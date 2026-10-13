@@ -1,0 +1,40 @@
+{
+ "adr": "ADR-006",
+ "frozen_at_utc": "2026-10-13T23:18:53+00:00",
+ "trained_on_quarter": "2026Q3",
+ "test_quarter": "2026Q4 (not yet published when frozen)",
+ "file": "derived/p2v2_frozen_predictions.parquet",
+ "sha256": "ec23f069982459f7165994048219fac4cac5a4ded55d8c1705f57e63bbcadf8d",
+ "rows": 5762813,
+ "code_commit": "252a6b71fc2547300583b571bdc3fea19c515a7a",
+ "rows_by_country": {
+  "ARE": 18178,
+  "DEU": 287261,
+  "FRA": 543126,
+  "IDN": 701414,
+  "MYS": 108755,
+  "PHL": 238175,
+  "USA": 3865904
+ },
+ "median_pred_mbps": {
+  "kriging": {
+   "ARE": 182.9,
+   "DEU": 39.1,
+   "FRA": 50.3,
+   "IDN": 28.1,
+   "MYS": 47.1,
+   "PHL": 22.3,
+   "USA": 99.3
+  },
+  "lightgbm": {
+   "ARE": 130.2,
+   "DEU": 27.1,
+   "FRA": 32.6,
+   "IDN": 15.9,
+   "MYS": 25.0,
+   "PHL": 12.9,
+   "USA": 69.6
+  }
+ },
+ "seconds": 629
+}

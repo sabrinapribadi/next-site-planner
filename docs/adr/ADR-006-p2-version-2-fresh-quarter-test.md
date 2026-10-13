@@ -30,6 +30,29 @@ The question: **"Predicting places nobody had tested, does LightGBM beat kriging
    - The file's SHA-256, row count and the code commit are pushed in `data/outputs/p2v2_frozen.json`.
    - **Any later change to the file voids the test.**
 
+#### Frozen record
+
+- **File:** `derived/p2v2_frozen_predictions.parquet`, 5,762,813 rows.
+- **SHA-256:** `ec23f069982459f7165994048219fac4cac5a4ded55d8c1705f57e63bbcadf8d`
+- **Frozen:** 2026-10-13T23:18:53+00:00, from code commit `252a6b7`.
+- The file stays in the data folder as a dated snapshot. It must hash to this value when the test runs.
+
+**Observed at freeze (before any Q4 data).** The two models disagree systematically on untested hexagons. Median predicted download:
+
+| Country | Kriging | LightGBM |
+|---|---|---|
+| Philippines | 22.3 Mbps | 12.9 Mbps |
+| Indonesia | 28.1 Mbps | 15.9 Mbps |
+| Malaysia | 47.1 Mbps | 25.0 Mbps |
+| Germany | 39.1 Mbps | 27.1 Mbps |
+| France | 50.3 Mbps | 32.6 Mbps |
+| United States | 99.3 Mbps | 69.6 Mbps |
+| UAE | 182.9 Mbps | 130.2 Mbps |
+
+- **Why they differ:** kriging borrows from nearby *tested* places. LightGBM also uses what the place is (population, places, cells, history), and untested places are sparser.
+- **Stakes:** if LightGBM is right, the deployed estimate of untested people below 25 Mbps (≈ 68M, from kriging) is too low. The fresh-quarter test therefore also settles the size of the hidden gap.
+- **Also reported at test time:** the people-weighted share below 25 Mbps in newly tested hexagons, measured vs each model's prediction.
+
 ### Test set (defined now)
 
 - Populated hexagons with **no** mobile test in 2026 Q3 and **at least one** in 2026 Q4: "newly tested hexagons".
