@@ -102,6 +102,15 @@ def main() -> None:
     kp = c.sql(f"SELECT population, h3_cell_to_lng(h3) AS lon, h3_cell_to_lat(h3) AS lat FROM '{DATA}/population/kontur_7_20231101.parquet'").df()
     pop_full = full_border_totals(borders, kp, "population")
     del kp
+    # over-assignment: hexagon centres outside their own full border, split into a neighbouring country vs sea/coast
+    allne = gpd.read_file(ne)[["ADM0_A3", "geometry"]]
+    hx = c.sql(f"SELECT iso3, population, coalesce(mobile_tests, 0) AS tests, h3_cell_to_lng(h3) AS lon, h3_cell_to_lat(h3) AS lat FROM '{OUT}/hex_latest.parquet'").df()
+    hj = gpd.sjoin(gpd.GeoDataFrame(hx, geometry=gpd.points_from_xy(hx["lon"], hx["lat"]), crs=allne.crs), allne, predicate="within", how="left")
+    hj = hj[~hj.index.duplicated()]
+    hj["other"] = hj["ADM0_A3"].notna() & (hj["ADM0_A3"] != hj["iso3"]); hj["sea"] = hj["ADM0_A3"].isna()
+    over = {k: {f"{w}_share_{v}": round(float(g.loc[g[w], v].sum() / max(g[v].sum(), 1)), 4) for w in ("other", "sea") for v in ("population", "tests")}
+            for k, g in hj.groupby("iso3")}
+    del hx, hj
     rows = {}
     for k in iso:
         wb = world_bank_population(k)
@@ -109,7 +118,7 @@ def main() -> None:
                    "tests_assigned": round((kept_tests.get(k) or 0) / max(full_tests.get(k, 1), 1), 4),
                    "population_kontur": round(pop_kept.get(k, 0)), "population_world_bank_2023": wb,
                    "kontur_vs_world_bank": round(pop_kept.get(k, 0) / wb, 3) if wb else None,
-                   "hexagons": c.sql(f"SELECT count(*) FROM '{OUT}/hex_latest.parquet' WHERE iso3 = '{k}'").fetchone()[0]}
+                   "outside_own_border": over.get(k), "hexagons": c.sql(f"SELECT count(*) FROM '{OUT}/hex_latest.parquet' WHERE iso3 = '{k}'").fetchone()[0]}
     # data contracts (ADR-003, E9)
     hl = c.sql(f"SELECT iso3, h3, population, places, cells, mobile_down_mbps, mobile_tests FROM '{OUT}/hex_latest.parquet'").df()
     E = CFG["experience"]

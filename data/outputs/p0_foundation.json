@@ -1,0 +1,66 @@
+{
+  "quarter": "2026Q3",
+  "countries": {
+    "IDN": {
+      "population_assigned": 1.0026,
+      "tests_assigned": 1.0036,
+      "population_kontur": 269734124,
+      "population_world_bank_2023": 281190067.0,
+      "kontur_vs_world_bank": 0.959,
+      "hexagons": 861723
+    },
+    "MYS": {
+      "population_assigned": 1.0037,
+      "tests_assigned": 1.003,
+      "population_kontur": 33318291,
+      "population_world_bank_2023": 35126298.0,
+      "kontur_vs_world_bank": 0.949,
+      "hexagons": 148561
+    },
+    "PHL": {
+      "population_assigned": 1.0078,
+      "tests_assigned": 1.0096,
+      "population_kontur": 107900697,
+      "population_world_bank_2023": 114891199.0,
+      "kontur_vs_world_bank": 0.939,
+      "hexagons": 278356
+    },
+    "DEU": {
+      "population_assigned": 1.0007,
+      "tests_assigned": 1.001,
+      "population_kontur": 83253701,
+      "population_world_bank_2023": 83287273.0,
+      "kontur_vs_world_bank": 1.0,
+      "hexagons": 385726
+    },
+    "FRA": {
+      "population_assigned": 1.0017,
+      "tests_assigned": 1.0069,
+      "population_kontur": 63873188,
+      "population_world_bank_2023": 68372286.0,
+      "kontur_vs_world_bank": 0.934,
+      "hexagons": 616975
+    },
+    "USA": {
+      "population_assigned": 1.0014,
+      "tests_assigned": 1.0017,
+      "population_kontur": 332225065,
+      "population_world_bank_2023": 336755052.0,
+      "kontur_vs_world_bank": 0.987,
+      "hexagons": 4329327
+    },
+    "ARE": {
+      "population_assigned": 1.0064,
+      "tests_assigned": 1.0166,
+      "population_kontur": 9038504,
+      "population_world_bank_2023": 10483751.0,
+      "kontur_vs_world_bank": 0.862,
+      "hexagons": 25913
+    }
+  },
+  "contracts_broken": [],
+  "inputs_in_manifest": 29,
+  "gate_passed": true,
+  "seconds": 151,
+  "panel_rows": 15324412
+}

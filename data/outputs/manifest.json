@@ -1,0 +1,208 @@
+{
+ "built": "2026-10-13T12:00:35+00:00",
+ "inputs": [
+  {
+   "path": "countries/ne_10m_admin_0_countries.geojson",
+   "bytes": 13287234,
+   "sha256": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255",
+   "rows": null,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2023q1.parquet",
+   "bytes": 43286792,
+   "sha256": "75315ff7cc2ab0126d7e1065d1a9111ee2fc5d8f65009f08c690f3ecea871709",
+   "rows": 2215743,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2023q2.parquet",
+   "bytes": 43868379,
+   "sha256": "3147d89e678a4b5f539185143deb6fc5378d5bd8de10247ccc908cee7dd0b90d",
+   "rows": 2249975,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2023q3.parquet",
+   "bytes": 46263638,
+   "sha256": "007e79cc99d4ae6b4ccc2ce65fe9c7c7eb1caca04212c0e45f57e016a7f45e2b",
+   "rows": 2369258,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2026q3.parquet",
+   "bytes": 47167731,
+   "sha256": "6e4bde8e223ae4edc49cca2da70dbacd73c85abdc7da97cf3d33c6494264c300",
+   "rows": 2378587,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2023q1.parquet",
+   "bytes": 19474705,
+   "sha256": "712d3b466a788b804d22336c4b3dac914b9f6ac94fbcfed8cec76af933908b16",
+   "rows": 1006052,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2023q2.parquet",
+   "bytes": 19846297,
+   "sha256": "930ef7f7eb1f3cf4945db63da8d84d0875ffbd1b4605feb2c67e3f3ebeb077b1",
+   "rows": 1028439,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2023q3.parquet",
+   "bytes": 20224403,
+   "sha256": "e0c3a42f010af892a27dc6e88d67e6084474a8c7f3ceabd9ec77275e83b6e382",
+   "rows": 1041960,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2023q4.parquet",
+   "bytes": 18875671,
+   "sha256": "c4c133560f9141e8e77f06d80f40dfa3a337843a0d3d1b24d0eca71d83559dbf",
+   "rows": 971423,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2024q1.parquet",
+   "bytes": 18366745,
+   "sha256": "b197c793338119b441092bfd83327c7c98eae5103c358986c9b2bcfd66c23a10",
+   "rows": 942627,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2024q2.parquet",
+   "bytes": 18787893,
+   "sha256": "356f62e2877b0bc0f5b60b6e7e94e99585710fa5138fc433b41e72b6f6743705",
+   "rows": 963968,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2024q3.parquet",
+   "bytes": 18711612,
+   "sha256": "e6cc08bff5ace85c6cd8e4ef6896c06bf4bf8978ef6510f983e2a04c09b9f458",
+   "rows": 960890,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2024q4.parquet",
+   "bytes": 17536002,
+   "sha256": "e29adca8caf300cbef15053d4e9c9aad35e31609a02e9fc6b31329f490f751d6",
+   "rows": 896409,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2025q1.parquet",
+   "bytes": 16152326,
+   "sha256": "ca9f338f2d28437bd353e539dce30163a822a6ea6e474ecc5b807d3ca5740fe6",
+   "rows": 818729,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2025q2.parquet",
+   "bytes": 16697014,
+   "sha256": "a2758cfa6c3c3953d9a3d42ab060a31681bf8faa9dcfd46099620c7b926f8d33",
+   "rows": 846991,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2025q3.parquet",
+   "bytes": 16694646,
+   "sha256": "c783c873809e94392dbac49ec88cbe6d2fd9894bdc1bfaeb766739117e124ddc",
+   "rows": 840945,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2025q4.parquet",
+   "bytes": 16869511,
+   "sha256": "8afc589e23dc0caf0e7f321d127fef4cd8e9fe9e96244367d56e45aebc05ac4d",
+   "rows": 853049,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2026q1.parquet",
+   "bytes": 15986864,
+   "sha256": "4db8c13f33258b60d5420183ce8cd2b90f188eb9d3e78cd1de5c6373968be22c",
+   "rows": 814295,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2026q2.parquet",
+   "bytes": 17495823,
+   "sha256": "4201646b280ea99532e548581cba9236d28f0ab496993c9b847f3559afb22cbb",
+   "rows": 886379,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/mobile/2026q3.parquet",
+   "bytes": 17771834,
+   "sha256": "9831fb3d3a6416149dbee9569e4cedada8ec61d48c107a577c2a1d3a12738f0d",
+   "rows": 901856,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "opencellid/cells_7.parquet",
+   "bytes": 65897717,
+   "sha256": "6db626675c01689640ab6ac7612f2bc7969c8d437e2ef4bdfe06e9912a12f4bc",
+   "rows": 1597383,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "overture/are_places_2026-09-23.1.parquet",
+   "bytes": 10851165,
+   "sha256": "9fafb3daf694a29b8a707ef99ea5396c0da88a96c28c53514ea8506a92055520",
+   "rows": 142113,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "overture/deu_places_2026-09-23.1.parquet",
+   "bytes": 427112352,
+   "sha256": "3047d3b75e667ab72ac657380bdf246466b0f0de510bb3c8393eccb4add9be03",
+   "rows": 5645303,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "overture/fra_places_2026-09-23.1.parquet",
+   "bytes": 168412061,
+   "sha256": "f26bf318005797df51c89dc876c0d062177747101553b60eb7edd049bee84280",
+   "rows": 2215397,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "overture/idn_places_2026-09-23.1.parquet",
+   "bytes": 151801404,
+   "sha256": "5ed41a76699e09467b9efe2cee23249b25aca081b2563f412893c2b1bec446fd",
+   "rows": 2003661,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "overture/mys_places_2026-09-23.1.parquet",
+   "bytes": 64919611,
+   "sha256": "b7b4243e0f1997971bdd172bebae58f60e0ea218fa1ae93fb09c4eb22f294167",
+   "rows": 845282,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "overture/phl_places_2026-09-23.1.parquet",
+   "bytes": 86534450,
+   "sha256": "b908edc2b4fa1a67b0fe16d990e4b9994255d46a207e9ab2fae9e54a0dacc4c6",
+   "rows": 1134224,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "overture/usa_places_2026-09-23.1.parquet",
+   "bytes": 1287049740,
+   "sha256": "7ce837db8ea566a7aed3c529bca2a4bc6c02af5871e245dfa175ea57bf6c5401",
+   "rows": 17828708,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "population/kontur_7_20231101.parquet",
+   "bytes": 143203052,
+   "sha256": "07da5e306e8dcfd33af8c8d106058b2be17f72a322cc10ee67ae18f9e3d9ff86",
+   "rows": 6387083,
+   "modified": "2026-10-13"
+  }
+ ]
+}
