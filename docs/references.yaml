@@ -76,3 +76,11 @@
   title: "Positional Encoder Graph Neural Networks for Geographic Data"
   used_in: [ADR-004]
   role: cited alternative, not tested (P2)
+- key: pebesma_2004
+  doi: 10.1016/j.cageo.2004.03.012
+  used_in: [ADR-004]
+  role: local kriging neighbourhood (P2 baseline)
+- key: cressie_1985
+  doi: 10.1007/BF01032109
+  used_in: [ADR-004]
+  role: weighted least-squares variogram fitting (P2 baseline)

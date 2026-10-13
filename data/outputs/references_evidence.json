@@ -253,6 +253,34 @@
     "ADR-004"
    ],
    "openalex_id": "https://openalex.org/W3215817997"
+  },
+  {
+   "key": "pebesma_2004",
+   "title": "Multivariable geostatistics in S: the gstat package",
+   "venue": "Computers & Geosciences",
+   "peer_reviewed": true,
+   "year": 2004,
+   "citations": 3001,
+   "citations_per_year": 130.5,
+   "role": "local kriging neighbourhood (P2 baseline)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W2007873570"
+  },
+  {
+   "key": "cressie_1985",
+   "title": "Fitting variogram models by weighted least squares",
+   "venue": "Mathematical Geology",
+   "peer_reviewed": true,
+   "year": 1985,
+   "citations": 1058,
+   "citations_per_year": 25.2,
+   "role": "weighted least-squares variogram fitting (P2 baseline)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W1530542196"
   }
  ]
 }

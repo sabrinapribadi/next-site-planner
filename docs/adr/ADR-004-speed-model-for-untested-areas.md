@@ -59,7 +59,7 @@ Five folds. The test-to-training ring distance was compared with the deployment 
 
 | Option | Status | Why |
 |---|---|---|
-| Ordinary kriging (local: 32 nearest training hexagons, exponential variogram fitted per country) | **Baseline (gate)** | Standard geostatistical interpolator (Cressie 1993) |
+| Ordinary kriging, local (moving search neighbourhood of 16, 32 or 64 nearest training hexagons, as gstat's `nmax`; Pebesma 2004), per-country variogram (exponential or spherical, whichever fits better by Cressie's 1985 weighted least squares) | **Baseline (gate)** | Standard geostatistical interpolator (Cressie 1993). The gate uses the **best** of the three neighbourhoods, the setting most favourable to the baseline |
 | Mean of ring-1 training neighbours | Naive baseline | Shows what a "look next door" rule gets |
 | LightGBM on covariates only (population, places, cells, fixed broadband, area type) | Ablation | Shows what context alone explains |
 | **LightGBM with spatial features** (covariates + neighbours' measured speeds by ring + nearest observation + the hexagon's own earlier quarters) | **Chosen** | The random-forest spatial approach (Hengl et al. 2018; Sekulić et al. 2020), with gradient boosting (Ke et al. 2017) |
@@ -91,7 +91,7 @@ Five folds. The test-to-training ring distance was compared with the deployment 
 
 **Gate (ADR-002):**
 
-- **Pass:** LightGBM with spatial features has RMSE of ln download ≤ **0.90 ×** ordinary kriging RMSE, on the same resolution-6 block folds, pooled over the seven countries.
+- **Pass:** LightGBM with spatial features has RMSE of ln download ≤ **0.90 ×** the best ordinary-kriging RMSE (16, 32 or 64 neighbours), on the same resolution-6 block folds, pooled over the seven countries. LightGBM hyperparameters are fixed in advance (no tuning on the test folds).
 - **Fail:** keep kriging and report the negative result.
 
 **Reported, not gated:**
@@ -134,6 +134,9 @@ Five folds. The test-to-training ring distance was compared with the deployment 
 | kNNDM CV: k-fold nearest-neighbour distance matching cross-validation | Geoscientific Model Development | yes | 2024 | 49 | Block size by distance matching |
 | Nearest neighbour distance matching Leave-One-Out Cross-Validation for map validation | Methods in Ecology and Evolution | yes | 2022 | 111 | Distance-matched error |
 | Positional Encoder Graph Neural Networks for Geographic Data | arXiv 2111.10144 | no (preprint) | 2021 | 6 | Cited alternative |
+
+| Multivariable geostatistics in S: the gstat package | Computers & Geosciences | yes | 2004 | 3,001 | Local kriging neighbourhood |
+| Fitting variogram models by weighted least squares | Mathematical Geology | yes | 1985 | 1,058 | Variogram fitting |
 
 Plus the P2 references already in ADR-002: Roberts et al. 2017, Ploton et al. 2020, Wadoux et al. 2021, Meyer & Pebesma 2021. Book without a count: Cressie (1993), *Statistics for Spatial Data*.
 
