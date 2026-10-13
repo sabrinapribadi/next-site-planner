@@ -2,6 +2,26 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.3.0] — 2026-10-13 — P0 and P1 run: gates passed; three methods corrected after checks
+**Files:** scripts/build_hex_table.py, scripts/experience_gap.py, src/spatialstats.py, src/hexgrid.py, tests/test_spatialstats.py, configs/default_config.yaml, docs/adr/ADR-002-validation-and-gates.md, docs/adr/ADR-003-industry-alignment.md, data/outputs/p0_foundation.json, data/outputs/p1_experience_gap.json, data/outputs/manifest.json, docs/build.html
+- **Situation:** The first P1 run passed its gate on paper, but three checks showed problems:
+  - Germany, France and the US had bootstrap intervals that missed their own estimates.
+  - The shuffled-data test still found up to 318 "hotspots" after FDR.
+  - OpenCelliD finds a cell near only 2% of fast rural Indonesian hexagons.
+- **Task:** Fix the methods without moving the goalposts, and record every change.
+- **Action:**
+  - **P0:** border check moved from DuckDB (stuck after 13 min) to GeoPandas (about 3 s per million points). The input file list is read once at the start, skipping files still downloading.
+  - **P1 intervals:** spatial block bootstrap (H3 resolution 5; resolution 4 as a check) replaced the biased tile bootstrap. Both are published.
+  - **P1 hotspots:** exact conditional-randomisation p-values for Gi* (convolution of the empirical distribution) replaced the normal approximation.
+  - **P1 gap types:** typed only where OpenCelliD finds ≥ 80% of fast hexagons' cells; elsewhere `slow_type_unknown`.
+  - **5G measure:** relabelled as a completeness figure, not coverage.
+  - All three changes are logged as deviations in ADR-002 and ADR-003.
+- **Result:**
+  - **P0 gate passed:** ≥ 99% of people and tests assigned in all 7 countries; contracts clean; 29 inputs in the manifest.
+  - **P1 gate passed:** every interval contains its estimate.
+  - **Hotspots:** false hotspots on shuffled data fell from 21–318 per country to 0 everywhere. Real slow hotspots remain only in Indonesia (24 hexagons) and the Philippines (14).
+- **Talking point:** "The checks I wrote in advance caught three of my own methods failing — biased intervals, a test that found hotspots in noise, and a cell database too sparse to type gaps — and each fix is published next to the original."
+
 ## [0.2.1] — 2026-10-13 — ADR-003 in code: morphology, gap types, data contracts, manifest, CI
 **Files:** src/morphology.py, src/contracts.py, tests/test_morphology_contracts.py, scripts/build_hex_table.py, scripts/experience_gap.py, configs/default_config.yaml, requirements.txt, .github/workflows/ci.yml
 - **Situation:** ADR-003 fixed the industry view on paper, but P0 and P1 could not yet produce it, and the repo had no CI.

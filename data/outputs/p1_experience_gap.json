@@ -1,0 +1,650 @@
+{
+  "quarter": "2026Q3",
+  "bars_mbps": [
+    5,
+    10,
+    25,
+    50,
+    100
+  ],
+  "density_deciles_edges_people_per_hex": [
+    118.0,
+    318.0,
+    555.0,
+    827.0,
+    1154.0,
+    1582.0,
+    2221.0,
+    3402.0,
+    6687.0
+  ],
+  "countries": {
+    "IDN": {
+      "population": 269734124.0,
+      "measured_share": 0.6497979247149315,
+      "below_5": 0.01902964063867708,
+      "below_10": 0.040889768133508364,
+      "below_25": 0.13296971780096195,
+      "below_50": 0.3566848189923776,
+      "below_100": 0.7453147602460838,
+      "opencellid_detection_in_fast_hexagons": {
+        "rural": 0.021743340048765523,
+        "urban_centre": 0.5392722877280127,
+        "urban_cluster": 0.07133163960312182
+      },
+      "morphology": {
+        "rural": {
+          "population_share": 0.16533677807854968,
+          "population": 44596971.0,
+          "measured_share": 0.20832722025000308,
+          "below_10": 0.15792082953789693,
+          "below_25": 0.3623345036354926
+        },
+        "urban_centre": {
+          "population_share": 0.4391070741942907,
+          "population": 118442162.0,
+          "measured_share": 0.9323115699289583,
+          "below_10": 0.014941806926725051,
+          "below_25": 0.06409630181745622
+        },
+        "urban_cluster": {
+          "population_share": 0.39555614772715963,
+          "population": 106694991.0,
+          "measured_share": 0.5207077903029206,
+          "below_10": 0.07289290893466309,
+          "below_25": 0.2315060233818247
+        }
+      },
+      "gap_types": {
+        "10": {
+          "none": 0.6232278382397031,
+          "slow_type_unknown": 0.026570086475228474,
+          "unmeasured": 0.35020207528506847
+        },
+        "25": {
+          "none": 0.5633944780379363,
+          "slow_type_unknown": 0.08640344667699516,
+          "unmeasured": 0.35020207528506847
+        }
+      },
+      "people_near_opencellid_5g_record": 0.00031027219974585045,
+      "populated_hexagons_untyped": 0,
+      "below_10_density_adjusted": 0.08321919931046647,
+      "below_25_density_adjusted": 0.22003573769400794,
+      "below_10_ci95_tile_bootstrap_preregistered": [
+        0.0400098032860109,
+        0.041701740194148997
+      ],
+      "below_25_ci95_tile_bootstrap_preregistered": [
+        0.13101260630620112,
+        0.1343026450746522
+      ],
+      "below_10_ci95": [
+        0.03582658819873298,
+        0.04586262155408048
+      ],
+      "below_25_ci95": [
+        0.11712435242162637,
+        0.14728757329795647
+      ],
+      "below_10_ci95_res4": [
+        0.03243170760309868,
+        0.05122930939288846
+      ],
+      "below_25_ci95_res4": [
+        0.10769814822914749,
+        0.1629147550817026
+      ],
+      "hotspots": {
+        "measured_hexagons": 134007,
+        "slow_hotspot_hexagons_fdr": 24,
+        "people_in_slow_hotspots_fdr": 43990.0,
+        "slow_hotspot_hexagons_unadjusted": 2603,
+        "slow_hotspot_hexagons_fdr_normal_approx": 912,
+        "false_hotspots_on_shuffled_unadjusted": 3026,
+        "false_hotspots_on_shuffled_fdr": 0,
+        "false_hotspots_on_shuffled_fdr_normal_approx": 318
+      }
+    },
+    "MYS": {
+      "population": 33318291.0,
+      "measured_share": 0.8575947667904095,
+      "below_5": 0.008393519442707798,
+      "below_10": 0.018219305434192524,
+      "below_25": 0.049456050187879776,
+      "below_50": 0.10091793849369726,
+      "below_100": 0.1949104963772143,
+      "opencellid_detection_in_fast_hexagons": {
+        "rural": 0.15353468758780991,
+        "urban_centre": 0.733696797903735,
+        "urban_cluster": 0.30460126023436046
+      },
+      "morphology": {
+        "rural": {
+          "population_share": 0.21447471600509163,
+          "population": 7145931.0,
+          "measured_share": 0.4712138978112159,
+          "below_10": 0.08743988439272025,
+          "below_25": 0.21812142922053585
+        },
+        "urban_centre": {
+          "population_share": 0.493155216154394,
+          "population": 16431089.0,
+          "measured_share": 0.997336877671346,
+          "below_10": 0.00048677847539663416,
+          "below_25": 0.002529392980467655
+        },
+        "urban_cluster": {
+          "population_share": 0.2923700678405144,
+          "population": 9741271.0,
+          "measured_share": 0.9053232375939444,
+          "below_10": 0.024739882610259962,
+          "below_25": 0.07225479898568987
+        }
+      },
+      "gap_types": {
+        "10": {
+          "none": 0.84196998579549,
+          "slow_type_unknown": 0.015624780994919577,
+          "unmeasured": 0.1424052332095905
+        },
+        "25": {
+          "none": 0.81518151696316,
+          "slow_type_unknown": 0.04241324982724954,
+          "unmeasured": 0.1424052332095905
+        }
+      },
+      "people_near_opencellid_5g_record": 0.02445953785564812,
+      "populated_hexagons_untyped": 0,
+      "below_10_density_adjusted": 0.03581087476201282,
+      "below_25_density_adjusted": 0.09127263605980246,
+      "below_10_ci95_tile_bootstrap_preregistered": [
+        0.018259754799896392,
+        0.020250080905267538
+      ],
+      "below_25_ci95_tile_bootstrap_preregistered": [
+        0.048897357665489895,
+        0.05225266824635486
+      ],
+      "below_10_ci95": [
+        0.014264348185346125,
+        0.023204288012103953
+      ],
+      "below_25_ci95": [
+        0.03904834661870205,
+        0.06289396898020211
+      ],
+      "below_10_ci95_res4": [
+        0.013040012506783582,
+        0.026745566960804035
+      ],
+      "below_25_ci95_res4": [
+        0.03605629773983988,
+        0.07074591855194141
+      ],
+      "hotspots": {
+        "measured_hexagons": 35379,
+        "slow_hotspot_hexagons_fdr": 1,
+        "people_in_slow_hotspots_fdr": 166.0,
+        "slow_hotspot_hexagons_unadjusted": 1075,
+        "slow_hotspot_hexagons_fdr_normal_approx": 249,
+        "false_hotspots_on_shuffled_unadjusted": 839,
+        "false_hotspots_on_shuffled_fdr": 0,
+        "false_hotspots_on_shuffled_fdr_normal_approx": 21
+      }
+    },
+    "PHL": {
+      "population": 107900697.0,
+      "measured_share": 0.5939572938995936,
+      "below_5": 0.019310731491745947,
+      "below_10": 0.05383337198306976,
+      "below_25": 0.1634583016466348,
+      "below_50": 0.3412217960296906,
+      "below_100": 0.6735751705230428,
+      "opencellid_detection_in_fast_hexagons": {
+        "rural": 0.06930807558328016,
+        "urban_centre": 0.6461589214420299,
+        "urban_cluster": 0.20101889623276273
+      },
+      "morphology": {
+        "rural": {
+          "population_share": 0.179902406005774,
+          "population": 19411595.0,
+          "measured_share": 0.0971327188724059,
+          "below_10": 0.2227105687029601,
+          "below_25": 0.48528216108079497
+        },
+        "urban_centre": {
+          "population_share": 0.4302800657534214,
+          "population": 46427519.0,
+          "measured_share": 0.933557100046634,
+          "below_10": 0.02011123431513559,
+          "below_25": 0.07644572078276546
+        },
+        "urban_cluster": {
+          "population_share": 0.3898175282408046,
+          "population": 42061583.0,
+          "measured_share": 0.4483940844546911,
+          "below_10": 0.11444746109061082,
+          "below_25": 0.3312492228991634
+        }
+      },
+      "gap_types": {
+        "10": {
+          "none": 0.5619825699550393,
+          "slow_type_unknown": 0.03197472394455431,
+          "unmeasured": 0.4060427061004064
+        },
+        "25": {
+          "none": 0.49687004338813495,
+          "slow_type_unknown": 0.0970872505114587,
+          "unmeasured": 0.4060427061004064
+        }
+      },
+      "people_near_opencellid_5g_record": 0.03316734830730519,
+      "populated_hexagons_untyped": 0,
+      "below_10_density_adjusted": 0.13163468913380014,
+      "below_25_density_adjusted": 0.33881849254706164,
+      "below_10_ci95_tile_bootstrap_preregistered": [
+        0.04982292406979312,
+        0.05450910628842162
+      ],
+      "below_25_ci95_tile_bootstrap_preregistered": [
+        0.15621472447874854,
+        0.1644553616276685
+      ],
+      "below_10_ci95": [
+        0.041623216568242825,
+        0.07081026635952041
+      ],
+      "below_25_ci95": [
+        0.12938034568927115,
+        0.20951658806103007
+      ],
+      "below_10_ci95_res4": [
+        0.03310636056386726,
+        0.08266850189548472
+      ],
+      "below_25_ci95_res4": [
+        0.10122746925709562,
+        0.247161195160382
+      ],
+      "hotspots": {
+        "measured_hexagons": 32179,
+        "slow_hotspot_hexagons_fdr": 14,
+        "people_in_slow_hotspots_fdr": 9090.0,
+        "slow_hotspot_hexagons_unadjusted": 595,
+        "slow_hotspot_hexagons_fdr_normal_approx": 90,
+        "false_hotspots_on_shuffled_unadjusted": 641,
+        "false_hotspots_on_shuffled_fdr": 0,
+        "false_hotspots_on_shuffled_fdr_normal_approx": 25
+      }
+    },
+    "DEU": {
+      "population": 83253701.0,
+      "measured_share": 0.6621889638275661,
+      "below_5": 0.02437525396935901,
+      "below_10": 0.0520538826978904,
+      "below_25": 0.14568545851579554,
+      "below_50": 0.3097988121897747,
+      "below_100": 0.5571160196425584,
+      "opencellid_detection_in_fast_hexagons": {
+        "rural": 0.5761397229099601,
+        "urban_centre": 0.9648481217216444,
+        "urban_cluster": 0.8302758203319112
+      },
+      "morphology": {
+        "rural": {
+          "population_share": 0.31367887176571285,
+          "population": 26114927.0,
+          "measured_share": 0.3308898776550285,
+          "below_10": 0.12084319649028806,
+          "below_25": 0.2936643380840431
+        },
+        "urban_centre": {
+          "population_share": 0.3155796641400963,
+          "population": 26273175.0,
+          "measured_share": 0.9236326024547852,
+          "below_10": 0.019596476019193496,
+          "below_25": 0.06662784538900762
+        },
+        "urban_cluster": {
+          "population_share": 0.37074146409419084,
+          "population": 30865599.0,
+          "measured_share": 0.7199522030983426,
+          "below_10": 0.06074879950981372,
+          "below_25": 0.17447536549316806
+        }
+      },
+      "gap_types": {
+        "10": {
+          "capacity": 0.018398941808004426,
+          "coverage": 0.0035278671875500164,
+          "none": 0.6277194571806484,
+          "slow_type_unknown": 0.01254269765136327,
+          "unmeasured": 0.33781103617243396
+        },
+        "25": {
+          "capacity": 0.05535349113188374,
+          "coverage": 0.010637461030110842,
+          "none": 0.5657176610082475,
+          "slow_type_unknown": 0.03048035065732393,
+          "unmeasured": 0.33781103617243396
+        }
+      },
+      "people_near_opencellid_5g_record": 0.041012422979249896,
+      "populated_hexagons_untyped": 0,
+      "below_10_density_adjusted": 0.06831699497738589,
+      "below_25_density_adjusted": 0.17718985270309848,
+      "below_10_ci95_tile_bootstrap_preregistered": [
+        0.055757388001783294,
+        0.05910971454646931
+      ],
+      "below_25_ci95_tile_bootstrap_preregistered": [
+        0.14922696508318353,
+        0.15497536012861363
+      ],
+      "below_10_ci95": [
+        0.0479013668570975,
+        0.05643768618261528
+      ],
+      "below_25_ci95": [
+        0.13504114146395485,
+        0.1561518578863603
+      ],
+      "below_10_ci95_res4": [
+        0.04611873644996402,
+        0.0589926288109078
+      ],
+      "below_25_ci95_res4": [
+        0.13126348249392816,
+        0.16311718384094795
+      ],
+      "hotspots": {
+        "measured_hexagons": 76292,
+        "slow_hotspot_hexagons_fdr": 0,
+        "people_in_slow_hotspots_fdr": 0.0,
+        "slow_hotspot_hexagons_unadjusted": 1454,
+        "slow_hotspot_hexagons_fdr_normal_approx": 172,
+        "false_hotspots_on_shuffled_unadjusted": 1638,
+        "false_hotspots_on_shuffled_fdr": 0,
+        "false_hotspots_on_shuffled_fdr_normal_approx": 61
+      }
+    },
+    "FRA": {
+      "population": 63873188.0,
+      "measured_share": 0.533969495933098,
+      "below_5": 0.01762951128080784,
+      "below_10": 0.03638180520955433,
+      "below_25": 0.08346605061687369,
+      "below_50": 0.1608290119952499,
+      "below_100": 0.30573608409511266,
+      "opencellid_detection_in_fast_hexagons": {
+        "rural": 0.7362773432038846,
+        "urban_centre": 0.9884626380849593,
+        "urban_cluster": 0.9235341932262293
+      },
+      "morphology": {
+        "rural": {
+          "population_share": 0.4060117368808959,
+          "population": 25933264.0,
+          "measured_share": 0.18771208282921886,
+          "below_10": 0.10029279042856934,
+          "below_25": 0.2175359137154639
+        },
+        "urban_centre": {
+          "population_share": 0.32942232349511036,
+          "population": 21041254.0,
+          "measured_share": 0.9157890969806267,
+          "below_10": 0.01519018466164221,
+          "below_25": 0.03864318004275287
+        },
+        "urban_cluster": {
+          "population_share": 0.2645659396239937,
+          "population": 16898670.0,
+          "measured_share": 0.5899278463926451,
+          "below_10": 0.046135137379932745,
+          "below_25": 0.10463741785030307
+        }
+      },
+      "gap_types": {
+        "10": {
+          "capacity": 0.010723623189122797,
+          "coverage": 0.0010595055941156404,
+          "none": 0.514542721744216,
+          "slow_type_unknown": 0.007643645405643444,
+          "unmeasured": 0.46603050406690205
+        },
+        "25": {
+          "capacity": 0.02567651703872993,
+          "coverage": 0.0023126761732951235,
+          "none": 0.48940117095767943,
+          "slow_type_unknown": 0.01657913176339343,
+          "unmeasured": 0.46603050406690205
+        }
+      },
+      "people_near_opencellid_5g_record": 0.23101541448032936,
+      "populated_hexagons_untyped": 0,
+      "below_10_density_adjusted": 0.054447346514975244,
+      "below_25_density_adjusted": 0.11930763968330874,
+      "below_10_ci95_tile_bootstrap_preregistered": [
+        0.03715601308052593,
+        0.04157991883570635
+      ],
+      "below_25_ci95_tile_bootstrap_preregistered": [
+        0.08408624122517024,
+        0.09045645986904965
+      ],
+      "below_10_ci95": [
+        0.02955664007867716,
+        0.04403219124798435
+      ],
+      "below_25_ci95": [
+        0.0681980177512473,
+        0.10018771219302387
+      ],
+      "below_10_ci95_res4": [
+        0.02813850286420081,
+        0.04707674291994034
+      ],
+      "below_25_ci95_res4": [
+        0.06298586555070056,
+        0.10805631249017981
+      ],
+      "hotspots": {
+        "measured_hexagons": 48484,
+        "slow_hotspot_hexagons_fdr": 0,
+        "people_in_slow_hotspots_fdr": 0.0,
+        "slow_hotspot_hexagons_unadjusted": 696,
+        "slow_hotspot_hexagons_fdr_normal_approx": 112,
+        "false_hotspots_on_shuffled_unadjusted": 874,
+        "false_hotspots_on_shuffled_fdr": 0,
+        "false_hotspots_on_shuffled_fdr_normal_approx": 29
+      }
+    },
+    "USA": {
+      "population": 332225065.0,
+      "measured_share": 0.5639278120090067,
+      "below_5": 0.017452651989164677,
+      "below_10": 0.03361703725298351,
+      "below_25": 0.08233104059881115,
+      "below_50": 0.15164075972626218,
+      "below_100": 0.2704719187071767,
+      "opencellid_detection_in_fast_hexagons": {
+        "rural": 0.5069629716543348,
+        "urban_centre": 0.8970183330291278,
+        "urban_cluster": 0.7248306536707281
+      },
+      "morphology": {
+        "rural": {
+          "population_share": 0.27711165020014367,
+          "population": 92063436.0,
+          "measured_share": 0.18353852228587253,
+          "below_10": 0.06592866611466157,
+          "below_25": 0.14791391016741426
+        },
+        "urban_centre": {
+          "population_share": 0.31101131698175755,
+          "population": 103325755.0,
+          "measured_share": 0.8690538288348341,
+          "below_10": 0.020625020748501127,
+          "below_25": 0.05520889248490598
+        },
+        "urban_cluster": {
+          "population_share": 0.4118770328180988,
+          "population": 136835874.0,
+          "measured_share": 0.5894515936661463,
+          "below_10": 0.041311870829031434,
+          "below_25": 0.09878672605874146
+        }
+      },
+      "gap_types": {
+        "10": {
+          "capacity": 0.004584780501134073,
+          "coverage": 0.0009898651084619399,
+          "none": 0.5449702297447063,
+          "slow_type_unknown": 0.013382936654704244,
+          "unmeasured": 0.4360721879909934
+        },
+        "25": {
+          "capacity": 0.01255323104534572,
+          "coverage": 0.002368936251092313,
+          "none": 0.5174990484236943,
+          "slow_type_unknown": 0.03150659628887423,
+          "unmeasured": 0.4360721879909934
+        }
+      },
+      "people_near_opencellid_5g_record": 0.2854888778485151,
+      "populated_hexagons_untyped": 0,
+      "below_10_density_adjusted": 0.038711318356215864,
+      "below_25_density_adjusted": 0.09112218636210936,
+      "below_10_ci95_tile_bootstrap_preregistered": [
+        0.036460369838188005,
+        0.038347708242225144
+      ],
+      "below_25_ci95_tile_bootstrap_preregistered": [
+        0.08672468295281484,
+        0.08933840534795195
+      ],
+      "below_10_ci95": [
+        0.03182086102501868,
+        0.035547947791875305
+      ],
+      "below_25_ci95": [
+        0.07832559572344734,
+        0.08656389952126854
+      ],
+      "below_10_ci95_res4": [
+        0.030831855115967026,
+        0.036492974709107014
+      ],
+      "below_25_ci95_res4": [
+        0.07622223659207937,
+        0.08843354185773517
+      ],
+      "hotspots": {
+        "measured_hexagons": 315429,
+        "slow_hotspot_hexagons_fdr": 0,
+        "people_in_slow_hotspots_fdr": 0.0,
+        "slow_hotspot_hexagons_unadjusted": 5004,
+        "slow_hotspot_hexagons_fdr_normal_approx": 742,
+        "false_hotspots_on_shuffled_unadjusted": 6276,
+        "false_hotspots_on_shuffled_fdr": 0,
+        "false_hotspots_on_shuffled_fdr_normal_approx": 238
+      }
+    },
+    "ARE": {
+      "population": 9038504.0,
+      "measured_share": 0.6360367821931594,
+      "below_5": 0.0049698886084642395,
+      "below_10": 0.011981587181093305,
+      "below_25": 0.034716683646959956,
+      "below_50": 0.05987401590691378,
+      "below_100": 0.10683460139044162,
+      "opencellid_detection_in_fast_hexagons": {
+        "rural": 0.3998593844875523,
+        "urban_centre": 0.9647814969233811,
+        "urban_cluster": 0.6375999456078325
+      },
+      "morphology": {
+        "rural": {
+          "population_share": 0.14602814802095568,
+          "population": 1319876.0,
+          "measured_share": 0.14218684179422916,
+          "below_10": 0.037907166340738215,
+          "below_25": 0.10289392494231865
+        },
+        "urban_centre": {
+          "population_share": 0.4989603367990986,
+          "population": 4509855.0,
+          "measured_share": 0.8762031151777607,
+          "below_10": 0.00970530796910275,
+          "below_25": 0.02743658246424377
+        },
+        "urban_cluster": {
+          "population_share": 0.3550115151799457,
+          "population": 3208773.0,
+          "measured_share": 0.5016256992937799,
+          "below_10": 0.01454706533225895,
+          "below_25": 0.04464020009903063
+        }
+      },
+      "gap_types": {
+        "10": {
+          "capacity": 0.003931402807367237,
+          "coverage": 0.00031166662093638504,
+          "none": 0.62841605203693,
+          "slow_type_unknown": 0.003377660727925772,
+          "unmeasured": 0.3639632178068406
+        },
+        "25": {
+          "capacity": 0.011431537785456532,
+          "coverage": 0.0005634782039151612,
+          "none": 0.6139556944379291,
+          "slow_type_unknown": 0.010086071765858597,
+          "unmeasured": 0.3639632178068406
+        }
+      },
+      "people_near_opencellid_5g_record": 0.02311101483165798,
+      "populated_hexagons_untyped": 0,
+      "below_10_density_adjusted": 0.01912931792788656,
+      "below_25_density_adjusted": 0.0507579885725678,
+      "below_10_ci95_tile_bootstrap_preregistered": [
+        0.011650666570279035,
+        0.01917211282590697
+      ],
+      "below_25_ci95_tile_bootstrap_preregistered": [
+        0.032912473841835536,
+        0.04391360033182354
+      ],
+      "below_10_ci95": [
+        0.007162976177457255,
+        0.020134320686016685
+      ],
+      "below_25_ci95": [
+        0.025313577340548683,
+        0.048310911485916694
+      ],
+      "below_10_ci95_res4": [
+        0.006986532153072247,
+        0.024843320847693588
+      ],
+      "below_25_ci95_res4": [
+        0.022216566330146768,
+        0.06951003722887232
+      ],
+      "hotspots": {
+        "measured_hexagons": 5078,
+        "slow_hotspot_hexagons_fdr": 1,
+        "people_in_slow_hotspots_fdr": 0.0,
+        "slow_hotspot_hexagons_unadjusted": 106,
+        "slow_hotspot_hexagons_fdr_normal_approx": 35,
+        "false_hotspots_on_shuffled_unadjusted": 98,
+        "false_hotspots_on_shuffled_fdr": 0,
+        "false_hotspots_on_shuffled_fdr_normal_approx": 0
+      }
+    }
+  },
+  "seconds": 411,
+  "gate_passed": true
+}

@@ -32,6 +32,8 @@ morphology:                          # Degree of Urbanisation thresholds (ADR-00
 
 gap_typing:                          # ADR-003, E1
   cell_radios: [LTE, NR]
+  detection_fast_mbps: 50            # completeness check: fast hexagons must have a cell nearby
+  min_detection_rate: 0.80           # type gaps only where OpenCelliD finds it >= 80% of the time (set after the check)
   cell_search_ring: 1                # ring-1 ≈ 1.3 km; ring-0 as sensitivity
 
 service_isd_m:                       # 3GPP TR 38.901 Tables 7.2-1 / 7.2-3 (ADR-003, E3)

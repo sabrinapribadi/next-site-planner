@@ -152,6 +152,32 @@ Costs are in **new-tower equivalents**: relative units, so no currency is conver
 - **Model card** for the P2 speed model (intended use, area of applicability, error per country).
 - **Runbook** for the P6 Databricks job.
 
+### Finding after P1: OpenCelliD completeness limits gap typing (2026-10-13)
+
+**Check:** in fast hexagons (≥ 50 Mbps), a cell must exist nearby. How often does OpenCelliD record an LTE/5G cell within ring-1? (People-weighted.)
+
+| Country | Rural | Urban cluster | Urban centre | LTE/5G records per 10k people |
+|---|---|---|---|---|
+| Indonesia | 2% | 7% | 54% | 2.1 |
+| Philippines | 7% | 20% | 65% | 2.7 |
+| Malaysia | 15% | 31% | 73% | 12.9 |
+| United States | 51% | 73% | 90% | 21.0 |
+| Germany | 58% | 83% | 97% | 25.8 |
+| France | 74% | 92% | 99% | 46.0 |
+| UAE | 40% | 64% | 97% | 12.8 |
+
+**What this means:**
+
+- Where cells are missing from the records, a "coverage gap" mostly means "OpenCelliD doesn't know the cell". This is the opposite of the falsification risk listed below.
+- The rule was not pre-registered. It is added after the check and stated as such.
+- **Rule:** gap types are kept only in (country, morphology) strata where OpenCelliD finds a cell near ≥ 80% of fast hexagons. Elsewhere, slow hexagons are labelled `slow_type_unknown`.
+
+**Consequences:**
+
+- The 5G measure becomes "people near an OpenCelliD-recorded 5G cell". It is published as a completeness figure, not as coverage, because 5G records range from 0.03% of people (Indonesia) to 29% (US).
+- Co-location candidates in P4 inherit the same limit.
+- An Ookla-only signal (upload / download ratio: cell-edge users are uplink-limited) is a candidate for P2. It can be checked against the typed strata.
+
 ## How this differs from the earlier portfolio project (R16)
 
 | | Earlier project (subscription churn) | This project (network planning) |
