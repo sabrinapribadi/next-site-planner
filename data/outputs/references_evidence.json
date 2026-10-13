@@ -8,8 +8,8 @@
    "venue": "Papers of the Regional Science Association",
    "peer_reviewed": true,
    "year": 1974,
-   "citations": 2710,
-   "citations_per_year": 51.1,
+   "citations": 2711,
+   "citations_per_year": 51.2,
    "role": "covering optimiser (P4)",
    "used_in": [
     "ADR-002"
@@ -22,8 +22,8 @@
    "venue": "Geographical Analysis",
    "peer_reviewed": true,
    "year": 1995,
-   "citations": 3649,
-   "citations_per_year": 114.0,
+   "citations": 3650,
+   "citations_per_year": 114.1,
    "role": "Gi* hotspot statistic (P1)",
    "used_in": [
     "ADR-002"
@@ -50,8 +50,8 @@
    "venue": "Ecography",
    "peer_reviewed": true,
    "year": 2016,
-   "citations": 3316,
-   "citations_per_year": 301.5,
+   "citations": 3339,
+   "citations_per_year": 303.5,
    "role": "spatial block cross-validation (P2)",
    "used_in": [
     "ADR-002"
@@ -64,8 +64,8 @@
    "venue": "Nature Communications",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 864,
-   "citations_per_year": 123.4,
+   "citations": 866,
+   "citations_per_year": 123.7,
    "role": "random CV overstates spatial models (P2)",
    "used_in": [
     "ADR-002"
@@ -78,8 +78,8 @@
    "venue": "Ecological Modelling",
    "peer_reviewed": true,
    "year": 2021,
-   "citations": 310,
-   "citations_per_year": 51.7,
+   "citations": 311,
+   "citations_per_year": 51.8,
    "role": "counter-view on spatial CV (P2)",
    "used_in": [
     "ADR-002"
@@ -92,8 +92,8 @@
    "venue": "Methods in Ecology and Evolution",
    "peer_reviewed": true,
    "year": 2021,
-   "citations": 515,
-   "citations_per_year": 85.8,
+   "citations": 518,
+   "citations_per_year": 86.3,
    "role": "area of applicability (P2)",
    "used_in": [
     "ADR-002"
@@ -106,8 +106,8 @@
    "venue": "Journal of Econometrics",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 8775,
-   "citations_per_year": 1253.6,
+   "citations": 8823,
+   "citations_per_year": 1260.4,
    "role": "staggered difference-in-differences (P3)",
    "used_in": [
     "ADR-002"
@@ -120,8 +120,8 @@
    "venue": "The Review of Economic Studies",
    "peer_reviewed": true,
    "year": 2024,
-   "citations": 2120,
-   "citations_per_year": 706.7,
+   "citations": 2124,
+   "citations_per_year": 708.0,
    "role": "imputation event-study estimator, head-to-head arm (P3)",
    "used_in": [
     "ADR-002"
@@ -134,8 +134,8 @@
    "venue": "PLoS ONE",
    "peer_reviewed": true,
    "year": 2015,
-   "citations": 1063,
-   "citations_per_year": 88.6,
+   "citations": 1066,
+   "citations_per_year": 88.8,
    "role": "dasymetric population mapping (WorldPop cross-check)",
    "used_in": [
     "ADR-001"
@@ -162,13 +162,97 @@
    "venue": "Journal of Urban Economics",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 380,
-   "citations_per_year": 54.3,
+   "citations": 382,
+   "citations_per_year": 54.6,
    "role": "Degree of Urbanisation applied globally (morphology, E2)",
    "used_in": [
     "ADR-003"
    ],
    "openalex_id": "https://openalex.org/W3108189576"
+  },
+  {
+   "key": "hengl_2018",
+   "title": "Random forest as a generic framework for predictive modeling of spatial and spatio-temporal variables",
+   "venue": "PeerJ",
+   "peer_reviewed": true,
+   "year": 2018,
+   "citations": 1094,
+   "citations_per_year": 121.6,
+   "role": "spatial features in tree models (P2)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W2793997912"
+  },
+  {
+   "key": "sekulic_2020",
+   "title": "Random Forest Spatial Interpolation",
+   "venue": "Remote Sensing",
+   "peer_reviewed": true,
+   "year": 2020,
+   "citations": 366,
+   "citations_per_year": 52.3,
+   "role": "nearest-observation features (P2)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W3027312415"
+  },
+  {
+   "key": "ke_2017",
+   "title": "LightGBM: A Highly Efficient Gradient Boosting Decision Tree",
+   "venue": "HAL (Le Centre pour la Communication Scientifique Directe)",
+   "peer_reviewed": false,
+   "year": 2017,
+   "citations": 9120,
+   "citations_per_year": 912.0,
+   "role": "gradient boosting model (P2)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W2768348081"
+  },
+  {
+   "key": "linnenbrink_2024",
+   "title": "kNNDM CV: k -fold nearest-neighbour distance matching cross-validation for map accuracy estimation",
+   "venue": "Geoscientific model development",
+   "peer_reviewed": true,
+   "year": 2024,
+   "citations": 49,
+   "citations_per_year": 16.3,
+   "role": "block size by distance matching, kNNDM (P2)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W4401399092"
+  },
+  {
+   "key": "mila_2022",
+   "title": "Nearest neighbour distance matching Leave\u2010One\u2010Out Cross\u2010Validation for map validation",
+   "venue": "Methods in Ecology and Evolution",
+   "peer_reviewed": true,
+   "year": 2022,
+   "citations": 111,
+   "citations_per_year": 22.2,
+   "role": "distance-matched error, NNDM (P2)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W4220932724"
+  },
+  {
+   "key": "pegnn_2021",
+   "title": "Positional Encoder Graph Neural Networks for Geographic Data",
+   "venue": "arXiv 2111.10144",
+   "peer_reviewed": false,
+   "year": 2021,
+   "citations": 6,
+   "citations_per_year": 1.0,
+   "role": "cited alternative, not tested (P2)",
+   "used_in": [
+    "ADR-004"
+   ],
+   "openalex_id": "https://openalex.org/W3215817997"
   }
  ]
 }

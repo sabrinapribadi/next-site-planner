@@ -49,3 +49,28 @@
   doi: 10.1016/j.jue.2020.103312
   used_in: [ADR-003]
   role: Degree of Urbanisation applied globally (morphology, E2)
+- key: hengl_2018
+  doi: 10.7717/peerj.5518
+  used_in: [ADR-004]
+  role: spatial features in tree models (P2)
+- key: sekulic_2020
+  doi: 10.3390/rs12101687
+  used_in: [ADR-004]
+  role: nearest-observation features (P2)
+- key: ke_2017
+  title: "LightGBM: A Highly Efficient Gradient Boosting Decision Tree"
+  used_in: [ADR-004]
+  role: gradient boosting model (P2)
+- key: linnenbrink_2024
+  doi: 10.5194/gmd-17-5897-2024
+  used_in: [ADR-004]
+  role: block size by distance matching, kNNDM (P2)
+- key: mila_2022
+  doi: 10.1111/2041-210X.13851
+  used_in: [ADR-004]
+  role: distance-matched error, NNDM (P2)
+- key: pegnn_2021
+  arxiv: "2111.10144"
+  title: "Positional Encoder Graph Neural Networks for Geographic Data"
+  used_in: [ADR-004]
+  role: cited alternative, not tested (P2)
