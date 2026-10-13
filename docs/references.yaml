@@ -30,11 +30,11 @@
   role: area of applicability (P2)
 - key: callaway_santanna_2021
   doi: 10.1016/j.jeconom.2020.12.001
-  used_in: [ADR-002]
+  used_in: [ADR-002, ADR-007]
   role: staggered difference-in-differences (P3)
 - key: borusyak_2024
   doi: 10.1093/restud/rdae007
-  used_in: [ADR-002]
+  used_in: [ADR-002, ADR-007]
   role: imputation event-study estimator, head-to-head arm (P3)
 - key: stevens_2015
   doi: 10.1371/journal.pone.0107042
@@ -96,3 +96,19 @@
   doi: 10.1007/BF00116466
   used_in: [ADR-005]
   role: cited alternative, spatial hierarchical Bayes (BYM)
+- key: goodman_bacon_2021
+  doi: 10.1016/j.jeconom.2021.03.014
+  used_in: [ADR-007]
+  role: why two-way fixed effects is biased with staggered timing (P3)
+- key: sun_abraham_2021
+  doi: 10.1016/j.jeconom.2020.09.006
+  used_in: [ADR-007]
+  role: cited alternative, interaction-weighted event study (P3)
+- key: dechaisemartin_2020
+  doi: 10.1257/aer.20181169
+  used_in: [ADR-007]
+  role: cited alternative, heterogeneity-robust DiD (P3)
+- key: arkhangelsky_2021
+  doi: 10.1257/aer.20190159
+  used_in: [ADR-007]
+  role: cited alternative, synthetic DiD (P3)

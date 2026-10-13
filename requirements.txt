@@ -12,3 +12,4 @@ scipy>=1.14
 pytest>=8
 lightgbm>=4.5
 scikit-learn>=1.5
+pyfixest>=0.30
