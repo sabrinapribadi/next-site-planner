@@ -41,7 +41,10 @@ QUARTERS = [(y, q) for y in range(2023, 2027) for q in range(1, 5) if (y, q) <= 
 def _duck():
     import duckdb
     c = duckdb.connect()
-    c.sql("INSTALL httpfs; LOAD httpfs; INSTALL spatial; LOAD spatial; SET s3_region='us-west-2'; SET threads=6;")
+    c.sql("INSTALL httpfs; LOAD httpfs; INSTALL spatial; LOAD spatial; SET s3_region='us-west-2';")
+    # 8 GB machine: cap memory and spill to disk, or macOS kills the process without an error (seen 2026-10-13)
+    tmp = DATA / "tmp_duckdb"; tmp.mkdir(parents=True, exist_ok=True)
+    c.sql(f"SET threads=3; SET memory_limit='2.5GB'; SET preserve_insertion_order=false; SET temp_directory='{tmp}';")
     return c
 
 
@@ -68,11 +71,13 @@ def ookla() -> None:
             if out.exists():
                 continue
             t0 = time.time(); m = (q - 1) * 3 + 1
+            tmp = out.with_suffix(f".tmp{os.getpid()}.parquet")
             src = f"s3://ookla-open-data/parquet/performance/type={typ}/year={y}/quarter={q}/{y}-{m:02d}-01_performance_{typ}_tiles.parquet"
             c.sql(f"""COPY (SELECT cb.iso3, t.quadkey, t.tile_x, t.tile_y, t.avg_d_kbps, t.avg_u_kbps, t.avg_lat_ms, t.tests, t.devices,
                                {y} AS year, {q} AS quarter, '{typ}' AS type
                         FROM read_parquet('{src}') t JOIN cb ON t.tile_x BETWEEN cb.x0 AND cb.x1 AND t.tile_y BETWEEN cb.y0 AND cb.y1
-                        WHERE ST_Contains(cb.geom, ST_Point(t.tile_x, t.tile_y))) TO '{out}' (FORMAT parquet)""")
+                        WHERE ST_Contains(cb.geom, ST_Point(t.tile_x, t.tile_y))) TO '{tmp}' (FORMAT parquet)""")
+            os.replace(tmp, out)  # atomic: a parallel run never sees a half-written file
             n = c.sql(f"SELECT count(*) FROM '{out}'").fetchone()[0]
             print(f"ookla {typ} {y}Q{q}: {n:,} tiles in {time.time() - t0:.0f}s", flush=True)
 
@@ -112,7 +117,8 @@ def population(release: str = "20231101") -> None:
     c.sql(f"CREATE TABLE k AS SELECT h3, population, ST_Point(h3_cell_to_lng(h3), h3_cell_to_lat(h3)) AS pt FROM (SELECT h3, population FROM ST_Read('{gpkg}'))")
     c.sql(f"""COPY (SELECT cb.iso3, k.h3, k.population, ST_X(k.pt) AS lon, ST_Y(k.pt) AS lat FROM k JOIN cb
                 ON ST_X(k.pt) BETWEEN cb.x0 AND cb.x1 AND ST_Y(k.pt) BETWEEN cb.y0 AND cb.y1
-                WHERE ST_Contains(cb.geom, k.pt)) TO '{out}' (FORMAT parquet)""")
+                WHERE ST_Contains(cb.geom, k.pt)) TO '{out}.tmp' (FORMAT parquet)""")
+    os.replace(f"{out}.tmp", out)
     print("population:", c.sql(f"SELECT iso3, count(*) hexes, round(sum(population)/1e6, 1) AS million FROM '{out}' GROUP BY 1 ORDER BY 3 DESC").fetchall())
 
 
@@ -124,12 +130,14 @@ def overture(release: str = "2026-09-23.1") -> None:
         if out.exists() or (k == "IDN" and (d / f"idn_places_{release}.parquet").exists()):
             continue
         b = c.sql(f"SELECT x0, x1, y0, y1 FROM cb WHERE iso3 = '{k}'").fetchone()
+        tmp = out.with_suffix(f".tmp{os.getpid()}.parquet")
         t0 = time.time()
         c.sql(f"""COPY (SELECT id, names."primary" AS name, basic_category, taxonomy."primary" AS category, confidence, operating_status,
                          addresses[1].region AS region, addresses[1].locality AS locality, ST_X(geometry) AS lon, ST_Y(geometry) AS lat
                   FROM read_parquet('s3://overturemaps-us-west-2/release/{release}/theme=places/type=place/*.parquet', hive_partitioning=1)
                   WHERE bbox.xmin BETWEEN {b[0]} AND {b[1]} AND bbox.ymin BETWEEN {b[2]} AND {b[3]} AND addresses[1].country = '{iso2}')
-                  TO '{out}' (FORMAT parquet)""")
+                  TO '{tmp}' (FORMAT parquet)""")
+        os.replace(tmp, out)  # atomic: an interrupted run never leaves a file that looks finished
         print(f"overture {k}: {c.sql(f'SELECT count(*) FROM {chr(39)}{out}{chr(39)}').fetchone()[0]:,} places in {time.time() - t0:.0f}s", flush=True)
 
 
