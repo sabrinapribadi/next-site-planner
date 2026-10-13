@@ -74,6 +74,15 @@ Re-run resolution-6 block CV for the best kriging and LightGBM. Then report:
 - **Uncertainty:** taken against the true typical speed. σ per (country, ring-distance class) = √(max(CV MSE − mean v_h, 0.01)), from kriging's resolution-6 CV.
 - **Outputs:** P(typical speed below 10 / 25 Mbps).
 
+### 6. Check added before it ran (2026-10-13, 22:45): does shrinkage remove noise or signal?
+
+Shrink 2026 Q2 hexagon speeds the same way, then predict the independently measured 2026 Q3 speed of the same hexagons (the Efron–Morris test).
+
+- **Pass:** the shrunk Q2 value has lower error than the raw Q2 value against Q3.
+- **Fail:** shrinkage removed signal, and the noise-corrected P1 shares are not published as an estimate.
+
+Q3's own noise is independent of Q2's, so it adds the same amount to both errors and cannot favour either. Script: `scripts/noise_validation.py`.
+
 ## SOTA comparison
 
 | Family | Method | Tested | Cited, not tested (why) |
