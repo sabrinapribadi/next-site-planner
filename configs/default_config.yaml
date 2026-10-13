@@ -32,7 +32,7 @@ morphology:                          # Degree of Urbanisation thresholds (ADR-00
 
 gap_typing:                          # ADR-003, E1
   cell_radios: [LTE, NR]
-  cell_search_ring: 1                # ring-1 ≈ 1.2 km; ring-0 as sensitivity
+  cell_search_ring: 1                # ring-1 ≈ 1.3 km; ring-0 as sensitivity
 
 service_isd_m:                       # 3GPP TR 38.901 Tables 7.2-1 / 7.2-3 (ADR-003, E3)
   urban_centre: 500                  # UMa

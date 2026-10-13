@@ -50,7 +50,7 @@ Applied to populated hexagons only.
 
 | Gap type | Rule | Typical fix |
 |---|---|---|
-| **Coverage gap** | Measured speed below the bar, and **no LTE or 5G cell** (OpenCelliD) within ring-1 (about 1.2 km) | New macro site |
+| **Coverage gap** | Measured speed below the bar, and **no LTE or 5G cell** (OpenCelliD) within ring-1 (about 1.3 km) | New macro site |
 | **Capacity gap** | Measured speed below the bar, with LTE or 5G cells within ring-1 | Co-location, sector or carrier add, or a small cell |
 | **Unmeasured** | No speed tests in the latest quarter | P2 predicts speed with an interval; typed after P2 |
 | No gap | Measured speed at or above the bar | — |
