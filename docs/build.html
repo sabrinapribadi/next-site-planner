@@ -283,7 +283,7 @@ const PHASES = [
   scqa: ["349M people (39%) live where nobody ran a speed test; P1 could not count them.",
          "Most tested hexagons rest on 1–2 tests, and two tests at the same place often differ 3–5×.",
          "Can a model predict typical speed where nobody tested, and beat standard kriging by 10%?",
-         "No: machine learning beat kriging by 7% (gate 10%), so kriging is used. Removing test noise showed ≈ 68M untested people likely below 25 Mbps, most in Indonesia and the Philippines."],
+         "Not by enough: machine learning was only 7% more accurate, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. Removing test noise showed ≈ 68M untested people likely below 25 Mbps, most in Indonesia and the Philippines."],
   steps: [
     ["Decision", "Design before training", "ADR-004 pushed first: kriging baseline, LightGBM, features, gate.", "A gate set after results proves nothing.", "docs/adr/ADR-004-speed-model-for-untested-areas.md"],
     ["Evaluation", "Test blocks sized to reality", "Measured how far untested people live from a test; ~36 km² blocks matched best (kNNDM idea).", "Random splits flatter; huge blocks punish.", "docs/adr/ADR-004-speed-model-for-untested-areas.md"],

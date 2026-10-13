@@ -234,7 +234,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
       <tr><td>Uncertainty</td><td>Resample speed tiles (pre-registered)</td><td>Resample ~250 km² blocks</td><td>Germany: tile interval 5.57–5.92% missed its own 5.21%</td></tr>
       <tr><td>Slow clusters</td><td>Normal-approximation p-values</td><td>Exact p-values</td><td>False clusters on shuffled data: up to 318 → 0</td></tr>
       <tr><td>Gap types</td><td>Type every slow hexagon</td><td>Type only where cell data is complete</td><td>Cell records near only 2% of fast rural Indonesian hexagons</td></tr>
-      <tr><td>Speed where nobody tested</td><td>LightGBM (machine learning)</td><td>Kriging (standard spatial averaging)</td><td>LightGBM only 7% more accurate; the rule set beforehand needed 10%</td></tr>
+      <tr><td>Speed where nobody tested</td><td>LightGBM (machine learning)</td><td>Kriging (standard spatial averaging)</td><td>LightGBM only 7% more accurate — below the 10% set in advance to justify its 16 extra inputs, so the simpler kriging is used</td></tr>
       <tr><td>Test noise</td><td>Take each hexagon's few tests at face value</td><td>Blend with the neighbourhood by how many tests it has</td><td>Blended speeds 28–44% closer to the next quarter's tests</td></tr>
     </tbody></table></div>
   <p class="muted small">Every change after a gate was set is logged as a deviation, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
