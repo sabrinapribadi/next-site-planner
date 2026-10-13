@@ -12,6 +12,9 @@ Outputs: data/outputs/p1_experience_gap.json (country results) and GEO_DATA_DIR/
 - 95% intervals: Poisson bootstrap over speed tiles (each tile's weight ~ Poisson(1)), hexagon speeds recomputed.
 - Hotspots: Getis–Ord Gi* on log speed with H3 ring-1 neighbours (self included); Benjamini–Hochberg FDR 5%
   within each country. Check: false hotspots on spatially shuffled speeds, with vs without FDR.
+- Industry view (ADR-003): morphology (Degree of Urbanisation on H3), gap type at each headline bar (coverage /
+  capacity / unmeasured / none, from LTE/5G cells within ring-1), shares by morphology, and the share of people
+  with a 5G (NR) cell within ring-1 (a lower bound: OpenCelliD under-records cells).
 """
 
 from __future__ import annotations
@@ -31,6 +34,7 @@ from scipy.stats import norm
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.hexgrid import connect  # noqa: E402
+from src.morphology import cells_within_ring, degree_of_urbanisation, gap_type  # noqa: E402
 
 CFG = yaml.safe_load((ROOT / "configs" / "default_config.yaml").read_text())
 DATA = Path(os.environ.get("GEO_DATA_DIR", "~/data/geo")).expanduser()
@@ -92,6 +96,9 @@ def main() -> None:
     E = CFG["experience"]; bars = sorted(E["thresholds_mbps"] + E["sensitivity_mbps"])
     hexes = pd.read_parquet(DER / "hex_latest.parquet")
     hexes = hexes[hexes["population"].notna()]
+    cellhex = hexes.groupby("h3", as_index=False)[["cells_lte", "cells_nr"]].sum()
+    cellhex["lte_nr"] = cellhex["cells_lte"] + cellhex["cells_nr"]
+    ring = CFG["gap_typing"]["cell_search_ring"]
     iso = list(CFG["countries"])
 
     # pooled, people-weighted density deciles (hexagons are near equal-area, so population = density)
@@ -110,6 +117,23 @@ def main() -> None:
     for k in iso:
         h = hexes[hexes["iso3"] == k].copy()
         r = shares(h, bars)
+
+        # industry view (ADR-003): morphology, gap type, 5G presence — populated hexagons only
+        hp = h[h["population"] > 0].copy()
+        hp["morphology"] = degree_of_urbanisation(hp["h3"], hp["population"], CFG["morphology"])
+        cells = cellhex[cellhex["lte_nr"] > 0]
+        hp["cells_ring"] = cells_within_ring(hp["h3"], cells["h3"], cells["lte_nr"], k=ring)
+        nr = cellhex[cellhex["cells_nr"] > 0]
+        hp["nr_ring"] = cells_within_ring(hp["h3"], nr["h3"], nr["cells_nr"], k=ring)
+        for b in E["thresholds_mbps"]:
+            hp[f"gap_{b:g}"] = gap_type(hp["mobile_down_mbps"], hp["cells_ring"].to_numpy(), b)
+        P = hp["population"].sum()
+        r["morphology"] = {m: {"population_share": float(g["population"].sum() / P), **shares(g, E["thresholds_mbps"])}
+                           for m, g in hp.groupby("morphology")}
+        r["gap_types"] = {f"{b:g}": {t: float(v / P) for t, v in hp.groupby(f"gap_{b:g}")["population"].sum().items()}
+                          for b in E["thresholds_mbps"]}
+        r["population_with_5g_cell_within_ring"] = float(hp.loc[hp["nr_ring"] > 0, "population"].sum() / P)
+        r["populated_hexagons_untyped"] = int(hp["morphology"].isna().sum() + hp[[f"gap_{b:g}" for b in E["thresholds_mbps"]]].isna().any(axis=1).sum())
         for b in E["thresholds_mbps"]:
             r[f"below_{b:g}_density_adjusted"] = density_adjusted(h, edges, weights, b)
         # Poisson bootstrap over tiles
@@ -143,14 +167,18 @@ def main() -> None:
                          "false_hotspots_on_shuffled_unadjusted": int(((ps < 0.05) & (zs < 0)).sum()),
                          "false_hotspots_on_shuffled_fdr": int((bh(ps) & (zs < 0)).sum())}
         mh["gi_z"] = z; mh["slow_hotspot"] = slow_fdr
-        hexlayer.append(mh[["iso3", "h3", "population", "mobile_down_mbps", "mobile_tests", "gi_z", "slow_hotspot"]])
+        lay = hp[["iso3", "h3", "population", "mobile_down_mbps", "mobile_tests", "morphology", "cells_ring", "nr_ring"]
+                 + [f"gap_{b:g}" for b in E["thresholds_mbps"]]].merge(mh[["h3", "gi_z", "slow_hotspot"]], on="h3", how="left")
+        hexlayer.append(lay)
         results[k] = r
-        print(k, {kk: (round(v, 4) if isinstance(v, float) else v) for kk, v in r.items() if kk != "hotspots"}, r["hotspots"], flush=True)
+        print(k, {kk: (round(v, 4) if isinstance(v, float) else v) for kk, v in r.items() if kk not in ("hotspots", "morphology", "gap_types")},
+              r["hotspots"], r["gap_types"], flush=True)
 
     pd.concat(hexlayer).to_parquet(DER / "hex_p1.parquet", index=False)
     report = {"quarter": f"{y}Q{q}", "bars_mbps": bars, "density_deciles_edges_people_per_hex": [float(e) for e in edges[1:-1]],
               "countries": results, "seconds": round(time.time() - t0),
-              "gate_passed": all("below_10_ci95" in r and r["hotspots"]["slow_hotspot_hexagons_fdr"] >= 0 for r in results.values())}
+              "gate_passed": all("below_10_ci95" in r and r["hotspots"]["slow_hotspot_hexagons_fdr"] >= 0
+                                 and r["populated_hexagons_untyped"] == 0 for r in results.values())}
     (ROOT / CFG["paths"]["outputs_dir"] / "p1_experience_gap.json").write_text(json.dumps(report, indent=2))
     print("done in", report["seconds"], "s")
 

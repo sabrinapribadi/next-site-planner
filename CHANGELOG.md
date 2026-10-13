@@ -2,6 +2,20 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.2.1] — 2026-10-13 — ADR-003 in code: morphology, gap types, data contracts, manifest, CI
+**Files:** src/morphology.py, src/contracts.py, tests/test_morphology_contracts.py, scripts/build_hex_table.py, scripts/experience_gap.py, configs/default_config.yaml, requirements.txt, .github/workflows/ci.yml
+- **Situation:** ADR-003 fixed the industry view on paper, but P0 and P1 could not yet produce it, and the repo had no CI.
+- **Task:** Implement the ADR-003 rules exactly as written, with tests, before any result exists.
+- **Action:**
+  - Degree of Urbanisation on H3: density per km², ring-1 contiguity, connected components, 50k / 5k cluster minimums.
+  - Gap types at 10 and 25 Mbps from LTE/5G cells within ring-1.
+  - Share of people with a 5G cell nearby.
+  - Data contracts (unique keys, value ranges, all countries, all quarters) and a SHA-256 snapshot manifest in P0.
+  - P1 gate now also requires every populated hexagon to be typed.
+  - GitHub Actions runs the tests.
+- **Result:** 9 unit tests pass locally (3 grid, 6 new). No analysis run yet.
+- **Talking point:** "The industry rules went into tested code before any result existed, so they could not be tuned to the answer."
+
 ## [0.2.0] — 2026-10-13 — Industry alignment before analysis (ADR-003); data acquisition for seven countries
 **Files:** docs/adr/ADR-003-industry-alignment.md, docs/adr/ADR-002-validation-and-gates.md, docs/adr/README.md, docs/PRD.md, docs/references.yaml, configs/default_config.yaml, scripts/acquire_public_data.py, docs/build.html, tests/browser/build_test.js, Makefile, .gitignore
 - **Situation:** The design answered an analyst's question but not a planner's. It had no coverage-vs-capacity split, no urban/rural morphology, "K sites" with equal costs, no co-location option and no planner-ready output. Separately, the 11 GB Overture places release was too slow to scan for every country on an 8 GB machine.

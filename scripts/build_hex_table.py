@@ -7,7 +7,8 @@ Writes to GEO_DATA_DIR/derived:
   hex_latest.parquet        one row per (country, hexagon): population, places, cells, latest mobile/fixed speed
 and data/outputs/p0_foundation.json with the gate checks.
 
-Gate (ADR-002): >= 99% of each country's population and speed tests assigned to the grid in the right country.
+Gate (ADR-002, amended by ADR-003): >= 99% of each country's population and speed tests assigned to the grid in
+the right country; data contracts pass; snapshot manifest written (data/outputs/manifest.json, SHA-256 per input).
 Assignment uses simplified borders (fast); the check recounts against full-detail borders. Country totals
 are also compared with the World Bank's 2023 population (a sanity check, not a gate).
 """
@@ -25,6 +26,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from src.contracts import check_hex_latest, check_panel_quarters, manifest  # noqa: E402
 from src.hexgrid import connect, counts_by_hex, speed_by_hex  # noqa: E402
 
 CFG = yaml.safe_load((ROOT / "configs" / "default_config.yaml").read_text())
@@ -94,11 +96,25 @@ def main() -> None:
                    "population_kontur": round(pop_kept.get(k, 0)), "population_world_bank_2023": wb,
                    "kontur_vs_world_bank": round(pop_kept.get(k, 0) / wb, 3) if wb else None,
                    "hexagons": c.sql(f"SELECT count(*) FROM '{OUT}/hex_latest.parquet' WHERE iso3 = '{k}'").fetchone()[0]}
+    # data contracts (ADR-003, E9)
+    hl = c.sql(f"SELECT iso3, h3, population, places, cells, mobile_down_mbps, mobile_tests FROM '{OUT}/hex_latest.parquet'").df()
+    E = CFG["experience"]
+    panel_q = {tuple(r) for r in c.sql(f"SELECT DISTINCT year, quarter FROM '{OUT}/hex_speed_panel.parquet' WHERE type = 'mobile'").fetchall()}
+    broken = check_hex_latest(hl, iso) + check_panel_quarters(panel_q, tuple(E["first_quarter"]), tuple(E["latest_quarter"]))
+    del hl
+
+    # snapshot manifest: every input file, with SHA-256 and rows
+    inputs = (sorted((DATA / "ookla7").glob("*/*.parquet")) + [DATA / "population" / "kontur_7_20231101.parquet",
+              DATA / "opencellid" / "cells_7.parquet", ne] + [DATA / "overture" / f"{k.lower()}_places_2026-09-23.1.parquet" for k in iso])
+    nrows = {str(f.relative_to(DATA)): c.sql(f"SELECT count(*) FROM '{f}'").fetchone()[0] for f in inputs if f.suffix == ".parquet"}
+    out_dir = ROOT / CFG["paths"]["outputs_dir"]; out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "manifest.json").write_text(json.dumps(manifest(DATA, inputs, nrows), indent=1))
+
     g = CFG["gates"]
-    gate = all(r["population_assigned"] >= g["p0_min_population_assigned"] and r["tests_assigned"] >= g["p0_min_tests_assigned"] for r in rows.values())
-    report = {"quarter": f"{y}Q{q}", "countries": rows, "gate_passed": gate, "seconds": round(time.time() - t0),
+    gate = not broken and all(r["population_assigned"] >= g["p0_min_population_assigned"] and r["tests_assigned"] >= g["p0_min_tests_assigned"] for r in rows.values())
+    report = {"quarter": f"{y}Q{q}", "countries": rows, "contracts_broken": broken, "inputs_in_manifest": len(inputs),
+              "gate_passed": gate, "seconds": round(time.time() - t0),
               "panel_rows": c.sql(f"SELECT count(*) FROM '{OUT}/hex_speed_panel.parquet'").fetchone()[0]}
-    (ROOT / CFG["paths"]["outputs_dir"]).mkdir(parents=True, exist_ok=True)
     (ROOT / CFG["paths"]["outputs_dir"] / "p0_foundation.json").write_text(json.dumps(report, indent=2))
     print(json.dumps(report, indent=2))
 
