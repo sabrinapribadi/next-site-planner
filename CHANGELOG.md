@@ -13,7 +13,7 @@ Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can b
   - Data contracts (unique keys, value ranges, all countries, all quarters) and a SHA-256 snapshot manifest in P0.
   - P1 gate now also requires every populated hexagon to be typed.
   - GitHub Actions runs the tests.
-- **Result:** 9 unit tests pass locally (3 grid, 6 new). No analysis run yet.
+- **Result:** 9 unit tests pass locally and in CI (3 grid, 6 new; CI first failed because plain `pytest` does not put the repo root on the import path, so it now runs `python -m pytest`). No analysis run yet.
 - **Talking point:** "The industry rules went into tested code before any result existed, so they could not be tuned to the answer."
 
 ## [0.2.0] — 2026-10-13 — Industry alignment before analysis (ADR-003); data acquisition for seven countries
