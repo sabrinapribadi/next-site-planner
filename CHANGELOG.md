@@ -2,6 +2,25 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.5.2] — 2026-10-14 — ADR-006 pre-registered and frozen; explanations collapsible
+**Files:** docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md, docs/adr/README.md, scripts/freeze_p2v2.py, data/outputs/p2v2_frozen.json, docs/index.html, docs/build.html, README.md
+- **Situation:**
+  - LightGBM failed P2's gate (7% better; 10% needed), yet was 18% better on well-tested hexagons, a diagnostic chosen after the fact.
+  - Readers were confused by "beat kriging by 7%, so kriging is used".
+  - The always-open notes lengthened the page.
+- **Task:** Settle the model choice on data that does not exist yet; explain the decision plainly; keep the page short.
+- **Action:**
+  - **ADR-006:** pushed before 2026 Q4 exists.
+    - Both models' predictions for all 5,762,813 untested hexagons are frozen and fingerprinted (SHA-256 ec23f069…).
+    - They are scored on hexagons first tested in Q4 with ≥ 10 tests, against the same 0.90 gate.
+  - **Clearer wording:** "only 7% more accurate, below the 10% set in advance to justify its extra inputs".
+  - **Collapsible notes:** "? How to read this" items next to each number.
+  - **New caveat:** the models disagree on untested places.
+- **Result:**
+  - **At freeze,** LightGBM predicts untested places 30–45% slower than kriging (e.g. Philippines median 12.9 vs 22.3 Mbps). The deployed ≈ 68M untested people below 25 Mbps may be too low; the Q4 test will decide.
+  - **Tests:** browser checks pass 7 of 7 in three modes.
+- **Talking point:** "When my diagnostic disagreed with my pre-set gate, I didn't switch models — I froze both predictions with a fingerprint and let next quarter's data decide."
+
 ## [0.5.1] — 2026-10-14 — Audit: every document aligned; results page de-duplicated for the hiring team
 **Files:** docs/PRD.md, docs/adr/ADR-001…005, docs/adr/README.md, docs/index.html, docs/build.html, README.md, Makefile, scripts/evidence.py, scripts/speed_model.py, data/outputs/references_evidence.json
 - **Situation:** After P2 the documents had drifted:

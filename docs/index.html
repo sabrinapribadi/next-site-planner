@@ -280,7 +280,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     <div class="prose"><span class="eyebrow">Caveats</span>
       <ul class="caveats">
         <li><b>Tests are not a random sample:</b> people test when it is slow or new; shares count people, not tests.</li>
-        <li><b>Untested speeds are predictions:</b> use them as chances, and trust district and country totals more than one hexagon (<a href="#d-p2">accuracy</a>).</li>
+        <li><b>Untested speeds are predictions, and may be too optimistic:</b> the deployed method (kriging) borrows from nearby tested places; a machine-learning model predicts untested places 30–45% slower. A test on the next quarter's data, fixed in advance, will decide (<a href="#d-p2">accuracy</a>).</li>
         <li><b>Not a licence check:</b> regulators test obligations with their own measurements, not crowdsourced averages.</li>
         <li><b>Gap types only where cell data allows:</b> coverage vs capacity is known mainly for city areas in Germany, France, the US and the UAE (<a href="#d-findings">details</a>).</li>
       </ul></div>
