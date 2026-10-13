@@ -90,18 +90,24 @@ def fit_variogram(p: np.ndarray, y: np.ndarray, max_km: float = 30.0, n_sample: 
 
 
 def krige(p_train: np.ndarray, y_train: np.ndarray, p_query: np.ndarray, vario: tuple[str, float, float, float],
-          k: int = 32, batch: int = 20000) -> tuple[np.ndarray, np.ndarray]:
-    """Local ordinary kriging: prediction and kriging variance for each query point."""
+          k: int = 32, batch: int | None = None, leave_one_out: bool = False) -> tuple[np.ndarray, np.ndarray]:
+    """Local ordinary kriging: prediction and kriging variance for each query point.
+    leave_one_out: the query points are the training points; each is predicted from its k nearest *other* points."""
     name, n, s, r = vario
     fn = MODELS[name]
     gam = lambda h: np.where(h > 0, fn(h, n, s, r), 0.0)  # γ(0) = 0
-    k = min(k, len(y_train))
+    k = min(k, len(y_train) - (1 if leave_one_out else 0))
+    batch = batch or max(500, int(2e8 / (k * k * 3 * 8)))   # keep the (batch, k, k, 3) distance array near 200 MB
     tree = cKDTree(p_train)
     pred, var = np.empty(len(p_query)), np.empty(len(p_query))
     for a in range(0, len(p_query), batch):
         q = p_query[a:a + batch]
-        dq, iq = tree.query(q, k=k)
-        if k == 1:
+        if leave_one_out:
+            dq, iq = tree.query(q, k=k + 1)
+            dq, iq = dq[:, 1:], iq[:, 1:]          # drop the point itself (distance 0)
+        else:
+            dq, iq = tree.query(q, k=k)
+        if k == 1 and dq.ndim == 1:
             dq, iq = dq[:, None], iq[:, None]
         pts = p_train[iq]                                                   # (B, k, 3)
         dd = np.linalg.norm(pts[:, :, None, :] - pts[:, None, :, :], axis=-1)
