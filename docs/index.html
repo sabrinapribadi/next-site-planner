@@ -1,0 +1,606 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Next Site Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Network-planning palette: warm map paper, signal teal for the analysis, a slow-speed ramp from sand to brick. */
+:root {
+  --bg: #f6f5f1; --surface: #ffffff; --fg: #17212b; --muted: #5b6672; --line: #e2dfd6; --tint: #efede6;
+  --accent: #0d6b7d; --accent-soft: #dcedf0; --slow: #b5321f; --slow-soft: #f6e0db; --ok: #2d7d4f; --ok-soft: #dff0e5; --amber: #a86a12;
+  --r0: #e9e2cc; --r1: #f0c374; --r2: #e38a43; --r3: #c9512e; --r4: #8a2215; --untested: #c3cbd3; --map-bg: #fbfaf7;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #10161b; --surface: #161e25; --fg: #e7ecef; --muted: #9aa6b1; --line: #29333c; --tint: #1a232b;
+  --accent: #5cc3d4; --accent-soft: #16343a; --slow: #f0785f; --slow-soft: #3d201b; --ok: #5cc28a; --ok-soft: #173326; --amber: #e0a542;
+  --r0: #3b3a30; --r1: #7a6233; --r2: #b1692f; --r3: #e0663f; --r4: #ff9a7d; --untested: #34404b; --map-bg: #131b21;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #10161b; --surface: #161e25; --fg: #e7ecef; --muted: #9aa6b1; --line: #29333c; --tint: #1a232b;
+  --accent: #5cc3d4; --accent-soft: #16343a; --slow: #f0785f; --slow-soft: #3d201b; --ok: #5cc28a; --ok-soft: #173326; --amber: #e0a542;
+  --r0: #3b3a30; --r1: #7a6233; --r2: #b1692f; --r3: #e0663f; --r4: #ff9a7d; --untested: #34404b; --map-bg: #131b21;
+  color-scheme: dark; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.6 var(--font-body); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: clamp(30px, 4.4vw, 44px); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 25px; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 18px; font-weight: 600; }
+p { margin: 0; }
+ul, ol { margin: 0; padding-left: 20px; }
+.prose { max-width: 70ch; display: grid; gap: 10px; }
+.eyebrow { font: 600 12px/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.small { font-size: 13px; }
+
+header.top { display: grid; gap: 14px; padding-block: 8px 26px; border-bottom: 1px solid var(--line); }
+header.top .lede { font-size: 18px; max-width: 64ch; }
+.status { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 13px; }
+.chip { font: 600 12px/1 var(--font-mono); padding: 6px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.chip.plan { background: var(--tint); color: var(--muted); }
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 13px var(--font-mono); }
+nav.toc a { text-decoration: none; color: var(--muted); }
+nav.toc a:hover { color: var(--accent); }
+nav.toc .n { color: var(--accent); margin-right: 6px; }
+
+section.block { display: grid; gap: 20px; padding-block: 42px 6px; }
+.glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; padding-block: 26px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.card b.big { font: 600 24px/1.15 var(--font-mono); font-variant-numeric: tabular-nums; }
+.card.result { border-color: var(--slow); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.fact { border-left: 3px solid var(--line); padding: 2px 0 2px 14px; display: grid; gap: 2px; min-width: 0; }
+.fact b { font: 600 23px/1.2 var(--font-mono); font-variant-numeric: tabular-nums; }
+.fact span { font-size: 13px; color: var(--muted); }
+.fact.slow { border-left-color: var(--slow); }
+.fact.accent { border-left-color: var(--accent); }
+
+.flow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.flow > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; min-width: 0; }
+.flow ol { display: grid; gap: 4px; }
+.flow .today { border-style: dashed; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 12px/1.3 var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: var(--tint); }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.pipeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: step; }
+.pipeline > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.pipeline b { font-size: 14px; }
+.pipeline b::before { counter-increment: step; content: counter(step) " · "; color: var(--accent); font-family: var(--font-mono); }
+.pipeline span { font-size: 13px; color: var(--muted); }
+
+/* controls */
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { font: 500 13px var(--font-mono); border: 0; background: transparent; color: var(--fg); padding: 7px 11px; cursor: pointer; border-right: 1px solid var(--line); }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.ctl-label { font: 600 12px var(--font-mono); color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* map */
+.mapgrid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+.mapwrap { position: relative; background: var(--map-bg); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; touch-action: manipulation; }
+.mapwrap canvas { display: block; width: 100%; cursor: crosshair; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12px; color: var(--muted); align-items: center; }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; border: 1px solid var(--line); }
+.legend i.untested { background: repeating-linear-gradient(45deg, var(--untested) 0 3px, transparent 3px 6px); }
+.toplist { list-style: none; padding: 0; display: grid; gap: 2px; counter-reset: rank; }
+.toplist li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.toplist li::before { counter-increment: rank; content: counter(rank); font: 600 12px var(--font-mono); color: var(--muted); }
+.toplist li:hover, .toplist li:focus-visible, .toplist li.on { background: var(--accent-soft); }
+.toplist .nm { overflow-wrap: anywhere; }
+.toplist .v { font: 600 12px var(--font-mono); color: var(--slow); white-space: nowrap; }
+
+/* charts */
+.chart { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 6px 4px; }
+svg.plot { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--font-body); }
+svg.plot text { fill: var(--fg); font-size: 12px; }
+svg.plot .ax { fill: var(--muted); font: 11px var(--font-mono); }
+svg.plot .grid { stroke: var(--line); }
+svg.plot .row:hover .band, svg.plot .row:focus .band { fill: var(--accent-soft); }
+svg.plot .row { outline: none; }
+.tip { position: absolute; z-index: 5; max-width: 300px; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-size: 13px; line-height: 1.45; box-shadow: 0 6px 22px rgba(0,0,0,0.14); pointer-events: none; }
+.tip b { display: block; font-weight: 600; margin-bottom: 2px; }
+.key { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); padding: 0 8px 6px; }
+.key i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.key i.sq { border-radius: 2px; }
+
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.points { display: grid; gap: 6px; }
+.caveats li { margin-bottom: 4px; }
+details.faq { border-bottom: 1px solid var(--line); padding-block: 8px; }
+details.faq summary { cursor: pointer; font-weight: 600; }
+details.faq p { margin-top: 6px; max-width: 75ch; }
+details.more { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+details.more > summary { cursor: pointer; padding: 14px 16px; list-style: none; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::after { content: "+"; font: 600 18px var(--font-mono); color: var(--accent); }
+details.more[open] > summary::after { content: "−"; }
+details.more > .body { padding: 4px 16px 18px; display: grid; gap: 18px; }
+details.more + details.more { margin-top: 12px; }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.sources li { margin-bottom: 3px; font-size: 13px; }
+
+@media (max-width: 860px) {
+  .mapgrid, .two, .flow { grid-template-columns: 1fr; }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .wrap { padding-inline: 16px; }
+  .pipeline { grid-template-columns: 1fr; }
+  h2 { font-size: 22px; }
+  th, td { padding: 8px 9px; }
+}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Portfolio · GIS + MLOps · public data only · seven countries</span>
+  <h1>Where would one more mobile site help the most people?</h1>
+  <p class="lede">Measured mobile speed, where people live and where cells are, on one equal-area grid for Indonesia, Malaysia, the Philippines, Germany, France, the US and the UAE.</p>
+  <div class="status"><span class="chip">Phases 0–1 of 7 done</span><span class="muted">Data foundation and experience gap are live. Speed model, new-site effect and site optimiser come next.</span></div>
+  <div class="status"><a href="build.html">Technical walkthrough →</a><a href="https://github.com/sabrinapribadi/next-site-planner">GitHub repository</a></div>
+  <nav class="toc" aria-label="Sections"><a href="#problem"><span class="n">1</span>Problem</a><a href="#data"><span class="n">2</span>Data</a><a href="#approach"><span class="n">3</span>Approach</a><a href="#solution"><span class="n">4</span>Solution</a><a href="#take"><span class="n">5</span>Our take</a></nav>
+</header>
+
+<div class="glance" id="glance">
+  <div class="card"><span class="eyebrow">Data</span><b class="big" id="g-data">899M people</b><span class="muted small">7 countries · 6.6M hexagons · 15 quarters of speed tests · 29.8M places · 1.6M cells</span></div>
+  <div class="card"><span class="eyebrow">Problem</span><b class="big">Rank sites, or count people?</b><span class="muted small">Site lists are ranked on weighted KPIs; countries are compared on national medians that mix cities with islands.</span></div>
+  <div class="card"><span class="eyebrow">Approach</span><b class="big">People below a bar</b><span class="muted small">Share of people on slow mobile, compared at equal population density, with spatial uncertainty.</span></div>
+  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">61.7M people</b><span class="muted small" id="g-result-sub">in tested areas get under 25 Mbps; 349M more live where nobody tested.</span></div>
+</div>
+
+<section class="block" id="problem">
+  <span class="eyebrow">1 · Problem</span>
+  <h2>Plans rank sites by scores. Nobody counts the people left on slow mobile.</h2>
+  <div class="flow">
+    <div class="today"><span class="eyebrow">Today</span>
+      <ol><li>Score candidate sites on many indicators (traffic, congestion, revenue).</li><li>Weight them in a meeting; build the top of the list.</li><li>Compare countries on one national median speed.</li><li>Rarely check whether new sites lifted nearby speeds.</li></ol></div>
+    <div><span class="eyebrow">This project</span>
+      <ol><li>Count people whose measured speed is below a bar.</li><li>Compare countries at the same population density.</li><li>Measure what real new sites did to nearby speeds (phase 3).</li><li>Choose a costed set of sites that lifts the most people (phase 4).</li></ol></div>
+  </div>
+  <ul class="points prose">
+    <li><b>Who needs it:</b> network planners, capital-budget reviewers, regulators and policy analysts.</li>
+    <li><b>What they need:</b> a site list with gap type, area type, cost and people helped, in their own planning tools.</li>
+  </ul>
+</section>
+
+<section class="block" id="data">
+  <span class="eyebrow">2 · Data</span>
+  <h2>Five public sources on one hexagon grid</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Source</th><th>What</th><th class="num">Size</th><th>Licence</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td>Ookla open speed tiles</td><td>Mobile and fixed, 2023 Q1 – 2026 Q3</td><td class="num">48.5M tile rows</td><td>CC BY-NC-SA 4.0</td><td>Measured download speed</td></tr>
+      <tr><td>Kontur population 2023</td><td>People per H3 hexagon</td><td class="num">6.4M hexagons</td><td>CC BY 4.0</td><td>Where people live</td></tr>
+      <tr><td>Overture Maps places</td><td>Shops, offices, services (2026-09)</td><td class="num">29.8M places</td><td>CDLA-Permissive 2.0</td><td>Daytime demand (phase 2 on)</td></tr>
+      <tr><td>OpenCelliD</td><td>Crowdsourced cell locations (2026-10-13)</td><td class="num">1.6M cells</td><td>CC BY-SA 4.0</td><td>Cells nearby, gap types</td></tr>
+      <tr><td>Natural Earth, geoBoundaries</td><td>Country borders, district names</td><td class="num">7 countries</td><td>Public domain, CC BY</td><td>Assignment, place names</td></tr>
+    </tbody></table></div>
+  <div class="two">
+    <div class="prose"><span class="eyebrow">The measure</span>
+      <ul class="points"><li><b>Grid:</b> H3 hexagons of about 0.74 km², the same size at the equator and in Germany.</li>
+        <li><b>Speed per hexagon:</b> test-weighted geometric mean of the tiles inside it.</li>
+        <li><b>Headline:</b> share of people in tested hexagons below 10 and 25 Mbps; untested people reported, never dropped.</li></ul></div>
+    <div class="prose"><span class="eyebrow">Test design</span>
+      <ul class="points"><li><b>Gates first:</b> every phase's pass mark was pushed to GitHub before any analysis (<a href="#appendix">appendix</a>).</li>
+        <li><b>Uncertainty:</b> spatial block bootstrap over ~250 km² blocks.</li>
+        <li><b>False alarms:</b> every hotspot test re-run on shuffled data.</li>
+        <li><b>Traceable:</b> 40 input files fingerprinted (SHA-256).</li></ul></div>
+  </div>
+</section>
+
+<section class="block" id="approach">
+  <span class="eyebrow">3 · Approach and method choice</span>
+  <h2>Five steps, each checked against a simpler or older option</h2>
+  <div class="pipeline">
+    <div><b>Grid</b><span>Speed tiles, people, places and cells onto one H3 grid; ≥ 99% kept per country.</span></div>
+    <div><b>People below bars</b><span>Share of tested people under 5, 10, 25, 50, 100 Mbps.</span></div>
+    <div><b>Fair comparison</b><span>Re-weight to the same density mix across countries.</span></div>
+    <div><b>Slow clusters</b><span>Getis–Ord Gi* with exact p-values and false-discovery control.</span></div>
+    <div><b>Gap types</b><span>Coverage vs capacity, only where cell data is complete enough.</span></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Choice</th><th>Tried</th><th>Chose</th><th>Deciding number</th></tr></thead>
+    <tbody>
+      <tr><td>Unit</td><td>Ookla's square tiles</td><td>H3 hexagons</td><td>Tiles are ~610 m wide at the equator, ~380 m in Germany</td></tr>
+      <tr><td>Comparison</td><td>Raw shares</td><td>Raw and density-adjusted</td><td id="t-adj">Philippines: 16.3% raw → 33.9% at equal density</td></tr>
+      <tr><td>Uncertainty</td><td>Resample speed tiles (pre-registered)</td><td>Resample ~250 km² blocks</td><td>Germany: tile interval 5.57–5.92% missed its own 5.21%</td></tr>
+      <tr><td>Slow clusters</td><td>Normal-approximation p-values</td><td>Exact p-values</td><td>False clusters on shuffled data: up to 318 → 0</td></tr>
+      <tr><td>Gap types</td><td>Type every slow hexagon</td><td>Type only where cell data is complete</td><td>Cell records near only 2% of fast rural Indonesian hexagons</td></tr>
+    </tbody></table></div>
+  <p class="muted small">Every change after a gate was set is logged as a deviation, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
+</section>
+
+<section class="block" id="solution">
+  <span class="eyebrow">4 · Solution</span>
+  <h2 id="sol-h">61.7M people in tested areas get under 25 Mbps — most of them outside cities</h2>
+  <div class="facts" id="facts"></div>
+
+  <div class="controls" role="group" aria-label="What-if controls">
+    <span class="ctl-label">Speed bar</span><div class="seg" id="bar-seg"></div>
+    <span class="ctl-label">Country</span><div class="seg" id="iso-seg"></div>
+  </div>
+
+  <div class="mapgrid">
+    <div style="display:grid; gap:8px; min-width:0">
+      <div class="mapwrap" id="mapwrap"><canvas id="map" aria-label="Map of people below the speed bar" role="img"></canvas><div class="tip" hidden></div></div>
+      <div class="legend" id="legend"></div>
+      <p class="muted small">Each hexagon ≈ 250 km². Colour = share of tested people below the bar. Rings mark slow clusters at 1 km scale. No basemap: the shape is where people live.</p>
+    </div>
+    <div style="display:grid; gap:8px; min-width:0">
+      <span class="eyebrow" id="top-h">Districts with the most people below the bar</span>
+      <ol class="toplist" id="toplist"></ol>
+      <p class="muted small">A starting list for planners, not yet a site plan: phases 2–4 add untested areas, measured site effects and costs.</p>
+    </div>
+  </div>
+
+  <div class="chart"><div class="key"><span><i style="background:var(--slow)"></i>Raw share, with 95% interval</span><span><i style="border:2px solid var(--accent);background:transparent"></i>At equal density</span><span class="mono">right: people below the bar</span></div>
+    <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
+
+  <div class="chart"><div class="key"><span><i style="background:var(--accent)"></i>Urban centre</span><span><i style="background:var(--amber)"></i>Town or suburb</span><span><i style="background:var(--slow)"></i>Rural</span><span class="mono">share of tested people below the bar</span></div>
+    <svg class="plot" id="c-morph" role="img" aria-label="Share below the bar by area type"></svg><div class="tip" hidden></div></div>
+
+  <div class="two">
+    <div class="prose"><span class="eyebrow">Caveats</span>
+      <ul class="caveats">
+        <li><b>Not everyone is tested:</b> <span id="cav-untested">349M people (39%)</span> live in hexagons with no test this quarter, mostly rural (<a href="#d-findings">details</a>).</li>
+        <li><b>Tests are not a random sample:</b> people test when it is slow or new. Shares count people, not tests.</li>
+        <li><b>Not a licence check:</b> regulators test obligations with their own measurements, not crowdsourced averages.</li>
+        <li><b>Cell data is uneven:</b> coverage vs capacity is typed only where it is complete enough.</li>
+        <li><b>Non-commercial:</b> maps derived from Ookla data are shared under CC BY-NC-SA 4.0.</li>
+      </ul></div>
+    <div><span class="eyebrow">FAQ</span>
+      <details class="faq"><summary>Is Germany really behind Indonesia?</summary><p>On the raw share below 25 Mbps they are close (14.6% vs 13.3%). Indonesia's tested people live mostly in cities. At equal density Indonesia is at 22.0% and Germany at 17.7%.</p></details>
+      <details class="faq"><summary>Why 10 and 25 Mbps?</summary><p>Both were fixed before the analysis. 5, 50 and 100 Mbps are shown as sensitivity; 100 Mbps matches Germany's 2019 licence obligation and the IMT-2020 user-experienced rate.</p></details>
+      <details class="faq"><summary>Where should the next site go?</summary><p>Not yet answered. The list shows where most people are below the bar today. Phase 2 predicts untested areas, phase 3 measures what new sites do, phase 4 chooses a costed set.</p></details>
+      <details class="faq"><summary>Coverage gap or capacity gap?</summary><p>Only typed where OpenCelliD records a cell near at least 80% of fast hexagons: city areas in Germany, France, the US and the UAE. Elsewhere it says "type unknown".</p></details>
+      <details class="faq"><summary>Why hexagons, not districts?</summary><p>Districts differ hugely in size and hide gaps inside them. Hexagons are equal-area; districts are used only for names and roll-ups.</p></details>
+      <details class="faq"><summary>How often can it refresh?</summary><p>Quarterly, after each Ookla release. Every refresh records a fingerprint of all 40 inputs.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="take">
+  <span class="eyebrow">5 · Our take</span>
+  <h2>The gap is rural, local, and partly unseen</h2>
+  <ul class="points prose" id="take-list">
+    <li><b>Rural first:</b> in most countries rural people are 3 to 6 times more likely than city-centre people to be below 25 Mbps (Indonesia 36% vs 6%; Philippines 49% vs 8%; Germany 29% vs 7%).</li>
+    <li><b>Raw rankings flatter dense countries:</b> at equal density the Philippines (34%) and Indonesia (22%) fall further behind; Germany (18%) sits closer to Indonesia than to France (12%).</li>
+    <li><b>Local, not regional:</b> after exact tests, slow clusters remain almost only in Indonesia (24) and the Philippines (14); none in Germany, France or the US. Plans must target places, not regions.</li>
+    <li><b>The biggest unknown is who isn't tested:</b> 349M people, mostly where slow shares are highest. That is phase 2.</li>
+    <li><b>What would change our view:</b> untested areas predicted fast (phase 2), or new sites found not to lift nearby speeds (phase 3).</li>
+  </ul>
+</section>
+
+<section class="block" id="deep">
+  <span class="eyebrow">For readers who want the details</span>
+  <details class="more" id="d-findings"><summary><span class="eyebrow">More findings · who is tested, gap types, slow clusters, cell data</span></summary><div class="body">
+    <div class="chart"><div class="key"><span><i class="sq" style="background:var(--ok)"></i>Tested, at or above the bar</span><span><i class="sq" style="background:var(--slow)"></i>Tested, below</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span></div>
+      <svg class="plot" id="c-tested" role="img" aria-label="People tested and untested by country"></svg><div class="tip" hidden></div></div>
+    <div class="chart"><div class="key"><span><i class="sq" style="background:var(--ok)"></i>No gap</span><span><i class="sq" style="background:var(--accent)"></i>Capacity gap</span><span><i class="sq" style="background:var(--amber)"></i>Coverage gap</span><span><i class="sq" style="background:var(--slow)"></i>Slow, type unknown</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span><span class="mono">at 25 Mbps</span></div>
+      <svg class="plot" id="c-gap" role="img" aria-label="Gap types at 25 Mbps by country"></svg><div class="tip" hidden></div></div>
+    <div class="two">
+      <div class="prose"><span class="eyebrow">Slow clusters (FDR 5%)</span><div class="table-wrap"><table id="t-hot"></table></div></div>
+      <div class="prose"><span class="eyebrow">OpenCelliD finds a cell near fast hexagons</span><div class="table-wrap"><table id="t-det"></table></div>
+        <p class="muted small">Below 80% (shaded) the coverage-vs-capacity split is not reported. Records of 5G cells cover 0.03% (Indonesia) to 28.5% (US) of people: a completeness figure, not 5G coverage.</p></div>
+    </div>
+  </div></details>
+
+  <details class="more" id="d-decisions"><summary><span class="eyebrow">Decision log · every choice against a named alternative</span></summary><div class="body">
+    <ul class="points">
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-001-framing-and-analysis-unit.md">ADR-001</a> — people below a bar on H3 resolution 8; raw and density-adjusted; untested people reported.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-002-validation-and-gates.md">ADR-002</a> — gates for every phase, set before analysis; two logged deviations (block bootstrap, exact p-values).</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-003-industry-alignment.md">ADR-003</a> — how planners work: gap types, Degree of Urbanisation, 3GPP site spacing, co-location costs, regulator benchmarks; OpenCelliD completeness finding.</li>
+    </ul>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Date</th><th>Pre-registered</th><th>Found</th><th>Changed to</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">2026-10-13</td><td>Bootstrap over speed tiles</td><td>Intervals missed their own estimate in Germany, France, US</td><td>Spatial block bootstrap; both published</td></tr>
+        <tr><td class="mono">2026-10-13</td><td>Gi* p-values (normal approximation)</td><td>Up to 318 false clusters on shuffled data after FDR</td><td>Exact conditional p-values; both published</td></tr>
+        <tr><td class="mono">2026-10-13</td><td>Gap type for every slow hexagon</td><td>Cell records near 2–74% of fast rural hexagons</td><td>Typed only where ≥ 80%</td></tr>
+      </tbody></table></div>
+  </div></details>
+
+  <details class="more" id="appendix"><summary><span class="eyebrow">Technical appendix · gates, intervals, assignment checks</span></summary><div class="body">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Phase</th><th>Gate (set before the work)</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>P0</td><td>≥ 99% of people and tests assigned per country; data contracts pass; inputs fingerprinted</td><td id="a-p0">Passed</td></tr>
+        <tr><td>P1</td><td>Shares with 95% intervals containing their estimate; clusters at FDR 5%; every populated hexagon typed</td><td id="a-p1">Passed</td></tr>
+        <tr><td>P2</td><td>Speed model ≤ 0.90 × kriging error under spatial block CV</td><td class="muted">Next</td></tr>
+        <tr><td>P3</td><td>Pre-trend placebo interval includes 0; new-site effect with interval</td><td class="muted">Planned</td></tr>
+        <tr><td>P4</td><td>≥ 10% more people lifted than a ranking, at equal cost</td><td class="muted">Planned</td></tr>
+      </tbody></table></div>
+    <div class="table-wrap"><table id="t-ci"></table></div>
+    <div class="table-wrap"><table id="t-p0"></table></div>
+    <details class="more" id="sources"><summary><span class="eyebrow">Sources · datasets, standards, regulators and papers</span></summary><div class="body">
+      <ul class="sources">
+        <li>Speedtest® by Ookla® Global Fixed and Mobile Network Performance Maps (AWS Open Data Registry), CC BY-NC-SA 4.0.</li>
+        <li>Kontur Population Dataset 2023-11-01, CC BY 4.0. · Overture Maps Foundation, places release 2026-09-23.1, CDLA-Permissive 2.0. · OpenCelliD, CC BY-SA 4.0.</li>
+        <li>Natural Earth admin-0; geoBoundaries (Runfola et al., PLoS ONE 2020); World Bank population indicator SP.POP.TOTL.</li>
+        <li>Eurostat, FAO, ILO, OECD, UN-Habitat, World Bank (2021). Applying the Degree of Urbanisation. · Dijkstra et al. (2021), Journal of Urban Economics 125.</li>
+        <li>3GPP TR 38.901 §7.2 (evaluation scenarios). · ITU-R M.2410-0 (2017). · FCC 17-126 (2017), para. 46. · Bundesnetzagentur press release, 4 Sep 2019. · Decision (EU) 2022/2481.</li>
+        <li>Ord & Getis (1995), Geographical Analysis 27(4). · Caldas de Castro & Singer (2006), Geographical Analysis 38. · Benjamini & Hochberg (1995), JRSS B 57.</li>
+        <li>Roberts et al. (2017), Ecography 40. · Meyer & Pebesma (2021), Methods in Ecology and Evolution 12. · Callaway & Sant'Anna (2021), Journal of Econometrics 225. · Church & ReVelle (1974), Papers of the Regional Science Association 32.</li>
+      </ul></div></details>
+  </div></details>
+</section>
+
+<footer>
+  <span>Every number comes from <code>data/outputs/*.json</code> via <code>scripts/export_page_data.py</code>. Code MIT; maps and derived figures CC BY-NC-SA 4.0 (Ookla data).</span>
+  <span>Sabrina Pribadi · last updated 13 Oct 2026 (<a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/CHANGELOG.md">changelog</a>) · <a href="build.html">technical walkthrough</a> · <a href="https://github.com/sabrinapribadi/next-site-planner">github.com/sabrinapribadi/next-site-planner</a></span>
+</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/h3-js@4.1.0/dist/h3-js.umd.js"></script>
+<script src="data/page_data.js"></script>
+<script>
+const G = window.GEO1, C = G.countries, ISOS = Object.keys(C), BARS = G.bars;
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (x, d = 1) => (100 * x).toFixed(d) + "%";
+const mil = (x) => x >= 10 ? x.toFixed(1) + "M" : x >= 1 ? x.toFixed(2) + "M" : Math.round(x * 1000) + "k";
+const ppl = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "k" : String(Math.round(n));
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const state = { bar: 25, iso: "IDN", sel: [] };
+const label = (k) => (k === "ARE" ? "UAE" : C[k].name);
+
+// ---------- tooltips: inside the chart's own box
+function showTip(wrap, html, x, y) {
+  const t = wrap.querySelector(":scope > .tip"); t.innerHTML = html; t.hidden = false;
+  const W = wrap.clientWidth, H = wrap.clientHeight, w = t.offsetWidth, h = t.offsetHeight;
+  let left = x + 14, top = y + 12;
+  if (left + w > W - 4) left = Math.max(4, x - w - 14);
+  if (top + h > H - 4) top = Math.max(4, H - h - 4);
+  t.style.left = left + "px"; t.style.top = top + "px";
+}
+function hideTip(wrap) { const t = wrap.querySelector(":scope > .tip"); if (t) t.hidden = true; }
+function bindRows(svg, tipFor) {
+  const wrap = svg.parentElement;
+  svg.querySelectorAll("g.row").forEach((g) => {
+    const show = (e) => { const r = wrap.getBoundingClientRect(); const b = g.getBoundingClientRect();
+      const x = e && e.clientX != null ? e.clientX - r.left : b.left - r.left + 40, y = e && e.clientY != null ? e.clientY - r.top : b.bottom - r.top;
+      showTip(wrap, tipFor(g.dataset.k), x, y); };
+    g.addEventListener("mousemove", show); g.addEventListener("focus", () => show(null));
+    g.addEventListener("mouseleave", () => hideTip(wrap)); g.addEventListener("blur", () => hideTip(wrap));
+  });
+}
+
+// ---------- headline facts
+function renderFacts() {
+  const b = String(state.bar); let below = 0, tested = 0, untested = 0, pop = 0;
+  ISOS.forEach((k) => { below += C[k].people_below_m[b]; untested += C[k].unmeasured_people_m; pop += C[k].population_m; tested += C[k].population_m - C[k].unmeasured_people_m; });
+  $("#facts").innerHTML = `
+    <div class="fact slow"><b>${mil(below)}</b><span>people in tested areas below ${b} Mbps</span></div>
+    <div class="fact slow"><b>${pct(below / tested)}</b><span>of tested people, seven countries</span></div>
+    <div class="fact"><b>${mil(untested)}</b><span>people where nobody tested (${pct(untested / pop, 0)})</span></div>
+    <div class="fact accent"><b>${ISOS.reduce((a, k) => a + C[k].hotspots.slow_hotspot_hexagons_fdr, 0)}</b><span>slow 1 km clusters; ${C.IDN.hotspots.slow_hotspot_hexagons_fdr + C.PHL.hotspots.slow_hotspot_hexagons_fdr} in Indonesia and the Philippines</span></div>`;
+  $("#sol-h").textContent = `${mil(below)} people in tested areas get under ${b} Mbps — most of them outside cities`;
+}
+
+// ---------- controls
+function renderControls() {
+  $("#bar-seg").innerHTML = BARS.map((b) => `<button type="button" data-bar="${b}" aria-pressed="${b === state.bar}">${b} Mbps</button>`).join("");
+  $("#iso-seg").innerHTML = ISOS.map((k) => `<button type="button" data-iso="${k}" aria-pressed="${k === state.iso}" title="${esc(C[k].name)}">${k}</button>`).join("");
+  $("#bar-seg").querySelectorAll("button").forEach((x) => x.addEventListener("click", () => { state.bar = +x.dataset.bar; renderAll(); }));
+  $("#iso-seg").querySelectorAll("button").forEach((x) => x.addEventListener("click", () => { state.iso = x.dataset.iso; state.sel = []; renderAll(); }));
+}
+
+// ---------- map
+const geo = {};
+function prep(iso) {
+  if (geo[iso]) return geo[iso];
+  const m = C[iso].map, n = m.h.length, polys = new Array(n), idx = new Map();
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = 0; i < n; i++) {
+    const id = m.h[i] + "fffffff"; idx.set(m.h[i], i);
+    const b = h3.cellToBoundary(id); polys[i] = b;
+    for (const [la, lo] of b) { if (lo < x0) x0 = lo; if (lo > x1) x1 = lo; if (la < y0) y0 = la; if (la > y1) y1 = la; }
+  }
+  const hot = C[iso].hotspot_cells.map(([c, p, s]) => [h3.cellToLatLng(c), p, s]);
+  return (geo[iso] = { polys, idx, x0, x1, y0, y1, kx: Math.cos(((y0 + y1) / 2) * Math.PI / 180), hot });
+}
+function binColor(v) { return v < 0 ? null : v < 10 ? css("--r0") : v < 25 ? css("--r1") : v < 50 ? css("--r2") : v < 75 ? css("--r3") : css("--r4"); }
+let proj = null;
+function drawMap() {
+  const iso = state.iso, g = prep(iso), m = C[iso].map, bi = BARS.indexOf(state.bar);
+  const wrap = $("#mapwrap"), cv = $("#map"), W = wrap.clientWidth;
+  const aspect = ((g.x1 - g.x0) * g.kx) / (g.y1 - g.y0);
+  const H = Math.round(Math.max(260, Math.min(600, W / aspect)));
+  const dpr = window.devicePixelRatio || 1; cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + "px";
+  const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  const pad = 14, s = Math.min((W - 2 * pad) / ((g.x1 - g.x0) * g.kx), (H - 2 * pad) / (g.y1 - g.y0));
+  const ox = (W - (g.x1 - g.x0) * g.kx * s) / 2, oy = (H - (g.y1 - g.y0) * s) / 2;
+  const P = (la, lo) => [ox + (lo - g.x0) * g.kx * s, oy + (g.y1 - la) * s];
+  proj = { g, s, ox, oy };
+  // striped pattern for untested
+  const pc = document.createElement("canvas"); pc.width = pc.height = 6; const px = pc.getContext("2d");
+  px.strokeStyle = css("--untested"); px.lineWidth = 2; px.beginPath(); px.moveTo(0, 6); px.lineTo(6, 0); px.stroke();
+  const pat = ctx.createPattern(pc, "repeat");
+  for (let i = 0; i < g.polys.length; i++) {
+    const v = m.b[bi][i], col = binColor(v);
+    ctx.beginPath(); g.polys[i].forEach(([la, lo], j) => { const [x, y] = P(la, lo); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.closePath();
+    ctx.fillStyle = col || pat; ctx.fill();
+    if (col && s > 18) { ctx.strokeStyle = css("--map-bg"); ctx.lineWidth = 0.4; ctx.stroke(); }
+  }
+  ctx.strokeStyle = css("--fg"); ctx.lineWidth = 1.4;
+  g.hot.forEach(([[la, lo]]) => { const [x, y] = P(la, lo); ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 2 * Math.PI); ctx.stroke(); });
+  ctx.strokeStyle = css("--accent"); ctx.lineWidth = 2.5;
+  state.sel.forEach((i) => { ctx.beginPath(); g.polys[i].forEach(([la, lo], j) => { const [x, y] = P(la, lo); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.closePath(); ctx.stroke(); });
+}
+function cellTip(i) {
+  const m = C[state.iso].map, bi = BARS.indexOf(state.bar), v = m.b[bi][i], p = m.p[i] * 1000, t = m.m[i];
+  const nm = m.names[m.n[i]];
+  if (v < 0) return `<b>${esc(nm)}</b>${ppl(p)} people · nobody tested here this quarter`;
+  const below = p * t / 100 * v / 100;
+  return `<b>${esc(nm)}</b>${ppl(p)} people · ${t}% live in tested hexagons<br>${v}% of tested people below ${state.bar} Mbps ≈ <b style="display:inline">${ppl(below)}</b> people`;
+}
+function cellCentre(i) {
+  const g = proj.g; let la = 0, lo = 0; g.polys[i].forEach(([a, b]) => { la += a; lo += b; }); la /= g.polys[i].length; lo /= g.polys[i].length;
+  return [proj.ox + (lo - g.x0) * g.kx * proj.s, proj.oy + (g.y1 - la) * proj.s];
+}
+function bindMap() {
+  const wrap = $("#mapwrap"), cv = $("#map");
+  const at = (e) => {
+    const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, g = proj.g;
+    const lo = g.x0 + (x - proj.ox) / (g.kx * proj.s), la = g.y1 - (y - proj.oy) / proj.s;
+    if (la < -85 || la > 85) return [-1, x, y];
+    const id = h3.latLngToCell(la, lo, 5).slice(0, -7);
+    return [g.idx.has(id) ? g.idx.get(id) : -1, x, y];
+  };
+  cv.addEventListener("mousemove", (e) => { const [i, x, y] = at(e); if (i < 0) { hideTip(wrap); return; } showTip(wrap, cellTip(i), x, y); });
+  cv.addEventListener("mouseleave", () => hideTip(wrap));
+  cv.addEventListener("click", (e) => { const [i] = at(e); state.sel = i < 0 ? [] : [i]; drawMap(); });
+}
+// districts ranked by people below the bar (summed over their ~250 km² areas)
+function districts() {
+  const m = C[state.iso].map, bi = BARS.indexOf(state.bar), d = new Map();
+  m.h.forEach((_, i) => { const v = m.b[bi][i] < 0 ? 0 : m.p[i] * 1000 * m.m[i] / 100 * m.b[bi][i] / 100;
+    const r = d.get(m.n[i]) || { n: m.n[i], v: 0, p: 0, cells: [], top: i, topv: -1 };
+    r.v += v; r.p += m.p[i] * 1000; r.cells.push(i); if (v > r.topv) { r.topv = v; r.top = i; } d.set(m.n[i], r); });
+  return [...d.values()].filter((r) => r.v > 0).sort((a, b) => b.v - a.v);
+}
+function districtTip(r) {
+  const m = C[state.iso].map;
+  return `<b>${esc(m.names[r.n])}</b>${ppl(r.v)} tested people below ${state.bar} Mbps, out of ${ppl(r.p)} people · ${r.cells.length} area${r.cells.length > 1 ? "s" : ""} of ~250 km² outlined`;
+}
+function renderTop() {
+  const m = C[state.iso].map, rows = districts().slice(0, 10);
+  $("#top-h").textContent = `${C[state.iso].name}: districts with the most people below ${state.bar} Mbps`;
+  $("#toplist").innerHTML = rows.map((r, j) => `<li tabindex="0" data-j="${j}" data-i="${r.top}"><span class="nm">${esc(m.names[r.n])}</span><span class="v">${ppl(r.v)}</span></li>`).join("");
+  const wrap = $("#mapwrap");
+  $("#toplist").querySelectorAll("li").forEach((li) => {
+    const on = () => { const r = rows[+li.dataset.j]; state.sel = r.cells; drawMap(); const [x, y] = cellCentre(r.top); showTip(wrap, districtTip(r), x, y);
+      $("#toplist").querySelectorAll("li").forEach((o) => o.classList.toggle("on", o === li)); };
+    const off = () => { hideTip(wrap); };
+    li.addEventListener("mouseenter", on); li.addEventListener("focus", on); li.addEventListener("click", on);
+    li.addEventListener("mouseleave", off); li.addEventListener("blur", off);
+  });
+}
+function renderLegend() {
+  const bins = [["--r0", "under 10%"], ["--r1", "10–25%"], ["--r2", "25–50%"], ["--r3", "50–75%"], ["--r4", "75% or more"]];
+  $("#legend").innerHTML = `<span class="mono">tested people below ${state.bar} Mbps:</span>` + bins.map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
+    + `<span><i class="untested"></i>not tested</span><span><i style="border-radius:50%;border:1.5px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
+}
+
+// ---------- SVG charts (drawn at the container's width so text stays readable on phones)
+function axis(x, x0, x1, top, bottom, ticks, fmt) {
+  return ticks.map((t) => `<line class="grid" x1="${x(t)}" x2="${x(t)}" y1="${top}" y2="${bottom}"/><text class="ax" x="${x(t)}" y="${bottom + 14}" text-anchor="middle">${fmt(t)}</text>`).join("");
+}
+function niceMax(v) { for (const m of [0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1]) if (v <= m) return m; return 1; }
+function chartCountry() {
+  const svg = $("#c-country"), W = svg.parentElement.clientWidth - 12, b = String(state.bar), phone = W < 520;
+  const L = phone ? 92 : 120, R = phone ? 54 : 70, rowH = 34, top = 6, n = ISOS.length, H = top + n * rowH + 22;
+  const order = [...ISOS].sort((a, c) => C[c].below[b] - C[a].below[b]);
+  const vmax = niceMax(Math.max(...ISOS.map((k) => Math.max(C[k].below[b], (C[k].ci95[b] || [0, 0])[1], C[k].density_adjusted[b] || 0))));
+  const x = (v) => L + (v / vmax) * (W - L - R);
+  const ticks = [0, vmax / 4, vmax / 2, 3 * vmax / 4, vmax];
+  let s = axis(x, 0, vmax, top, top + n * rowH, ticks, (t) => Math.round(100 * t) + "%");
+  order.forEach((k, r) => {
+    const c = C[k], y = top + r * rowH + rowH / 2, ci = c.ci95[b], adj = c.density_adjusted[b];
+    s += `<g class="row" tabindex="0" data-k="${k}"><rect class="band" x="0" y="${y - rowH / 2}" width="${W}" height="${rowH}" fill="transparent"/>
+      <text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(phone ? k : label(k))}</text>
+      ${ci ? `<line x1="${x(ci[0])}" x2="${x(ci[1])}" y1="${y}" y2="${y}" stroke="var(--slow)" stroke-width="3" stroke-linecap="round" opacity="0.45"/>` : ""}
+      <circle cx="${x(c.below[b])}" cy="${y}" r="6" fill="var(--slow)"/>
+      ${adj != null ? `<circle cx="${x(adj)}" cy="${y}" r="6" fill="none" stroke="var(--accent)" stroke-width="2"/>` : ""}
+      <text class="ax" x="${W - 4}" y="${y + 4}" text-anchor="end">${mil(c.people_below_m[b])}</text></g>`;
+  });
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
+  bindRows(svg, (k) => { const c = C[k], ci = c.ci95[b], adj = c.density_adjusted[b];
+    return `<b>${esc(c.name)}</b>${pct(c.below[b])} of tested people below ${b} Mbps${ci ? ` (95% interval ${pct(ci[0])}–${pct(ci[1])})` : ""} ≈ ${mil(c.people_below_m[b])} people.`
+      + (adj != null ? `<br>At equal density: ${pct(adj)}.` : `<br>Equal-density figure computed for 10 and 25 Mbps.`)
+      + `<br>Not tested: ${mil(c.unmeasured_people_m)} people (${pct(1 - c.measured_share, 0)}).`; });
+}
+const MORPH = [["urban_centre", "--accent", "Urban centre"], ["urban_cluster", "--amber", "Town or suburb"], ["rural", "--slow", "Rural"]];
+function chartMorph() {
+  const svg = $("#c-morph"), W = svg.parentElement.clientWidth - 12, phone = W < 520, bar = state.bar === 10 ? "below_10" : "below_25";
+  const lbl = state.bar === 10 ? 10 : 25;
+  const L = phone ? 92 : 120, R = 16, rowH = 34, top = 6, n = ISOS.length, H = top + n * rowH + 22;
+  const order = [...ISOS].sort((a, c) => C[c].morphology.rural[bar] - C[a].morphology.rural[bar]);
+  const x = (v) => L + (v / 0.6) * (W - L - R);
+  let s = axis(x, 0, 0.6, top, top + n * rowH, [0, 0.15, 0.3, 0.45, 0.6], (t) => Math.round(100 * t) + "%");
+  order.forEach((k, r) => {
+    const c = C[k], y = top + r * rowH + rowH / 2;
+    const xs = MORPH.map(([m]) => x(c.morphology[m][bar]));
+    s += `<g class="row" tabindex="0" data-k="${k}"><rect class="band" x="0" y="${y - rowH / 2}" width="${W}" height="${rowH}" fill="transparent"/>
+      <text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(phone ? k : label(k))}</text>
+      <line x1="${Math.min(...xs)}" x2="${Math.max(...xs)}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="2"/>
+      ${MORPH.map(([m, col], j) => `<circle cx="${xs[j]}" cy="${y}" r="6" fill="var(${col})"/>`).join("")}</g>`;
+  });
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
+  bindRows(svg, (k) => { const c = C[k];
+    return `<b>${esc(c.name)} · below ${lbl} Mbps</b>` + MORPH.map(([m, , l]) => `${l}: ${pct(c.morphology[m][bar])} of tested · ${pct(c.morphology[m].share, 0)} of people, ${pct(c.morphology[m].measured, 0)} tested`).join("<br>")
+      + (state.bar !== 10 && state.bar !== 25 ? `<br><span class="muted">Area types are reported at 10 and 25 Mbps; showing 25.</span>` : ""); });
+}
+function stacked(svgId, parts, tipFor) {
+  const svg = $(svgId), W = svg.parentElement.clientWidth - 12, phone = W < 520;
+  const L = phone ? 92 : 120, R = 10, rowH = 30, top = 6, n = ISOS.length, H = top + n * rowH + 22;
+  const x = (v) => L + v * (W - L - R);
+  let s = axis(x, 0, 1, top, top + n * rowH, [0, 0.25, 0.5, 0.75, 1], (t) => Math.round(100 * t) + "%");
+  ISOS.forEach((k, r) => {
+    const y = top + r * rowH + 5; let acc = 0;
+    s += `<g class="row" tabindex="0" data-k="${k}"><rect class="band" x="0" y="${y - 5}" width="${W}" height="${rowH}" fill="transparent"/>
+      <text x="${L - 10}" y="${y + 14}" text-anchor="end">${esc(phone ? k : label(k))}</text>`;
+    parts(k).forEach(([v, col]) => { s += `<rect x="${x(acc)}" y="${y}" width="${Math.max(0, x(acc + v) - x(acc))}" height="${rowH - 10}" fill="var(${col})"/>`; acc += v; });
+    s += `</g>`;
+  });
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s; bindRows(svg, tipFor);
+}
+function chartTested() {
+  const b = String(state.bar);
+  stacked("#c-tested", (k) => { const c = C[k], t = c.measured_share; return [[t * (1 - c.below[b]), "--ok"], [t * c.below[b], "--slow"], [1 - t, "--untested"]]; },
+    (k) => { const c = C[k], t = c.measured_share, P = c.population_m;
+      return `<b>${esc(c.name)} · ${mil(P)} people</b>Tested, at or above ${b} Mbps: ${mil(P * t * (1 - c.below[b]))}<br>Tested, below: ${mil(P * t * c.below[b])}<br>Not tested: ${mil(c.unmeasured_people_m)} (${pct(1 - t, 0)})`; });
+}
+const GAPS = [["none", "--ok", "No gap"], ["capacity", "--accent", "Capacity gap"], ["coverage", "--amber", "Coverage gap"], ["slow_type_unknown", "--slow", "Slow, type unknown"], ["unmeasured", "--untested", "Not tested"]];
+function chartGap() {
+  stacked("#c-gap", (k) => GAPS.map(([g, col]) => [C[k].gap_types_25[g] || 0, col]),
+    (k) => `<b>${esc(C[k].name)} · at 25 Mbps</b>` + GAPS.map(([g, , l]) => `${l}: ${pct(C[k].gap_types_25[g] || 0)}`).join("<br>"));
+}
+function tables() {
+  $("#t-hot").innerHTML = `<thead><tr><th>Country</th><th class="num">Clusters</th><th class="num">People in them</th><th class="num">False on shuffled</th></tr></thead><tbody>` +
+    ISOS.map((k) => { const h = C[k].hotspots; return `<tr><td>${esc(C[k].name)}</td><td class="num">${h.slow_hotspot_hexagons_fdr}</td><td class="num">${ppl(h.people_in_slow_hotspots_fdr)}</td><td class="num">${h.false_hotspots_on_shuffled_fdr} <span class="muted">(was ${h.false_hotspots_on_shuffled_fdr_normal_approx})</span></td></tr>`; }).join("") + `</tbody>`;
+  $("#t-det").innerHTML = `<thead><tr><th>Country</th><th class="num">Rural</th><th class="num">Town</th><th class="num">City</th></tr></thead><tbody>` +
+    ISOS.map((k) => { const d = C[k].opencellid_detection, f = (m) => `<td class="num" style="${d[m] < 0.8 ? "background:var(--slow-soft)" : ""}">${pct(d[m], 0)}</td>`;
+      return `<tr><td>${esc(C[k].name)}</td>${f("rural")}${f("urban_cluster")}${f("urban_centre")}</tr>`; }).join("") + `</tbody>`;
+  $("#t-ci").innerHTML = `<thead><tr><th>Country</th><th class="num">Below 25 Mbps</th><th class="num">Block bootstrap (used)</th><th class="num">Tile bootstrap (pre-registered)</th></tr></thead><tbody>` +
+    ISOS.map((k) => { const c = C[k], a = c.ci95["25"], t = c.ci95_tile_bootstrap["25"], miss = c.below["25"] < t[0] || c.below["25"] > t[1];
+      return `<tr><td>${esc(c.name)}</td><td class="num">${pct(c.below["25"])}</td><td class="num">${pct(a[0])}–${pct(a[1])}</td><td class="num" style="${miss ? "color:var(--slow)" : ""}">${pct(t[0])}–${pct(t[1])}${miss ? " ✕" : ""}</td></tr>`; }).join("") + `</tbody>`;
+  $("#t-p0").innerHTML = `<thead><tr><th>Country</th><th class="num">People assigned</th><th class="num">Tests assigned</th><th class="num">Kontur ÷ World Bank</th><th class="num">Hexagons</th></tr></thead><tbody>` +
+    ISOS.map((k) => { const p = C[k].p0; return `<tr><td>${esc(C[k].name)}</td><td class="num">${pct(Math.min(p.population_assigned, 1))}</td><td class="num">${pct(Math.min(p.tests_assigned, 1))}</td><td class="num">${p.kontur_vs_world_bank.toFixed(2)}</td><td class="num">${p.hexagons.toLocaleString("en")}</td></tr>`; }).join("") + `</tbody>`;
+}
+
+// ---------- in-page links open collapsed sections
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]'); if (!a) return;
+  const t = document.querySelector(a.getAttribute("href")); if (!t) return;
+  let d = t.closest("details"); while (d) { d.open = true; d = d.parentElement.closest("details"); }
+  if (t.tagName === "DETAILS") t.open = true;
+  e.preventDefault(); requestAnimationFrame(() => { t.scrollIntoView({ block: "start" }); history.replaceState(null, "", a.getAttribute("href")); renderCharts(); });
+});
+document.querySelectorAll("details.more").forEach((d) => d.addEventListener("toggle", () => d.open && renderCharts()));
+
+function renderCharts() { chartCountry(); chartMorph(); chartTested(); chartGap(); }
+function renderAll() { renderControls(); renderFacts(); renderLegend(); drawMap(); renderTop(); renderCharts(); }
+let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { drawMap(); renderCharts(); }, 120); });
+const redrawTheme = () => { drawMap(); };
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redrawTheme);
+new MutationObserver(redrawTheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+tables(); bindMap(); renderAll();
+</script>

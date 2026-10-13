@@ -1,4 +1,4 @@
-.PHONY: data evidence test
+.PHONY: data evidence test build-test hover-test page-data
 
 # Raw data into GEO_DATA_DIR (see .env); resumable
 data:
@@ -13,3 +13,9 @@ test:
 
 build-test:
 	cd tests/browser && (test -d node_modules/puppeteer-core || npm i --no-save puppeteer-core@23) && node build_test.js $(CURDIR)/docs/build.html /tmp | grep -E "FAIL|build-page checks"
+
+hover-test:
+	cd tests/browser && (test -d node_modules/puppeteer-core || npm i --no-save puppeteer-core@23) && mkdir -p /tmp/geo1-shots && node hover_test.js $(CURDIR)/docs/index.html /tmp/geo1-shots
+
+page-data:
+	python scripts/export_page_data.py

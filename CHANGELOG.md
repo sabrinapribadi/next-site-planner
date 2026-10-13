@@ -2,6 +2,23 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.4.0] — 2026-10-13 — Results page live: hexagon map, district list, fair country comparison
+**Files:** docs/index.html, docs/data/page_data.js, scripts/export_page_data.py, tests/browser/hover_test.js, Makefile
+- **Situation:** P0 and P1 passed, but the results only existed as JSON and a technical walkthrough; a planner or hiring manager could not see them.
+- **Task:** Build the hiring-team results page (R12) with practitioner numbers (R9) and hover on every chart (R10), without a basemap or a build step.
+- **Action:**
+  - The export script rolls 6.6M hexagons up to 46k areas of ~250 km², each with a district name (geoBoundaries).
+  - **Map:** a canvas hexagon map drawn with h3-js, with hover by inverse projection.
+  - **Controls:** what-if buttons for the speed bar (5–100 Mbps) and the country.
+  - **District list:** districts ranked by the people below the bar.
+  - **Charts:** country comparison (raw with block-bootstrap intervals, and at equal density), area types, tested vs untested, gap types.
+  - The FAQ and caveats state the limits.
+- **Result:**
+  - The page loads 1.75 MB of data.
+  - Hover tests pass: 6 of 6 in desktop light, desktop dark and phone at 400 px; no sideways scroll; no JS errors.
+  - Headline: 61.7M people in tested areas are below 25 Mbps, and 349M live where nobody tested.
+- **Talking point:** "The map answers a planner's first question — which districts have the most people on slow mobile — before any model exists, and says plainly what it cannot see."
+
 ## [0.3.0] — 2026-10-13 — P0 and P1 run: gates passed; three methods corrected after checks
 **Files:** scripts/build_hex_table.py, scripts/experience_gap.py, src/spatialstats.py, src/hexgrid.py, tests/test_spatialstats.py, configs/default_config.yaml, docs/adr/ADR-002-validation-and-gates.md, docs/adr/ADR-003-industry-alignment.md, data/outputs/p0_foundation.json, data/outputs/p1_experience_gap.json, data/outputs/manifest.json, docs/build.html
 - **Situation:** The first P1 run passed its gate on paper, but three checks showed problems:
