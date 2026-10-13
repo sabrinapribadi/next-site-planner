@@ -10,3 +10,6 @@ evidence:
 
 test:
 	pytest -q tests
+
+build-test:
+	cd tests/browser && (test -d node_modules/puppeteer-core || npm i --no-save puppeteer-core@23) && node build_test.js $(CURDIR)/docs/build.html /tmp | grep -E "FAIL|build-page checks"

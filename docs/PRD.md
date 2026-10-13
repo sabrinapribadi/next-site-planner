@@ -1,6 +1,6 @@
 PRODUCT REQUIREMENT DOCUMENT (PRD)
 Project: Next Site Planner — Where Would One More Mobile Site Help the Most People?
-Version: 0.1 (design: framing, validation, gates — before any analysis)
+Version: 0.2 (industry alignment, ADR-003: gap types, morphology, co-location-first costs, planner exports — before P1)
 Author: Sabrina Pribadi
 Date: October 13, 2026
 Status: Proposed — P0 next
@@ -29,10 +29,10 @@ do, then optimise the set" — every number reproducible from public data.
 
 Success Metrics (pre-registered — see ADR-002):
 - P0: ≥ 99% of each country's population and ≥ 99% of its speed tests land on the H3 grid
-- P1: population share below 10 and 25 Mbps per country, raw and density-adjusted, with 95% intervals
+- P1: population share below 10 and 25 Mbps per country, raw and density-adjusted, with 95% intervals; every populated hexagon typed by morphology and gap (coverage / capacity)
 - P2: the spatial model beats ordinary kriging by ≥ 10% (RMSE of log speed) under spatial block cross-validation
 - P3: new-site effect with a 95% interval and a passing pre-trend (placebo) test
-- P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same budget
+- P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same cost budget (new-tower equivalents)
 - P5: API contracts and the LLM evaluation set pass in CI; cost and latency within budget (R13)
 - P6: the Databricks job reproduces the local P1 numbers exactly
 - P7: two live pages (results and technical walkthrough), browser-tested
@@ -57,8 +57,9 @@ In scope: seven countries; mobile and fixed speed tiles 2023 Q1–2026 Q3; H3 re
 residential population (Kontur 2023) and daytime places (Overture 2026-09); cell locations
 (OpenCelliD snapshot 2026-10-13); boundaries (OCHA kecamatan for Indonesia, geoBoundaries elsewhere).
 
-Out of scope: radio propagation modelling; spectrum, backhaul and site-rental costs (a flat
-cost per site is assumed and varied); any operator's private data; naming operators.
+Out of scope: site-specific radio propagation modelling (3GPP evaluation inter-site distances are used
+instead, ADR-003); absolute costs in currency (relative costs in new-tower equivalents, varied over a range);
+any operator's private data; naming operators; compliance testing against licence obligations.
 
 Known data limits (measured, plan §9):
 - Ookla tiles exist only where people ran tests; only ~20% of Indonesian mobile tiles appear in all 15 quarters
@@ -71,14 +72,15 @@ Known data limits (measured, plan §9):
 
 | Persona | Need | Today |
 |---|---|---|
-| Network planner | A budgeted list of locations that lifts the most people above a speed bar | Sites ranked by composite KPI scores |
+| Network planner | A costed list of interventions (co-locate, small cell, new site) by gap type and morphology, as CSV / GeoJSON / KML | Sites ranked by composite KPI scores |
 | Regulator / policy analyst | Where coverage is worst for the most people, compared fairly with peer countries | Raw national medians that mix cities and islands |
 | Capex reviewer | Evidence that new sites improve experience nearby | Before/after checks rarely done |
 | GIS analyst | The same answer at kecamatan, district or hexagon level | Manual joins in desktop GIS |
 | AI assistant | Typed tools: gap at a place, top sites for a budget, why this site | None |
 
 User stories:
-- As a planner, I give a country, a budget (K sites) and a speed bar, and get K locations with the people each would lift.
+- As a planner, I give a country, a budget (new-tower equivalents) and a speed bar, and get a site list — gap type, morphology,
+  intervention, cost, people lifted — plus a cost–benefit curve, ready for GIS and planning tools.
 - As a policy analyst, I compare Indonesia with six markets at equal population density.
 - As a reviewer, I see how much a new site lifted nearby speeds, with an interval.
 - As an AI agent (via MCP), I can call gap_at(place), top_sites(country, k), explain_site(h3) and compare_countries().
@@ -86,11 +88,11 @@ User stories:
 
 5. FUNCTIONAL REQUIREMENTS
 
-Module A: Data foundation on H3 resolution 8 — ADR-001 (P0)
-Module B: Experience-gap map and fair benchmark — P1
+Module A: Data foundation on H3 resolution 8; snapshot manifest; data contracts — ADR-001, ADR-003 (P0)
+Module B: Experience-gap map, fair benchmark, morphology and gap typing, regulatory benchmarks — ADR-003 (P1)
 Module C: Spatial speed model — P2 (ADR pending)
 Module D: New-site effect — P3 (ADR pending)
-Module E: Budgeted site optimiser — P4 (ADR pending)
+Module E: Budgeted site optimiser — co-location-first, costed, planner exports, post-launch tracking — P4 (ADR pending; ADR-003)
 Module F: API, MCP tools, grounded rationales — P5 (ADR pending)
 Module G: Databricks quarterly job, registry, drift — P6 (ADR pending; R15 justification in ADR-001)
 
@@ -116,10 +118,10 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | Phase | Goal | Gate / exit criterion (ADR-002) |
 |---|---|---|
 | P0 | Seven-country data foundation on H3 r8 | ≥ 99% of population and of speed tests assigned to the grid; contract tests pass |
-| P1 | Experience-gap map; fair cross-country benchmark; hotspots | Shares below 10 / 25 Mbps with 95% intervals, raw and density-adjusted; Gi* hotspots at FDR 5% |
+| P1 | Experience-gap map; fair cross-country benchmark; hotspots; gap types and morphology | Shares below 10 / 25 Mbps with 95% intervals, raw and density-adjusted; Gi* hotspots at FDR 5%; every populated hexagon typed |
 | P2 | Spatial speed model where tests are sparse | GBM ≤ 0.9 × kriging RMSE (log speed) under spatial block CV; transfer to an unseen country reported |
 | P3 | Effect of new sites (Germany, US) | Pre-trend placebo interval includes 0; effect with 95% interval; transfer to Indonesia stated as an assumption |
-| P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal K |
+| P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal cost; exports pass format checks |
 | P5 | API + MCP + grounded rationales | Contract tests and LLM evaluation pass in CI; R13 budgets met |
 | P6 | Databricks quarterly job + registry + drift | Databricks reproduces local P1 numbers exactly |
 | P7 | Results page + technical walkthrough + web map | Both pages live and browser-tested (R10, R12, R14) |
@@ -134,6 +136,8 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | OpenCelliD first-seen dates are noisy | Use only cells first seen ≤ 2024 and observed ≥ 180 days; placebo test |
 | Effect estimated abroad may not hold in Indonesia | State it as an assumption; sensitivity range in P4 |
 | Free Edition cannot read Ookla's S3 | Test first; else upload country extracts (as in CHN-1) |
+| Cost ratios come from one regulator (US, 2017) | Relative units, not currency; P4 reports results across ranges; local cost data recommended before use |
+| OpenCelliD cells are not tower positions | Ring-1 search, ring-0 sensitivity; co-location counts are a proxy |
 | 8 GB development machine | DuckDB locally with out-of-core execution; Spark on Databricks for the full refresh |
 
 
@@ -147,3 +151,10 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 - Stratifying the digital divide: socio-economic influences on Internet performance (2026). arXiv 2605.30809
 - A user-demand-driven approach for 5G base station location selection (2025). Journal of Computer Research and Development 62(3)
 - Uber H3 hexagonal hierarchical spatial index (h3geo.org)
+- Eurostat, FAO, ILO, OECD, UN-Habitat, World Bank (2021). Applying the Degree of Urbanisation: a methodological manual
+- Dijkstra, L. et al. (2021). Applying the Degree of Urbanisation to the globe. Journal of Urban Economics 125
+- 3GPP TR 38.901. Study on channel model for frequencies from 0.5 to 100 GHz, §7.2 (evaluation scenarios)
+- FCC 17-126 (2017). Twentieth Mobile Wireless Competition Report, para. 46
+- Bundesnetzagentur (4 Sep 2019). Press release: assignment of 5G spectrum (coverage obligations)
+- Decision (EU) 2022/2481. Digital Decade Policy Programme 2030
+- ITU-R M.2410-0 (2017). Minimum requirements related to technical performance for IMT-2020 radio interfaces

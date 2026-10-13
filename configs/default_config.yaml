@@ -22,9 +22,29 @@ experience:
   latest_quarter: [2026, 3]
   first_quarter: [2023, 1]
   thresholds_mbps: [10, 25]          # headline bars
-  sensitivity_mbps: [5, 50]
+  sensitivity_mbps: [5, 50, 100]     # 100: BNetzA 2019 obligation, ITU-R M.2410 (ADR-003)
   density_deciles: 10                # density-adjusted comparison
   bootstrap_reps: 500
+
+morphology:                          # Degree of Urbanisation thresholds (ADR-003, E2)
+  urban_centre: {min_density_km2: 1500, min_population: 50000}
+  urban_cluster: {min_density_km2: 300, min_population: 5000}
+
+gap_typing:                          # ADR-003, E1
+  cell_radios: [LTE, NR]
+  cell_search_ring: 1                # ring-1 ≈ 1.2 km; ring-0 as sensitivity
+
+service_isd_m:                       # 3GPP TR 38.901 Tables 7.2-1 / 7.2-3 (ADR-003, E3)
+  urban_centre: 500                  # UMa
+  urban_centre_small_cell: 200       # UMi street canyon
+  urban_cluster: 500                 # UMa
+  rural: 1732                        # RMa; 5000 in sensitivity
+  rural_sensitivity: 5000
+
+cost_new_tower_equivalents:          # FCC 17-126 para. 46 (ADR-003, E4–E5)
+  new_macro: 1.0
+  colocation: {central: 0.30, range: [0.20, 0.50]}
+  small_cell: {central: 0.50, range: [0.25, 0.50]}
 
 gates:                               # ADR-002, written before analysis
   p0_min_population_assigned: 0.99

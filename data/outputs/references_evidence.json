@@ -155,6 +155,20 @@
     "ADR-001"
    ],
    "openalex_id": "https://openalex.org/W7163075412"
+  },
+  {
+   "key": "dijkstra_2021",
+   "title": "Applying the Degree of Urbanisation to the globe: A new harmonised definition reveals a different picture of global urbanisation",
+   "venue": "Journal of Urban Economics",
+   "peer_reviewed": true,
+   "year": 2020,
+   "citations": 380,
+   "citations_per_year": 54.3,
+   "role": "Degree of Urbanisation applied globally (morphology, E2)",
+   "used_in": [
+    "ADR-003"
+   ],
+   "openalex_id": "https://openalex.org/W3108189576"
   }
  ]
 }

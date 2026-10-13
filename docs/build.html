@@ -1,0 +1,458 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Site Planner Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Technical walkthrough (portfolio rule R14). Same tokens as index.html so the two pages read as one set. */
+:root {
+  --bg: #f5f7fa; --surface: #ffffff; --fg: #16202a; --muted: #5a6573; --line: #dde2e9; --tint: #eef1f7;
+  --accent: #3b4fd8; --accent-soft: #e3e7fc;
+  --stay: #13836f; --stay-soft: #dff2ec; --churn: #c2452d; --churn-soft: #f8e4df; --amber: #b7791f; --amber-soft: #f7ecd9;
+  --lane-a: #f3f5fb; --lane-b: #fafbfd;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f141a; --surface: #161d25; --fg: #e6ebf0; --muted: #98a3b0; --line: #2a333e; --tint: #1b2430;
+  --accent: #8e9cff; --accent-soft: #252c55;
+  --stay: #3cc5a6; --stay-soft: #133a32; --churn: #f07a5f; --churn-soft: #43231c; --amber: #e0a542; --amber-soft: #3a2c14;
+  --lane-a: #141b23; --lane-b: #11171e;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0f141a; --surface: #161d25; --fg: #e6ebf0; --muted: #98a3b0; --line: #2a333e; --tint: #1b2430;
+  --accent: #8e9cff; --accent-soft: #252c55;
+  --stay: #3cc5a6; --stay-soft: #133a32; --churn: #f07a5f; --churn-soft: #43231c; --amber: #e0a542; --amber-soft: #3a2c14;
+  --lane-a: #141b23; --lane-b: #11171e;
+  color-scheme: dark; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.6 var(--font-body); }
+.wrap { max-width: 1160px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 15px; font-weight: 600; }
+p { margin: 0; }
+.eyebrow { font: 600 12px/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+header.top { display: grid; gap: 14px; padding-block: 8px 24px; border-bottom: 1px solid var(--line); }
+header.top .lede { font-size: 17px; max-width: 66ch; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 18px; font: 500 13px var(--font-mono); }
+.links a { text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+
+section.block { display: grid; gap: 18px; padding-block: 34px 6px; }
+.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.howto div { border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; display: grid; gap: 2px; }
+.howto b { font-size: 14px; }
+.howto span { font-size: 13px; color: var(--muted); }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+th { font: 600 11.5px var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: var(--tint); }
+tr:last-child td { border-bottom: 0; }
+
+/* system map */
+.map { min-width: 980px; }
+.map th.ph { cursor: pointer; white-space: nowrap; }
+.map th.ph:hover, .map th.ph.on { color: var(--accent); }
+.map th.ph.on { background: var(--accent-soft); }
+.map td.lane { font: 600 12px var(--font-mono); color: var(--muted); white-space: nowrap; background: var(--tint); }
+.map td.cell { font-size: 12.5px; line-height: 1.4; }
+.map td.cell.on { background: var(--accent-soft); }
+.map td.cell span { display: block; }
+.map td.cell span + span { margin-top: 4px; }
+
+/* verdict chips */
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 11px/1 var(--font-mono); letter-spacing: 0.03em; padding: 5px 8px; border-radius: 999px; white-space: nowrap; }
+.chip.pass { background: var(--stay-soft); color: var(--stay); }
+.chip.fail { background: var(--churn-soft); color: var(--churn); }
+.chip.run { background: var(--amber-soft); color: var(--amber); }
+.chip.plan { background: var(--tint); color: var(--muted); }
+
+/* phase picker */
+.picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.picker button { font: 600 13px var(--font-mono); border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 8px 12px; cursor: pointer; display: grid; gap: 4px; justify-items: start; }
+.picker button small { font: 500 11px var(--font-body); color: var(--muted); }
+.picker button[aria-selected="true"] { border-color: var(--accent); background: var(--accent-soft); }
+@media (max-width: 600px) {
+  .picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .picker button { padding: 7px 9px; min-width: 0; }
+  .picker button small { display: none; }
+  .picker .chip { white-space: normal; line-height: 1.25; }
+}
+
+.phase-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 16px; }
+.phase-head .dates { font: 500 12px var(--font-mono); color: var(--muted); }
+
+.scqa { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.scqa div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
+.scqa b { font: 600 11px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.scqa p { font-size: 13.5px; line-height: 1.5; }
+@media (max-width: 860px) { .scqa { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .scqa { grid-template-columns: minmax(0, 1fr); } }
+
+/* swimlane */
+.lanewrap { display: grid; gap: 12px; }
+.walk { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.walk button { font: 600 13px var(--font-body); border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+.walk button.primary { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+.walk button:disabled { opacity: 0.45; cursor: default; }
+.walk .pos { font: 600 12px var(--font-mono); color: var(--muted); }
+svg.swim { display: block; }
+svg.swim .lane-bg { fill: var(--lane-a); }
+svg.swim .lane-bg.alt { fill: var(--lane-b); }
+svg.swim .lane-label { fill: var(--muted); font: 600 11px var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
+svg.swim .lane-line { stroke: var(--line); }
+svg.swim .edge { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+svg.swim .arrowhead { fill: var(--muted); }
+svg.swim g.step { cursor: pointer; outline: none; }
+svg.swim g.step rect { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+svg.swim g.step text { fill: var(--fg); font: 500 11.5px var(--font-body); }
+svg.swim g.step .num { fill: var(--accent); font: 700 11px var(--font-mono); }
+svg.swim g.step.kind-fail rect { stroke: var(--churn); }
+svg.swim g.step.kind-fix rect { stroke: var(--stay); }
+svg.swim g.step.kind-plan rect { stroke-dasharray: 4 3; }
+svg.swim g.step:hover rect, svg.swim g.step:focus rect { stroke: var(--accent); stroke-width: 2; }
+svg.swim g.step.current rect { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2.4; }
+svg.swim g.step.done rect { fill: var(--tint); }
+.lane-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); }
+.lane-legend i { display: inline-block; width: 18px; height: 11px; border-radius: 3px; border: 1.5px solid var(--line); vertical-align: -1px; margin-right: 6px; background: var(--surface); }
+.lane-legend i.fail { border-color: var(--churn); }
+.lane-legend i.fix { border-color: var(--stay); }
+.lane-legend i.plan { border-style: dashed; }
+
+.detail { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; }
+.detail .kv { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 4px 12px; font-size: 13.5px; }
+.detail .kv b { font: 600 11px var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.detail code, td code { font: 12px var(--font-mono); background: var(--tint); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+
+/* phase panel: four parts, each separated by a rule and generous space */
+#phase { display: grid; gap: 30px; padding-top: 10px; }
+#phase > .part + .part { border-top: 1px solid var(--line); padding-top: 26px; }
+.ph-top { display: grid; gap: 14px; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+@media (max-width: 860px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.box { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.box > .eyebrow ~ .eyebrow { margin-top: 16px; }
+ul.points { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; }
+.star { margin: 0; border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; font-size: 15px; font-style: italic; }
+.obst td:first-child { width: 22%; }
+@media (max-width: 600px) {  /* obstacles become stacked cards on phones */
+  .obst thead { display: none; }
+  .obst, .obst tbody, .obst tr, .obst td { display: block; width: 100%; }
+  .obst tr { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .obst tr:last-child { border-bottom: 0; }
+  .obst td, .obst td:first-child { width: auto; border: 0; padding: 3px 0; display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; }
+  .obst td::before { content: attr(data-label); font: 600 10.5px var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  .obst td:first-child { font-weight: 600; }
+}
+.verdict-ok { color: var(--stay); font-weight: 600; }
+.verdict-no { color: var(--churn); font-weight: 600; }
+.verdict-wait { color: var(--amber); font-weight: 600; }
+
+.tip { position: fixed; z-index: 10; max-width: 300px; background: var(--fg); color: var(--bg); font-size: 12.5px; line-height: 1.45; padding: 8px 10px; border-radius: 8px; pointer-events: none; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); }
+.tip b { display: block; margin-bottom: 2px; }
+footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Technical walkthrough · GEO-1 · next site planner</span>
+  <h1>How the site planner is being built, phase by phase</h1>
+  <p class="lede">Eight phases, each with a pass/fail gate committed to GitHub before the work. For every phase: the question, the build steps, what broke, and what it taught.</p>
+  <div class="links">
+    <a href="./">← Hiring-team view (results)</a>
+    <a href="https://github.com/sabrinapribadi/next-site-planner">Code and ADRs</a>
+    <a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/CHANGELOG.md">Change log (STAR)</a>
+  </div>
+</header>
+
+<section class="block" aria-labelledby="h-read">
+  <span class="eyebrow" id="h-read">How to read each phase</span>
+  <div class="howto">
+    <div><b>SCQA</b><span>Situation · Complication · Question · Answer (the gate result)</span></div>
+    <div><b>Swimlane</b><span>Build steps by layer; step through with Next</span></div>
+    <div><b>Decisions</b><span>What was chosen, with the ADR that records why</span></div>
+    <div><b>Obstacles</b><span>Symptom → root cause → fix → prevention</span></div>
+    <div><b>Result vs gate</b><span>Pass/fail against the bar set in advance</span></div>
+    <div><b>Lessons + STAR</b><span>What carries over, and the one-line interview story</span></div>
+  </div>
+</section>
+
+<section class="block" aria-labelledby="h-map">
+  <div class="phase-head"><h2 id="h-map">System map</h2><span class="muted">What each phase added to each layer. Click a phase to open it.</span></div>
+  <div class="scroll"><table class="map" id="map"></table></div>
+</section>
+
+<section class="block" aria-labelledby="h-phase">
+  <span class="eyebrow" id="h-phase">Phase</span>
+  <div class="picker" id="picker" role="tablist" aria-label="Phases"></div>
+  <article id="phase"></article>
+</section>
+
+<footer>
+  <span>Every number comes from <code>data/outputs/*.json</code>, the ADRs and <code>CHANGELOG.md</code> in the repository. Data: Ookla open speed tiles, Kontur population, Overture places, OpenCelliD, OCHA and geoBoundaries.</span>
+  <span>Sabrina Pribadi · last updated 13 Oct 2026 · <a href="./">results page</a> · <a href="https://github.com/sabrinapribadi/next-site-planner">github.com/sabrinapribadi/next-site-planner</a></span>
+</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const REPO = "https://github.com/sabrinapribadi/next-site-planner/blob/main/";
+const ADR = {
+  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md"
+};
+const LANES = ["Data", "Compute (DuckDB · Spark)", "Spatial statistics", "Model", "Evaluation", "Serving & AI", "Platform", "Decision"];
+
+// Steps: [lane, short title, what, why, where (file), kind] — kind: "" | "fail" | "fix" | "plan"
+const PHASES = [
+{
+  id: "p0", tag: "P0", name: "Seven-country data foundation", dates: "13 Oct 2026", verdict: ["run", "In progress"],
+  scqa: ["Site plans are often ranked on composite KPIs; country comparisons quote national medians.",
+         "Measured speed, people and places sit in different grids, licences and sizes, across seven countries.",
+         "Can all of it land on one fair grid, losing under 1% of people and tests?",
+         "Data acquired; grid build and gate check run next."],
+  steps: [
+    ["Decision", "Gates on GitHub first", "PRD and ADRs with every phase gate pushed before any analysis.", "A gate written after the result proves nothing.", "docs/adr/ADR-002-validation-and-gates.md"],
+    ["Data", "Licences checked", "12 sources checked at the source: Ookla is non-commercial share-alike, OpenCelliD share-alike, the rest open.", "Licences decide what the page may publish.", "README.md"],
+    ["Data", "Seven countries", "Indonesia, Malaysia, Philippines, Germany, France, US, UAE: a focus, two peers, two EU markets, the largest market and the fastest.", "A fair benchmark needs contrast, not just neighbours.", "configs/default_config.yaml"],
+    ["Data", "Speed tiles", "30 global Ookla files read once each, tiles assigned to countries by point-in-polygon.", "One read per file; only seven countries kept.", "scripts/acquire_public_data.py"],
+    ["Data", "Places via official CLI", "Overture places: the official CLI fetched 17.8M US places in ~10 minutes.", "Scanning the 11 GB release per country took hours.", "scripts/acquire_public_data.py", "fix"],
+    ["Data", "Population on H3", "Kontur population is already on H3 resolution 8, the analysis grid.", "No resampling error; one layer for all seven.", "scripts/acquire_public_data.py"],
+    ["Compute (DuckDB · Spark)", "Tiles → hexagons", "Test-weighted mean of log speed per H3 r8 cell; places and cells counted per cell.", "Equal-area cells compare the equator with 51° N fairly.", "src/hexgrid.py"],
+    ["Evaluation", "Assignment gate", "≥ 99% of people and tests on the grid in the right country, checked against full-detail borders.", "Simplified borders must not lose people.", "scripts/build_hex_table.py", "plan"]
+  ],
+  decisions: [["Measured experience per person on H3 resolution 8", "001"], ["Gates for every phase, fixed in advance", "002"]],
+  results: [["People assigned to the grid", "≥ 99% per country", "pending", "wait"], ["Speed tests assigned", "≥ 99% per country", "pending", "wait"]],
+  obstacles: [
+    ["Places download took hours", "Each country re-scanned the whole 11 GB release; an OR of country boxes blocked file skipping", "One box per country; the official CLI for the US (catalog-filtered files)", "Measure the read before choosing the tool"],
+    ["US download died after 4.7M rows", "The CLI's default connect timeout is 3 seconds", "30 s / 120 s timeouts and three retries", "Read tool defaults before long downloads"],
+    ["Germany's file unreadable (no footer)", "A run stopped mid-write left a file that looked finished", "Every step writes to a temporary name and renames when complete", "Make writes atomic before running anything long"],
+    ["Runs crowded an 8 GB laptop", "Several DuckDB jobs and copies at once", "Memory cap 2.5 GB, spill to disk, one heavy job at a time", "Budget memory per job on small machines"],
+    ["'New sites' looked like 2025–26", "OpenCelliD's 'created' marks one-off sightings after a rebuild, not launch dates", "Use only cells first seen ≤ 2024 and observed for months", "Check what a date field means before building on it"],
+    ["The US covered the whole globe", "Alaska's Aleutians cross the date line, so its bounding box spans 360°", "Lower 48 only (stated); France metropolitan only", "Inspect bounding boxes before joining"]
+  ],
+  lessons: ["Fix gates before data, data before models.", "Atomic writes and memory caps are part of the pipeline, not extras.", "The right tool is the one that reads the least data."],
+  star: "Downloading seven countries' places went from hours to ten minutes once I measured what each tool actually read."
+},
+{
+  id: "p1", tag: "P1", name: "Experience gap and fair benchmark", dates: "planned", verdict: ["plan", "Next"],
+  scqa: ["National medians mix dense cities with remote islands.",
+         "A country can look slow only because more of its people live in sparse areas.",
+         "How many people live below 10 and 25 Mbps, compared at equal density?",
+         "Planned."],
+  steps: [
+    ["Spatial statistics", "Share of people below bars", "Population-weighted shares below 5, 10, 25, 50 Mbps; unmeasured people reported separately.", "Count people, not tiles.", "scripts/experience_gap.py", "plan"],
+    ["Spatial statistics", "Density-adjusted", "Shares within pooled density deciles, re-weighted to a common distribution.", "Compare like with like.", "scripts/experience_gap.py", "plan"],
+    ["Evaluation", "95% intervals", "Poisson bootstrap over speed tiles, 500 replicates.", "Small markets get honest uncertainty.", "scripts/experience_gap.py", "plan"],
+    ["Spatial statistics", "Slow hotspots", "Getis–Ord Gi* with FDR 5%; false hotspots on shuffled data with vs without FDR.", "Thousands of tests produce false alarms without control.", "scripts/experience_gap.py", "plan"]
+  ],
+  decisions: [["Raw and density-adjusted shares side by side", "001"], ["Gi* with false-discovery control", "002"]],
+  results: [["Shares with 95% intervals, raw and adjusted", "reported", "pending", "wait"], ["Hotspots at FDR 5%", "reported", "pending", "wait"]],
+  obstacles: [], lessons: [], star: ""
+},
+{ id: "p2", tag: "P2", name: "Spatial speed model", dates: "planned", verdict: ["plan", "Planned"],
+  scqa: ["Speed tests are sparse outside cities.", "Random validation flatters spatial models.", "Can a model predict speed where nobody tested, honestly validated?", "Planned."],
+  steps: [["Model", "Kriging vs boosting", "Ordinary kriging baseline vs gradient boosting with spatial features.", "Gate: ≤ 0.9 × kriging error under spatial block CV.", "planned", "plan"],
+          ["Evaluation", "Spatial block CV", "Blocks and leave-one-country-out; random CV shown only for contrast.", "Neighbouring hexagons leak.", "planned", "plan"],
+          ["Evaluation", "Area of applicability", "Flag where predictors differ from training data.", "Do not predict into the unknown silently.", "planned", "plan"]],
+  decisions: [["Spatial block CV + area of applicability", "002"]], results: [["RMSE ratio vs kriging", "≤ 0.90", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ id: "p3", tag: "P3", name: "What new sites do", dates: "planned", verdict: ["plan", "Planned"],
+  scqa: ["Plans assume new sites lift nearby speeds.", "Nobody checks; sites go where demand is, which biases naive comparisons.", "How much does a new site lift speeds within 500 m?", "Planned."],
+  steps: [["Data", "New cells", "OpenCelliD cells first seen 2023–24 and observed ≥ 180 days (Germany ~40k, US ~61k).", "Only reliable first-seen dates.", "planned", "plan"],
+          ["Model", "Event study", "Callaway–Sant'Anna vs Borusyak imputation; pre-trend placebo.", "Staggered roll-outs bias two-way fixed effects.", "planned", "plan"],
+          ["Decision", "Transfer to Indonesia", "Effect measured in Germany and the US, carried to Indonesia as a stated assumption with a range.", "Indonesia has only ~1.3k reliable new cells.", "planned", "plan"]],
+  decisions: [["Staggered difference-in-differences", "002"]], results: [["Pre-trend intervals include 0", "pass", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ id: "p4", tag: "P4", name: "Budgeted site optimiser", dates: "planned", verdict: ["plan", "Planned"],
+  scqa: ["Sites are usually picked one by one from a ranked list.", "Neighbouring top-ranked sites cover the same people.", "Does optimising the set lift more people than ranking?", "Planned."],
+  steps: [["Data", "Candidate locations", "Hexagons with people below the bar and no nearby cell, from P1 and P2.", "Only places a site could help.", "planned", "plan"],
+          ["Model", "Maximal covering", "Exact integer programme; greedy and KPI ranking as baselines.", "Gate: ≥ 10% more people lifted at equal budget.", "planned", "plan"],
+          ["Evaluation", "Budget and effect range", "Results across budgets K and the P3 effect interval.", "A plan should survive its own uncertainty.", "planned", "plan"]],
+  decisions: [["Covering optimiser vs ranking", "002"]], results: [["People lifted vs ranking", "≥ +10%", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ id: "p5", tag: "P5", name: "API, MCP tools, grounded rationales", dates: "planned", verdict: ["plan", "Planned"],
+  scqa: ["Planners and AI assistants need answers on demand.", "LLM rationales can invent numbers.", "Can agents query gaps and sites with grounded answers at a known cost?", "Planned."],
+  steps: [["Serving & AI", "Tools", "gap_at, top_sites, explain_site, compare_countries over MCP.", "One registry for apps and agents.", "planned", "plan"],
+          ["Serving & AI", "Grounded rationale", "LLM explains a proposed site; every number checked against tool results.", "Same guard as CHN-1's planner.", "planned", "plan"],
+          ["Evaluation", "Cost and latency budgets", "Cost per 1,000 rationales and p95 latency measured (R13).", "Known before shipping.", "planned", "plan"]],
+  decisions: [], results: [["Contracts + LLM evaluation in CI", "pass", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ id: "p6", tag: "P6", name: "Databricks quarterly job", dates: "planned", verdict: ["plan", "Planned"],
+  scqa: ["Ookla publishes quarterly.", "The refresh reads ~300M rows each quarter.", "Can Spark on Databricks reproduce the local numbers exactly?", "Planned."],
+  steps: [["Platform", "Read Ookla on Databricks?", "Test whether Free Edition can reach Ookla's S3; else upload extracts.", "Free Edition limits internet access.", "planned", "plan"],
+          ["Compute (DuckDB · Spark)", "Spark refresh", "Quarterly tiles → H3 with Databricks' built-in H3 functions.", "R15: ~300M rows read per refresh.", "planned", "plan"],
+          ["Evaluation", "Parity + drift", "Reproduce local P1 shares exactly; drift per quarter.", "Same numbers on both platforms.", "planned", "plan"]],
+  decisions: [], results: [["Local P1 shares reproduced", "exact", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ id: "p7", tag: "P7", name: "Pages and web map", dates: "planned", verdict: ["plan", "Planned"],
+  scqa: ["Results must be readable by hiring teams and auditable by engineers.", "Maps of millions of hexagons are heavy.", "Can two pages show it all, browser-tested?", "Planned."],
+  steps: [["Serving & AI", "Results page + map", "R12 page with a hoverable hexagon map.", "Show, don't narrate.", "docs/index.html", "plan"],
+          ["Serving & AI", "Technical walkthrough", "This page (R14), updated as each phase finishes.", "Engineers audit how it was built.", "docs/build.html"],
+          ["Evaluation", "Browser tests", "Real Chrome, three display modes, every chart and step hoverable.", "Rule R10.", "tests/browser/", "plan"]],
+  decisions: [], results: [["Browser tests", "pass", "pending", "wait"]], obstacles: [], lessons: [], star: "" }
+];
+
+const MAP = {
+  "Data": {p0: ["7 countries, 12 sources", "Official CLI for places"], p3: ["Cells first seen ≤ 2024"]},
+  "Compute (DuckDB · Spark)": {p0: ["Tiles → H3 r8", "Atomic writes, memory cap"], p6: ["Spark refresh"]},
+  "Spatial statistics": {p1: ["Shares below 10/25 Mbps", "Density-adjusted", "Gi* + FDR"]},
+  "Model": {p2: ["Kriging vs boosting"], p3: ["Event study"], p4: ["Covering optimiser"]},
+  "Evaluation": {p0: ["Assignment gate"], p1: ["Bootstrap intervals"], p2: ["Spatial block CV"], p3: ["Pre-trend placebo"], p4: ["vs ranking"]},
+  "Serving & AI": {p5: ["API + MCP tools"], p7: ["Hexagon web map"]},
+  "Platform": {p6: ["Databricks job, registry, drift"]}
+};
+
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const tip = $("#tip");
+function showTip(e, html) {
+  tip.innerHTML = html; tip.hidden = false;
+  const r = tip.getBoundingClientRect(), x = (e.clientX ?? e.x) + 14, y = (e.clientY ?? e.y) + 14;
+  tip.style.left = Math.max(8, Math.min(x, innerWidth - r.width - 8)) + "px";
+  tip.style.top = Math.max(8, Math.min(y, innerHeight - r.height - 8)) + "px";
+}
+function hideTip() { tip.hidden = true; }
+const chip = v => `<span class="chip ${v[0]}">${esc(v[1])}</span>`;
+const adrLink = n => `<a href="${REPO}${ADR[n]}">ADR-${n}</a>`;
+const fileLink = f => f === "planned" ? '<span class="muted">planned</span>'
+  : f.split(" · ").map(x => /^(ADR|CHANGELOG)/.test(x) ? esc(x) : `<code>${esc(x)}</code>`).join(" · ");
+
+// ---------- system map
+function renderMap() {
+  const head = `<thead><tr><th>Layer</th>${PHASES.map(p => `<th class="ph" data-id="${p.id}" tabindex="0" title="Open ${p.tag}">${p.tag}<br><span class="muted" style="text-transform:none;font-weight:500">${esc(p.name.split(" ")[0])}…</span></th>`).join("")}</tr></thead>`;
+  const rows = Object.keys(MAP).map(lane => `<tr><td class="lane">${esc(lane)}</td>${PHASES.map(p =>
+    `<td class="cell" data-id="${p.id}">${(MAP[lane][p.id] || []).map(t => `<span>${esc(t)}</span>`).join("") || '<span class="muted">·</span>'}</td>`).join("")}</tr>`).join("");
+  $("#map").innerHTML = head + "<tbody>" + rows + "</tbody>";
+  $("#map").querySelectorAll("th.ph, td.cell").forEach(el => {
+    const p = PHASES.find(x => x.id === el.dataset.id);
+    el.addEventListener("click", () => select(p.id, true));
+    el.addEventListener("keydown", e => { if (e.key === "Enter") select(p.id, true); });
+    el.addEventListener("mousemove", e => showTip(e, `<b>${esc(p.tag)} · ${esc(p.name)}</b>${esc(p.verdict[1])}. Click to open.`));
+    el.addEventListener("mouseleave", hideTip);
+  });
+}
+
+// ---------- phase picker
+function renderPicker() {
+  $("#picker").innerHTML = PHASES.map(p => `<button role="tab" data-id="${p.id}" aria-selected="false">${p.tag} ${chip(p.verdict)}<small>${esc(p.name)}</small></button>`).join("");
+  $("#picker").querySelectorAll("button").forEach(b => b.addEventListener("click", () => select(b.dataset.id, false)));
+}
+
+// ---------- swimlane (SVG, laid out from the step list)
+const COL = 150, BOX_W = 132, BOX_H = 62, LANE_H = 86, LABEL_W = 132, PAD = 14;
+function wrap(text, max) {
+  const words = text.split(" "), lines = []; let cur = "";
+  for (const w of words) { if ((cur + " " + w).trim().length > max && cur) { lines.push(cur); cur = w; } else cur = (cur + " " + w).trim(); }
+  if (cur) lines.push(cur); return lines.slice(0, 3);
+}
+function renderSwim(p, state) {
+  const lanes = LANES.filter(l => p.steps.some(s => s[0] === l));
+  const W = LABEL_W + p.steps.length * COL + PAD, H = lanes.length * LANE_H;
+  const pos = p.steps.map((s, i) => ({x: LABEL_W + i * COL + (COL - BOX_W) / 2, y: lanes.indexOf(s[0]) * LANE_H + (LANE_H - BOX_H) / 2}));
+  let svg = `<svg class="swim" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(p.tag)} build steps by layer">
+    <defs><marker id="ah-${p.id}" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="arrowhead" d="M0,0 L8,4 L0,8 z"/></marker></defs>`;
+  lanes.forEach((l, i) => {
+    svg += `<rect class="lane-bg${i % 2 ? " alt" : ""}" x="0" y="${i * LANE_H}" width="${W}" height="${LANE_H}"/>`;
+    svg += `<line class="lane-line" x1="0" x2="${W}" y1="${(i + 1) * LANE_H}" y2="${(i + 1) * LANE_H}"/>`;
+    wrap(l, 14).forEach((t, k, arr) => svg += `<text class="lane-label" x="12" y="${i * LANE_H + LANE_H / 2 + (k - (arr.length - 1) / 2) * 14 + 4}">${esc(t)}</text>`);
+  });
+  for (let i = 0; i < pos.length - 1; i++) {
+    const a = pos[i], b = pos[i + 1], x1 = a.x + BOX_W, y1 = a.y + BOX_H / 2, x2 = b.x - 2, y2 = b.y + BOX_H / 2, mx = (x1 + x2) / 2;
+    svg += `<path class="edge" marker-end="url(#ah-${p.id})" d="M${x1},${y1} H${mx} V${y2} H${x2}"/>`;
+  }
+  p.steps.forEach((s, i) => {
+    const {x, y} = pos[i], kind = s[5] ? ` kind-${s[5]}` : "", cls = i === state.i ? " current" : i < state.i ? " done" : "";
+    const lines = wrap(s[1], 16);
+    svg += `<g class="step${kind}${cls}" data-i="${i}" tabindex="0" role="button" aria-label="Step ${i + 1}: ${esc(s[1])}">
+      <rect x="${x}" y="${y}" width="${BOX_W}" height="${BOX_H}" rx="8"/>
+      <text class="num" x="${x + 9}" y="${y + 16}">${i + 1}</text>
+      ${lines.map((t, k) => `<text x="${x + 24}" y="${y + 17 + k * 15}">${esc(t)}</text>`).join("")}</g>`;
+  });
+  return svg + "</svg>";
+}
+function stepDetail(p, i) {
+  const s = p.steps[i], kind = {fail: "Where it failed", fix: "A fix", plan: "Planned"}[s[5]] || "";
+  return `<div class="detail" aria-live="polite"><span class="eyebrow">Step ${i + 1} of ${p.steps.length} · ${esc(s[0])}${kind ? " · " + kind : ""}</span>
+    <h3>${esc(s[1])}</h3><div class="kv"><b>What</b><span>${esc(s[2])}</span><b>Why</b><span>${esc(s[3])}</span><b>Where</b><span>${fileLink(s[4])}</span></div></div>`;
+}
+
+// ---------- phase body
+const state = {id: "p0", i: 0};
+function renderPhase() {
+  const p = PHASES.find(x => x.id === state.id);
+  const scqa = ["Situation", "Complication", "Question", "Answer"].map((h, k) => `<div><b>${h}</b><p>${esc(p.scqa[k])}</p></div>`).join("");
+  const res = p.results.map(r => `<tr><td>${esc(r[0])}</td><td class="mono">${esc(r[1])}</td><td class="mono">${esc(r[2])}</td><td>${
+    r[3] === "ok" ? '<span class="verdict-ok">pass</span>' : r[3] === "no" ? '<span class="verdict-no">fail</span>' : r[3] === "wait" ? '<span class="verdict-wait">pending</span>' : '<span class="muted">info</span>'}</td></tr>`).join("");
+  const obs = p.obstacles.length ? `<div class="part box"><span class="eyebrow">Obstacles · symptom → root cause → fix → prevention</span>
+    <div class="scroll"><table class="obst"><thead><tr><th>Symptom</th><th>Root cause</th><th>Fix</th><th>Prevention</th></tr></thead><tbody>${
+    p.obstacles.map(o => `<tr>${o.map((c, k) => `<td data-label="${["Symptom", "Root cause", "Fix", "Prevention"][k]}">${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>` : "";
+  $("#phase").innerHTML = `
+    <div class="part ph-top"><div class="phase-head"><h2>${esc(p.tag)} · ${esc(p.name)}</h2>${chip(p.verdict)}<span class="dates">${esc(p.dates)}</span></div>
+    <div class="scqa">${scqa}</div></div>
+    <div class="part lanewrap">
+      <div class="walk"><span class="eyebrow">Build steps</span>
+        <button type="button" id="prev">◀ Prev</button><button type="button" class="primary" id="next">Next ▶</button>
+        <span class="pos" id="pos"></span></div>
+      <div class="scroll" id="swim"></div>
+      <div class="lane-legend"><span><i></i>step</span><span><i class="fail"></i>where it failed</span><span><i class="fix"></i>a fix</span><span><i class="plan"></i>planned</span><span>Hover a step for a summary; click or use Next for details.</span></div>
+      <div id="detail"></div>
+    </div>
+    <div class="part two">
+      <div class="box"><span class="eyebrow">Result vs gate (set before the work)</span>
+        <div class="scroll"><table><thead><tr><th>Check</th><th>Target</th><th>Result</th><th></th></tr></thead><tbody>${res}</tbody></table></div></div>
+      <div class="box"><span class="eyebrow">Key decisions</span>${p.decisions.length ? `<ul class="points">${p.decisions.map(d => `<li>${esc(d[0])} · ${adrLink(d[1])}</li>`).join("")}</ul>` : '<p class="muted">To be decided.</p>'}
+        ${p.lessons.length ? `<span class="eyebrow">Lessons learned</span><ul class="points">${p.lessons.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}</div>
+    </div>
+    ${obs}
+    ${p.star ? `<div class="part box"><span class="eyebrow">STAR talking point</span><p class="star">“${esc(p.star)}”</p></div>` : ""}`;
+  $("#prev").addEventListener("click", () => step(-1));
+  $("#next").addEventListener("click", () => step(1));
+  drawSteps();
+}
+function drawSteps() {
+  const p = PHASES.find(x => x.id === state.id);
+  $("#swim").innerHTML = renderSwim(p, state);
+  $("#detail").innerHTML = stepDetail(p, state.i);
+  $("#pos").textContent = `Step ${state.i + 1} of ${p.steps.length}`;
+  $("#prev").disabled = state.i === 0; $("#next").disabled = state.i === p.steps.length - 1;
+  $("#swim").querySelectorAll("g.step").forEach(g => {
+    const s = p.steps[+g.dataset.i];
+    const go = () => { state.i = +g.dataset.i; drawSteps(); $(`#swim g.step[data-i="${state.i}"]`).focus({preventScroll: true}); };
+    g.addEventListener("click", go);
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    g.addEventListener("mousemove", e => showTip(e, `<b>${+g.dataset.i + 1}. ${esc(s[1])}</b>${esc(s[2])}`));
+    g.addEventListener("mouseleave", hideTip);
+    g.addEventListener("focus", () => { const r = g.getBoundingClientRect(); showTip({clientX: r.left, clientY: r.bottom}, `<b>${+g.dataset.i + 1}. ${esc(s[1])}</b>${esc(s[2])}`); });
+    g.addEventListener("blur", hideTip);
+  });
+  const cur = $("#swim g.step.current");
+  if (cur) { const box = $("#swim"), r = cur.getBoundingClientRect(), b = box.getBoundingClientRect();
+    if (r.left < b.left || r.right > b.right) box.scrollLeft += r.left - b.left - 40; }
+}
+function step(d) { const p = PHASES.find(x => x.id === state.id); state.i = Math.max(0, Math.min(p.steps.length - 1, state.i + d)); hideTip(); drawSteps(); }
+function select(id, scroll) {
+  state.id = id; state.i = 0; hideTip();
+  document.querySelectorAll("#picker button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.id === id)));
+  document.querySelectorAll("#map th.ph, #map td.cell").forEach(el => el.classList.toggle("on", el.dataset.id === id));
+  renderPhase();
+  try { history.replaceState(null, "", "#" + id); } catch (e) { /* sandboxed viewers */ }
+  if (scroll) $("#h-phase").scrollIntoView({behavior: "smooth", block: "start"});
+}
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input, textarea")) return;
+  if (e.key === "ArrowRight") step(1); else if (e.key === "ArrowLeft") step(-1);
+});
+addEventListener("scroll", hideTip, {passive: true});
+
+renderMap(); renderPicker();
+const start = (location.hash || "").slice(1);
+select(PHASES.some(p => p.id === start) ? start : "p0", false);
+</script>

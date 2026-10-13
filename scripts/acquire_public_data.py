@@ -122,23 +122,64 @@ def population(release: str = "20231101") -> None:
     print("population:", c.sql(f"SELECT iso3, count(*) hexes, round(sum(population)/1e6, 1) AS million FROM '{out}' GROUP BY 1 ORDER BY 3 DESC").fetchall())
 
 
-def overture(release: str = "2026-09-23.1") -> None:
+PLACE_COLS = """id, names."primary" AS name, basic_category, taxonomy."primary" AS category, confidence, operating_status,
+               addresses[1].region AS region, addresses[1].locality AS locality, ST_X(geometry) AS lon, ST_Y(geometry) AS lat"""
+
+
+def overture(release: str = "2026-09-23.1", only: list[str] | None = None) -> None:
+    """Places per country, one country per pass with a single bounding box (lets DuckDB skip row groups).
+    The US is fetched with Overture's own CLI instead (step `overture_us`): one box, catalog-filtered files."""
     d = DATA / "overture"; d.mkdir(parents=True, exist_ok=True)
     c = _duck(); _countries(c)
     for k, (_, iso2, _, _) in COUNTRIES.items():
         out = d / f"{k.lower()}_places_{release}.parquet"
-        if out.exists() or (k == "IDN" and (d / f"idn_places_{release}.parquet").exists()):
+        if out.exists() or k == "USA" or (only and k not in only):
             continue
-        b = c.sql(f"SELECT x0, x1, y0, y1 FROM cb WHERE iso3 = '{k}'").fetchone()
-        tmp = out.with_suffix(f".tmp{os.getpid()}.parquet")
-        t0 = time.time()
-        c.sql(f"""COPY (SELECT id, names."primary" AS name, basic_category, taxonomy."primary" AS category, confidence, operating_status,
-                         addresses[1].region AS region, addresses[1].locality AS locality, ST_X(geometry) AS lon, ST_Y(geometry) AS lat
+        x0, x1, y0, y1 = c.sql(f"SELECT x0, x1, y0, y1 FROM cb WHERE iso3 = '{k}'").fetchone()
+        tmp = out.with_suffix(f".tmp{os.getpid()}.parquet"); t0 = time.time()
+        c.sql(f"""COPY (SELECT {PLACE_COLS}
                   FROM read_parquet('s3://overturemaps-us-west-2/release/{release}/theme=places/type=place/*.parquet', hive_partitioning=1)
-                  WHERE bbox.xmin BETWEEN {b[0]} AND {b[1]} AND bbox.ymin BETWEEN {b[2]} AND {b[3]} AND addresses[1].country = '{iso2}')
-                  TO '{tmp}' (FORMAT parquet)""")
-        os.replace(tmp, out)  # atomic: an interrupted run never leaves a file that looks finished
+                  WHERE bbox.xmin >= {x0} AND bbox.xmax <= {x1} AND bbox.ymin >= {y0} AND bbox.ymax <= {y1}
+                    AND addresses[1].country = '{iso2}') TO '{tmp}' (FORMAT parquet)""")
+        os.replace(tmp, out)
         print(f"overture {k}: {c.sql(f'SELECT count(*) FROM {chr(39)}{out}{chr(39)}').fetchone()[0]:,} places in {time.time() - t0:.0f}s", flush=True)
+
+
+def overture_cli(only: list[str] | None = None, release: str = "2026-09-23.1") -> None:
+    """Places with Overture's official CLI (overturemaps download): one bounding box per country, catalog-filtered
+    files, then the same columns as `overture`. Much faster than scanning the release (US: 17.8M places in ~10 min)."""
+    d = DATA / "overture"; d.mkdir(parents=True, exist_ok=True)
+    c = _duck(); _countries(c)
+    for k in only or ["USA"]:
+        iso2 = COUNTRIES[k][1]
+        out = d / f"{k.lower()}_places_{release}.parquet"
+        if out.exists():
+            continue
+        x0, x1, y0, y1 = c.sql(f"SELECT x0, x1, y0, y1 FROM cb WHERE iso3 = '{k}'").fetchone()
+        raw = d / f"_{k.lower()}_raw_{release}.parquet"; t0 = time.time()
+        for attempt in range(1, 4):  # the CLI's default connect timeout is 3 s; long downloads hit it
+            r = subprocess.run(["overturemaps", "download", f"--bbox={x0},{y0},{x1},{y1}", "-f", "geoparquet", "--type=place",
+                                f"--release={release}", "--connect_timeout=30", "--request_timeout=120", "-o", str(raw.with_suffix(".part"))])
+            if r.returncode == 0:
+                break
+            print(f"overture {k} (CLI): attempt {attempt} failed, retrying", flush=True)
+        else:
+            raise SystemExit(f"overture {k} download failed 3 times")
+        os.replace(raw.with_suffix(".part"), raw)
+        for f in d.glob(f"_{k.lower()}_raw_*.state"):
+            f.unlink()
+        tmp = out.with_suffix(".tmp.parquet")
+        c.sql(f"COPY (SELECT {PLACE_COLS} FROM read_parquet('{raw}') WHERE addresses[1].country = '{iso2}') TO '{tmp}' (FORMAT parquet)")
+        os.replace(tmp, out); raw.unlink()
+        print(f"overture {k} (CLI): {c.sql(f'SELECT count(*) FROM {chr(39)}{out}{chr(39)}').fetchone()[0]:,} places in {time.time() - t0:.0f}s", flush=True)
+
+
+def overture_us() -> None:
+    overture_cli(["USA"])
+
+
+def overture_are() -> None:
+    overture_cli(["ARE"])
 
 
 def boundaries() -> None:
@@ -152,7 +193,7 @@ def boundaries() -> None:
                 print(f"boundaries {k} {m['boundaryType']}: {m['admUnitCount']} units, licence {m['boundaryLicense']}", flush=True)
 
 
-STEPS = {"ookla": ookla, "opencellid": opencellid, "population": population, "overture": overture, "boundaries": boundaries}
+STEPS = {"ookla": ookla, "opencellid": opencellid, "population": population, "overture": overture, "overture_us": overture_us, "overture_are": overture_are, "boundaries": boundaries}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("steps", nargs="+", choices=list(STEPS)); a = ap.parse_args()

@@ -45,3 +45,7 @@
   title: "Stratifying the Digital Divide: Analysis of Socio-Economic Influences on Internet Performance"
   used_in: [ADR-001]
   role: recent use of Ookla tiles for inequality analysis
+- key: dijkstra_2021
+  doi: 10.1016/j.jue.2020.103312
+  used_in: [ADR-003]
+  role: Degree of Urbanisation applied globally (morphology, E2)
