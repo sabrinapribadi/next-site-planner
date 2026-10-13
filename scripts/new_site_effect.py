@@ -96,8 +96,14 @@ def run(d: dict, G: np.ndarray, Y: np.ndarray, keep=None, **kw) -> dict:
 
 
 def regression_arms(d: dict, G: np.ndarray) -> dict:
-    """Imputation (two-stage, Borusyak et al. / Gardner) and two-way fixed effects, new sites in ring 0."""
+    """Imputation (two-stage, Borusyak et al. / Gardner) and two-way fixed effects, new sites in ring 0.
+    Memory: one dummy per hexagon, so never-treated hexagons are sampled (seeded) up to 20× the treated count;
+    every treated and not-yet-treated hexagon is kept. The Callaway–Sant'Anna estimate uses all units."""
     m = ~np.isnan(G)
+    nev = np.flatnonzero(m & np.isinf(G)); cap = 20 * int((m & np.isfinite(G)).sum())
+    if len(nev) > cap:
+        drop = np.random.default_rng(11).choice(nev, size=len(nev) - cap, replace=False)
+        m = m.copy(); m[drop] = False
     U, Tt = np.nonzero(~np.isnan(d["Ym"][m]))
     gi = G[m][U]
     df = pd.DataFrame({"unit": U, "t": Tt, "y": d["Ym"][m][U, Tt], "strat_t": d["strat"][m][U] * 100 + Tt, "block": pd.factorize(d["block"][m][U])[0]})
@@ -164,6 +170,7 @@ def main() -> None:
                      "passed": bool(nr.get("pretrend", {}).get("all_ci_include_0") and nr.get("pretrend", {}).get("p_value", 0) > 0.05)}
         res[k] = r
         log(k, "gate", r["gate"], "| neg. control", r["negative_control_fixed"].get("post_avg_0_4"), "| placebo", r["placebo_timing"].get("post_avg_0_4"))
+        (ROOT / CFG["paths"]["outputs_dir"] / "p3_partial.json").write_text(json.dumps(res, default=str))   # survive a crash
     out = {"design": "ADR-007", "events_window": "2023Q3-2024Q4", "event_times": [EVENTS.start, EVENTS.stop - 1], "bootstrap_reps": REPS,
            "countries": res, "gate_passed": {k: v["gate"].get("passed") for k, v in res.items()}, "seconds": round(time.time() - t0)}
     (ROOT / CFG["paths"]["outputs_dir"] / "p3_new_site_effect.json").write_text(json.dumps(out, indent=1, default=lambda o: int(o) if isinstance(o, np.integer) else str(o)))
