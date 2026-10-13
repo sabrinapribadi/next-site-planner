@@ -7,14 +7,22 @@ Kontur's (already H3 r8). Places and cells are counts per hexagon.
 
 from __future__ import annotations
 
+import os
+from pathlib import Path
+
 import duckdb
 
 RES = 8
 
 
 def connect() -> duckdb.DuckDBPyConnection:
+    """DuckDB with H3 and spatial; capped so it runs on an 8 GB machine (spills to a local, non-synced temp folder)."""
     c = duckdb.connect()
     c.sql("INSTALL h3 FROM community; LOAD h3; INSTALL spatial; LOAD spatial;")
+    tmp = Path(os.environ.get("DUCKDB_TEMP_DIR", "~/Library/Caches/next-site-planner/duckdb")).expanduser()
+    tmp.mkdir(parents=True, exist_ok=True)
+    c.sql(f"""SET memory_limit = '{os.environ.get("DUCKDB_MEMORY_LIMIT", "3GB")}'; SET threads = {os.environ.get("DUCKDB_THREADS", "4")};
+              SET preserve_insertion_order = false; SET temp_directory = '{tmp}'""")
     return c
 
 
