@@ -49,10 +49,10 @@ def main() -> None:
     c = connect()
     iso = list(CFG["countries"])
     ne = DATA / "countries" / "ne_10m_admin_0_countries.geojson"
-    c.sql(f"CREATE TABLE full AS SELECT ADM0_A3 AS iso3, geom FROM ST_Read('{ne}') WHERE ADM0_A3 IN ({','.join(repr(i) for i in iso)})")
+    c.sql(f"CREATE TABLE borders AS SELECT ADM0_A3 AS iso3, geom FROM ST_Read('{ne}') WHERE ADM0_A3 IN ({','.join(repr(i) for i in iso)})")
     for k, w in CLIP.items():
-        c.sql(f"UPDATE full SET geom = ST_Intersection(geom, ST_GeomFromText('{w}')) WHERE iso3 = '{k}'")
-    c.sql("CREATE TABLE fb AS SELECT *, ST_XMin(geom) x0, ST_XMax(geom) x1, ST_YMin(geom) y0, ST_YMax(geom) y1 FROM full")
+        c.sql(f"UPDATE borders SET geom = ST_Intersection(geom, ST_GeomFromText('{w}')) WHERE iso3 = '{k}'")
+    c.sql("CREATE TABLE fb AS SELECT *, ST_XMin(geom) x0, ST_XMax(geom) x1, ST_YMin(geom) y0, ST_YMax(geom) y1 FROM borders")
 
     # speed panel: every quarter, mobile and fixed
     # file list fixed once, so files still arriving (later fixed-line quarters) change neither the panel nor the manifest
