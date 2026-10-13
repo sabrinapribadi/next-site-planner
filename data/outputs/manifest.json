@@ -1,5 +1,5 @@
 {
- "built": "2026-10-13T12:00:35+00:00",
+ "built": "2026-10-13T12:53:24+00:00",
  "inputs": [
   {
    "path": "countries/ne_10m_admin_0_countries.geojson",
@@ -27,6 +27,83 @@
    "bytes": 46263638,
    "sha256": "007e79cc99d4ae6b4ccc2ce65fe9c7c7eb1caca04212c0e45f57e016a7f45e2b",
    "rows": 2369258,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2023q4.parquet",
+   "bytes": 46569646,
+   "sha256": "e56766178ca35d689fbcd0441282eaebb4a9de49f3eae291d2dd91ff31c7aa2a",
+   "rows": 2380451,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2024q1.parquet",
+   "bytes": 45158438,
+   "sha256": "0ab18eefd2513284f8c77829e00e2d3896d5214cee50d914359ef560873bfb20",
+   "rows": 2297428,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2024q2.parquet",
+   "bytes": 45125653,
+   "sha256": "688f2291c4151300293418722f1311f0e10ab3cde73c6f45753242cef202e61a",
+   "rows": 2301937,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2024q3.parquet",
+   "bytes": 45852431,
+   "sha256": "13c61485c61c9f380d650485dc2b87e811c6ea4b3897d04a823140a07792c7cb",
+   "rows": 2328676,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2024q4.parquet",
+   "bytes": 45770408,
+   "sha256": "187c5b344ce0b4b0eb15f3b0a2ff61793f5a270186db02cb87a354beb632f1f3",
+   "rows": 2324939,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2025q1.parquet",
+   "bytes": 42558358,
+   "sha256": "62efab68213e00e3b185f7d019fe9eb28b9dacc098ad53ef25982028f6c3e338",
+   "rows": 2158664,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2025q2.parquet",
+   "bytes": 45763036,
+   "sha256": "c84bc63a09a027899ab607e0ad331791f22d217083b076a927ada2e19eddd118",
+   "rows": 2319755,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2025q3.parquet",
+   "bytes": 47342479,
+   "sha256": "0de398ec13b1dc766c7c64b1d1c391d3380591ce7659902630cd997c3dd9a7c2",
+   "rows": 2395179,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2025q4.parquet",
+   "bytes": 46975208,
+   "sha256": "a7231bcfd0b3571fb01cd8c37a09bfe4cc22d346ba97b990b9f9f0c6f263d637",
+   "rows": 2374200,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2026q1.parquet",
+   "bytes": 44857580,
+   "sha256": "78509cc57ce87fa2f3d27a0e4022d2d6380b60dbaeda69c8f15d096605ff25d6",
+   "rows": 2267280,
+   "modified": "2026-10-13"
+  },
+  {
+   "path": "ookla7/fixed/2026q2.parquet",
+   "bytes": 46271904,
+   "sha256": "a6111c7742247afd7164393c46f485f2d424bc0338b12bf25e2d4cd8e34fec82",
+   "rows": 2338039,
    "modified": "2026-10-13"
   },
   {

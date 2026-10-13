@@ -7,6 +7,12 @@
       "population_kontur": 269734124,
       "population_world_bank_2023": 281190067.0,
       "kontur_vs_world_bank": 0.959,
+      "outside_own_border": {
+        "other_share_population": 0.0,
+        "other_share_tests": 0.0,
+        "sea_share_population": 0.0026,
+        "sea_share_tests": 0.0045
+      },
       "hexagons": 861723
     },
     "MYS": {
@@ -15,6 +21,12 @@
       "population_kontur": 33318291,
       "population_world_bank_2023": 35126298.0,
       "kontur_vs_world_bank": 0.949,
+      "outside_own_border": {
+        "other_share_population": 0.0001,
+        "other_share_tests": 0.0002,
+        "sea_share_population": 0.0036,
+        "sea_share_tests": 0.0054
+      },
       "hexagons": 148561
     },
     "PHL": {
@@ -23,6 +35,12 @@
       "population_kontur": 107900697,
       "population_world_bank_2023": 114891199.0,
       "kontur_vs_world_bank": 0.939,
+      "outside_own_border": {
+        "other_share_population": 0.0,
+        "other_share_tests": 0.0,
+        "sea_share_population": 0.0077,
+        "sea_share_tests": 0.0121
+      },
       "hexagons": 278356
     },
     "DEU": {
@@ -31,6 +49,12 @@
       "population_kontur": 83253701,
       "population_world_bank_2023": 83287273.0,
       "kontur_vs_world_bank": 1.0,
+      "outside_own_border": {
+        "other_share_population": 0.0006,
+        "other_share_tests": 0.0009,
+        "sea_share_population": 0.0002,
+        "sea_share_tests": 0.0013
+      },
       "hexagons": 385726
     },
     "FRA": {
@@ -39,6 +63,12 @@
       "population_kontur": 63873188,
       "population_world_bank_2023": 68372286.0,
       "kontur_vs_world_bank": 0.934,
+      "outside_own_border": {
+        "other_share_population": 0.0003,
+        "other_share_tests": 0.0007,
+        "sea_share_population": 0.0015,
+        "sea_share_tests": 0.0097
+      },
       "hexagons": 616975
     },
     "USA": {
@@ -47,6 +77,12 @@
       "population_kontur": 332225065,
       "population_world_bank_2023": 336755052.0,
       "kontur_vs_world_bank": 0.987,
+      "outside_own_border": {
+        "other_share_population": 0.0001,
+        "other_share_tests": 0.0003,
+        "sea_share_population": 0.0013,
+        "sea_share_tests": 0.0034
+      },
       "hexagons": 4329327
     },
     "ARE": {
@@ -55,12 +91,18 @@
       "population_kontur": 9038504,
       "population_world_bank_2023": 10483751.0,
       "kontur_vs_world_bank": 0.862,
+      "outside_own_border": {
+        "other_share_population": 0.0013,
+        "other_share_tests": 0.003,
+        "sea_share_population": 0.0051,
+        "sea_share_tests": 0.016
+      },
       "hexagons": 25913
     }
   },
   "contracts_broken": [],
-  "inputs_in_manifest": 29,
+  "inputs_in_manifest": 40,
   "gate_passed": true,
-  "seconds": 151,
-  "panel_rows": 15324412
+  "seconds": 185,
+  "panel_rows": 30900777
 }
