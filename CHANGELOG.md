@@ -2,6 +2,18 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.4.1] — 2026-10-13 — District zoom at analysis resolution (0.74 km²)
+**Files:** docs/index.html, scripts/export_page_data.py, docs/data/d/*.js, tests/browser/hover_test.js
+- **Situation:** The map showed ~250 km² display cells, which read as if sites were planned at that size; a planner needs the 0.74 km² analysis hexagons.
+- **Task:** Let a reader zoom from the country view into one district's analysis hexagons without making the page heavy.
+- **Action:**
+  - One small file per district in any top-10 list (113 files, 12 MB, the largest 0.5 MB), loaded on demand.
+  - **District view:** each hexagon is coloured tested-below / tested-above / not tested. Hover shows people, area type, measured speed, gap type and cluster membership. A back button returns to the country.
+  - Map heading and note now say "display cells ≈ 250 km²; analysis on 0.74 km²".
+  - **Fixed a tooltip that could stick:** opening a section redrew a chart under the pointer, so it never received "mouse left".
+- **Result:** Hover tests pass 7 of 7 in light, dark and phone modes, twice in a row. Example: Bogor has 2,458 hexagons and 4.42M people.
+- **Talking point:** "The overview stays light, but every district can be opened at the resolution the analysis — and later the site search — actually uses."
+
 ## [0.4.0] — 2026-10-13 — Results page live: hexagon map, district list, fair country comparison
 **Files:** docs/index.html, docs/data/page_data.js, scripts/export_page_data.py, tests/browser/hover_test.js, Makefile
 - **Situation:** P0 and P1 passed, but the results only existed as JSON and a technical walkthrough; a planner or hiring manager could not see them.

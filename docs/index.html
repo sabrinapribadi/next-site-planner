@@ -99,6 +99,11 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
 .legend { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 12px; color: var(--muted); align-items: center; }
 .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 5px; border: 1px solid var(--line); }
 .legend i.untested { background: repeating-linear-gradient(45deg, var(--untested) 0 3px, transparent 3px 6px); }
+.maphead { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; min-height: 30px; font-size: 13px; }
+.maphead button { font: 500 13px var(--font-mono); border: 1px solid var(--line); background: var(--surface); color: var(--accent); border-radius: 8px; padding: 5px 10px; cursor: pointer; }
+.maphead b { font-weight: 600; }
+.legend i.pred { background: repeating-linear-gradient(45deg, var(--r2) 0 3px, transparent 3px 6px); }
+.legend i.predok { background: repeating-linear-gradient(45deg, var(--ok) 0 3px, transparent 3px 6px); }
 .toplist { list-style: none; padding: 0; display: grid; gap: 2px; counter-reset: rank; }
 .toplist li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 13px; }
 .toplist li::before { counter-increment: rank; content: counter(rank); font: 600 12px var(--font-mono); color: var(--muted); }
@@ -239,14 +244,15 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
 
   <div class="mapgrid">
     <div style="display:grid; gap:8px; min-width:0">
+      <div class="maphead" id="maphead"></div>
       <div class="mapwrap" id="mapwrap"><canvas id="map" aria-label="Map of people below the speed bar" role="img"></canvas><div class="tip" hidden></div></div>
       <div class="legend" id="legend"></div>
-      <p class="muted small">Each hexagon ≈ 250 km². Colour = share of tested people below the bar. Rings mark slow clusters at 1 km scale. No basemap: the shape is where people live.</p>
+      <p class="muted small" id="map-note"></p>
     </div>
     <div style="display:grid; gap:8px; min-width:0">
       <span class="eyebrow" id="top-h">Districts with the most people below the bar</span>
       <ol class="toplist" id="toplist"></ol>
-      <p class="muted small">A starting list for planners, not yet a site plan: phases 2–4 add untested areas, measured site effects and costs.</p>
+      <p class="muted small">Click a district to zoom to its 0.74 km² analysis hexagons. A starting list for planners, not yet a site plan: phases 2–4 add untested areas, measured site effects and costs.</p>
     </div>
   </div>
 
@@ -358,7 +364,7 @@ const pct = (x, d = 1) => (100 * x).toFixed(d) + "%";
 const mil = (x) => x >= 10 ? x.toFixed(1) + "M" : x >= 1 ? x.toFixed(2) + "M" : Math.round(x * 1000) + "k";
 const ppl = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "k" : String(Math.round(n));
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const state = { bar: 25, iso: "IDN", sel: [] };
+const state = { bar: 25, iso: "IDN", sel: [], detail: null };
 const label = (k) => (k === "ARE" ? "UAE" : C[k].name);
 
 // ---------- tooltips: inside the chart's own box
@@ -399,29 +405,40 @@ function renderControls() {
   $("#bar-seg").innerHTML = BARS.map((b) => `<button type="button" data-bar="${b}" aria-pressed="${b === state.bar}">${b} Mbps</button>`).join("");
   $("#iso-seg").innerHTML = ISOS.map((k) => `<button type="button" data-iso="${k}" aria-pressed="${k === state.iso}" title="${esc(C[k].name)}">${k}</button>`).join("");
   $("#bar-seg").querySelectorAll("button").forEach((x) => x.addEventListener("click", () => { state.bar = +x.dataset.bar; renderAll(); }));
-  $("#iso-seg").querySelectorAll("button").forEach((x) => x.addEventListener("click", () => { state.iso = x.dataset.iso; state.sel = []; renderAll(); }));
+  $("#iso-seg").querySelectorAll("button").forEach((x) => x.addEventListener("click", () => { state.iso = x.dataset.iso; state.sel = []; state.detail = null; renderAll(); }));
 }
 
-// ---------- map
-const geo = {};
+// ---------- map: country overview (~250 km² display cells) or one district at analysis resolution (H3 r8, ~0.74 km²)
+const geo = {}, dgeo = {};
+function boundsOf(polys) {
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (const b of polys) for (const [la, lo] of b) { if (lo < x0) x0 = lo; if (lo > x1) x1 = lo; if (la < y0) y0 = la; if (la > y1) y1 = la; }
+  return { x0, x1, y0, y1, kx: Math.cos(((y0 + y1) / 2) * Math.PI / 180) };
+}
 function prep(iso) {
   if (geo[iso]) return geo[iso];
-  const m = C[iso].map, n = m.h.length, polys = new Array(n), idx = new Map();
-  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-  for (let i = 0; i < n; i++) {
-    const id = m.h[i] + "fffffff"; idx.set(m.h[i], i);
-    const b = h3.cellToBoundary(id); polys[i] = b;
-    for (const [la, lo] of b) { if (lo < x0) x0 = lo; if (lo > x1) x1 = lo; if (la < y0) y0 = la; if (la > y1) y1 = la; }
-  }
+  const m = C[iso].map, idx = new Map(), polys = m.h.map((h, i) => { idx.set(h, i); return h3.cellToBoundary(h + "fffffff"); });
   const hot = C[iso].hotspot_cells.map(([c, p, s]) => [h3.cellToLatLng(c), p, s]);
-  return (geo[iso] = { polys, idx, x0, x1, y0, y1, kx: Math.cos(((y0 + y1) / 2) * Math.PI / 180), hot });
+  return (geo[iso] = { polys, idx, res: 5, tail: 7, hot, ...boundsOf(polys) });
 }
+function prepDistrict(key) {
+  if (dgeo[key]) return dgeo[key];
+  const d = window.GEO1_D[key], idx = new Map(), polys = d.h.map((h, i) => { idx.set(h, i); return h3.cellToBoundary(h + "fffff"); });
+  return (dgeo[key] = { polys, idx, res: 8, tail: 5, d, ...boundsOf(polys) });
+}
+const Phi = (z) => { const t = 1 / (1 + 0.2316419 * Math.abs(z)), d = 0.3989423 * Math.exp(-z * z / 2);
+  const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); return z > 0 ? 1 - p : p; };
+function pBelow(d, i, bar) { return d.pm && d.pm[i] > 0 && d.sg[i] > 0 ? Phi((Math.log(bar) - Math.log(d.pm[i])) / d.sg[i]) : null; }
 function binColor(v) { return v < 0 ? null : v < 10 ? css("--r0") : v < 25 ? css("--r1") : v < 50 ? css("--r2") : v < 75 ? css("--r3") : css("--r4"); }
+function stripes(ctx, color) {
+  const pc = document.createElement("canvas"); pc.width = pc.height = 6; const px = pc.getContext("2d");
+  px.strokeStyle = color; px.lineWidth = 2; px.beginPath(); px.moveTo(0, 6); px.lineTo(6, 0); px.stroke(); return ctx.createPattern(pc, "repeat");
+}
 let proj = null;
 function drawMap() {
-  const iso = state.iso, g = prep(iso), m = C[iso].map, bi = BARS.indexOf(state.bar);
+  const det = state.detail, g = det ? prepDistrict(det) : prep(state.iso), bi = BARS.indexOf(state.bar);
   const wrap = $("#mapwrap"), cv = $("#map"), W = wrap.clientWidth;
-  const aspect = ((g.x1 - g.x0) * g.kx) / (g.y1 - g.y0);
+  const aspect = Math.max(0.3, ((g.x1 - g.x0) * g.kx) / Math.max(1e-6, g.y1 - g.y0));
   const H = Math.round(Math.max(260, Math.min(600, W / aspect)));
   const dpr = window.devicePixelRatio || 1; cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + "px";
   const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
@@ -429,27 +446,43 @@ function drawMap() {
   const ox = (W - (g.x1 - g.x0) * g.kx * s) / 2, oy = (H - (g.y1 - g.y0) * s) / 2;
   const P = (la, lo) => [ox + (lo - g.x0) * g.kx * s, oy + (g.y1 - la) * s];
   proj = { g, s, ox, oy };
-  // striped pattern for untested
-  const pc = document.createElement("canvas"); pc.width = pc.height = 6; const px = pc.getContext("2d");
-  px.strokeStyle = css("--untested"); px.lineWidth = 2; px.beginPath(); px.moveTo(0, 6); px.lineTo(6, 0); px.stroke();
-  const pat = ctx.createPattern(pc, "repeat");
-  for (let i = 0; i < g.polys.length; i++) {
-    const v = m.b[bi][i], col = binColor(v);
-    ctx.beginPath(); g.polys[i].forEach(([la, lo], j) => { const [x, y] = P(la, lo); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.closePath();
-    ctx.fillStyle = col || pat; ctx.fill();
-    if (col && s > 18) { ctx.strokeStyle = css("--map-bg"); ctx.lineWidth = 0.4; ctx.stroke(); }
+  const path = (i) => { ctx.beginPath(); g.polys[i].forEach(([la, lo], j) => { const [x, y] = P(la, lo); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.closePath(); };
+  const untested = stripes(ctx, css("--untested")), predSlow = stripes(ctx, css("--r2")), predOk = stripes(ctx, css("--ok"));
+  if (!det) {
+    const m = C[state.iso].map;
+    for (let i = 0; i < g.polys.length; i++) {
+      const col = binColor(m.b[bi][i]); path(i); ctx.fillStyle = col || untested; ctx.fill();
+      if (col && s > 18) { ctx.strokeStyle = css("--map-bg"); ctx.lineWidth = 0.4; ctx.stroke(); }
+    }
+    ctx.strokeStyle = css("--fg"); ctx.lineWidth = 1.4;
+    g.hot.forEach(([[la, lo]]) => { const [x, y] = P(la, lo); ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 2 * Math.PI); ctx.stroke(); });
+  } else {
+    const d = g.d;
+    for (let i = 0; i < g.polys.length; i++) {
+      path(i);
+      if (d.s[i] >= 0) ctx.fillStyle = d.s[i] < state.bar ? css("--r3") : css("--ok");
+      else { const p = pBelow(d, i, state.bar); ctx.fillStyle = p == null ? untested : p >= 0.5 ? predSlow : predOk; }
+      ctx.fill(); ctx.strokeStyle = css("--map-bg"); ctx.lineWidth = 0.5; ctx.stroke();
+    }
+    ctx.strokeStyle = css("--fg"); ctx.lineWidth = 2;
+    d.x.forEach((v, i) => { if (v) { path(i); ctx.stroke(); } });
   }
-  ctx.strokeStyle = css("--fg"); ctx.lineWidth = 1.4;
-  g.hot.forEach(([[la, lo]]) => { const [x, y] = P(la, lo); ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 2 * Math.PI); ctx.stroke(); });
   ctx.strokeStyle = css("--accent"); ctx.lineWidth = 2.5;
-  state.sel.forEach((i) => { ctx.beginPath(); g.polys[i].forEach(([la, lo], j) => { const [x, y] = P(la, lo); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.closePath(); ctx.stroke(); });
+  if (!det) state.sel.forEach((i) => { path(i); ctx.stroke(); });
+  renderMapHead();
 }
+const GAPN = ["no gap", "capacity gap", "coverage gap", "slow, type unknown", "not tested"], AREAN = ["rural", "town or suburb", "urban centre"];
 function cellTip(i) {
+  if (state.detail) {
+    const d = proj.g.d, p = pBelow(d, i, state.bar);
+    const sp = d.s[i] >= 0 ? `measured ${d.s[i]} Mbps (${d.s[i] < state.bar ? "below" : "at or above"} ${state.bar})`
+      : p == null ? "not tested" : `not tested · predicted ${d.pm[i]} Mbps, ${Math.round(100 * p)}% chance below ${state.bar}`;
+    return `<b>0.74 km² hexagon · ${ppl(d.p[i])} people</b>${AREAN[d.a[i]]} · ${sp}<br>at 25 Mbps: ${GAPN[d.g[i]]}${d.x[i] ? " · in a slow 1 km cluster" : ""}`;
+  }
   const m = C[state.iso].map, bi = BARS.indexOf(state.bar), v = m.b[bi][i], p = m.p[i] * 1000, t = m.m[i];
   const nm = m.names[m.n[i]];
   if (v < 0) return `<b>${esc(nm)}</b>${ppl(p)} people · nobody tested here this quarter`;
-  const below = p * t / 100 * v / 100;
-  return `<b>${esc(nm)}</b>${ppl(p)} people · ${t}% live in tested hexagons<br>${v}% of tested people below ${state.bar} Mbps ≈ <b style="display:inline">${ppl(below)}</b> people`;
+  return `<b>${esc(nm)}</b>${ppl(p)} people · ${t}% live in tested hexagons<br>${v}% of tested people below ${state.bar} Mbps ≈ <b style="display:inline">${ppl(p * t / 100 * v / 100)}</b> people`;
 }
 function cellCentre(i) {
   const g = proj.g; let la = 0, lo = 0; g.polys[i].forEach(([a, b]) => { la += a; lo += b; }); la /= g.polys[i].length; lo /= g.polys[i].length;
@@ -461,14 +494,17 @@ function bindMap() {
     const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, g = proj.g;
     const lo = g.x0 + (x - proj.ox) / (g.kx * proj.s), la = g.y1 - (y - proj.oy) / proj.s;
     if (la < -85 || la > 85) return [-1, x, y];
-    const id = h3.latLngToCell(la, lo, 5).slice(0, -7);
+    const id = h3.latLngToCell(la, lo, g.res).slice(0, -g.tail);
     return [g.idx.has(id) ? g.idx.get(id) : -1, x, y];
   };
   cv.addEventListener("mousemove", (e) => { const [i, x, y] = at(e); if (i < 0) { hideTip(wrap); return; } showTip(wrap, cellTip(i), x, y); });
   cv.addEventListener("mouseleave", () => hideTip(wrap));
-  cv.addEventListener("click", (e) => { const [i] = at(e); state.sel = i < 0 ? [] : [i]; drawMap(); });
+  cv.addEventListener("click", (e) => {
+    const [i] = at(e); if (state.detail || i < 0) return;
+    const n = C[state.iso].map.n[i]; if (C[state.iso].detail.includes(n)) openDistrict(n);
+  });
 }
-// districts ranked by people below the bar (summed over their ~250 km² areas)
+// districts ranked by people below the bar (summed over their ~250 km² display cells)
 function districts() {
   const m = C[state.iso].map, bi = BARS.indexOf(state.bar), d = new Map();
   m.h.forEach((_, i) => { const v = m.b[bi][i] < 0 ? 0 : m.p[i] * 1000 * m.m[i] / 100 * m.b[bi][i] / 100;
@@ -477,26 +513,54 @@ function districts() {
   return [...d.values()].filter((r) => r.v > 0).sort((a, b) => b.v - a.v);
 }
 function districtTip(r) {
-  const m = C[state.iso].map;
-  return `<b>${esc(m.names[r.n])}</b>${ppl(r.v)} tested people below ${state.bar} Mbps, out of ${ppl(r.p)} people · ${r.cells.length} area${r.cells.length > 1 ? "s" : ""} of ~250 km² outlined`;
+  return `<b>${esc(C[state.iso].map.names[r.n])}</b>${ppl(r.v)} tested people below ${state.bar} Mbps, out of ${ppl(r.p)} people · click to zoom to its 0.74 km² hexagons`;
+}
+function openDistrict(n) {
+  const key = `${state.iso}_${n}`;
+  const go = () => { state.detail = key; state.sel = []; hideTip($("#mapwrap")); drawMap(); renderLegend(); };
+  if (window.GEO1_D && window.GEO1_D[key]) return go();
+  const sc = document.createElement("script"); sc.src = `data/d/${key}.js`; sc.onload = go;
+  sc.onerror = () => { $("#maphead").textContent = "This district's detail could not be loaded."; }; document.head.appendChild(sc);
+}
+function closeDistrict() { state.detail = null; drawMap(); renderLegend(); }
+function renderMapHead() {
+  const h = $("#maphead");
+  if (!state.detail) { h.innerHTML = `<span class="muted">${esc(C[state.iso].name)} · display cells ≈ 250 km² · analysis runs on 0.74 km² hexagons</span>`; return; }
+  const d = proj.g.d, n = +state.detail.split("_")[1], tested = d.s.filter((v) => v >= 0).length;
+  const people = d.p.reduce((a, b) => a + b, 0), below = d.p.reduce((a, p, i) => a + (d.s[i] >= 0 && d.s[i] < state.bar ? p : 0), 0);
+  h.innerHTML = `<button type="button" id="map-back">← ${esc(C[state.iso].name)}</button><b>${esc(C[state.iso].map.names[n])}</b>
+    <span class="muted">${d.h.length.toLocaleString("en")} hexagons of 0.74 km² · ${ppl(people)} people · ${tested.toLocaleString("en")} tested · ${ppl(below)} people in tested hexagons below ${state.bar} Mbps</span>`;
+  $("#map-back").addEventListener("click", closeDistrict);
 }
 function renderTop() {
   const m = C[state.iso].map, rows = districts().slice(0, 10);
   $("#top-h").textContent = `${C[state.iso].name}: districts with the most people below ${state.bar} Mbps`;
-  $("#toplist").innerHTML = rows.map((r, j) => `<li tabindex="0" data-j="${j}" data-i="${r.top}"><span class="nm">${esc(m.names[r.n])}</span><span class="v">${ppl(r.v)}</span></li>`).join("");
+  $("#toplist").innerHTML = rows.map((r, j) => `<li tabindex="0" role="button" data-j="${j}" data-i="${r.top}"><span class="nm">${esc(m.names[r.n])}</span><span class="v">${ppl(r.v)}</span></li>`).join("");
   const wrap = $("#mapwrap");
   $("#toplist").querySelectorAll("li").forEach((li) => {
-    const on = () => { const r = rows[+li.dataset.j]; state.sel = r.cells; drawMap(); const [x, y] = cellCentre(r.top); showTip(wrap, districtTip(r), x, y);
+    const r = rows[+li.dataset.j];
+    const on = () => { if (state.detail) return; state.sel = r.cells; drawMap(); const [x, y] = cellCentre(r.top); showTip(wrap, districtTip(r), x, y);
       $("#toplist").querySelectorAll("li").forEach((o) => o.classList.toggle("on", o === li)); };
-    const off = () => { hideTip(wrap); };
-    li.addEventListener("mouseenter", on); li.addEventListener("focus", on); li.addEventListener("click", on);
+    const off = () => hideTip(wrap);
+    const open = () => { if (C[state.iso].detail.includes(r.n)) openDistrict(r.n); };
+    li.addEventListener("mouseenter", on); li.addEventListener("focus", on); li.addEventListener("click", open);
+    li.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
     li.addEventListener("mouseleave", off); li.addEventListener("blur", off);
   });
 }
 function renderLegend() {
+  if (state.detail) {
+    const hasP = !!(window.GEO1_D[state.detail] || {}).pm;
+    $("#legend").innerHTML = `<span class="mono">0.74 km² hexagons:</span><span><i style="background:var(--r3)"></i>tested, below ${state.bar} Mbps</span><span><i style="background:var(--ok)"></i>tested, at or above</span>`
+      + (hasP ? `<span><i class="pred"></i>not tested, predicted below</span><span><i class="predok"></i>not tested, predicted above</span>` : `<span><i class="untested"></i>not tested</span>`)
+      + `<span><i style="border:2px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
+    $("#map-note").textContent = "Each hexagon ≈ 0.74 km², the analysis grid. A new site's search area in phase 4 is one of these hexagons (or a 0.1 km² one in dense cities).";
+    return;
+  }
   const bins = [["--r0", "under 10%"], ["--r1", "10–25%"], ["--r2", "25–50%"], ["--r3", "50–75%"], ["--r4", "75% or more"]];
   $("#legend").innerHTML = `<span class="mono">tested people below ${state.bar} Mbps:</span>` + bins.map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
     + `<span><i class="untested"></i>not tested</span><span><i style="border-radius:50%;border:1.5px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
+  $("#map-note").textContent = "Display cells ≈ 250 km² keep the page light; every number is computed on 0.74 km² hexagons. Rings mark slow clusters. No basemap: the shape is where people live.";
 }
 
 // ---------- SVG charts (drawn at the container's width so text stays readable on phones)
@@ -596,7 +660,8 @@ document.addEventListener("click", (e) => {
 });
 document.querySelectorAll("details.more").forEach((d) => d.addEventListener("toggle", () => d.open && renderCharts()));
 
-function renderCharts() { chartCountry(); chartMorph(); chartTested(); chartGap(); }
+// a redraw replaces the rows under the pointer, so their mouseleave never fires: hide chart tooltips first
+function renderCharts() { document.querySelectorAll(".chart > .tip").forEach((t) => (t.hidden = true)); chartCountry(); chartMorph(); chartTested(); chartGap(); }
 function renderAll() { renderControls(); renderFacts(); renderLegend(); drawMap(); renderTop(); renderCharts(); }
 let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { drawMap(); renderCharts(); }, 120); });
 const redrawTheme = () => { drawMap(); };

@@ -54,6 +54,17 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     const lt = await mapTip(); await page.evaluate(() => document.activeElement.blur()); await wait(80);
     const lGone = (await mapTip()) === null;
     rows.push({ id: "toplist", ok: !!lt && lt.inside && lGone, ...(lt || {}), gone: lGone });
+    // district zoom: click the first district, hover one of its 0.74 km² hexagons, then go back
+    await page.evaluate(() => document.querySelector("#toplist li").click()); await page.waitForFunction(() => state.detail !== null, { timeout: 10000 }); await wait(200);
+    const dp = await page.evaluate(() => { const [x, y] = cellCentre(0); const r = document.getElementById("map").getBoundingClientRect(); return [r.left + x, r.top + y]; });
+    await page.mouse.move(dp[0], dp[1]); await wait(100);
+    const dt = await mapTip();
+    if (dt) { await mw.screenshot({ path: `${outDir}/${mode}_district.png` }); }
+    await page.mouse.move(2, 2); await wait(80);
+    const head = await page.$eval("#maphead", (e) => e.textContent.replace(/\s+/g, " ").trim().slice(0, 80));
+    await page.evaluate(() => document.getElementById("map-back").click()); await wait(150);
+    const back = await page.evaluate(() => state.detail === null);
+    rows.push({ id: "district", ok: !!dt && dt.inside && /0\.74 km/.test(dt.text) && back, ...(dt || {}), gone: back, text: (dt ? dt.text : "") + " | " + head });
     summary.push({ mode, onLoad, closedOnLoad, hScroll, errs: errs.length, pass: rows.filter((r) => r.ok).length, total: rows.length });
     console.log(`\n== ${mode}: tooltips visible on load=${onLoad} · page scrolls sideways=${hScroll} · JS errors=${errs.length}`);
     for (const r of rows) console.log(`  ${r.ok ? "OK  " : "FAIL"} ${r.id.padEnd(8)} ${r.w ? `${r.w}×${r.h}px covers ${r.coverPct ?? "-"}% inside=${r.inside}${r.clipped ? " CLIPPED" : ""}` : "not shown"} hides=${r.gone} | ${r.text || ""}`);
