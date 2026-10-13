@@ -2,6 +2,38 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.5.1] — 2026-10-14 — Audit: every document aligned; results page de-duplicated for the hiring team
+**Files:** docs/PRD.md, docs/adr/ADR-001…005, docs/adr/README.md, docs/index.html, docs/build.html, README.md, Makefile, scripts/evidence.py, scripts/speed_model.py, data/outputs/references_evidence.json
+- **Situation:** After P2 the documents had drifted:
+  - the PRD still said "P0 next";
+  - all ADRs said "Proposed";
+  - the walkthrough quoted 15.3M hexagon-quarters and 29 inputs (now 30.9M and 40);
+  - two promised checks were not marked as open;
+  - the results page repeated the same numbers in up to six places.
+- **Task:** Align every document with the result files, and make the results page readable in two minutes (R12) without repeating itself.
+- **Action:**
+  - **PRD v0.3:** gate results recorded.
+  - **ADRs:** marked Accepted, with results and open items.
+    - The WorldPop cross-check and the published urban-centre comparison are open.
+    - ADR-004 notes that `p2_speed_model.json` untested totals come from the LightGBM path and are not used.
+  - **ADR-002:** gate results table.
+  - **Walkthrough:** P0 numbers corrected.
+  - **Results page:**
+    - one headline ("1 in 9 people … 2 in 3 never tested");
+    - tiles that each say something different;
+    - one combined country chart (measured with interval, equal density, everyone);
+    - the area-type chart moved to details;
+    - non-overlapping caveats and FAQ;
+    - one map note;
+    - the duplicate decision table removed.
+  - **Results page, R17 and R6:** "How to read this" notes for every remaining number; all P2 and noise sources listed.
+  - **Reproducibility:** README "Reproduce" section; `make pipeline`.
+  - **Evidence:** a 30 s timeout for OpenAlex calls; evidence regenerated (23 references).
+- **Result:**
+  - The collapsed page is 5.5 screens on desktop (limit about 7). Only the data card and data table shared numbers (places, cells); fixed.
+  - Tests: 18 unit tests, 297 of 297 walkthrough checks, 7 of 7 hover checks in three modes.
+- **Talking point:** "An audit after every phase keeps the PRD, decision records, pages and result files telling the same story."
+
 ## [0.5.0] — 2026-10-14 — P2: speed where nobody tested (gate failed → kriging); test noise; every number explained
 **Files:** docs/adr/ADR-004-speed-model-for-untested-areas.md, docs/adr/ADR-005-measurement-noise.md, src/spatialmodel.py, src/noise.py, scripts/speed_model.py, scripts/noise_followup.py, scripts/noise_validation.py, tests/test_spatialmodel.py, tests/test_noise.py, data/outputs/p2_speed_model.json, data/outputs/p2b_noise_followup.json, data/outputs/p2c_noise_validation.json, scripts/export_page_data.py, docs/index.html, docs/build.html, docs/data/*
 - **Situation:** 349M people (39%) live where nobody tested, so P1 could not count them. Most tested hexagons rest on 1–2 tests.

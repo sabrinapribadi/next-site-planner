@@ -10,6 +10,9 @@ test fold. Models: ordinary kriging (gate baseline), ring-1 neighbour mean (naiv
 
 Writes data/outputs/p2_speed_model.json and GEO_DATA_DIR/derived/hex_p2.parquet (untested populated hexagons:
 prediction, sigma, P(below 10 / 25 Mbps), area-of-applicability flag).
+Note: the deployment at the end of this script uses LightGBM. The gate failed on 2026-10-13 (ratio 0.929), so
+scripts/noise_followup.py replaces hex_p2.parquet with kriging predictions (ADR-004, ADR-005); the untested totals in
+p2_speed_model.json are not used.
 """
 
 from __future__ import annotations

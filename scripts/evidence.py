@@ -26,7 +26,7 @@ def fetch(ref: dict) -> dict:
         url = f"{API}/doi:{ref['doi']}"
     else:
         url = f"{API}?search={urllib.parse.quote(ref['title'])}&per-page=1"
-    w = json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "portfolio-evidence/1.0"})))
+    w = json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "portfolio-evidence/1.0"}), timeout=30))
     if "results" in w:
         w = w["results"][0] if w["results"] else {}
     src = (w.get("primary_location") or {}).get("source") or {}

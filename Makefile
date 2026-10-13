@@ -1,4 +1,4 @@
-.PHONY: data evidence test build-test hover-test page-data
+.PHONY: data evidence test build-test hover-test page-data pipeline
 
 # Raw data into GEO_DATA_DIR (see .env); resumable
 data:
@@ -18,4 +18,13 @@ hover-test:
 	cd tests/browser && (test -d node_modules/puppeteer-core || npm i --no-save puppeteer-core@23) && mkdir -p /tmp/geo1-shots && node hover_test.js $(CURDIR)/docs/index.html /tmp/geo1-shots
 
 page-data:
+	python scripts/export_page_data.py
+
+# Full pipeline (needs GEO_DATA_DIR from .env): P0 grid → P1 gap → P2 speed model → ADR-005 noise follow-up → page data
+pipeline:
+	python scripts/build_hex_table.py
+	python scripts/experience_gap.py
+	python scripts/speed_model.py
+	python scripts/noise_followup.py
+	python scripts/noise_validation.py
 	python scripts/export_page_data.py

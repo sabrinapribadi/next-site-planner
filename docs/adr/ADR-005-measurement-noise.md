@@ -1,6 +1,6 @@
 # ADR-005: Measurement Noise — Small-Area Shrinkage and Noise-Aware Scoring
 
-**Status:** Proposed — **post-hoc follow-up**. Written after the P2 gate failed and pushed before any of these analyses ran. Nothing here changes a pre-registered result: the P1 shares and the failed P2 gate stand as reported.
+**Status:** Accepted (post-hoc follow-up; results in §7 and below). Written after the P2 gate failed and pushed before any of these analyses ran. Nothing here changes a pre-registered result: the P1 shares and the failed P2 gate stand as reported.
 **Date:** 2026-10-13
 **Deciders:** Sabrina Pribadi
 
@@ -105,6 +105,21 @@ Q3's own noise is independent of Q2's, so it adds the same amount to both errors
 - Noise-corrected country shares are published beside the raw shares, marked credible or provisional per country.
 - The raw P1 shares remain the headline.
 - **Likely cause of the overshoot:** the noise model overstates noise where typical speeds sit near 25 Mbps, plus a real speed-up between quarters in Indonesia (raw share 13.8% → 10.4%). The next refinement is a heavier-tailed noise distribution, checked again across quarters.
+
+### 8. P2 noise-aware scores and deployment (`data/outputs/p2b_noise_followup.json`)
+
+**Noise-aware scores (resolution-6 blocks):**
+
+| Score | Kriging | LightGBM | LightGBM, precision-weighted |
+|---|---|---|---|
+| RMSE, all | 1.335 | 1.241 | 1.241 |
+| RMSE on ≥ 10-test hexagons | 0.807 | 0.659 | 0.648 |
+| Noise-adjusted RMSE | 0.689 | 0.481 | 0.482 |
+
+**Deployed predictions (kriging):**
+
+- 5.76M untested populated hexagons.
+- ≈ 68M people expected below 25 Mbps (typical speed): Philippines 23.4M, Indonesia 30.3M, Germany 5.5M, United States 4.7M, France 3.4M, Malaysia 0.8M, UAE 0.03M.
 
 ## SOTA comparison
 

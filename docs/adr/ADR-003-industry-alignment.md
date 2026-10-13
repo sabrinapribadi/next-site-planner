@@ -1,6 +1,6 @@
 # ADR-003: Industry Alignment — Plan Sites the Way Network Planners Do
 
-**Status:** Proposed — written before P1 runs; amends ADR-002 gates P0, P1, P4
+**Status:** Accepted — written before P1 ran; amends ADR-002 gates P0, P1, P4; E1 and E2 implemented in P1
 **Date:** 2026-10-13
 **Deciders:** Sabrina Pribadi
 
@@ -177,6 +177,13 @@ Costs are in **new-tower equivalents**: relative units, so no currency is conver
 - The 5G measure becomes "people near an OpenCelliD-recorded 5G cell". It is published as a completeness figure, not as coverage, because 5G records range from 0.03% of people (Indonesia) to 29% (US).
 - Co-location candidates in P4 inherit the same limit.
 - An Ookla-only signal (upload / download ratio: cell-edge users are uplink-limited) is a candidate for P2. It can be checked against the typed strata.
+
+### Status of the other expectations (audit 2026-10-14)
+
+- **E1–E2 (gap type, morphology):** implemented in P1. Gap types are limited by OpenCelliD completeness (finding above).
+- **Upload/download follow-up:** tested in P2. Block-CV AUC was 0.51 (a coin flip), so Ookla-only gap typing is dropped.
+- **P1 check, urban-centre share vs published Degree of Urbanisation figures:** not yet run (open).
+- **E3–E8 (service radius, costs, regulatory bars, exports, post-launch tracking):** used from P4 on. The 100 Mbps sensitivity bar is already in P1.
 
 ## How this differs from the earlier portfolio project (R16)
 

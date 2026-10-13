@@ -1,5 +1,5 @@
 {
- "retrieved": "2026-10-13",
+ "retrieved": "2026-10-14",
  "source": "OpenAlex",
  "references": [
   {
@@ -281,6 +281,48 @@
     "ADR-004"
    ],
    "openalex_id": "https://openalex.org/W1530542196"
+  },
+  {
+   "key": "fay_herriot_1979",
+   "title": "Estimates of Income for Small Places: An Application of James-Stein Procedures to Census Data",
+   "venue": "Journal of the American Statistical Association",
+   "peer_reviewed": true,
+   "year": 1979,
+   "citations": 1260,
+   "citations_per_year": 26.2,
+   "role": "empirical-Bayes small-area shrinkage (noise follow-up)",
+   "used_in": [
+    "ADR-005"
+   ],
+   "openalex_id": "https://openalex.org/W2094648385"
+  },
+  {
+   "key": "ghosh_rao_1994",
+   "title": "Small Area Estimation: An Appraisal",
+   "venue": "Statistical Science",
+   "peer_reviewed": true,
+   "year": 1994,
+   "citations": 733,
+   "citations_per_year": 22.2,
+   "role": "small-area estimation practice",
+   "used_in": [
+    "ADR-005"
+   ],
+   "openalex_id": "https://openalex.org/W1996995433"
+  },
+  {
+   "key": "besag_1991",
+   "title": "Bayesian image restoration, with two applications in spatial statistics",
+   "venue": "Annals of the Institute of Statistical Mathematics",
+   "peer_reviewed": true,
+   "year": 1991,
+   "citations": 4205,
+   "citations_per_year": 116.8,
+   "role": "cited alternative, spatial hierarchical Bayes (BYM)",
+   "used_in": [
+    "ADR-005"
+   ],
+   "openalex_id": "https://openalex.org/W2004014822"
   }
  ]
 }

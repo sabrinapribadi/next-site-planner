@@ -222,7 +222,7 @@ const PHASES = [
   scqa: ["Site plans are often ranked on composite KPIs; country comparisons quote national medians.",
          "Measured speed, people and places sit in different grids, licences and sizes, across seven countries.",
          "Can all of it land on one fair grid, losing under 1% of people and tests?",
-         "Yes: every country keeps ≥ 99% of its people and tests; 6.6M hexagons, 15.3M hexagon-quarters, 29 inputs fingerprinted."],
+         "Yes: every country keeps ≥ 99% of its people and tests; 6.6M hexagons, 30.9M hexagon-quarters (mobile and fixed), 40 inputs fingerprinted."],
   steps: [
     ["Decision", "Gates on GitHub first", "PRD and ADRs with every phase gate pushed before any analysis.", "A gate written after the result proves nothing.", "docs/adr/ADR-002-validation-and-gates.md"],
     ["Decision", "Industry alignment", "ADR-003: gap types, urban/rural classes, 3GPP site spacing, co-location costs, regulator benchmarks — before P1.", "A planner's questions, not only an analyst's.", "docs/adr/ADR-003-industry-alignment.md"],
@@ -236,7 +236,7 @@ const PHASES = [
     ["Evaluation", "Contracts + manifest", "Unique keys, valid values, all countries and quarters; SHA-256 of every input.", "A number on the page traces to its inputs.", "src/contracts.py"]
   ],
   decisions: [["Measured experience per person on H3 resolution 8", "001"], ["Gates for every phase, fixed in advance", "002"], ["Plan sites the way network planners do", "003"]],
-  results: [["People assigned to the grid", "≥ 99% per country", "≥ 100.1% everywhere", "ok"], ["Speed tests assigned", "≥ 99% per country", "≥ 100.1% everywhere", "ok"],
+  results: [["People assigned to the grid", "≥ 99% per country", "100.1–100.8% (over 100% = coastal hexagons centred just offshore)", "ok"], ["Speed tests assigned", "≥ 99% per country", "100.1–101.7%", "ok"],
             ["Data contracts", "all pass", "all pass", "ok"], ["Assigned to a neighbouring country", "report", "≤ 0.3% of tests (UAE → Oman)", "info"],
             ["Kontur vs World Bank 2023", "report", "0.86 (UAE) to 1.00 (Germany)", "info"]],
   obstacles: [

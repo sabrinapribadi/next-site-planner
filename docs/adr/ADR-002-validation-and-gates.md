@@ -1,6 +1,6 @@
 # ADR-002: Validation Strategy and Gates for Every Phase
 
-**Status:** Proposed — gates written before any analysis; amended by ADR-003 (2026-10-13) before P1 ran
+**Status:** Accepted — gates written before any analysis; amended by ADR-003 (2026-10-13) before P1 ran; results below
 **Date:** 2026-10-13
 **Deciders:** Sabrina Pribadi
 
@@ -38,6 +38,15 @@ Each later phase ADR repeats this table in detail for its own method (rule R2).
 | P7 | Results page and technical walkthrough live; browser tests pass in three display modes | Any test fails |
 
 Checks reported but not gated (ADR-003): urban-centre population share vs published Degree of Urbanisation figures where available (> 10 points apart is investigated).
+
+## Gate results (updated as phases finish)
+
+| Phase | Gate | Result | Where |
+|---|---|---|---|
+| P0 | ≥ 99% of people and tests assigned per country; contracts; manifest | **Passed.** 100.1–100.8% of people and 100.1–101.7% of tests. Above 100% = coastal hexagons whose centre lies just offshore; ≤ 0.3% sit in a neighbouring country. Contracts clean; 40 inputs fingerprinted | `data/outputs/p0_foundation.json` |
+| P1 | Intervals; clusters at FDR 5%; every populated hexagon typed | **Passed**, after two logged deviations (block bootstrap, exact p-values). Every interval contains its estimate (14 of 14) | `data/outputs/p1_experience_gap.json` |
+| P2 | LightGBM ≤ 0.90 × best kriging RMSE (resolution-6 blocks) | **Failed.** 0.929 (7% better). Kriging is deployed. Same on the other designs (0.92–0.94) | `data/outputs/p2_speed_model.json`, ADR-004 |
+| P3–P7 | — | Not yet run | — |
 
 ## Deviations from the pre-registered plan (logged when found, with evidence)
 

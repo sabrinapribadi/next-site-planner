@@ -1,9 +1,9 @@
 PRODUCT REQUIREMENT DOCUMENT (PRD)
 Project: Next Site Planner — Where Would One More Mobile Site Help the Most People?
-Version: 0.2 (industry alignment, ADR-003: gap types, morphology, co-location-first costs, planner exports — before P1)
+Version: 0.3 (P0–P2 done: gate results, ADR-004 speed model, ADR-005 measurement noise; open checks listed)
 Author: Sabrina Pribadi
-Date: October 13, 2026
-Status: Proposed — P0 next
+Date: October 14, 2026
+Status: Active — P0, P1 passed; P2 gate failed (kriging deployed); P3 next
 
 
 1. EXECUTIVE SUMMARY
@@ -28,9 +28,9 @@ Value Proposition: Replace "rank sites by KPIs" with "measure the gap, measure w
 do, then optimise the set" — every number reproducible from public data.
 
 Success Metrics (pre-registered — see ADR-002):
-- P0: ≥ 99% of each country's population and ≥ 99% of its speed tests land on the H3 grid
-- P1: population share below 10 and 25 Mbps per country, raw and density-adjusted, with 95% intervals; every populated hexagon typed by morphology and gap (coverage / capacity)
-- P2: the spatial model beats ordinary kriging by ≥ 10% (RMSE of log speed) under spatial block cross-validation
+- P0: ≥ 99% of each country's population and ≥ 99% of its speed tests land on the H3 grid — **passed**
+- P1: population share below 10 and 25 Mbps per country, raw and density-adjusted, with 95% intervals; every populated hexagon typed by morphology and gap (coverage / capacity) — **passed** after two logged deviations
+- P2: the spatial model beats ordinary kriging by ≥ 10% (RMSE of log speed) under spatial block cross-validation — **failed: 7% (ratio 0.929); kriging deployed**
 - P3: new-site effect with a 95% interval and a passing pre-trend (placebo) test
 - P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same cost budget (new-tower equivalents)
 - P5: API contracts and the LLM evaluation set pass in CI; cost and latency within budget (R13)
@@ -90,11 +90,11 @@ User stories:
 
 Module A: Data foundation on H3 resolution 8; snapshot manifest; data contracts — ADR-001, ADR-003 (P0)
 Module B: Experience-gap map, fair benchmark, morphology and gap typing, regulatory benchmarks — ADR-003 (P1)
-Module C: Spatial speed model — P2 (ADR pending)
-Module D: New-site effect — P3 (ADR pending)
-Module E: Budgeted site optimiser — co-location-first, costed, planner exports, post-launch tracking — P4 (ADR pending; ADR-003)
-Module F: API, MCP tools, grounded rationales — P5 (ADR pending)
-Module G: Databricks quarterly job, registry, drift — P6 (ADR pending; R15 justification in ADR-001)
+Module C: Speed where nobody tested (kriging deployed; LightGBM compared), measurement noise and shrinkage — ADR-004, ADR-005 (P2)
+Module D: New-site effect — P3 (ADR to be written before analysis)
+Module E: Budgeted site optimiser — co-location-first, costed, planner exports, post-launch tracking — P4 (ADR to be written; ADR-003)
+Module F: API, MCP tools, grounded rationales — P5 (ADR to be written)
+Module G: Databricks quarterly job, registry, drift — P6 (ADR to be written; R15 justification in ADR-001)
 
 
 7. DATA STRATEGY
@@ -107,7 +107,7 @@ Module G: Databricks quarterly job, registry, drift — P6 (ADR pending; R15 jus
 | OpenCelliD full database, 2026-10-13 | CC BY-SA 4.0 | Cell locations, radio type, first and last seen |
 | OCHA COD-AB Indonesia; geoBoundaries gbOpen | CC BY-IGO; CC BY 4.0 / ODbL | Kecamatan and district reporting |
 | Natural Earth admin-0 | Public domain | Assign tiles and hexagons to countries |
-| WorldPop Indonesia 2020 | CC BY 4.0 | Cross-check of Kontur in Indonesia |
+| WorldPop Indonesia 2020 | CC BY 4.0 | Cross-check of Kontur in Indonesia (planned; not yet run) |
 
 Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in the repository.
 `scripts/acquire_public_data.py` rebuilds it; sources that change (OpenCelliD, Overture) are kept as dated snapshots.
@@ -117,14 +117,14 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 
 | Phase | Goal | Gate / exit criterion (ADR-002) |
 |---|---|---|
-| P0 | Seven-country data foundation on H3 r8 | ≥ 99% of population and of speed tests assigned to the grid; contract tests pass |
-| P1 | Experience-gap map; fair cross-country benchmark; hotspots; gap types and morphology | Shares below 10 / 25 Mbps with 95% intervals, raw and density-adjusted; Gi* hotspots at FDR 5%; every populated hexagon typed |
-| P2 | Spatial speed model where tests are sparse | GBM ≤ 0.9 × kriging RMSE (log speed) under spatial block CV; transfer to an unseen country reported |
+| P0 | Seven-country data foundation on H3 r8 | ≥ 99% of population and of speed tests assigned to the grid; contract tests pass — **passed** |
+| P1 | Experience-gap map; fair cross-country benchmark; hotspots; gap types and morphology | Shares below 10 / 25 Mbps with 95% intervals, raw and density-adjusted; Gi* hotspots at FDR 5%; every populated hexagon typed — **passed** |
+| P2 | Speed where nobody tested | LightGBM ≤ 0.9 × best kriging RMSE (log speed) under resolution-6 block CV; transfer to an unseen country reported — **failed (0.929); kriging deployed** |
 | P3 | Effect of new sites (Germany, US) | Pre-trend placebo interval includes 0; effect with 95% interval; transfer to Indonesia stated as an assumption |
 | P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal cost; exports pass format checks |
 | P5 | API + MCP + grounded rationales | Contract tests and LLM evaluation pass in CI; R13 budgets met |
 | P6 | Databricks quarterly job + registry + drift | Databricks reproduces local P1 numbers exactly |
-| P7 | Results page + technical walkthrough + web map | Both pages live and browser-tested (R10, R12, R14) |
+| P7 | Results page + technical walkthrough + web map | Both pages live and browser-tested (R10, R12, R14, R17) — pages live and updated each phase |
 
 
 11. RISKS AND MITIGATIONS
@@ -132,7 +132,8 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | Risk | Mitigation |
 |---|---|
 | Speed tests are not a random sample (people test when it is slow or new) | Report tests and devices per tile; weight by population, not tests; state the bias on the page |
-| Sparse tiles in rural areas | P2 predicts with intervals; area-of-applicability flags where predictions are unreliable |
+| Sparse tiles in rural areas | P2 predicts with intervals; area-of-applicability flags where predictions are unreliable (95% of untested people inside) |
+| Measurement noise: most hexagons rest on 1–2 tests; one test varies 3–5× | ADR-005: noise model, shrinkage toward the neighbourhood, checked on the next quarter (28–44% closer); corrected shares marked credible or provisional |
 | OpenCelliD first-seen dates are noisy | Use only cells first seen ≤ 2024 and observed ≥ 180 days; placebo test |
 | Effect estimated abroad may not hold in Indonesia | State it as an assumption; sensitivity range in P4 |
 | Free Edition cannot read Ookla's S3 | Test first; else upload country extracts (as in CHN-1) |
@@ -151,6 +152,15 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 - Stratifying the digital divide: socio-economic influences on Internet performance (2026). arXiv 2605.30809
 - A user-demand-driven approach for 5G base station location selection (2025). Journal of Computer Research and Development 62(3)
 - Uber H3 hexagonal hierarchical spatial index (h3geo.org)
+- Hengl, T. et al. (2018). Random forest as a generic framework for predictive modeling of spatial and spatio-temporal variables. PeerJ
+- Sekulić, A. et al. (2020). Random Forest Spatial Interpolation. Remote Sensing 12(10)
+- Ke, G. et al. (2017). LightGBM: A Highly Efficient Gradient Boosting Decision Tree. NeurIPS
+- Linnenbrink, J. et al. (2024). kNNDM CV. Geoscientific Model Development 17
+- Milà, C. et al. (2022). Nearest neighbour distance matching Leave-One-Out Cross-Validation. Methods in Ecology and Evolution
+- Pebesma, E. (2004). Multivariable geostatistics in S: the gstat package. Computers & Geosciences 30
+- Cressie, N. (1985). Fitting variogram models by weighted least squares. Mathematical Geology 17
+- Fay, R. & Herriot, R. (1979). Estimates of income for small places. Journal of the American Statistical Association 74
+- Ghosh, M. & Rao, J. N. K. (1994). Small Area Estimation: An Appraisal. Statistical Science 9
 - Eurostat, FAO, ILO, OECD, UN-Habitat, World Bank (2021). Applying the Degree of Urbanisation: a methodological manual
 - Dijkstra, L. et al. (2021). Applying the Degree of Urbanisation to the globe. Journal of Urban Economics 125
 - 3GPP TR 38.901. Study on channel model for frequencies from 0.5 to 100 GHz, §7.2 (evaluation scenarios)

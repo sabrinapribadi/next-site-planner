@@ -1,6 +1,6 @@
 # ADR-004: Speed Model for Untested Areas (P2)
 
-**Status:** Proposed — written and pushed before any P2 model is trained
+**Status:** Accepted — written and pushed before any P2 model was trained; **gate failed, kriging deployed** (results below)
 **Date:** 2026-10-13
 **Deciders:** Sabrina Pribadi
 
@@ -149,6 +149,40 @@ Plus the P2 references already in ADR-002: Roberts et al. 2017, Ploton et al. 20
 | Leave-one-country-out error much higher | Countries differ (operators, spectrum) | Use within-country models; restrict claims |
 | 80% intervals cover far less than 80% | σ underestimated far from tests | Widen by ring-distance class; flag outside the area of applicability |
 | Predicted untested areas mostly fast | Untested ≠ slow | Report: the gap is smaller than feared |
+
+## Results (2026-10-13; `data/outputs/p2_speed_model.json`)
+
+**Gate design (resolution-6 blocks), RMSE of ln download:**
+
+| Model | RMSE | Typical miss |
+|---|---|---|
+| Ring-1 neighbour mean | 1.687 | 5.4× |
+| Kriging (best: 64 neighbours) | 1.335 | 3.8× |
+| LightGBM, covariates only | 1.306 | 3.7× |
+| LightGBM with spatial features | 1.241 | 3.5× |
+
+- **Ratio 0.929 > 0.90: the gate fails** and kriging is the deployed model.
+- **Other designs:** resolution 7 = 0.933, resolution 5 = 0.922, random hexagons = 0.935.
+- **Distance-matched RMSE:** kriging 1.240, LightGBM 1.157. **People-weighted RMSE:** 1.018 and 0.940.
+- **Uncertainty:**
+  - 80% intervals cover 84%;
+  - AUC for "below 25 Mbps" = 0.76;
+  - 95% of untested people are inside the area of applicability.
+- **Leave-one-country-out:** error rises 3–13% against within-country CV (UAE most).
+- **ADR-003 follow-up:** upload/download ratio and latency do not separate coverage from capacity gaps (AUC 0.51).
+
+**Why the margin is small, and what happened next (ADR-005, post-hoc):**
+
+- Two tiles in the same hexagon differ by SD 1.15 on the log scale, so test noise dominates the error.
+- **On well-tested hexagons (≥ 10 tests):** kriging 0.807, LightGBM 0.659, ratio 0.82.
+- **Against the noise-free typical speed:** 0.689 and 0.481.
+- This is a diagnostic only. The pre-registered gate stays failed.
+- **LightGBM version 2:** a gate scored on well-tested hexagons must be pre-registered and tested on a fresh quarter (2026 Q4) before LightGBM can replace kriging.
+
+**Note on outputs:**
+
+- `p2_speed_model.json` → `untested_totals` comes from the LightGBM deployment path that ran before the gate decision. It is **not used**.
+- Deployed predictions (kriging) and their totals are in `data/outputs/p2b_noise_followup.json` and `derived/hex_p2.parquet`.
 
 ## Consequences
 

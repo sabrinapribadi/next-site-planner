@@ -1,6 +1,6 @@
 # ADR-001: Framing — Measured Experience per Person on an H3 Grid, Seven Countries
 
-**Status:** Proposed
+**Status:** Accepted — implemented in P0 and P1 (2026-10-13)
 **Date:** 2026-10-13
 **Deciders:** Sabrina Pribadi
 
@@ -74,6 +74,13 @@ Data sources without papers (vendor or agency documentation): Ookla open data, K
 | Large share of population in unmeasured hexagons (> 20% in a country) | Speed tests too sparse there | Report it as a finding; P2 predicts speed with intervals; flag the country |
 | Density adjustment changes no country's rank | Density does not explain differences | Report raw and adjusted side by side; say so |
 | Kontur and WorldPop disagree by > 10% on Indonesia's population in poorly served hexagons | Population layer uncertainty | Report both; carry the range into P4 |
+
+## Outcome and open items (audit 2026-10-14)
+
+- **Implemented as decided:** H3 resolution 8, people-weighted shares below 10/25 Mbps (sensitivity 5/50/100), density-adjusted comparison, untested people reported.
+- **Unmeasured above 20%:** true in six of seven countries (14–47% of people). As planned, P2 now predicts their speed (ADR-004, ADR-005).
+- **Density adjustment changes ranks:** yes. The Philippines and Indonesia fall further behind at equal density.
+- **Open, not yet run:** the WorldPop cross-check of Kontur in Indonesia (falsification row 3). It will be reported before P4 uses population totals.
 
 ## Consequences
 
