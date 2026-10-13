@@ -56,6 +56,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     rows.push({ id: "toplist", ok: !!lt && lt.inside && lGone, ...(lt || {}), gone: lGone });
     // district zoom: click the first district, hover one of its 0.74 km² hexagons, then go back
     await page.evaluate(() => document.querySelector("#toplist li").click()); await page.waitForFunction(() => state.detail !== null, { timeout: 10000 }); await wait(200);
+    await page.evaluate(() => document.getElementById("mapwrap").scrollIntoView({ block: "center" })); await wait(200);
     const dp = await page.evaluate(() => { const [x, y] = cellCentre(0); const r = document.getElementById("map").getBoundingClientRect(); return [r.left + x, r.top + y]; });
     await page.mouse.move(dp[0], dp[1]); await wait(100);
     const dt = await mapTip();

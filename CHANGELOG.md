@@ -2,6 +2,33 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.5.0] — 2026-10-14 — P2: speed where nobody tested (gate failed → kriging); test noise; every number explained
+**Files:** docs/adr/ADR-004-speed-model-for-untested-areas.md, docs/adr/ADR-005-measurement-noise.md, src/spatialmodel.py, src/noise.py, scripts/speed_model.py, scripts/noise_followup.py, scripts/noise_validation.py, tests/test_spatialmodel.py, tests/test_noise.py, data/outputs/p2_speed_model.json, data/outputs/p2b_noise_followup.json, data/outputs/p2c_noise_validation.json, scripts/export_page_data.py, docs/index.html, docs/build.html, docs/data/*
+- **Situation:** 349M people (39%) live where nobody tested, so P1 could not count them. Most tested hexagons rest on 1–2 tests.
+- **Task:** Predict typical speed where nobody tested, beat standard kriging by the pre-set 10% or fall back, and make every number readable (R17).
+- **Action:**
+  - **Design first:** ADR-004 pushed before training.
+    - Test blocks sized by distance matching (~36 km²).
+    - The strongest fair kriging: Cressie's weighted fit, exponential or spherical variogram, 16/32/64 neighbours, the best one used.
+    - Leak-proof nested out-of-fold features; four test designs.
+  - **Gate:** failed (0.929), so kriging is deployed.
+  - **Follow-up (ADR-005, written before it ran):**
+    - a noise model from tile pairs;
+    - Fay–Herriot blending with a leave-one-out kriging prior;
+    - a cross-quarter check.
+  - **Pages:**
+    - the district view coloured by the chance of a typical speed below the bar;
+    - an "everyone" chart including untested people;
+    - "How to read this" notes, a glossary, P2 and noise tables;
+    - the walkthrough's P2 phase.
+- **Result:**
+  - **Model comparison:** LightGBM was 6–8% better than kriging on every design, 18% better on well-tested hexagons (a diagnostic, after the fact). Kriging stays.
+  - **Noise:** two tests at one place differ 3–5×.
+  - **Blending check:** blended speeds were 28–44% closer to the next quarter's tests in all seven countries. Share levels are credible in 4 of 7.
+  - **Untested people:** ≈ 68M are likely below 25 Mbps (23M in the Philippines, 30M in Indonesia).
+  - **Tests:** 18 unit tests pass; browser checks 8 of 8 in three modes and 297 of 297 on the walkthrough.
+- **Talking point:** "My machine-learning model failed my own gate, so I shipped kriging — then showed the real limit was test noise, and that about 68 million people nobody tested are likely on slow mobile."
+
 ## [0.4.1] — 2026-10-13 — District zoom at analysis resolution (0.74 km²)
 **Files:** docs/index.html, scripts/export_page_data.py, docs/data/d/*.js, tests/browser/hover_test.js
 - **Situation:** The map showed ~250 km² display cells, which read as if sites were planned at that size; a planner needs the 0.74 km² analysis hexagons.

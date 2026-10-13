@@ -211,7 +211,7 @@ footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line);
 <script>
 const REPO = "https://github.com/sabrinapribadi/next-site-planner/blob/main/";
 const ADR = {
-  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md", "003": "docs/adr/ADR-003-industry-alignment.md"
+  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md", "003": "docs/adr/ADR-003-industry-alignment.md", "004": "docs/adr/ADR-004-speed-model-for-untested-areas.md", "005": "docs/adr/ADR-005-measurement-noise.md"
 };
 const LANES = ["Data", "Compute (DuckDB · Spark)", "Spatial statistics", "Model", "Evaluation", "Serving & AI", "Platform", "Decision"];
 
@@ -279,12 +279,37 @@ const PHASES = [
   lessons: ["A pre-written check is only useful if you act when it fails.", "Publish the failed method next to the fix.", "Know what your data cannot see."],
   star: "My own checks caught three failing methods — biased intervals, a hotspot test that found noise, and a cell database too sparse to type gaps — and each fix is published next to the original."
 },
-{ agg: [["Hexagon predictions → error", "RMSE of log speed per held-out spatial block, then per country (planned)", "Errors where the model has not seen data"], ["Hexagons → applicability", "Share of people inside the area of applicability (planned)", "Where predictions can be trusted"]], id: "p2", tag: "P2", name: "Spatial speed model", dates: "planned", verdict: ["plan", "Planned"],
-  scqa: ["Speed tests are sparse outside cities.", "Random validation flatters spatial models.", "Can a model predict speed where nobody tested, honestly validated?", "Planned."],
-  steps: [["Model", "Kriging vs boosting", "Ordinary kriging baseline vs gradient boosting with spatial features.", "Gate: ≤ 0.9 × kriging error under spatial block CV.", "planned", "plan"],
-          ["Evaluation", "Spatial block CV", "Blocks and leave-one-country-out; random CV shown only for contrast.", "Neighbouring hexagons leak.", "planned", "plan"],
-          ["Evaluation", "Area of applicability", "Flag where predictors differ from training data.", "Do not predict into the unknown silently.", "planned", "plan"]],
-  decisions: [["Spatial block CV + area of applicability", "002"]], results: [["RMSE ratio vs kriging", "≤ 0.90", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ agg: [["Tile pairs in one hexagon → noise level", "Squared difference of two tiles regressed on 1/tests (non-negative least squares), per country", "Separates test-to-test noise from real location differences"], ["Neighbours → kriging prediction", "Weighted average of the 64 nearest tested hexagons; weights from the fitted variogram", "Closer, more similar places count more"], ["Hexagon + neighbourhood → typical speed", "Blend weighted by noise: tests count more the more of them there are (Fay–Herriot)", "One test is mostly luck; 200 tests are not"], ["Held-out blocks → error", "RMSE of log speed per ~36 km² block fold, pooled; also per country, by distance, on well-tested hexagons", "Errors where the model has not seen data"], ["Untested hexagons → country totals", "Σ people × chance typical speed is below the bar", "Expected people, not a count of hexagons"]], id: "p2", tag: "P2", name: "Speed where nobody tested", dates: "13–14 Oct 2026", verdict: ["fail", "Gate failed → kriging"],
+  scqa: ["349M people (39%) live where nobody ran a speed test; P1 could not count them.",
+         "Most tested hexagons rest on 1–2 tests, and two tests at the same place often differ 3–5×.",
+         "Can a model predict typical speed where nobody tested, and beat standard kriging by 10%?",
+         "No: machine learning beat kriging by 7% (gate 10%), so kriging is used. Removing test noise showed ≈ 68M untested people likely below 25 Mbps, most in Indonesia and the Philippines."],
+  steps: [
+    ["Decision", "Design before training", "ADR-004 pushed first: kriging baseline, LightGBM, features, gate.", "A gate set after results proves nothing.", "docs/adr/ADR-004-speed-model-for-untested-areas.md"],
+    ["Evaluation", "Test blocks sized to reality", "Measured how far untested people live from a test; ~36 km² blocks matched best (kNNDM idea).", "Random splits flatter; huge blocks punish.", "docs/adr/ADR-004-speed-model-for-untested-areas.md"],
+    ["Decision", "Strongest fair baseline", "Kriging with Cressie's weighted variogram fit, two variogram shapes, 16/32/64 neighbours; the gate uses the best.", "A weak baseline would make machine learning look good.", "src/spatialmodel.py"],
+    ["Compute (DuckDB · Spark)", "Leak-proof neighbour features", "Nested out-of-fold: no hexagon ever sees its own speed or the test block's.", "Leakage is the usual way spatial models cheat.", "scripts/speed_model.py"],
+    ["Model", "Kriging vs LightGBM", "Four test designs, all consistent: LightGBM 6–8% more accurate.", "Same answer whatever the split.", "data/outputs/p2_speed_model.json"],
+    ["Evaluation", "Gate failed", "Ratio 0.929 > 0.90: kriging deployed, as written beforehand.", "Keep the rule even when it hurts.", "docs/adr/ADR-002-validation-and-gates.md", "fail"],
+    ["Spatial statistics", "Why: test noise", "Two tiles in one hexagon differ by SD 1.15 (log); one test varies 3–5×.", "No model can beat noise in its targets.", "docs/adr/ADR-005-measurement-noise.md"],
+    ["Decision", "Follow-up written first", "ADR-005 pushed before running: noise model, blending, cross-quarter check.", "Post-hoc work must still be declared before it runs.", "docs/adr/ADR-005-measurement-noise.md", "fix"],
+    ["Spatial statistics", "Blend with neighbourhood", "Fay–Herriot: 1-test hexagons take 75–90% from neighbours.", "Typical speed, not one lucky test.", "src/noise.py", "fix"],
+    ["Evaluation", "Checked on the next quarter", "Blended Q2 speeds 28–44% closer to Q3's separate tests; share levels credible in 4 of 7 countries.", "Prove the correction removes noise, not signal.", "scripts/noise_validation.py"],
+    ["Serving & AI", "Predictions on the map", "5.76M untested hexagons get a typical speed and a chance below each bar; district view shows them striped.", "Planners see where a field test is needed.", "docs/index.html"]
+  ],
+  decisions: [["Kriging vs LightGBM, test blocks by distance matching", "004"], ["Measurement noise: blend, then check on the next quarter", "005"]],
+  results: [["Machine learning vs kriging error", "≤ 0.90", "0.929 (7% better)", "no"], ["Same on other test designs", "report", "0.92–0.94", "info"],
+            ["On well-tested hexagons (10+ tests)", "report", "0.82 (18% better)", "info"], ["80% ranges contain the truth", "≈ 80%", "84%", "ok"],
+            ["Blended vs raw, next quarter", "lower error", "28–44% lower, all 7", "ok"], ["Untested people likely below 25 Mbps", "report", "≈ 68M", "info"]],
+  obstacles: [
+    ["Feature build took 18 minutes, then ran out of memory", "Neighbourhood joins over 6.6M hexagons spilled under a 3 GB cap; a second connection held tiles", "4 GB cap, 2 threads, features saved to disk (2 minutes on re-run)", "Save expensive features; size memory for the largest join"],
+    ["Model looked barely better than kriging", "Targets are noisy: most hexagons have 1–2 tests", "Measured the noise, scored on well-tested hexagons as a diagnostic", "Estimate the noise floor before judging a model"],
+    ["The corrected shares dropped sharply in the US and France", "Single unlucky tests in fast neighbourhoods", "Cross-quarter level check; ✓ for 4 countries, ⚠ provisional for 3", "Validate a correction's level, not only its direction"],
+    ["OpenAlex listed LightGBM as a preprint", "Its primary copy is a repository mirror", "Stated venue in references.yaml", "Check the venue behind a citation count"]
+  ],
+  lessons: ["Size the test to how the model will be used.", "Know the noise floor before comparing models.", "A failed gate is a result; publish it next to the follow-up."],
+  star: "Machine learning failed my own 10% gate against kriging, so I shipped kriging, then showed the real limit was test noise — and that about 68 million untested people are likely on slow mobile."
+},
 { agg: [["Tiles near a new site → effect", "Tiles within 500 m of a new cell; group-time effects aggregated to event time, weighted by group size (Callaway–Sant'Anna, planned)", "Avoids the bias of one pooled before/after regression"]], id: "p3", tag: "P3", name: "What new sites do", dates: "planned", verdict: ["plan", "Planned"],
   scqa: ["Plans assume new sites lift nearby speeds.", "Nobody checks; sites go where demand is, which biases naive comparisons.", "How much does a new site lift speeds within 500 m?", "Planned."],
   steps: [["Data", "New cells", "OpenCelliD cells first seen 2023–24 and observed ≥ 180 days (Germany ~40k, US ~61k).", "Only reliable first-seen dates.", "planned", "plan"],

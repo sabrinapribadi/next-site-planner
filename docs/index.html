@@ -125,6 +125,13 @@ svg.plot .row { outline: none; }
 .key i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
 .key i.sq { border-radius: 2px; }
 
+.how { font-size: 13px; color: var(--muted); border-left: 3px solid var(--accent-soft); padding: 4px 0 4px 12px; max-width: 80ch; }
+.how b { color: var(--fg); font-weight: 600; }
+.badge { font: 600 11px var(--font-mono); padding: 2px 6px; border-radius: 999px; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); } .badge.warn { background: var(--slow-soft); color: var(--slow); }
+dl.gloss { display: grid; grid-template-columns: minmax(140px, 220px) minmax(0, 1fr); gap: 8px 16px; margin: 0; font-size: 14px; }
+dl.gloss dt { font-weight: 600; } dl.gloss dd { margin: 0; color: var(--fg); }
+@media (max-width: 520px) { dl.gloss { grid-template-columns: 1fr; } dl.gloss dd { margin-bottom: 6px; } }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .points { display: grid; gap: 6px; }
 .caveats li { margin-bottom: 4px; }
@@ -158,7 +165,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
   <span class="eyebrow">Portfolio · GIS + MLOps · public data only · seven countries</span>
   <h1>Where would one more mobile site help the most people?</h1>
   <p class="lede">Measured mobile speed, where people live and where cells are, on one equal-area grid for Indonesia, Malaysia, the Philippines, Germany, France, the US and the UAE.</p>
-  <div class="status"><span class="chip">Phases 0–1 of 7 done</span><span class="muted">Data foundation and experience gap are live. Speed model, new-site effect and site optimiser come next.</span></div>
+  <div class="status"><span class="chip">Phases 0–2 of 7 done</span><span class="muted">Data foundation, experience gap and speed for untested areas are live. New-site effect and site optimiser come next.</span></div>
   <div class="status"><a href="build.html">Technical walkthrough →</a><a href="https://github.com/sabrinapribadi/next-site-planner">GitHub repository</a></div>
   <nav class="toc" aria-label="Sections"><a href="#problem"><span class="n">1</span>Problem</a><a href="#data"><span class="n">2</span>Data</a><a href="#approach"><span class="n">3</span>Approach</a><a href="#solution"><span class="n">4</span>Solution</a><a href="#take"><span class="n">5</span>Our take</a></nav>
 </header>
@@ -167,7 +174,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
   <div class="card"><span class="eyebrow">Data</span><b class="big" id="g-data">899M people</b><span class="muted small">7 countries · 6.6M hexagons · 15 quarters of speed tests · 29.8M places · 1.6M cells</span></div>
   <div class="card"><span class="eyebrow">Problem</span><b class="big">Rank sites, or count people?</b><span class="muted small">Site lists are ranked on weighted KPIs; countries are compared on national medians that mix cities with islands.</span></div>
   <div class="card"><span class="eyebrow">Approach</span><b class="big">People below a bar</b><span class="muted small">Share of people on slow mobile, compared at equal population density, with spatial uncertainty.</span></div>
-  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">61.7M people</b><span class="muted small" id="g-result-sub">in tested areas get under 25 Mbps; 349M more live where nobody tested.</span></div>
+  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">61.7M people</b><span class="muted small" id="g-result-sub">in tested areas get under 25 Mbps; about 68M more are likely below it where nobody tested.</span></div>
 </div>
 
 <section class="block" id="problem">
@@ -228,6 +235,8 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
       <tr><td>Uncertainty</td><td>Resample speed tiles (pre-registered)</td><td>Resample ~250 km² blocks</td><td>Germany: tile interval 5.57–5.92% missed its own 5.21%</td></tr>
       <tr><td>Slow clusters</td><td>Normal-approximation p-values</td><td>Exact p-values</td><td>False clusters on shuffled data: up to 318 → 0</td></tr>
       <tr><td>Gap types</td><td>Type every slow hexagon</td><td>Type only where cell data is complete</td><td>Cell records near only 2% of fast rural Indonesian hexagons</td></tr>
+      <tr><td>Speed where nobody tested</td><td>LightGBM (machine learning)</td><td>Kriging (standard spatial averaging)</td><td>LightGBM only 7% more accurate; the rule set beforehand needed 10%</td></tr>
+      <tr><td>Test noise</td><td>Take each hexagon's few tests at face value</td><td>Blend with the neighbourhood by how many tests it has</td><td>Blended speeds 28–44% closer to the next quarter's tests</td></tr>
     </tbody></table></div>
   <p class="muted small">Every change after a gate was set is logged as a deviation, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
 </section>
@@ -248,6 +257,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
       <div class="mapwrap" id="mapwrap"><canvas id="map" aria-label="Map of people below the speed bar" role="img"></canvas><div class="tip" hidden></div></div>
       <div class="legend" id="legend"></div>
       <p class="muted small" id="map-note"></p>
+      <p class="how" id="how-map"></p>
     </div>
     <div style="display:grid; gap:8px; min-width:0">
       <span class="eyebrow" id="top-h">Districts with the most people below the bar</span>
@@ -258,21 +268,30 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
 
   <div class="chart"><div class="key"><span><i style="background:var(--slow)"></i>Raw share, with 95% interval</span><span><i style="border:2px solid var(--accent);background:transparent"></i>At equal density</span><span class="mono">right: people below the bar</span></div>
     <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
+  <p class="how"><b>How to read this.</b> Each red dot is the share of people, in places with speed tests, whose average mobile download is below the bar. Example: Philippines at 25 Mbps = 16.3% → about 16 in 100 tested people. The pale line is the 95% interval: the true share very likely lies inside it. The hollow circle re-weights every country to the same mix of dense and sparse areas, so countries are compared like for like. <b>So what:</b> where the hollow circle sits far right of the dot, a country looks better than it is only because more of its tested people live in cities.</p>
+
+  <div class="chart"><div class="key"><span><i style="background:var(--slow)"></i>Tested people (as measured)</span><span><i style="border:2px solid var(--slow);background:transparent"></i>Tested, typical speed (noise removed)</span><span><i style="background:var(--amber)"></i>Everyone, incl. people nobody tested</span></div>
+    <svg class="plot" id="c-all" role="img" aria-label="Share below the bar including untested people"></svg><div class="tip" hidden></div></div>
+  <p class="how" id="how-all"></p>
 
   <div class="chart"><div class="key"><span><i style="background:var(--accent)"></i>Urban centre</span><span><i style="background:var(--amber)"></i>Town or suburb</span><span><i style="background:var(--slow)"></i>Rural</span><span class="mono">share of tested people below the bar</span></div>
     <svg class="plot" id="c-morph" role="img" aria-label="Share below the bar by area type"></svg><div class="tip" hidden></div></div>
+  <p class="how"><b>How to read this.</b> Each country has three dots: the share of tested people below the bar in city centres, towns and rural areas (the UN "Degree of Urbanisation" definition). Example: Philippines at 25 Mbps — city centres 8%, rural 49%. <b>So what:</b> the gap is overwhelmingly rural, so site plans should start outside the cities.</p>
 
   <div class="two">
     <div class="prose"><span class="eyebrow">Caveats</span>
       <ul class="caveats">
-        <li><b>Not everyone is tested:</b> <span id="cav-untested">349M people (39%)</span> live in hexagons with no test this quarter, mostly rural (<a href="#d-findings">details</a>).</li>
+        <li><b>Not everyone is tested:</b> 349M people (39%) live in hexagons with no test this quarter, mostly rural. Their speed is predicted, with honest ranges (<a href="#d-p2">details</a>).</li>
+        <li><b>One test is mostly luck:</b> two tests at the same place often differ 3–5×. Each hexagon is blended with its neighbourhood by how many tests it has (<a href="#d-p2">details</a>).</li>
         <li><b>Tests are not a random sample:</b> people test when it is slow or new. Shares count people, not tests.</li>
         <li><b>Not a licence check:</b> regulators test obligations with their own measurements, not crowdsourced averages.</li>
         <li><b>Cell data is uneven:</b> coverage vs capacity is typed only where it is complete enough.</li>
         <li><b>Non-commercial:</b> maps derived from Ookla data are shared under CC BY-NC-SA 4.0.</li>
       </ul></div>
     <div><span class="eyebrow">FAQ</span>
-      <details class="faq"><summary>Is Germany really behind Indonesia?</summary><p>On the raw share below 25 Mbps they are close (14.6% vs 13.3%). Indonesia's tested people live mostly in cities. At equal density Indonesia is at 22.0% and Germany at 17.7%.</p></details>
+      <details class="faq"><summary>Is Germany really behind Indonesia?</summary><p>No. As measured they look close (14.6% vs 13.3% below 25 Mbps), but Indonesia's tested people live mostly in cities. At equal density Indonesia is at 22.0% and Germany at 17.7%. Counting everyone, including people nobody tested, Indonesia is at about 18–20% and Germany at about 11–16%.</p></details>
+      <details class="faq"><summary>What is "typical speed"?</summary><p>The speed most people in a hexagon usually get. One test can be unlucky (a busy hour, a cheap plan, indoors). We blend each hexagon's tests with its neighbourhood: a hexagon with 1 test takes about 75–90% from its neighbours, one with 200 tests keeps its own. Checked against the next quarter's tests: 28–44% closer than the raw value.</p></details>
+      <details class="faq"><summary>Did the speed model fail?</summary><p>Its pre-set test, yes. Machine learning (LightGBM) was 7% more accurate than standard kriging; the rule written beforehand required 10%, so kriging is used. Scored only on well-tested places, machine learning was 18% better. That is tested again, with a rule written first, on the next quarter's data.</p></details>
       <details class="faq"><summary>Why 10 and 25 Mbps?</summary><p>Both were fixed before the analysis. 5, 50 and 100 Mbps are shown as sensitivity; 100 Mbps matches Germany's 2019 licence obligation and the IMT-2020 user-experienced rate.</p></details>
       <details class="faq"><summary>Where should the next site go?</summary><p>Not yet answered. The list shows where most people are below the bar today. Phase 2 predicts untested areas, phase 3 measures what new sites do, phase 4 chooses a costed set.</p></details>
       <details class="faq"><summary>Coverage gap or capacity gap?</summary><p>Only typed where OpenCelliD records a cell near at least 80% of fast hexagons: city areas in Germany, France, the US and the UAE. Elsewhere it says "type unknown".</p></details>
@@ -289,8 +308,9 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     <li><b>Rural first:</b> in most countries rural people are 3 to 6 times more likely than city-centre people to be below 25 Mbps (Indonesia 36% vs 6%; Philippines 49% vs 8%; Germany 29% vs 7%).</li>
     <li><b>Raw rankings flatter dense countries:</b> at equal density the Philippines (34%) and Indonesia (22%) fall further behind; Germany (18%) sits closer to Indonesia than to France (12%).</li>
     <li><b>Local, not regional:</b> after exact tests, slow clusters remain almost only in Indonesia (24) and the Philippines (14); none in Germany, France or the US. Plans must target places, not regions.</li>
-    <li><b>The biggest unknown is who isn't tested:</b> 349M people, mostly where slow shares are highest. That is phase 2.</li>
-    <li><b>What would change our view:</b> untested areas predicted fast (phase 2), or new sites found not to lift nearby speeds (phase 3).</li>
+    <li><b>The untested gap is the bigger one:</b> about 23M untested Filipinos and 30M untested Indonesians are likely below 25 Mbps — more than among the people who did test.</li>
+    <li><b>Single tests mislead:</b> two tests in the same place often differ 3–5×. Once that noise is removed, the US, France and the UAE have far fewer slow places than raw numbers suggest; Indonesia and the Philippines do not.</li>
+    <li><b>What would change our view:</b> new sites found not to lift nearby speeds (phase 3), or the next quarter's data disagreeing with the predictions.</li>
   </ul>
 </section>
 
@@ -308,11 +328,28 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     </div>
   </div></details>
 
+  <details class="more" id="d-p2"><summary><span class="eyebrow">Speed where nobody tested · test noise · how good the predictions are</span></summary><div class="body">
+    <div class="table-wrap"><table id="t-p2"></table></div>
+    <p class="how"><b>How to read the error.</b> The error is measured on a log scale; the "typical miss" column turns it into everyday terms. Example: a typical miss of 3.5× means a prediction of 20 Mbps could really be about 6–70 Mbps. The ratio compares two errors: 0.93 = machine learning's error is 93% of kriging's, i.e. 7% smaller. <b>So what:</b> single-hexagon predictions are rough; use them as chances ("70% likely below 25 Mbps") and trust district and country totals more.</p>
+    <div class="table-wrap"><table id="t-noise"></table></div>
+    <p class="how"><b>How to read this.</b> "One test varies by" = how much two tests at the same place differ. "Real spots differ by" = how much the typical speed truly differs between spots inside one 0.74 km² hexagon. <b>So what:</b> one test tells you far less than the neighbourhood does; a hexagon with 1–2 tests is mostly luck.</p>
+    <div class="table-wrap"><table id="t-valid"></table></div>
+    <p class="how"><b>How to read this.</b> We blended 2026 Q2 speeds with their neighbourhood, then compared with Q3's separate tests. "Closer by" = how much smaller the error became. The level check adds Q3's test noise back and asks whether the blended speeds reproduce the share below 25 Mbps actually seen. <b>So what:</b> blending works for every country; the corrected country shares are credible (✓) in four countries and provisional (⚠) in three.</p>
+    <ul class="points small">
+      <li><b>80% ranges hold 84% of the time:</b> a stated range like "9–45 Mbps" contained the measured value in 84 of 100 cases — the uncertainty is honest, slightly cautious.</li>
+      <li><b>Ranking slow vs fast (AUC 0.76):</b> given one truly slow and one fast hexagon, the model ranks the slow one as more likely slow 76% of the time (50% = coin flip). Good for prioritising, not for verdicts.</li>
+      <li><b>Inside the model's comfort zone (95%):</b> 95% of untested people live where the inputs look like places the model learned from.</li>
+      <li><b>Coverage vs capacity from Ookla alone (AUC 0.51):</b> upload/download ratio and latency cannot tell the two gap types apart — a coin flip, so that idea was dropped.</li>
+    </ul>
+  </div></details>
+
   <details class="more" id="d-decisions"><summary><span class="eyebrow">Decision log · every choice against a named alternative</span></summary><div class="body">
     <ul class="points">
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-001-framing-and-analysis-unit.md">ADR-001</a> — people below a bar on H3 resolution 8; raw and density-adjusted; untested people reported.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-002-validation-and-gates.md">ADR-002</a> — gates for every phase, set before analysis; two logged deviations (block bootstrap, exact p-values).</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-003-industry-alignment.md">ADR-003</a> — how planners work: gap types, Degree of Urbanisation, 3GPP site spacing, co-location costs, regulator benchmarks; OpenCelliD completeness finding.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-004-speed-model-for-untested-areas.md">ADR-004</a> — speed where nobody tested: kriging vs LightGBM, test blocks sized to real distances; the gate failed and kriging is used.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-005-measurement-noise.md">ADR-005</a> — test noise (written after the gate failed, before running): noise model, blending with the neighbourhood, cross-quarter check.</li>
     </ul>
     <div class="table-wrap"><table>
       <thead><tr><th>Date</th><th>Pre-registered</th><th>Found</th><th>Changed to</th></tr></thead>
@@ -323,13 +360,31 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
       </tbody></table></div>
   </div></details>
 
-  <details class="more" id="appendix"><summary><span class="eyebrow">Technical appendix · gates, intervals, assignment checks</span></summary><div class="body">
+  <details class="more" id="appendix"><summary><span class="eyebrow">Technical appendix · glossary, gates, intervals, assignment checks</span></summary><div class="body">
+    <dl class="gloss" id="glossary">
+      <dt>Hexagon (0.74 km²)</dt><dd>The analysis grid: equal-size cells (H3 resolution 8), about 0.9 km across.</dd>
+      <dt>Tested hexagon</dt><dd>A hexagon with at least one Ookla speed test this quarter. 61% of people live in one.</dd>
+      <dt>Share below the bar</dt><dd>People in tested hexagons whose average download is below e.g. 25 Mbps, divided by all people in tested hexagons.</dd>
+      <dt>95% interval</dt><dd>A range that very likely contains the true value. Example: 12.9–21.0% means "somewhere in there, most likely near 16%".</dd>
+      <dt>At equal density</dt><dd>Each country re-weighted to the same mix of dense and sparse areas, so archipelagos and dense cities compare fairly.</dd>
+      <dt>Slow cluster (FDR 5%)</dt><dd>A group of neighbouring slow hexagons unlikely to be chance; at most 5% of flagged clusters are expected to be false alarms.</dd>
+      <dt>Typical speed</dt><dd>What most people in a hexagon usually get, after blending its few tests with its neighbourhood (empirical Bayes).</dd>
+      <dt>Error (log scale) / typical miss</dt><dd>How far predictions are from measurements. An error of 1.24 means a typical miss of about 3.5× (e^1.24): 20 Mbps predicted, 6–70 Mbps possible.</dd>
+      <dt>Ratio vs kriging</dt><dd>One model's error divided by kriging's. 0.93 = 7% smaller error. The pre-set rule needed 0.90 or lower.</dd>
+      <dt>Kriging</dt><dd>The standard way to estimate a value at a place from nearby measurements, weighting closer and more similar ones more.</dd>
+      <dt>LightGBM</dt><dd>A machine-learning model (gradient-boosted trees) that also uses population, places, cells, home-broadband speed and history.</dd>
+      <dt>Spatial block test</dt><dd>Hold out whole areas (~36 km²) and predict them from the rest, mimicking how far untested people live from a test.</dd>
+      <dt>AUC</dt><dd>How well a score ranks slow above fast places: 0.5 = coin flip, 1.0 = perfect.</dd>
+      <dt>80% range coverage</dt><dd>How often stated 80% ranges contain the measured value; 84% = honest, slightly cautious.</dd>
+      <dt>Area of applicability</dt><dd>Where a prediction's inputs resemble the places the model learned from; outside it, predictions are flagged.</dd>
+      <dt>✓ credible / ⚠ provisional</dt><dd>Whether the noise-corrected country share passed the cross-quarter level check (within 1.5 points).</dd>
+    </dl>
     <div class="table-wrap"><table>
       <thead><tr><th>Phase</th><th>Gate (set before the work)</th><th>Result</th></tr></thead>
       <tbody>
         <tr><td>P0</td><td>≥ 99% of people and tests assigned per country; data contracts pass; inputs fingerprinted</td><td id="a-p0">Passed</td></tr>
         <tr><td>P1</td><td>Shares with 95% intervals containing their estimate; clusters at FDR 5%; every populated hexagon typed</td><td id="a-p1">Passed</td></tr>
-        <tr><td>P2</td><td>Speed model ≤ 0.90 × kriging error under spatial block CV</td><td class="muted">Next</td></tr>
+        <tr><td>P2</td><td>Machine learning ≤ 0.90 × kriging error (spatial blocks)</td><td><span class="badge warn">Failed</span> 0.93 → kriging used</td></tr>
         <tr><td>P3</td><td>Pre-trend placebo interval includes 0; new-site effect with interval</td><td class="muted">Planned</td></tr>
         <tr><td>P4</td><td>≥ 10% more people lifted than a ranking, at equal cost</td><td class="muted">Planned</td></tr>
       </tbody></table></div>
@@ -396,8 +451,9 @@ function renderFacts() {
     <div class="fact slow"><b>${mil(below)}</b><span>people in tested areas below ${b} Mbps</span></div>
     <div class="fact slow"><b>${pct(below / tested)}</b><span>of tested people, seven countries</span></div>
     <div class="fact"><b>${mil(untested)}</b><span>people where nobody tested (${pct(untested / pop, 0)})</span></div>
+    <div class="fact slow"><b>≈ ${mil(ISOS.reduce((a, k) => a + (C[k].untested ? C[k].untested.expected_below_m[b] : 0), 0))}</b><span>of them likely below ${b} Mbps (predicted typical speed)</span></div>
     <div class="fact accent"><b>${ISOS.reduce((a, k) => a + C[k].hotspots.slow_hotspot_hexagons_fdr, 0)}</b><span>slow 1 km clusters; ${C.IDN.hotspots.slow_hotspot_hexagons_fdr + C.PHL.hotspots.slow_hotspot_hexagons_fdr} in Indonesia and the Philippines</span></div>`;
-  $("#sol-h").textContent = `${mil(below)} people in tested areas get under ${b} Mbps — most of them outside cities`;
+  $("#sol-h").textContent = `${mil(below)} people in tested areas get under ${b} Mbps — and about ${mil(ISOS.reduce((a, k) => a + (C[k].untested ? C[k].untested.expected_below_m[b] : 0), 0))} more where nobody tested`;
 }
 
 // ---------- controls
@@ -428,7 +484,14 @@ function prepDistrict(key) {
 }
 const Phi = (z) => { const t = 1 / (1 + 0.2316419 * Math.abs(z)), d = 0.3989423 * Math.exp(-z * z / 2);
   const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); return z > 0 ? 1 - p : p; };
-function pBelow(d, i, bar) { return d.pm && d.pm[i] > 0 && d.sg[i] > 0 ? Phi((Math.log(bar) - Math.log(d.pm[i])) / d.sg[i]) : null; }
+// chance that a hexagon's typical speed is below the bar: tested → blended (noise-corrected) speed; untested → kriging prediction
+function pBelow(d, i, bar) {
+  if (d.tm && d.tm[i] > 0 && d.ts[i] > 0) return Phi((Math.log(bar) - Math.log(d.tm[i])) / d.ts[i]);
+  if (d.pm && d.pm[i] > 0 && d.sg[i] > 0) return Phi((Math.log(bar) - Math.log(d.pm[i])) / d.sg[i]);
+  return null;
+}
+const PBINS = [[0.2, "--ok"], [0.5, "--r1"], [0.8, "--r2"], [1.01, "--r4"]];
+const pColor = (p) => css(PBINS.find(([t]) => p < t)[1]);
 function binColor(v) { return v < 0 ? null : v < 10 ? css("--r0") : v < 25 ? css("--r1") : v < 50 ? css("--r2") : v < 75 ? css("--r3") : css("--r4"); }
 function stripes(ctx, color) {
   const pc = document.createElement("canvas"); pc.width = pc.height = 6; const px = pc.getContext("2d");
@@ -457,11 +520,13 @@ function drawMap() {
     ctx.strokeStyle = css("--fg"); ctx.lineWidth = 1.4;
     g.hot.forEach(([[la, lo]]) => { const [x, y] = P(la, lo); ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 2 * Math.PI); ctx.stroke(); });
   } else {
-    const d = g.d;
+    const d = g.d, pats = {};
+    PBINS.forEach(([, v]) => { pats[v] = stripes(ctx, css(v)); });
     for (let i = 0; i < g.polys.length; i++) {
       path(i);
-      if (d.s[i] >= 0) ctx.fillStyle = d.s[i] < state.bar ? css("--r3") : css("--ok");
-      else { const p = pBelow(d, i, state.bar); ctx.fillStyle = p == null ? untested : p >= 0.5 ? predSlow : predOk; }
+      const p = pBelow(d, i, state.bar);
+      if (p == null) ctx.fillStyle = d.s[i] >= 0 ? (d.s[i] < state.bar ? css("--r3") : css("--ok")) : untested;
+      else { const v = PBINS.find(([t]) => p < t)[1]; ctx.fillStyle = d.s[i] >= 0 ? css(v) : pats[v]; }
       ctx.fill(); ctx.strokeStyle = css("--map-bg"); ctx.lineWidth = 0.5; ctx.stroke();
     }
     ctx.strokeStyle = css("--fg"); ctx.lineWidth = 2;
@@ -475,9 +540,10 @@ const GAPN = ["no gap", "capacity gap", "coverage gap", "slow, type unknown", "n
 function cellTip(i) {
   if (state.detail) {
     const d = proj.g.d, p = pBelow(d, i, state.bar);
-    const sp = d.s[i] >= 0 ? `measured ${d.s[i]} Mbps (${d.s[i] < state.bar ? "below" : "at or above"} ${state.bar})`
-      : p == null ? "not tested" : `not tested · predicted ${d.pm[i]} Mbps, ${Math.round(100 * p)}% chance below ${state.bar}`;
-    return `<b>0.74 km² hexagon · ${ppl(d.p[i])} people</b>${AREAN[d.a[i]]} · ${sp}<br>at 25 Mbps: ${GAPN[d.g[i]]}${d.x[i] ? " · in a slow 1 km cluster" : ""}`;
+    const sp = d.s[i] >= 0 ? `measured ${d.s[i]} Mbps${d.tm && d.tm[i] > 0 ? ` · typical ≈ ${d.tm[i]} Mbps` : ""}`
+      : d.pm && d.pm[i] > 0 ? `not tested · predicted typical ≈ ${d.pm[i]} Mbps` : "not tested";
+    return `<b>0.74 km² hexagon · ${ppl(d.p[i])} people</b>${AREAN[d.a[i]]} · ${sp}` + (p == null ? "" : `<br>${Math.round(100 * p)}% chance its typical speed is below ${state.bar} Mbps`)
+      + `<br>at 25 Mbps: ${GAPN[d.g[i]]}${d.x[i] ? " · in a slow 1 km cluster" : ""}`;
   }
   const m = C[state.iso].map, bi = BARS.indexOf(state.bar), v = m.b[bi][i], p = m.p[i] * 1000, t = m.m[i];
   const nm = m.names[m.n[i]];
@@ -527,9 +593,9 @@ function renderMapHead() {
   const h = $("#maphead");
   if (!state.detail) { h.innerHTML = `<span class="muted">${esc(C[state.iso].name)} · display cells ≈ 250 km² · analysis runs on 0.74 km² hexagons</span>`; return; }
   const d = proj.g.d, n = +state.detail.split("_")[1], tested = d.s.filter((v) => v >= 0).length;
-  const people = d.p.reduce((a, b) => a + b, 0), below = d.p.reduce((a, p, i) => a + (d.s[i] >= 0 && d.s[i] < state.bar ? p : 0), 0);
+  const people = d.p.reduce((a, b) => a + b, 0), exp = d.p.reduce((a, p, i) => { const q = pBelow(d, i, state.bar); return a + (q == null ? 0 : p * q); }, 0);
   h.innerHTML = `<button type="button" id="map-back">← ${esc(C[state.iso].name)}</button><b>${esc(C[state.iso].map.names[n])}</b>
-    <span class="muted">${d.h.length.toLocaleString("en")} hexagons of 0.74 km² · ${ppl(people)} people · ${tested.toLocaleString("en")} tested · ${ppl(below)} people in tested hexagons below ${state.bar} Mbps</span>`;
+    <span class="muted">${d.h.length.toLocaleString("en")} hexagons of 0.74 km² · ${ppl(people)} people · ${tested.toLocaleString("en")} tested · ≈ ${ppl(exp)} people likely below ${state.bar} Mbps (typical speed, tested + predicted)</span>`;
   $("#map-back").addEventListener("click", closeDistrict);
 }
 function renderTop() {
@@ -550,17 +616,17 @@ function renderTop() {
 }
 function renderLegend() {
   if (state.detail) {
-    const hasP = !!(window.GEO1_D[state.detail] || {}).pm;
-    $("#legend").innerHTML = `<span class="mono">0.74 km² hexagons:</span><span><i style="background:var(--r3)"></i>tested, below ${state.bar} Mbps</span><span><i style="background:var(--ok)"></i>tested, at or above</span>`
-      + (hasP ? `<span><i class="pred"></i>not tested, predicted below</span><span><i class="predok"></i>not tested, predicted above</span>` : `<span><i class="untested"></i>not tested</span>`)
-      + `<span><i style="border:2px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
+    $("#legend").innerHTML = `<span class="mono">chance typical speed is below ${state.bar} Mbps:</span>` + [["--ok", "under 20%"], ["--r1", "20–50%"], ["--r2", "50–80%"], ["--r4", "80% or more"]].map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
+      + `<span><i class="untested"></i>striped = not tested (predicted)</span><span><i style="border:2px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
     $("#map-note").textContent = "Each hexagon ≈ 0.74 km², the analysis grid. A new site's search area in phase 4 is one of these hexagons (or a 0.1 km² one in dense cities).";
+    $("#how-map").innerHTML = `<b>How to read this.</b> Each hexagon's colour is the chance that the speed people <i>typically</i> get there is below ${state.bar} Mbps. Solid = tested (its few tests blended with the neighbourhood); striped = nobody tested (predicted from nearby tests by kriging). Example: "70% chance" means that in 10 hexagons like it, about 7 are really below the bar. <b>So what:</b> dark clusters are the most reliable search areas for a new site; pale striped areas need a field test first.`;
     return;
   }
   const bins = [["--r0", "under 10%"], ["--r1", "10–25%"], ["--r2", "25–50%"], ["--r3", "50–75%"], ["--r4", "75% or more"]];
   $("#legend").innerHTML = `<span class="mono">tested people below ${state.bar} Mbps:</span>` + bins.map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
     + `<span><i class="untested"></i>not tested</span><span><i style="border-radius:50%;border:1.5px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
   $("#map-note").textContent = "Display cells ≈ 250 km² keep the page light; every number is computed on 0.74 km² hexagons. Rings mark slow clusters. No basemap: the shape is where people live.";
+  $("#how-map").innerHTML = `<b>How to read this.</b> Colour = share of tested people in each ~250 km² area whose measured average is below ${state.bar} Mbps. Example: a dark area at 80% means about 8 in 10 tested people there are below the bar. Striped = nobody tested. <b>So what:</b> click a district on the right to see its 0.74 km² hexagons, including predictions where nobody tested.`;
 }
 
 // ---------- SVG charts (drawn at the container's width so text stays readable on phones)
@@ -612,6 +678,30 @@ function chartMorph() {
     return `<b>${esc(c.name)} · below ${lbl} Mbps</b>` + MORPH.map(([m, , l]) => `${l}: ${pct(c.morphology[m][bar])} of tested · ${pct(c.morphology[m].share, 0)} of people, ${pct(c.morphology[m].measured, 0)} tested`).join("<br>")
       + (state.bar !== 10 && state.bar !== 25 ? `<br><span class="muted">Area types are reported at 10 and 25 Mbps; showing 25.</span>` : ""); });
 }
+function chartAll() {
+  const svg = $("#c-all"), W = svg.parentElement.clientWidth - 12, b = String(state.bar), phone = W < 520;
+  const L = phone ? 92 : 120, R = 34, rowH = 34, top = 6, n = ISOS.length, H = top + n * rowH + 22;
+  const order = [...ISOS].sort((a, c) => C[c].untested.all_people_share_below[b] - C[a].untested.all_people_share_below[b]);
+  const vmax = niceMax(Math.max(...ISOS.map((k) => Math.max(C[k].below[b], C[k].noise.corrected_below[b], C[k].untested.all_people_share_below[b]))));
+  const x = (v) => L + (v / vmax) * (W - L - R);
+  let sv = axis(x, 0, vmax, top, top + n * rowH, [0, vmax / 4, vmax / 2, 3 * vmax / 4, vmax], (t) => Math.round(100 * t) + "%");
+  order.forEach((k, r) => {
+    const c = C[k], y = top + r * rowH + rowH / 2, a = c.below[b], t = c.noise.corrected_below[b], e = c.untested.all_people_share_below[b];
+    sv += `<g class="row" tabindex="0" data-k="${k}"><rect class="band" x="0" y="${y - rowH / 2}" width="${W}" height="${rowH}" fill="transparent"/>
+      <text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(phone ? k : label(k))}</text>
+      <line x1="${x(Math.min(a, t, e))}" x2="${x(Math.max(a, t, e))}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="2"/>
+      <circle cx="${x(a)}" cy="${y}" r="6" fill="var(--slow)"/><circle cx="${x(t)}" cy="${y}" r="6" fill="none" stroke="var(--slow)" stroke-width="2"/>
+      <rect x="${x(e) - 6}" y="${y - 6}" width="12" height="12" fill="var(--amber)"/>
+      <text class="ax" x="${W - 4}" y="${y + 4}" text-anchor="end">${c.noise.level_credible ? "✓" : "⚠"}</text></g>`;
+  });
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = sv;
+  bindRows(svg, (k) => { const c = C[k], u = c.untested;
+    return `<b>${esc(c.name)} · below ${b} Mbps</b>Tested people, as measured: ${pct(c.below[b])}<br>Tested people, typical speed: ${pct(c.noise.corrected_below[b])} ${c.noise.level_credible ? "(✓ level checked)" : "(⚠ provisional)"}`
+      + `<br>Nobody tested: ${mil(u.people_m)} people, ≈ ${mil(u.expected_below_m[b])} likely below`
+      + `<br>Everyone: ≈ ${pct(u.all_people_share_below[b])}`; });
+  const ph = C.PHL, id = C.IDN;
+  $("#how-all").innerHTML = `<b>How to read this.</b> Three views of the same question for each country. Red dot: tested people, as measured. Red ring: tested people at their typical speed (single-test luck removed). Amber square: everyone, adding the predicted typical speed of people nobody tested. Example at ${b} Mbps: the Philippines goes from ${pct(ph.below[b])} (tested) to about ${pct(ph.untested.all_people_share_below[b])} (everyone), because ≈ ${mil(ph.untested.expected_below_m[b])} untested Filipinos are likely below the bar. ✓ = the typical-speed level passed a check against the next quarter; ⚠ = provisional. <b>So what:</b> in Indonesia (≈ ${mil(id.untested.expected_below_m[b])}) and the Philippines, the people no statistic sees are the larger part of the gap.`;
+}
 function stacked(svgId, parts, tipFor) {
   const svg = $(svgId), W = svg.parentElement.clientWidth - 12, phone = W < 520;
   const L = phone ? 92 : 120, R = 10, rowH = 30, top = 6, n = ISOS.length, H = top + n * rowH + 22;
@@ -637,7 +727,17 @@ function chartGap() {
   stacked("#c-gap", (k) => GAPS.map(([g, col]) => [C[k].gap_types_25[g] || 0, col]),
     (k) => `<b>${esc(C[k].name)} · at 25 Mbps</b>` + GAPS.map(([g, , l]) => `${l}: ${pct(C[k].gap_types_25[g] || 0)}`).join("<br>"));
 }
+const fx = (e) => Math.exp(e).toFixed(1) + "×";
 function tables() {
+  const P = G.p2, N = G.noise_scores, D = { r6: "~36 km² blocks (the rule)", r7: "~5 km² blocks", r5: "~250 km² blocks", random: "random hexagons (optimistic)" };
+  $("#t-p2").innerHTML = `<thead><tr><th>Test design</th><th class="num">Kriging error</th><th class="num">Machine-learning error</th><th class="num">Ratio</th><th>Plain words</th></tr></thead><tbody>` +
+    Object.entries(D).map(([d, l]) => `<tr><td>${l}</td><td class="num">${P[d].rmse.toFixed(2)} <span class="muted">(${fx(P[d].rmse)})</span></td><td class="num">${P[d].gbm.toFixed(2)} <span class="muted">(${fx(P[d].gbm)})</span></td><td class="num">${P[d].ratio.toFixed(2)}</td><td>${Math.round(100 * (1 - P[d].ratio))}% smaller error${d === "r6" ? " — rule needed 10%: kriging used" : ""}</td></tr>`).join("") +
+    `<tr><td>Well-tested places only (10+ tests)</td><td class="num">${N.kriging.rmse_well_measured_10plus_tests.toFixed(2)} <span class="muted">(${fx(N.kriging.rmse_well_measured_10plus_tests)})</span></td><td class="num">${N.gbm.rmse_well_measured_10plus_tests.toFixed(2)} <span class="muted">(${fx(N.gbm.rmse_well_measured_10plus_tests)})</span></td><td class="num">${(N.gbm.rmse_well_measured_10plus_tests / N.kriging.rmse_well_measured_10plus_tests).toFixed(2)}</td><td>${Math.round(100 * (1 - N.gbm.rmse_well_measured_10plus_tests / N.kriging.rmse_well_measured_10plus_tests))}% smaller once noisy targets are left out (diagnostic, after the fact)</td></tr>` +
+    `<tr><td>Against typical speed (noise removed)</td><td class="num">${N.kriging.rmse_noise_adjusted.toFixed(2)} <span class="muted">(${fx(N.kriging.rmse_noise_adjusted)})</span></td><td class="num">${N.gbm.rmse_noise_adjusted.toFixed(2)} <span class="muted">(${fx(N.gbm.rmse_noise_adjusted)})</span></td><td class="num">${(N.gbm.rmse_noise_adjusted / N.kriging.rmse_noise_adjusted).toFixed(2)}</td><td>How far predictions are from what people typically get</td></tr></tbody>`;
+  $("#t-noise").innerHTML = `<thead><tr><th>Country</th><th class="num">One test varies by</th><th class="num">Real spots differ by</th></tr></thead><tbody>` +
+    ISOS.map((k) => `<tr><td>${esc(C[k].name)}</td><td class="num">${fx(Math.sqrt(C[k].noise.s2_test))}</td><td class="num">${fx(Math.sqrt(C[k].noise.s2_micro))}</td></tr>`).join("") + `</tbody>`;
+  $("#t-valid").innerHTML = `<thead><tr><th>Country</th><th class="num">Closer to next quarter by</th><th class="num">Below 25 Mbps: seen in Q3</th><th class="num">Reproduced</th><th>Typical-speed share</th></tr></thead><tbody>` +
+    ISOS.map((k) => { const v = C[k].noise.validation; return `<tr><td>${esc(C[k].name)}</td><td class="num">${pct(v.mse_reduction_shrunk_vs_raw, 0)}</td><td class="num">${pct(v.q3_raw_share_below_25)}</td><td class="num">${pct(v.q3_noisy_share_predicted_from_shrunk_q2)}</td><td>${pct(C[k].noise.corrected_below["25"])} ${C[k].noise.level_credible ? '<span class="badge ok">✓ credible</span>' : '<span class="badge warn">⚠ provisional</span>'}</td></tr>`; }).join("") + `</tbody>`;
   $("#t-hot").innerHTML = `<thead><tr><th>Country</th><th class="num">Clusters</th><th class="num">People in them</th><th class="num">False on shuffled</th></tr></thead><tbody>` +
     ISOS.map((k) => { const h = C[k].hotspots; return `<tr><td>${esc(C[k].name)}</td><td class="num">${h.slow_hotspot_hexagons_fdr}</td><td class="num">${ppl(h.people_in_slow_hotspots_fdr)}</td><td class="num">${h.false_hotspots_on_shuffled_fdr} <span class="muted">(was ${h.false_hotspots_on_shuffled_fdr_normal_approx})</span></td></tr>`; }).join("") + `</tbody>`;
   $("#t-det").innerHTML = `<thead><tr><th>Country</th><th class="num">Rural</th><th class="num">Town</th><th class="num">City</th></tr></thead><tbody>` +
@@ -661,7 +761,7 @@ document.addEventListener("click", (e) => {
 document.querySelectorAll("details.more").forEach((d) => d.addEventListener("toggle", () => d.open && renderCharts()));
 
 // a redraw replaces the rows under the pointer, so their mouseleave never fires: hide chart tooltips first
-function renderCharts() { document.querySelectorAll(".chart > .tip").forEach((t) => (t.hidden = true)); chartCountry(); chartMorph(); chartTested(); chartGap(); }
+function renderCharts() { document.querySelectorAll(".chart > .tip").forEach((t) => (t.hidden = true)); chartCountry(); chartAll(); chartMorph(); chartTested(); chartGap(); }
 function renderAll() { renderControls(); renderFacts(); renderLegend(); drawMap(); renderTop(); renderCharts(); }
 let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { drawMap(); renderCharts(); }, 120); });
 const redrawTheme = () => { drawMap(); };

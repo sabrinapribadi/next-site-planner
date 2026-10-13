@@ -11,10 +11,12 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 
 **Live:** [results page](https://sabrinapribadi.github.io/next-site-planner/) · [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html)
 
-Status: **phases 0–1 of 7 done** (data foundation, experience gap; gates passed). Speed model (P2), new-site effect (P3) and site optimiser (P4) next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
+Status: **phases 0–2 of 7 done**. Data foundation and experience gap passed their gates. For speed where nobody tested (P2), machine learning failed its gate against kriging (7% better; 10% needed), so kriging is used. New-site effect (P3) and site optimiser (P4) are next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
 
 - 61.7M people in tested areas get under 25 Mbps on mobile; 349M people live where nobody tested.
 - At equal population density the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
+- About 68M people nobody tested are likely below 25 Mbps (typical speed), including 23M in the Philippines and 30M in Indonesia.
+- Single speed tests are mostly luck: two tests at the same place differ 3–5×. Each hexagon is blended with its neighbourhood (checked against the next quarter: 28–44% closer).
 
 ## Data
 
