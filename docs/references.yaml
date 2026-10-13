@@ -84,3 +84,15 @@
   doi: 10.1007/BF01032109
   used_in: [ADR-004]
   role: weighted least-squares variogram fitting (P2 baseline)
+- key: fay_herriot_1979
+  doi: 10.1080/01621459.1979.10482505
+  used_in: [ADR-005]
+  role: empirical-Bayes small-area shrinkage (noise follow-up)
+- key: ghosh_rao_1994
+  doi: 10.1214/ss/1177010647
+  used_in: [ADR-005]
+  role: small-area estimation practice
+- key: besag_1991
+  doi: 10.1007/BF00116466
+  used_in: [ADR-005]
+  role: cited alternative, spatial hierarchical Bayes (BYM)
