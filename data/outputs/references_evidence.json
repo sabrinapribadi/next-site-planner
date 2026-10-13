@@ -201,8 +201,8 @@
   {
    "key": "ke_2017",
    "title": "LightGBM: A Highly Efficient Gradient Boosting Decision Tree",
-   "venue": "HAL (Le Centre pour la Communication Scientifique Directe)",
-   "peer_reviewed": false,
+   "venue": "NeurIPS 2017 (OpenAlex primary copy is a HAL mirror)",
+   "peer_reviewed": true,
    "year": 2017,
    "citations": 9120,
    "citations_per_year": 912.0,

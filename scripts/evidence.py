@@ -33,8 +33,11 @@ def fetch(ref: dict) -> dict:
     year = w.get("publication_year")
     cites = w.get("cited_by_count", 0)
     is_preprint = bool(ref.get("arxiv")) or src.get("type") == "repository" or w.get("type") == "preprint"
-    return {"key": ref["key"], "title": w.get("title"), "venue": "arXiv " + ref["arxiv"] if ref.get("arxiv") else src.get("display_name"),
-            "peer_reviewed": not is_preprint, "year": year, "citations": cites,
+    # a reference may name its venue when OpenAlex's primary copy is a repository mirror (stated in references.yaml)
+    venue = ref.get("venue") or ("arXiv " + ref["arxiv"] if ref.get("arxiv") else src.get("display_name"))
+    peer = ref["peer_reviewed"] if "peer_reviewed" in ref else not is_preprint
+    return {"key": ref["key"], "title": w.get("title"), "venue": venue,
+            "peer_reviewed": peer, "year": year, "citations": cites,
             "citations_per_year": round(cites / max(1, dt.date.today().year - (year or dt.date.today().year) + 1), 1),
             "role": ref.get("role"), "used_in": ref.get("used_in", []), "openalex_id": w.get("id")}
 

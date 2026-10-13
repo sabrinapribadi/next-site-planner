@@ -59,6 +59,8 @@
   role: nearest-observation features (P2)
 - key: ke_2017
   title: "LightGBM: A Highly Efficient Gradient Boosting Decision Tree"
+  venue: "NeurIPS 2017 (OpenAlex primary copy is a HAL mirror)"
+  peer_reviewed: true
   used_in: [ADR-004]
   role: gradient boosting model (P2)
 - key: linnenbrink_2024
