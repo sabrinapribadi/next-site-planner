@@ -125,8 +125,13 @@ svg.plot .row { outline: none; }
 .key i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
 .key i.sq { border-radius: 2px; }
 
-.how { font-size: 13px; color: var(--muted); border-left: 3px solid var(--accent-soft); padding: 4px 0 4px 12px; max-width: 80ch; }
-.how b { color: var(--fg); font-weight: 600; }
+details.how { font-size: 13px; color: var(--muted); max-width: 80ch; }
+details.how > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; font: 500 12px var(--font-mono); color: var(--accent); }
+details.how > summary::-webkit-details-marker { display: none; }
+details.how > summary::before { content: "?"; display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--accent); font: 700 10px var(--font-mono); }
+details.how[open] > summary { margin-bottom: 4px; }
+details.how > p { border-left: 3px solid var(--accent-soft); padding: 4px 0 4px 12px; }
+details.how b { color: var(--fg); font-weight: 600; }
 .badge { font: 600 11px var(--font-mono); padding: 2px 6px; border-radius: 999px; }
 .badge.ok { background: var(--ok-soft); color: var(--ok); } .badge.warn { background: var(--slow-soft); color: var(--slow); }
 dl.gloss { display: grid; grid-template-columns: minmax(140px, 220px) minmax(0, 1fr); gap: 8px 16px; margin: 0; font-size: 14px; }
@@ -244,7 +249,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
   <span class="eyebrow">4 · Solution</span>
   <h2 id="sol-h">Most people on slow mobile were never tested</h2>
   <div class="facts" id="facts"></div>
-  <p class="how"><b>How to read these.</b> "Typically get" uses each hexagon's typical speed (see the FAQ "What is typical speed?") or, where nobody tested, a prediction; a hexagon with a 60% chance of being below the bar counts 0.6 of its people. The last tile is the measure fixed before the analysis: the raw average of whatever tests were run, which single unlucky tests inflate. <b>So what:</b> the first tile is the best estimate of how many people a site plan should reach; most of them are invisible in test statistics.</p>
+  <details class="how"><summary>How to read this</summary><p>"Typically get" uses each hexagon's typical speed (see the FAQ "What is typical speed?") or, where nobody tested, a prediction; a hexagon with a 60% chance of being below the bar counts 0.6 of its people. The last tile is the measure fixed before the analysis: the raw average of whatever tests were run, which single unlucky tests inflate. <b>So what:</b> the first tile is the best estimate of how many people a site plan should reach; most of them are invisible in test statistics.</p></details>
 
   <div class="controls" role="group" aria-label="What-if controls">
     <span class="ctl-label">Speed bar</span><div class="seg" id="bar-seg"></div>
@@ -256,7 +261,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
       <div class="maphead" id="maphead"></div>
       <div class="mapwrap" id="mapwrap"><canvas id="map" aria-label="Map of people below the speed bar" role="img"></canvas><div class="tip" hidden></div></div>
       <div class="legend" id="legend"></div>
-      <p class="how" id="how-map"></p>
+      <details class="how"><summary>How to read this map</summary><p id="how-map"></p></details>
     </div>
     <div style="display:grid; gap:8px; min-width:0">
       <span class="eyebrow" id="top-h">Districts with the most people below the bar</span>
@@ -267,7 +272,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
 
   <div class="chart"><div class="key"><span><i style="background:var(--slow)"></i>Tested people, measured (with 95% interval)</span><span><i style="border:2px solid var(--accent);background:transparent"></i>Tested, at equal density</span><span><i class="sq" style="background:var(--amber)"></i>Everyone, typical speed</span><span class="mono">right: people below (everyone)</span></div>
     <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
-  <p class="how"><b>How to read this.</b> Red dot: share of tested people whose measured average is below the bar; the pale line is its 95% interval (the true share very likely lies inside). Hollow circle: the same share if every country had the same mix of dense and sparse areas (10 and 25 Mbps). Amber square: everyone, using typical speeds and including people nobody tested. Example at 25 Mbps: the Philippines is 16% for tested people, 34% at equal density, about 31% for everyone. <b>So what:</b> rankings built on tested people alone flatter dense, well-tested countries.</p>
+  <details class="how"><summary>How to read this</summary><p>Red dot: share of tested people whose measured average is below the bar; the pale line is its 95% interval (the true share very likely lies inside). Hollow circle: the same share if every country had the same mix of dense and sparse areas (10 and 25 Mbps). Amber square: everyone, using typical speeds and including people nobody tested. Example at 25 Mbps: the Philippines is 16% for tested people, 34% at equal density, about 31% for everyone. <b>So what:</b> rankings built on tested people alone flatter dense, well-tested countries.</p></details>
 
 
 
@@ -306,16 +311,16 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
   <details class="more" id="d-findings"><summary><span class="eyebrow">More findings · city vs rural, who is tested, gap types, slow clusters, cell data</span></summary><div class="body">
   <div class="chart"><div class="key"><span><i style="background:var(--accent)"></i>Urban centre</span><span><i style="background:var(--amber)"></i>Town or suburb</span><span><i style="background:var(--slow)"></i>Rural</span><span class="mono">share of tested people below the bar</span></div>
     <svg class="plot" id="c-morph" role="img" aria-label="Share below the bar by area type"></svg><div class="tip" hidden></div></div>
-  <p class="how"><b>How to read this.</b> Each country has three dots: the share of tested people below the bar in city centres, towns and rural areas (the UN "Degree of Urbanisation" definition). Example: Philippines at 25 Mbps — city centres 8%, rural 49%. <b>So what:</b> site plans should start outside the cities.</p>
+  <details class="how"><summary>How to read this</summary><p>Each country has three dots: the share of tested people below the bar in city centres, towns and rural areas (the UN "Degree of Urbanisation" definition). Example: Philippines at 25 Mbps — city centres 8%, rural 49%. <b>So what:</b> site plans should start outside the cities.</p></details>
     <div class="chart"><div class="key"><span><i class="sq" style="background:var(--ok)"></i>Tested, at or above the bar</span><span><i class="sq" style="background:var(--slow)"></i>Tested, below</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span></div>
       <svg class="plot" id="c-tested" role="img" aria-label="People tested and untested by country"></svg><div class="tip" hidden></div></div>
-    <p class="how"><b>How to read this.</b> Each bar is 100% of a country's people, split into tested and at or above the bar, tested and below, and not tested. Example: France — 47% of people live where nobody tested this quarter. <b>So what:</b> where the grey part is large, measured shares alone miss many people; the predicted speeds fill that gap.</p>
+    <details class="how"><summary>How to read this</summary><p>Each bar is 100% of a country's people, split into tested and at or above the bar, tested and below, and not tested. Example: France — 47% of people live where nobody tested this quarter. <b>So what:</b> where the grey part is large, measured shares alone miss many people; the predicted speeds fill that gap.</p></details>
     <div class="chart"><div class="key"><span><i class="sq" style="background:var(--ok)"></i>No gap</span><span><i class="sq" style="background:var(--accent)"></i>Capacity gap</span><span><i class="sq" style="background:var(--amber)"></i>Coverage gap</span><span><i class="sq" style="background:var(--slow)"></i>Slow, type unknown</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span><span class="mono">at 25 Mbps</span></div>
       <svg class="plot" id="c-gap" role="img" aria-label="Gap types at 25 Mbps by country"></svg><div class="tip" hidden></div></div>
-    <p class="how"><b>How to read this.</b> For people below 25 Mbps: a <i>coverage gap</i> has no LTE/5G cell recorded within about 1.3 km (needs a new site); a <i>capacity gap</i> has cells nearby but is still slow (needs more capacity on existing sites). "Type unknown" is used where the public cell database is too incomplete to tell. Example: Germany — 5.5% of people are in capacity gaps, 1.1% in coverage gaps. <b>So what:</b> where the type is known (mostly city areas in Germany, France, the US and the UAE), slow areas need capacity far more often than new coverage; in Southeast Asia the type cannot be told from public data.</p>
+    <details class="how"><summary>How to read this</summary><p>For people below 25 Mbps: a <i>coverage gap</i> has no LTE/5G cell recorded within about 1.3 km (needs a new site); a <i>capacity gap</i> has cells nearby but is still slow (needs more capacity on existing sites). "Type unknown" is used where the public cell database is too incomplete to tell. Example: Germany — 5.5% of people are in capacity gaps, 1.1% in coverage gaps. <b>So what:</b> where the type is known (mostly city areas in Germany, France, the US and the UAE), slow areas need capacity far more often than new coverage; in Southeast Asia the type cannot be told from public data.</p></details>
     <div class="two">
       <div class="prose"><span class="eyebrow">Slow clusters (FDR 5%)</span><div class="table-wrap"><table id="t-hot"></table></div>
-        <p class="how"><b>How to read this.</b> "Clusters" counts 1 km hexagons that sit in a group of slow neighbours beyond what chance explains. "False on shuffled" re-runs the test after randomly shuffling speeds, so any cluster found is a false alarm; the old method's count is in brackets. <b>So what:</b> zero false alarms means the clusters shown are real; slow places elsewhere are scattered, not clustered.</p></div>
+        <details class="how"><summary>How to read this</summary><p>"Clusters" counts 1 km hexagons that sit in a group of slow neighbours beyond what chance explains. "False on shuffled" re-runs the test after randomly shuffling speeds, so any cluster found is a false alarm; the old method's count is in brackets. <b>So what:</b> zero false alarms means the clusters shown are real; slow places elsewhere are scattered, not clustered.</p></details></div>
       <div class="prose"><span class="eyebrow">OpenCelliD finds a cell near fast hexagons</span><div class="table-wrap"><table id="t-det"></table></div>
         <p class="muted small">Below 80% (shaded) the coverage-vs-capacity split is not reported. Records of 5G cells cover 0.03% (Indonesia) to 28.5% (US) of people: a completeness figure, not 5G coverage.</p></div>
     </div>
@@ -323,11 +328,11 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
 
   <details class="more" id="d-p2"><summary><span class="eyebrow">Speed where nobody tested · test noise · how good the predictions are</span></summary><div class="body">
     <div class="table-wrap"><table id="t-p2"></table></div>
-    <p class="how"><b>How to read the error.</b> The error is measured on a log scale; the "typical miss" column turns it into everyday terms. Example: a typical miss of 3.5× means a prediction of 20 Mbps could really be about 6–70 Mbps. The ratio compares two errors: 0.93 = machine learning's error is 93% of kriging's, i.e. 7% smaller. <b>So what:</b> single-hexagon predictions are rough; use them as chances ("70% likely below 25 Mbps") and trust district and country totals more.</p>
+    <details class="how"><summary>How to read this</summary><p>The error is measured on a log scale; the "typical miss" column turns it into everyday terms. Example: a typical miss of 3.5× means a prediction of 20 Mbps could really be about 6–70 Mbps. The ratio compares two errors: 0.93 = machine learning's error is 93% of kriging's, i.e. 7% smaller. <b>So what:</b> single-hexagon predictions are rough; use them as chances ("70% likely below 25 Mbps") and trust district and country totals more.</p></details>
     <div class="table-wrap"><table id="t-noise"></table></div>
-    <p class="how"><b>How to read this.</b> "One test varies by" = how much two tests at the same place differ. "Real spots differ by" = how much the typical speed truly differs between spots inside one 0.74 km² hexagon. <b>So what:</b> one test tells you far less than the neighbourhood does; a hexagon with 1–2 tests is mostly luck.</p>
+    <details class="how"><summary>How to read this</summary><p>"One test varies by" = how much two tests at the same place differ. "Real spots differ by" = how much the typical speed truly differs between spots inside one 0.74 km² hexagon. <b>So what:</b> one test tells you far less than the neighbourhood does; a hexagon with 1–2 tests is mostly luck.</p></details>
     <div class="table-wrap"><table id="t-valid"></table></div>
-    <p class="how"><b>How to read this.</b> We blended 2026 Q2 speeds with their neighbourhood, then compared with Q3's separate tests. "Closer by" = how much smaller the error became. The level check adds Q3's test noise back and asks whether the blended speeds reproduce the share below 25 Mbps actually seen. <b>So what:</b> blending works for every country; the corrected country shares are credible (✓) in four countries and provisional (⚠) in three.</p>
+    <details class="how"><summary>How to read this</summary><p>We blended 2026 Q2 speeds with their neighbourhood, then compared with Q3's separate tests. "Closer by" = how much smaller the error became. The level check adds Q3's test noise back and asks whether the blended speeds reproduce the share below 25 Mbps actually seen. <b>So what:</b> blending works for every country; the corrected country shares are credible (✓) in four countries and provisional (⚠) in three.</p></details>
     <ul class="points small">
       <li><b>80% ranges hold 84% of the time:</b> a stated range like "9–45 Mbps" contained the measured value in 84 of 100 cases — the uncertainty is honest, slightly cautious.</li>
       <li><b>Ranking slow vs fast (AUC 0.76):</b> given one truly slow and one fast hexagon, the model ranks the slow one as more likely slow 76% of the time (50% = coin flip). Good for prioritising, not for verdicts.</li>
@@ -376,9 +381,9 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
         <tr><td>P4</td><td>≥ 10% more people lifted than a ranking, at equal cost</td><td class="muted">Planned</td></tr>
       </tbody></table></div>
     <div class="table-wrap"><table id="t-ci"></table></div>
-    <p class="how"><b>How to read this.</b> Two ways of computing the 95% interval for the share below 25 Mbps. The pre-registered one (resampling speed tiles) is biased: ✕ marks where its interval does not even contain the measured share. The one used resamples ~250 km² blocks. <b>So what:</b> intervals on this page come from the block method; the failed method is kept for transparency.</p>
+    <details class="how"><summary>How to read this</summary><p>Two ways of computing the 95% interval for the share below 25 Mbps. The pre-registered one (resampling speed tiles) is biased: ✕ marks where its interval does not even contain the measured share. The one used resamples ~250 km² blocks. <b>So what:</b> intervals on this page come from the block method; the failed method is kept for transparency.</p></details>
     <div class="table-wrap"><table id="t-p0"></table></div>
-    <p class="how"><b>How to read this.</b> "Assigned" compares people and tests placed on the grid with a recount against detailed borders; above 100% means a few coastal hexagons whose centre lies just offshore were counted (≤ 0.3% sit in a neighbouring country). "Kontur ÷ World Bank" compares the population layer with official totals; France and the US exclude overseas areas and Alaska/Hawaii, and Kontur under-counts the UAE's migrant workforce. <b>So what:</b> no country loses people or tests; population totals are close to official ones.</p>
+    <details class="how"><summary>How to read this</summary><p>"Assigned" compares people and tests placed on the grid with a recount against detailed borders; above 100% means a few coastal hexagons whose centre lies just offshore were counted (≤ 0.3% sit in a neighbouring country). "Kontur ÷ World Bank" compares the population layer with official totals; France and the US exclude overseas areas and Alaska/Hawaii, and Kontur under-counts the UAE's migrant workforce. <b>So what:</b> no country loses people or tests; population totals are close to official ones.</p></details>
     <details class="more" id="sources"><summary><span class="eyebrow">Sources · datasets, standards, regulators and papers (evidence tables with citation counts in each ADR)</span></summary><div class="body">
       <ul class="sources">
         <li>Speedtest® by Ookla® Global Fixed and Mobile Network Performance Maps (AWS Open Data Registry), CC BY-NC-SA 4.0.</li>
@@ -607,13 +612,13 @@ function renderLegend() {
   if (state.detail) {
     $("#legend").innerHTML = `<span class="mono">chance typical speed is below ${state.bar} Mbps:</span>` + [["--ok", "under 20%"], ["--r1", "20–50%"], ["--r2", "50–80%"], ["--r4", "80% or more"]].map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
       + `<span><i class="untested"></i>striped = not tested (predicted)</span><span><i style="border:2px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
-    $("#how-map").innerHTML = `<b>How to read this.</b> Each hexagon's colour is the chance that the speed people <i>typically</i> get there is below ${state.bar} Mbps. Solid = tested (its few tests blended with the neighbourhood); striped = nobody tested (predicted from nearby tests by kriging). Example: "70% chance" means that in 10 hexagons like it, about 7 are really below the bar. Each hexagon is 0.74 km², the size of a phase-4 site search area. <b>So what:</b> dark clusters are the most reliable search areas for a new site; pale striped areas need a field test first.`;
+    $("#how-map").innerHTML = `Each hexagon's colour is the chance that the speed people <i>typically</i> get there is below ${state.bar} Mbps. Solid = tested (its few tests blended with the neighbourhood); striped = nobody tested (predicted from nearby tests by kriging). Example: "70% chance" means that in 10 hexagons like it, about 7 are really below the bar. Each hexagon is 0.74 km², the size of a phase-4 site search area. <b>So what:</b> dark clusters are the most reliable search areas for a new site; pale striped areas need a field test first.`;
     return;
   }
   const bins = [["--r0", "under 10%"], ["--r1", "10–25%"], ["--r2", "25–50%"], ["--r3", "50–75%"], ["--r4", "75% or more"]];
   $("#legend").innerHTML = `<span class="mono">tested people below ${state.bar} Mbps:</span>` + bins.map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
     + `<span><i class="untested"></i>not tested</span><span><i style="border-radius:50%;border:1.5px solid var(--fg);background:transparent"></i>slow 1 km cluster</span>`;
-  $("#how-map").innerHTML = `<b>How to read this.</b> Colour = share of tested people in each ~250 km² area whose measured average is below ${state.bar} Mbps. Example: a dark area at 80% means about 8 in 10 tested people there are below the bar. Striped = nobody tested. Rings mark slow clusters. Display cells are ~250 km² to keep the page light; all numbers are computed on 0.74 km² hexagons. <b>So what:</b> click a district on the right to see those hexagons, including predictions where nobody tested.`;
+  $("#how-map").innerHTML = `Colour = share of tested people in each ~250 km² area whose measured average is below ${state.bar} Mbps. Example: a dark area at 80% means about 8 in 10 tested people there are below the bar. Striped = nobody tested. Rings mark slow clusters. Display cells are ~250 km² to keep the page light; all numbers are computed on 0.74 km² hexagons. <b>So what:</b> click a district on the right to see those hexagons, including predictions where nobody tested.`;
 }
 
 // ---------- SVG charts (drawn at the container's width so text stays readable on phones)
