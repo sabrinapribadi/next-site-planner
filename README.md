@@ -9,7 +9,12 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 - Measure what new sites do: before/after speeds near newly seen cells (Germany, US)
 - Choose sites as a set: a budgeted covering optimiser, compared with KPI-style ranking
 
-Status: **design** — PRD and ADRs with gates fixed before analysis. See [docs/PRD.md](docs/PRD.md) and [docs/adr](docs/adr/README.md).
+**Live:** [results page](https://sabrinapribadi.github.io/next-site-planner/) · [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html)
+
+Status: **phases 0–1 of 7 done** (data foundation, experience gap; gates passed). Speed model (P2), new-site effect (P3) and site optimiser (P4) next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
+
+- 61.7M people in tested areas get under 25 Mbps on mobile; 349M people live where nobody tested.
+- At equal population density the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
 
 ## Data
 
