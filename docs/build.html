@@ -211,56 +211,73 @@ footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line);
 <script>
 const REPO = "https://github.com/sabrinapribadi/next-site-planner/blob/main/";
 const ADR = {
-  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md"
+  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md", "003": "docs/adr/ADR-003-industry-alignment.md"
 };
 const LANES = ["Data", "Compute (DuckDB · Spark)", "Spatial statistics", "Model", "Evaluation", "Serving & AI", "Platform", "Decision"];
 
 // Steps: [lane, short title, what, why, where (file), kind] — kind: "" | "fail" | "fix" | "plan"
 const PHASES = [
 {
-  agg: [["Speed tiles → hexagon", "Download and upload: test-weighted mean of log speed, shown back in Mbps (a geometric mean)", "Speeds are right-skewed; a tile with 200 tests says more than one with 2"], ["Speed tiles → hexagon", "Latency: test-weighted mean; tests and devices: summed; tiles: counted", "Latency is not skewed like speed; counts add up"], ["Population → hexagon", "Kontur is already on H3 resolution 8: taken as is", "No resampling error"], ["Places, cells → hexagon", "Count of points whose location falls in the hexagon (LTE and 5G counted separately)", "Demand and infrastructure on the same grid"], ["Tile or hexagon → country", "Point-in-polygon on the centre (simplified borders); checked against full-detail borders", "Fast assignment, verified loss under 1%"], ["Quarters → panel", "One row per hexagon × quarter × mobile/fixed", "The before/after study (P3) needs history"]], id: "p0", tag: "P0", name: "Seven-country data foundation", dates: "13 Oct 2026", verdict: ["run", "In progress"],
+  agg: [["Speed tiles → hexagon", "Download and upload: test-weighted mean of log speed, shown back in Mbps (a geometric mean)", "Speeds are right-skewed; a tile with 200 tests says more than one with 2"], ["Speed tiles → hexagon", "Latency: test-weighted mean; tests and devices: summed; tiles: counted", "Latency is not skewed like speed; counts add up"], ["Population → hexagon", "Kontur is already on H3 resolution 8: taken as is", "No resampling error"], ["Places, cells → hexagon", "Count of points whose location falls in the hexagon (LTE and 5G counted separately)", "Demand and infrastructure on the same grid"], ["Tile or hexagon → country", "Point-in-polygon on the centre (simplified borders); checked against full-detail borders", "Fast assignment, verified loss under 1%"], ["Quarters → panel", "One row per hexagon × quarter × mobile/fixed", "The before/after study (P3) needs history"]], id: "p0", tag: "P0", name: "Seven-country data foundation", dates: "13 Oct 2026", verdict: ["pass", "Gate passed"],
   scqa: ["Site plans are often ranked on composite KPIs; country comparisons quote national medians.",
          "Measured speed, people and places sit in different grids, licences and sizes, across seven countries.",
          "Can all of it land on one fair grid, losing under 1% of people and tests?",
-         "Data acquired; grid build and gate check run next."],
+         "Yes: every country keeps ≥ 99% of its people and tests; 6.6M hexagons, 15.3M hexagon-quarters, 29 inputs fingerprinted."],
   steps: [
     ["Decision", "Gates on GitHub first", "PRD and ADRs with every phase gate pushed before any analysis.", "A gate written after the result proves nothing.", "docs/adr/ADR-002-validation-and-gates.md"],
+    ["Decision", "Industry alignment", "ADR-003: gap types, urban/rural classes, 3GPP site spacing, co-location costs, regulator benchmarks — before P1.", "A planner's questions, not only an analyst's.", "docs/adr/ADR-003-industry-alignment.md"],
     ["Data", "Licences checked", "12 sources checked at the source: Ookla is non-commercial share-alike, OpenCelliD share-alike, the rest open.", "Licences decide what the page may publish.", "README.md"],
     ["Data", "Seven countries", "Indonesia, Malaysia, Philippines, Germany, France, US, UAE: a focus, two peers, two EU markets, the largest market and the fastest.", "A fair benchmark needs contrast, not just neighbours.", "configs/default_config.yaml"],
-    ["Data", "Speed tiles", "30 global Ookla files read once each, tiles assigned to countries by point-in-polygon.", "One read per file; only seven countries kept.", "scripts/acquire_public_data.py"],
-    ["Data", "Places via official CLI", "Overture places: the official CLI fetched 17.8M US places in ~10 minutes.", "Scanning the 11 GB release per country took hours.", "scripts/acquire_public_data.py", "fix"],
-    ["Data", "Population on H3", "Kontur population is already on H3 resolution 8, the analysis grid.", "No resampling error; one layer for all seven.", "scripts/acquire_public_data.py"],
-    ["Compute (DuckDB · Spark)", "Tiles → hexagons", "Test-weighted mean of log speed per H3 r8 cell; places and cells counted per cell.", "Equal-area cells compare the equator with 51° N fairly.", "src/hexgrid.py"],
-    ["Evaluation", "Assignment gate", "≥ 99% of people and tests on the grid in the right country, checked against full-detail borders.", "Simplified borders must not lose people.", "scripts/build_hex_table.py", "plan"]
+    ["Data", "Places via official CLI", "Overture places: the official CLI fetched 17.8M US places in ~10 minutes; 29.8M places in total.", "Scanning the 11 GB release per country took hours.", "scripts/acquire_public_data.py", "fix"],
+    ["Data", "Speed tiles", "15 quarters of mobile tiles (13.8M rows) and fixed tiles, seven countries kept.", "One read per global file.", "scripts/acquire_public_data.py"],
+    ["Compute (DuckDB · Spark)", "Tiles → hexagons", "Test-weighted geometric mean speed per H3 r8 cell; people, places and cells on the same cell.", "Equal-area cells compare the equator with 51° N fairly.", "src/hexgrid.py"],
+    ["Evaluation", "Border check stalled", "DuckDB checked 6.4M points against detailed borders one by one: still running after 13 minutes.", "Few, very detailed polygons defeat a spatial join.", "scripts/build_hex_table.py", "fail"],
+    ["Evaluation", "GeoPandas border check", "Prepared polygons: ~3 s per million points instead of ~150 s.", "Measure, then pick the tool.", "scripts/build_hex_table.py", "fix"],
+    ["Evaluation", "Contracts + manifest", "Unique keys, valid values, all countries and quarters; SHA-256 of every input.", "A number on the page traces to its inputs.", "src/contracts.py"]
   ],
-  decisions: [["Measured experience per person on H3 resolution 8", "001"], ["Gates for every phase, fixed in advance", "002"]],
-  results: [["People assigned to the grid", "≥ 99% per country", "pending", "wait"], ["Speed tests assigned", "≥ 99% per country", "pending", "wait"]],
+  decisions: [["Measured experience per person on H3 resolution 8", "001"], ["Gates for every phase, fixed in advance", "002"], ["Plan sites the way network planners do", "003"]],
+  results: [["People assigned to the grid", "≥ 99% per country", "≥ 100.1% everywhere", "ok"], ["Speed tests assigned", "≥ 99% per country", "≥ 100.1% everywhere", "ok"],
+            ["Data contracts", "all pass", "all pass", "ok"], ["Assigned to a neighbouring country", "report", "≤ 0.3% of tests (UAE → Oman)", "info"],
+            ["Kontur vs World Bank 2023", "report", "0.86 (UAE) to 1.00 (Germany)", "info"]],
   obstacles: [
     ["Places download took hours", "Each country re-scanned the whole 11 GB release; an OR of country boxes blocked file skipping", "One box per country; the official CLI for the US (catalog-filtered files)", "Measure the read before choosing the tool"],
     ["US download died after 4.7M rows", "The CLI's default connect timeout is 3 seconds", "30 s / 120 s timeouts and three retries", "Read tool defaults before long downloads"],
     ["Germany's file unreadable (no footer)", "A run stopped mid-write left a file that looked finished", "Every step writes to a temporary name and renames when complete", "Make writes atomic before running anything long"],
-    ["Runs crowded an 8 GB laptop", "Several DuckDB jobs and copies at once", "Memory cap 2.5 GB, spill to disk, one heavy job at a time", "Budget memory per job on small machines"],
-    ["'New sites' looked like 2025–26", "OpenCelliD's 'created' marks one-off sightings after a rebuild, not launch dates", "Use only cells first seen ≤ 2024 and observed for months", "Check what a date field means before building on it"],
-    ["The US covered the whole globe", "Alaska's Aleutians cross the date line, so its bounding box spans 360°", "Lower 48 only (stated); France metropolitan only", "Inspect bounding boxes before joining"]
+    ["Border check ran 13+ minutes", "DuckDB's spatial join tests each point against unprepared, detailed polygons when there are only seven", "GeoPandas sjoin with prepared polygons: 2.9 s vs 155 s on 1.2M points, same totals", "Benchmark two tools on a sample before a full run"],
+    ["Half-written files in the input list", "The downloader's temporary names also end in .parquet", "Skip names containing .tmp; read the file list once at start", "Agree file-naming rules between jobs"],
+    ["'New sites' looked like 2025–26", "OpenCelliD's 'created' marks one-off sightings after a rebuild, not launch dates", "Use only cells first seen ≤ 2024 and observed for months", "Check what a date field means before building on it"]
   ],
-  lessons: ["Fix gates before data, data before models.", "Atomic writes and memory caps are part of the pipeline, not extras.", "The right tool is the one that reads the least data."],
-  star: "Downloading seven countries' places went from hours to ten minutes once I measured what each tool actually read."
+  lessons: ["Fix gates before data, data before models.", "Atomic writes and memory caps are part of the pipeline, not extras.", "Benchmark tools on a sample: the right one was 50× faster here."],
+  star: "Seven countries' speed, people, places and cells landed on one grid with under 1% lost — after I benchmarked the border check and cut it from 13+ minutes to seconds."
 },
 {
-  agg: [["Hexagons → country share", "Σ people in measured hexagons below the bar ÷ Σ people in measured hexagons; unmeasured people reported separately", "Counts people, not tiles or tests"], ["Hexagons → density-adjusted share", "Shares within 10 pooled, people-weighted density deciles, each weighted 10% (direct standardisation)", "Compares countries at the same density mix"], ["Hexagons → urban/rural class", "Connected clusters of dense hexagons (ring-1 contiguity); cluster population summed and checked against 50k / 5k", "Degree of Urbanisation rules, on H3"], ["Cells → gap type", "LTE/5G cells counted over a hexagon and its 6 neighbours (ring-1, ~1.3 km)", "Cell positions are estimates; one hexagon is too strict"], ["Hexagon + neighbours → hotspot score", "Gi*: sum of log speed over the 7 hexagons vs the country mean", "A hotspot is a cluster, not one slow hexagon"], ["Hexagons → interval", "Spatial blocks of ~343 hexagons (H3 resolution 5) resampled with Poisson weights", "Neighbouring hexagons are correlated; resample them together"]], id: "p1", tag: "P1", name: "Experience gap and fair benchmark", dates: "planned", verdict: ["plan", "Next"],
+  agg: [["Hexagons → country share", "Σ people in measured hexagons below the bar ÷ Σ people in measured hexagons; unmeasured people reported separately", "Counts people, not tiles or tests"], ["Hexagons → density-adjusted share", "Shares within 10 pooled, people-weighted density deciles, each weighted 10% (direct standardisation)", "Compares countries at the same density mix"], ["Hexagons → urban/rural class", "Connected clusters of dense hexagons (ring-1 contiguity); cluster population summed and checked against 50k / 5k", "Degree of Urbanisation rules, on H3"], ["Cells → gap type", "LTE/5G cells counted over a hexagon and its 6 neighbours (ring-1, ~1.3 km)", "Cell positions are estimates; one hexagon is too strict"], ["Hexagon + neighbours → hotspot score", "Gi*: sum of log speed over the 7 hexagons vs the country mean", "A hotspot is a cluster, not one slow hexagon"], ["Hexagons → interval", "Spatial blocks of ~343 hexagons (H3 resolution 5) resampled with Poisson weights", "Neighbouring hexagons are correlated; resample them together"]], id: "p1", tag: "P1", name: "Experience gap and fair benchmark", dates: "13 Oct 2026", verdict: ["pass", "Gate passed"],
   scqa: ["National medians mix dense cities with remote islands.",
-         "A country can look slow only because more of its people live in sparse areas.",
-         "How many people live below 10 and 25 Mbps, compared at equal density?",
-         "Planned."],
+         "A country can look slow only because more of its people live in sparse areas — and three of my own methods failed their checks.",
+         "How many people live below 10 and 25 Mbps, compared at equal density, with honest uncertainty?",
+         "Below 25 Mbps: Philippines 16.3%, Germany 14.6%, Indonesia 13.3% … UAE 3.5%; at equal density the Philippines and Indonesia fall further behind."],
   steps: [
-    ["Spatial statistics", "Share of people below bars", "Population-weighted shares below 5, 10, 25, 50 Mbps; unmeasured people reported separately.", "Count people, not tiles.", "scripts/experience_gap.py", "plan"],
-    ["Spatial statistics", "Density-adjusted", "Shares within pooled density deciles, re-weighted to a common distribution.", "Compare like with like.", "scripts/experience_gap.py", "plan"],
-    ["Evaluation", "95% intervals", "Poisson bootstrap over speed tiles, 500 replicates.", "Small markets get honest uncertainty.", "scripts/experience_gap.py", "plan"],
-    ["Spatial statistics", "Slow hotspots", "Getis–Ord Gi* with FDR 5%; false hotspots on shuffled data with vs without FDR.", "Thousands of tests produce false alarms without control.", "scripts/experience_gap.py", "plan"]
+    ["Spatial statistics", "People below bars", "People-weighted shares below 5, 10, 25, 50, 100 Mbps; unmeasured people (14–47%) reported separately.", "Count people, not tiles.", "scripts/experience_gap.py"],
+    ["Spatial statistics", "Density-adjusted", "Shares within 10 pooled density deciles, re-weighted equally.", "Compare like with like.", "scripts/experience_gap.py"],
+    ["Evaluation", "Tile bootstrap failed", "Germany: estimate 5.21%, interval 5.57–5.92% — the interval missed its own estimate.", "Resampling tiles pushes hexagons across the bar.", "docs/adr/ADR-002-validation-and-gates.md", "fail"],
+    ["Evaluation", "Spatial block bootstrap", "Resample ~250 km² blocks of hexagons; every interval now contains its estimate.", "Neighbours are correlated: resample them together.", "src/spatialstats.py", "fix"],
+    ["Spatial statistics", "Hotspots found noise", "On shuffled data, FDR still flagged up to 318 hotspots (normal approximation).", "1–6 neighbours, skewed speeds: tails are wrong.", "src/spatialstats.py", "fail"],
+    ["Spatial statistics", "Exact p-values", "Neighbour sums vs the convolved empirical distribution: 0 false hotspots on shuffled data.", "FDR needs exact tails.", "src/spatialstats.py", "fix"],
+    ["Spatial statistics", "Urban / rural classes", "Degree of Urbanisation on H3: urban centres hold 31–50% of people.", "Planning differs by morphology.", "src/morphology.py"],
+    ["Evaluation", "Cell data too sparse", "OpenCelliD finds a cell near only 2% of fast rural Indonesian hexagons.", "A 'coverage gap' would mean 'unknown cell'.", "docs/adr/ADR-003-industry-alignment.md", "fail"],
+    ["Decision", "Type gaps only where reliable", "Coverage vs capacity only where ≥ 80% of fast hexagons have a recorded cell; else 'slow, type unknown'.", "Say what the data cannot tell.", "scripts/experience_gap.py", "fix"]
   ],
-  decisions: [["Raw and density-adjusted shares side by side", "001"], ["Gi* with false-discovery control", "002"]],
-  results: [["Shares with 95% intervals, raw and adjusted", "reported", "pending", "wait"], ["Hotspots at FDR 5%", "reported", "pending", "wait"]],
-  obstacles: [], lessons: [], star: ""
+  decisions: [["Raw and density-adjusted shares side by side", "001"], ["Spatial block bootstrap; exact Gi* p-values (logged deviations)", "002"], ["Gap types only where cell data is complete enough", "003"]],
+  results: [["Indonesia below 25 Mbps", "95% interval", "13.3% [11.7%–14.7%]", "ok"], ["Philippines below 25 Mbps", "95% interval", "16.3% [12.9%–21.0%]", "ok"],
+            ["Germany below 25 Mbps", "95% interval", "14.6% [13.5%–15.6%]", "ok"], ["Every interval contains its estimate", "all", "14 of 14", "ok"],
+            ["False hotspots on shuffled data (FDR)", "≈ 0", "0 in all 7 (was 0–318)", "ok"], ["Populated hexagons typed", "100%", "100%", "ok"]],
+  obstacles: [
+    ["Intervals missed their own estimate", "64% of measured hexagons have one tile; resampling tiles flips hexagons below the bar more often than above", "Spatial block bootstrap (H3 resolution 5; 4 as a check)", "Check that an interval contains its estimate before reading it"],
+    ["Hotspots found in shuffled data", "Normal approximation for Gi* with 1–6 neighbours and skewed speeds", "Exact conditional p-values by convolution", "Run every test on data with the pattern destroyed"],
+    ["5G 'coverage' of 0.03% in Indonesia", "OpenCelliD records few 5G cells (phones report 5G as LTE)", "Relabelled as a completeness figure, kept off the headlines", "Test what a source can see before measuring with it"]
+  ],
+  lessons: ["A pre-written check is only useful if you act when it fails.", "Publish the failed method next to the fix.", "Know what your data cannot see."],
+  star: "My own checks caught three failing methods — biased intervals, a hotspot test that found noise, and a cell database too sparse to type gaps — and each fix is published next to the original."
 },
 { agg: [["Hexagon predictions → error", "RMSE of log speed per held-out spatial block, then per country (planned)", "Errors where the model has not seen data"], ["Hexagons → applicability", "Share of people inside the area of applicability (planned)", "Where predictions can be trusted"]], id: "p2", tag: "P2", name: "Spatial speed model", dates: "planned", verdict: ["plan", "Planned"],
   scqa: ["Speed tests are sparse outside cities.", "Random validation flatters spatial models.", "Can a model predict speed where nobody tested, honestly validated?", "Planned."],
