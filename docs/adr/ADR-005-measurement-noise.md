@@ -83,6 +83,29 @@ Shrink 2026 Q2 hexagon speeds the same way, then predict the independently measu
 
 Q3's own noise is independent of Q2's, so it adds the same amount to both errors and cannot favour either. Script: `scripts/noise_validation.py`.
 
+### 7. Results of the check (2026-10-13)
+
+**Pass (pre-written criterion).** Against the independent Q3 measurement, shrunk Q2 speeds have 28–44% lower squared error than raw Q2 speeds, in all seven countries. They also beat the neighbourhood-only prior. The AUC for spotting Q3's slow hexagons rises from 0.70–0.80 to 0.74–0.83.
+
+**Level diagnostic (added after the pass/fail result).** Add Q3's own noise back to the shrunk Q2 posterior and predict the noisy Q3 share below 25 Mbps:
+
+| Country | Observed | Predicted | Verdict |
+|---|---|---|---|
+| Malaysia | 4.0% | 4.6% | level credible |
+| France | 6.0% | 6.8% | level credible |
+| United States | 6.5% | 5.7% | level credible |
+| UAE | 2.5% | 1.9% | level credible |
+| Germany | 12.1% | 16.2% | overshoots: level provisional |
+| Philippines | 12.5% | 18.7% | overshoots: level provisional |
+| Indonesia | 10.4% | 19.6% | overshoots: level provisional |
+
+**Use:**
+
+- Shrunk speeds are used per hexagon (maps, district view, P4 inputs).
+- Noise-corrected country shares are published beside the raw shares, marked credible or provisional per country.
+- The raw P1 shares remain the headline.
+- **Likely cause of the overshoot:** the noise model overstates noise where typical speeds sit near 25 Mbps, plus a real speed-up between quarters in Indonesia (raw share 13.8% → 10.4%). The next refinement is a heavier-tailed noise distribution, checked again across quarters.
+
 ## SOTA comparison
 
 | Family | Method | Tested | Cited, not tested (why) |

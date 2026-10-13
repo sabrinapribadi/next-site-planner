@@ -58,9 +58,11 @@ def main() -> None:
         pm, pv = shrink(g.y.to_numpy(), g.v.to_numpy(), mu, s2u)
         g = g.assign(mu=mu, post=pm, post_v=pv)
         b = t3[t3.iso3 == k]
-        q3 = b.assign(w=b.tests * b.y).groupby("h3").agg(sw=("w", "sum"), n3=("tests", "sum"))
+        s2t3, s2m3 = fit_noise(tile_pairs(b, seed=1))
+        q3 = b.assign(w=b.tests * b.y, n2=b.tests.astype(float) ** 2).groupby("h3").agg(sw=("w", "sum"), n3=("tests", "sum"), n23=("n2", "sum"))
         q3["y3"] = q3.sw / q3.n3
-        j = g.join(q3[["y3", "n3"]], how="inner").join(pop[pop.iso3 == k].set_index("h3")["population"], how="left").fillna({"population": 0})
+        q3["v3"] = hex_noise_var(q3.n3.to_numpy(float), q3.n23.to_numpy(float), s2t3, s2m3)
+        j = g.join(q3[["y3", "n3", "v3"]], how="inner").join(pop[pop.iso3 == k].set_index("h3")["population"], how="left").fillna({"population": 0})
         e = lambda est: float(np.mean((est - j.y3) ** 2))
         slow3 = (j.y3 < np.log(25)).to_numpy()
         res = {"hexagons_in_both_quarters": int(len(j)), "mse_raw_q2": e(j.y), "mse_prior_only": e(j.mu), "mse_shrunk_q2": e(j.post)}
@@ -73,6 +75,8 @@ def main() -> None:
             res["q3_raw_share_below_25"] = float((w * slow3).sum() / w.sum())
             res["q2_raw_share_below_25"] = float((w * (j.y < np.log(25))).sum() / w.sum())
             res["q2_shrunk_share_below_25"] = float((w * norm.cdf((np.log(25) - j.post) / np.sqrt(j.post_v))).sum() / w.sum())
+            # level check: add Q3's own test noise back to the shrunk Q2 posterior; this should reproduce the noisy Q3 share
+            res["q3_noisy_share_predicted_from_shrunk_q2"] = float((w * norm.cdf((np.log(25) - j.post) / np.sqrt(j.post_v + j.v3))).sum() / w.sum())
         out[k] = res
         print(k, {kk: round(vv, 3) if isinstance(vv, float) else vv for kk, vv in res.items()}, flush=True)
     (ROOT / CFG["paths"]["outputs_dir"] / "p2c_noise_validation.json").write_text(json.dumps(out, indent=1))
