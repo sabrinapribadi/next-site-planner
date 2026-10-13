@@ -22,7 +22,10 @@ import time
 import urllib.request
 from pathlib import Path
 
+import geopandas as gpd
+import pandas as pd
 import yaml
+from shapely import wkt
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -43,16 +46,20 @@ def world_bank_population(iso3: str) -> float | None:
         return None
 
 
+def full_border_totals(borders: gpd.GeoDataFrame, pts: pd.DataFrame, weight: str) -> dict:
+    """Sum `weight` of points inside each full-detail border. GeoPandas sjoin uses prepared GEOS polygons:
+    ~3 s per million points here, vs ~150 s for DuckDB's spatial join on the same few, very detailed polygons."""
+    g = gpd.GeoDataFrame(pts[[weight]], geometry=gpd.points_from_xy(pts["lon"], pts["lat"]), crs=borders.crs)
+    j = gpd.sjoin(g, borders, predicate="within", how="inner")
+    return {k: float(v) for k, v in j.groupby("iso3")[weight].sum().items()}
+
+
 def main() -> None:
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
     c = connect()
     iso = list(CFG["countries"])
     ne = DATA / "countries" / "ne_10m_admin_0_countries.geojson"
-    c.sql(f"CREATE TABLE borders AS SELECT ADM0_A3 AS iso3, geom FROM ST_Read('{ne}') WHERE ADM0_A3 IN ({','.join(repr(i) for i in iso)})")
-    for k, w in CLIP.items():
-        c.sql(f"UPDATE borders SET geom = ST_Intersection(geom, ST_GeomFromText('{w}')) WHERE iso3 = '{k}'")
-    c.sql("CREATE TABLE fb AS SELECT *, ST_XMin(geom) x0, ST_XMax(geom) x1, ST_YMin(geom) y0, ST_YMax(geom) y1 FROM borders")
 
     # speed panel: every quarter, mobile and fixed
     # file list fixed once, so files still arriving (later fixed-line quarters) change neither the panel nor the manifest
@@ -82,14 +89,19 @@ def main() -> None:
 
     # gate: recount against full-detail borders
     src = f"{DATA}/ookla7/mobile/{y}q{q}.parquet"
-    c.sql(f"CREATE TABLE raw AS SELECT tile_x, tile_y, tests FROM read_parquet('{src}')")
-    full_tests = dict(c.sql("""SELECT fb.iso3, sum(tests) FROM raw JOIN fb ON tile_x BETWEEN x0 AND x1 AND tile_y BETWEEN y0 AND y1
-                               WHERE ST_Contains(fb.geom, ST_Point(tile_x, tile_y)) GROUP BY 1""").fetchall())
+    borders = gpd.read_file(ne)[["ADM0_A3", "geometry"]].rename(columns={"ADM0_A3": "iso3"})
+    borders = borders[borders["iso3"].isin(iso)].reset_index(drop=True)
+    for k, w in CLIP.items():
+        m = borders["iso3"] == k
+        borders.loc[m, "geometry"] = borders.loc[m, "geometry"].intersection(wkt.loads(w))
+    raw = c.sql(f"SELECT tile_x AS lon, tile_y AS lat, tests FROM read_parquet('{src}')").df()
+    full_tests = full_border_totals(borders, raw, "tests")
+    del raw
     kept_tests = dict(c.sql(f"SELECT iso3, sum(mobile_tests) FROM '{OUT}/hex_latest.parquet' GROUP BY 1").fetchall())
     pop_kept = dict(c.sql(f"SELECT iso3, sum(population) FROM '{OUT}/hex_latest.parquet' GROUP BY 1").fetchall())
-    c.sql(f"CREATE TABLE kp AS SELECT h3, population, ST_Point(h3_cell_to_lng(h3), h3_cell_to_lat(h3)) AS pt FROM '{DATA}/population/kontur_7_20231101.parquet'")
-    pop_full = dict(c.sql("""SELECT fb.iso3, sum(population) FROM kp JOIN fb ON ST_X(pt) BETWEEN x0 AND x1 AND ST_Y(pt) BETWEEN y0 AND y1
-                             WHERE ST_Contains(fb.geom, pt) GROUP BY 1""").fetchall())
+    kp = c.sql(f"SELECT population, h3_cell_to_lng(h3) AS lon, h3_cell_to_lat(h3) AS lat FROM '{DATA}/population/kontur_7_20231101.parquet'").df()
+    pop_full = full_border_totals(borders, kp, "population")
+    del kp
     rows = {}
     for k in iso:
         wb = world_bank_population(k)
