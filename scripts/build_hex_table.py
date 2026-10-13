@@ -56,7 +56,7 @@ def main() -> None:
 
     # speed panel: every quarter, mobile and fixed
     # file list fixed once, so files still arriving (later fixed-line quarters) change neither the panel nor the manifest
-    ookla = sorted((DATA / "ookla7").glob("*/*.parquet"))
+    ookla = sorted(f for f in (DATA / "ookla7").glob("*/*.parquet") if ".tmp" not in f.name)  # skip in-progress downloads
     c.sql(f"CREATE VIEW tiles AS SELECT * FROM read_parquet({[str(f) for f in ookla]}, union_by_name = true)")
     c.sql(f"COPY ({speed_by_hex(c, 'tiles')}) TO '{OUT}/hex_speed_panel.parquet' (FORMAT parquet)")
     y, q = CFG["experience"]["latest_quarter"]
