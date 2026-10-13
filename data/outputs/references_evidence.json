@@ -1,0 +1,160 @@
+{
+ "retrieved": "2026-10-13",
+ "source": "OpenAlex",
+ "references": [
+  {
+   "key": "church_revelle_1974",
+   "title": "THE MAXIMAL COVERING LOCATION PROBLEM",
+   "venue": "Papers of the Regional Science Association",
+   "peer_reviewed": true,
+   "year": 1974,
+   "citations": 2710,
+   "citations_per_year": 51.1,
+   "role": "covering optimiser (P4)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W2050000782"
+  },
+  {
+   "key": "ord_getis_1995",
+   "title": "Local Spatial Autocorrelation Statistics: Distributional Issues and an Application",
+   "venue": "Geographical Analysis",
+   "peer_reviewed": true,
+   "year": 1995,
+   "citations": 3649,
+   "citations_per_year": 114.0,
+   "role": "Gi* hotspot statistic (P1)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W1967137980"
+  },
+  {
+   "key": "caldas_singer_2006",
+   "title": "Controlling the False Discovery Rate: A New Application to Account for Multiple and Dependent Tests in Local Statistics of Spatial Association",
+   "venue": "Geographical Analysis",
+   "peer_reviewed": true,
+   "year": 2006,
+   "citations": 330,
+   "citations_per_year": 15.7,
+   "role": "false-discovery control for local statistics (P1)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W2002110589"
+  },
+  {
+   "key": "roberts_2017",
+   "title": "Cross\u2010validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure",
+   "venue": "Ecography",
+   "peer_reviewed": true,
+   "year": 2016,
+   "citations": 3316,
+   "citations_per_year": 301.5,
+   "role": "spatial block cross-validation (P2)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W2560136348"
+  },
+  {
+   "key": "ploton_2020",
+   "title": "Spatial validation reveals poor predictive performance of large-scale ecological mapping models",
+   "venue": "Nature Communications",
+   "peer_reviewed": true,
+   "year": 2020,
+   "citations": 864,
+   "citations_per_year": 123.4,
+   "role": "random CV overstates spatial models (P2)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W3085784695"
+  },
+  {
+   "key": "wadoux_2021",
+   "title": "Spatial cross-validation is not the right way to evaluate map accuracy",
+   "venue": "Ecological Modelling",
+   "peer_reviewed": true,
+   "year": 2021,
+   "citations": 310,
+   "citations_per_year": 51.7,
+   "role": "counter-view on spatial CV (P2)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W3194508523"
+  },
+  {
+   "key": "meyer_pebesma_2021",
+   "title": "Predicting into unknown space? Estimating the area of applicability of spatial prediction models",
+   "venue": "Methods in Ecology and Evolution",
+   "peer_reviewed": true,
+   "year": 2021,
+   "citations": 515,
+   "citations_per_year": 85.8,
+   "role": "area of applicability (P2)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W3025440848"
+  },
+  {
+   "key": "callaway_santanna_2021",
+   "title": "Difference-in-Differences with multiple time periods",
+   "venue": "Journal of Econometrics",
+   "peer_reviewed": true,
+   "year": 2020,
+   "citations": 8775,
+   "citations_per_year": 1253.6,
+   "role": "staggered difference-in-differences (P3)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W3113269512"
+  },
+  {
+   "key": "borusyak_2024",
+   "title": "Revisiting Event-Study Designs: Robust and Efficient Estimation",
+   "venue": "The Review of Economic Studies",
+   "peer_reviewed": true,
+   "year": 2024,
+   "citations": 2120,
+   "citations_per_year": 706.7,
+   "role": "imputation event-study estimator, head-to-head arm (P3)",
+   "used_in": [
+    "ADR-002"
+   ],
+   "openalex_id": "https://openalex.org/W3196836501"
+  },
+  {
+   "key": "stevens_2015",
+   "title": "Disaggregating Census Data for Population Mapping Using Random Forests with Remotely-Sensed and Ancillary Data",
+   "venue": "PLoS ONE",
+   "peer_reviewed": true,
+   "year": 2015,
+   "citations": 1063,
+   "citations_per_year": 88.6,
+   "role": "dasymetric population mapping (WorldPop cross-check)",
+   "used_in": [
+    "ADR-001"
+   ],
+   "openalex_id": "https://openalex.org/W2057442840"
+  },
+  {
+   "key": "digital_divide_2026",
+   "title": "Stratifying the Digital Divide: Analysis of Socio-Economic Influences on Internet Performance",
+   "venue": "arXiv 2605.30809",
+   "peer_reviewed": false,
+   "year": 2026,
+   "citations": 0,
+   "citations_per_year": 0.0,
+   "role": "recent use of Ookla tiles for inequality analysis",
+   "used_in": [
+    "ADR-001"
+   ],
+   "openalex_id": "https://openalex.org/W7163075412"
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+# Every paper cited in an ADR (rule R2). `python scripts/evidence.py` fetches venue, type and citations
+# from OpenAlex and writes data/outputs/references_evidence.json plus a table per ADR.
+- key: church_revelle_1974
+  doi: 10.1111/j.1435-5597.1974.tb00902.x
+  used_in: [ADR-002]
+  role: covering optimiser (P4)
+- key: ord_getis_1995
+  doi: 10.1111/j.1538-4632.1995.tb00912.x
+  used_in: [ADR-002]
+  role: Gi* hotspot statistic (P1)
+- key: caldas_singer_2006
+  doi: 10.1111/j.0016-7363.2006.00682.x
+  used_in: [ADR-002]
+  role: false-discovery control for local statistics (P1)
+- key: roberts_2017
+  doi: 10.1111/ecog.02881
+  used_in: [ADR-002]
+  role: spatial block cross-validation (P2)
+- key: ploton_2020
+  doi: 10.1038/s41467-020-18321-y
+  used_in: [ADR-002]
+  role: random CV overstates spatial models (P2)
+- key: wadoux_2021
+  doi: 10.1016/j.ecolmodel.2021.109692
+  used_in: [ADR-002]
+  role: counter-view on spatial CV (P2)
+- key: meyer_pebesma_2021
+  doi: 10.1111/2041-210X.13650
+  used_in: [ADR-002]
+  role: area of applicability (P2)
+- key: callaway_santanna_2021
+  doi: 10.1016/j.jeconom.2020.12.001
+  used_in: [ADR-002]
+  role: staggered difference-in-differences (P3)
+- key: borusyak_2024
+  doi: 10.1093/restud/rdae007
+  used_in: [ADR-002]
+  role: imputation event-study estimator, head-to-head arm (P3)
+- key: stevens_2015
+  doi: 10.1371/journal.pone.0107042
+  used_in: [ADR-001]
+  role: dasymetric population mapping (WorldPop cross-check)
+- key: digital_divide_2026
+  arxiv: "2605.30809"
+  title: "Stratifying the Digital Divide: Analysis of Socio-Economic Influences on Internet Performance"
+  used_in: [ADR-001]
+  role: recent use of Ookla tiles for inequality analysis

@@ -1,0 +1,33 @@
+# ============================================================
+# Default configuration — next-site-planner (GEO-1)
+# ============================================================
+
+paths:
+  data_dir: ${GEO_DATA_DIR}          # raw data outside the repo (OneDrive github_project/data/geo)
+  outputs_dir: data/outputs          # small, committed artefacts only
+
+countries:                           # ADR-001; FRA metropolitan only, USA lower 48
+  IDN: Indonesia
+  MYS: Malaysia
+  PHL: Philippines
+  DEU: Germany
+  FRA: France
+  USA: United States
+  ARE: United Arab Emirates
+
+grid:
+  h3_resolution: 8                   # ~0.74 km² hexagons (ADR-001)
+
+experience:
+  latest_quarter: [2026, 3]
+  first_quarter: [2023, 1]
+  thresholds_mbps: [10, 25]          # headline bars
+  sensitivity_mbps: [5, 50]
+  density_deciles: 10                # density-adjusted comparison
+  bootstrap_reps: 500
+
+gates:                               # ADR-002, written before analysis
+  p0_min_population_assigned: 0.99
+  p0_min_tests_assigned: 0.99
+  p2_max_rmse_ratio_vs_kriging: 0.90
+  p4_min_people_lift_vs_ranking: 0.10

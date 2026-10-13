@@ -1,0 +1,86 @@
+# ADR-001: Framing — Measured Experience per Person on an H3 Grid, Seven Countries
+
+**Status:** Proposed
+**Date:** 2026-10-13
+**Deciders:** Sabrina Pribadi
+
+---
+
+## Context and Problem Statement
+
+Site plans are often built by ranking candidate locations on many indicators with agreed weights. That answers *which sites score highest*, not *where one more site would improve experience for the most people, per unit of budget*. Comparisons between countries usually quote national median speeds, which mix dense cities with remote islands and say nothing about how many people are poorly served.
+
+The question this project must answer is: **"Where do the most people live with poor measured mobile experience, how does that compare fairly across countries, and which budgeted set of new sites would lift the most of them?"**
+
+## Decision Drivers
+
+- Measured experience, not claimed coverage: speed tests from real devices
+- Count **people**, not tiles or tests: weight by where people live and gather
+- One analysis unit that is equal-area across latitudes, so Indonesia (equator) and Germany (51° N) compare fairly
+- Public, licence-compatible data only (R1), reproducible by a script
+- Spark and Databricks only if measured volume or operations justify them (R15)
+
+## Considered Options
+
+**How experience is measured**
+
+| Option | Status | Why |
+|---|---|---|
+| Operator coverage maps | Rejected | Claimed coverage, not measured experience; not public in a common format for seven countries |
+| Drive tests | Rejected | Not public |
+| Radio propagation model from site configurations | Rejected | Needs antenna heights, power, spectrum: private |
+| **Crowdsourced speed tests (Ookla open tiles), weighted by population** | **Chosen** | Public, quarterly, global, consistent method; bias (people test when it is slow or new) stated and reported per tile |
+| Other crowdsourced panels (e.g. commercial app panels) | Rejected | Not open data |
+
+**Analysis unit**
+
+| Option | Status | Why |
+|---|---|---|
+| Ookla's native quadkey tiles (zoom 16) | Rejected as the unit | Area shrinks with latitude (~610 m at the equator, ~380 m in Germany): unfair across countries |
+| Administrative units (kecamatan, counties) | Reporting level only | Very unequal sizes; aggregation hides gaps (modifiable areal unit problem) |
+| 1 km square raster | Rejected | Not hierarchical; no native support in Spark/Databricks |
+| **H3 resolution 8 (~0.74 km² hexagons)** | **Chosen** | Near equal-area worldwide; hierarchical (roll up to r7/r6, down to r9); native H3 functions in Databricks SQL; the population layer is already on r8 |
+
+**Population layer**
+
+| Option | Status | Why |
+|---|---|---|
+| **Kontur population 2023 (H3 r8, built from GHSL, Meta HRSL and OSM)** | **Chosen** | One global, consistent layer for all seven countries, already on the analysis grid; CC BY 4.0 |
+| WorldPop constrained 100 m (random-forest dasymetric mapping, Stevens et al. 2015) | Cross-check (Indonesia) | Strong method; per-country server too slow for the US file (494 MB) |
+| Census tables only | Rejected | Admin-level only; no sub-district detail |
+
+## Decision Outcome
+
+- **Countries:** Indonesia, Malaysia, Philippines, Germany, France (metropolitan), United States (lower 48), United Arab Emirates. Overseas territories, Alaska and Hawaii are excluded and stated.
+- **Grid:** each Ookla tile centre is assigned to its H3 r8 cell; a hexagon's speed is the test-weighted mean over its tiles of log download speed (speeds are right-skewed). Population and places are aggregated to the same cells.
+- **Headline metric:** share of a country's population living in hexagons whose measured median mobile download is below **10 Mbps** and below **25 Mbps** (sensitivity at 5 and 50). Reported alongside the share of population in hexagons **with no measurement**, never silently dropped.
+- **Fair comparison:** shares are also reported **density-adjusted** — computed within population-density deciles and re-weighted to a common density distribution — so archipelagos and dense cities are compared like for like.
+- **Period:** latest quarter (2026 Q3) for maps; 2023 Q1–2026 Q3 for trends and for the new-site study.
+- **Spark / Databricks (R15), measured:** ~49M speed-tile rows kept from ~300M read per quarterly refresh, plus millions of population hexagons and ~25M places, joined spatially. Spark is justified for the full refresh; Databricks for the quarterly job, registry and drift checks (P6). Exploration runs locally on DuckDB.
+
+## Evidence (OpenAlex, retrieved 2026-10-13)
+
+| Reference | Venue | Peer-reviewed | Year | Citations | Per year | Used for |
+|---|---|---|---|---|---|---|
+| Disaggregating Census Data for Population Mapping Using Random Forests with Remotely-Sensed and Ancillary Data | PLoS ONE | yes | 2015 | 1,063 | 88.6 | WorldPop cross-check |
+| Stratifying the Digital Divide: Analysis of Socio-Economic Influences on Internet Performance | arXiv 2605.30809 | no (preprint) | 2026 | 0 | 0.0 | context: recent use of Ookla tiles for inequality |
+
+Data sources without papers (vendor or agency documentation): Ookla open data, Kontur population, Overture Maps, OpenCelliD, H3 (h3geo.org), OCHA COD-AB, geoBoundaries, Natural Earth.
+
+## Falsification
+
+| Result | Diagnosis | Next action |
+|---|---|---|
+| Large share of population in unmeasured hexagons (> 20% in a country) | Speed tests too sparse there | Report it as a finding; P2 predicts speed with intervals; flag the country |
+| Density adjustment changes no country's rank | Density does not explain differences | Report raw and adjusted side by side; say so |
+| Kontur and WorldPop disagree by > 10% on Indonesia's population in poorly served hexagons | Population layer uncertainty | Report both; carry the range into P4 |
+
+## Consequences
+
+- Positive: every number is about people, comparable across latitudes, and reproducible from public data
+- Negative: speed tests are not a random sample; results describe tested experience. Stated on every page
+- Negative: the CC BY-NC-SA licence of Ookla data carries over to published derived maps
+
+## Related Decisions
+
+- ADR-002 (validation and gates for every phase)

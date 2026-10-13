@@ -1,0 +1,11 @@
+duckdb>=1.5
+geopandas>=1.2
+pyarrow>=20
+h3>=4.5
+shapely>=2.1
+pyproj>=3.7
+rasterio>=1.5
+pyyaml>=6
+numpy>=2
+pandas>=2.3
+pytest>=8
