@@ -81,6 +81,7 @@ def map_layer(h: pd.DataFrame, iso3: str) -> dict:
 GAP = {"none": 0, "capacity": 1, "coverage": 2, "slow_type_unknown": 3, "unmeasured": 4}
 MOR = {"rural": 0, "urban_cluster": 1, "urban_centre": 2}
 DDIR = ROOT / "docs" / "data" / "d"
+NOISE = None   # set in main() from derived/hex_noise.parquet when the ADR-005 follow-up has run
 
 
 def district_details(iso3: str, hk: pd.DataFrame, m: dict, p2: pd.DataFrame | None) -> list[int]:
@@ -94,6 +95,8 @@ def district_details(iso3: str, hk: pd.DataFrame, m: dict, p2: pd.DataFrame | No
     hk = hk.assign(nidx=r5.map(name_of_r5))
     if p2 is not None:
         hk = hk.merge(p2[p2["iso3"] == iso3][["h3", "pred_ln", "sigma"]], on="h3", how="left")
+    if NOISE is not None:
+        hk = hk.merge(NOISE[NOISE["iso3"] == iso3][["h3", "post_mean", "post_var"]], on="h3", how="left")
     for n in sorted(keep):
         d = hk[hk["nidx"] == n]
         assert all(x.endswith("fffff") for x in d["h3"])
@@ -104,6 +107,9 @@ def district_details(iso3: str, hk: pd.DataFrame, m: dict, p2: pd.DataFrame | No
         if p2 is not None:
             out["pm"] = [round(float(np.exp(v)), 1) if v == v else -1 for v in d["pred_ln"]]
             out["sg"] = [round(float(v), 3) if v == v else -1 for v in d["sigma"]]
+        if NOISE is not None:   # typical (noise-corrected) speed of tested hexagons
+            out["tm"] = [round(float(np.exp(v)), 1) if v == v else -1 for v in d["post_mean"]]
+            out["ts"] = [round(float(np.sqrt(v)), 3) if v == v else -1 for v in d["post_var"]]
         (DDIR / f"{iso3}_{n}.js").write_text(f'(window.GEO1_D = window.GEO1_D || {{}})["{iso3}_{n}"] = ' + json.dumps(out, separators=(",", ":")) + ";\n")
     return sorted(int(n) for n in keep)
 
@@ -114,6 +120,12 @@ def main() -> None:
     hex8 = pd.read_parquet(DATA / "derived" / "hex_p1.parquet")
     p2f = DATA / "derived" / "hex_p2.parquet"
     p2 = pd.read_parquet(p2f, columns=["iso3", "h3", "pred_ln", "sigma"]) if p2f.exists() else None
+    global NOISE
+    nf = DATA / "derived" / "hex_noise.parquet"
+    NOISE = pd.read_parquet(nf, columns=["iso3", "h3", "post_mean", "post_var"]) if nf.exists() else None
+    p2j = json.loads((ROOT / "data/outputs/p2_speed_model.json").read_text()) if (ROOT / "data/outputs/p2_speed_model.json").exists() else None
+    p2b = json.loads((ROOT / "data/outputs/p2b_noise_followup.json").read_text()) if (ROOT / "data/outputs/p2b_noise_followup.json").exists() else None
+    p2c = json.loads((ROOT / "data/outputs/p2c_noise_validation.json").read_text()) if (ROOT / "data/outputs/p2c_noise_validation.json").exists() else None
     DDIR.mkdir(parents=True, exist_ok=True)
     for f in DDIR.glob("*.js"):
         f.unlink()
@@ -139,9 +151,31 @@ def main() -> None:
         c["hotspot_cells"] = [[x, round(p), round(s, 1)] for x, p, s in zip(hs["h3"], hs["population"], hs["mobile_down_mbps"])]
         c["map"] = map_layer(hk, k)
         c["detail"] = district_details(k, hk, c["map"], p2)
+        if p2j:
+            d6 = p2j["designs"]["r6"]
+            c["p2"] = {"rmse_kriging": round(d6["per_country"][k]["kriging"], 3), "rmse_gbm": round(d6["per_country"][k]["gbm"], 3),
+                       "loco_rmse": round(p2j["leave_one_country_out"][k]["rmse"], 3)}
+        if p2b and p2c:
+            corr, tot, val = p2b["p1_noise_corrected"][k], p2b["totals"][k], p2c[k]
+            credible = abs(val["q3_noisy_share_predicted_from_shrunk_q2"] - val["q3_raw_share_below_25"]) <= 0.015
+            c["noise"] = {"corrected_below": {str(b): round(corr[f"below_{b}"], 4) for b in BARS},
+                          "corrected_ci95": {str(b): [round(x, 4) for x in corr[f"below_{b}_ci95"]] for b in (10, 25)},
+                          "level_credible": bool(credible),
+                          "validation": {kk: round(vv, 4) if isinstance(vv, float) else vv for kk, vv in val.items()},
+                          "s2_test": round(p2b["noise_model"][k]["s2_test"], 3), "s2_micro": round(p2b["noise_model"][k]["s2_micro"], 3)}
+            c["untested"] = {"people_m": round(tot["untested_people"] / 1e6, 2),
+                             "expected_below_m": {str(b): round(tot[f"expected_untested_below_{b}"] / 1e6, 2) for b in BARS},
+                             "all_people_share_below": {str(b): round(tot[f"all_people_share_below_{b}"], 4) for b in BARS}}
         countries[k] = c
         print(k, len(c["map"]["h"]), "map cells,", len(c["hotspot_cells"]), "hotspot hexagons,", len(c["detail"]), "district files", flush=True)
     page = {"quarter": p1["quarter"], "bars": BARS, "countries": countries, "has_p2": p2 is not None,
+            "p2": None if not p2j else {k_: {"rmse": round(v["kriging"]["rmse"], 3), "gbm": round(v["gbm"]["rmse"], 3), "ratio": round(v["ratio_gbm_vs_kriging"], 3)} for k_, v in p2j["designs"].items()}
+                  | {"gate_passed": p2j["gate_passed"], "coverage_80": round(p2j["uncertainty"]["coverage_80"], 3), "auc_below_25": round(p2j["uncertainty"]["auc_below_25"], 3),
+                     "aoa_people_inside": round(p2j["area_of_applicability"]["untested_people_inside"], 3), "gap_followup_auc": round(p2j["gap_type_followup"]["block_cv_auc"], 3),
+                     "naive": round(p2j["designs"]["r6"]["naive"]["rmse"], 3), "covariates_only": round(p2j["designs"]["r6"]["gbm_covariates_only"]["rmse"], 3),
+                     "distance_matched": {m: round(p2j["designs"]["r6"][m]["rmse_distance_matched"], 3) for m in ("kriging", "gbm")},
+                     "people_weighted": {m: round(p2j["designs"]["r6"][m]["rmse_people_weighted"], 3) for m in ("kriging", "gbm")}},
+            "noise_scores": None if not p2b else {m: {kk: round(vv, 3) for kk, vv in v.items()} for m, v in p2b["p2_noise_aware_scores"].items() if isinstance(v, dict)},
             "p0": {"gate_passed": p0["gate_passed"], "panel_rows": p0["panel_rows"], "inputs": p0["inputs_in_manifest"]},
             "p1": {"gate_passed": p1["gate_passed"], "density_deciles_edges": p1["density_deciles_edges_people_per_hex"]}}
     OUT.parent.mkdir(parents=True, exist_ok=True)
