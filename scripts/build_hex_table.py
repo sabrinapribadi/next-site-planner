@@ -55,7 +55,9 @@ def main() -> None:
     c.sql("CREATE TABLE fb AS SELECT *, ST_XMin(geom) x0, ST_XMax(geom) x1, ST_YMin(geom) y0, ST_YMax(geom) y1 FROM full")
 
     # speed panel: every quarter, mobile and fixed
-    c.sql(f"CREATE VIEW tiles AS SELECT * FROM read_parquet('{DATA}/ookla7/*/*.parquet')")
+    # file list fixed once, so files still arriving (later fixed-line quarters) change neither the panel nor the manifest
+    ookla = sorted((DATA / "ookla7").glob("*/*.parquet"))
+    c.sql(f"CREATE VIEW tiles AS SELECT * FROM read_parquet({[str(f) for f in ookla]}, union_by_name = true)")
     c.sql(f"COPY ({speed_by_hex(c, 'tiles')}) TO '{OUT}/hex_speed_panel.parquet' (FORMAT parquet)")
     y, q = CFG["experience"]["latest_quarter"]
 
@@ -104,7 +106,7 @@ def main() -> None:
     del hl
 
     # snapshot manifest: every input file, with SHA-256 and rows
-    inputs = (sorted((DATA / "ookla7").glob("*/*.parquet")) + [DATA / "population" / "kontur_7_20231101.parquet",
+    inputs = (ookla + [DATA / "population" / "kontur_7_20231101.parquet",
               DATA / "opencellid" / "cells_7.parquet", ne] + [DATA / "overture" / f"{k.lower()}_places_2026-09-23.1.parquet" for k in iso])
     nrows = {str(f.relative_to(DATA)): c.sql(f"SELECT count(*) FROM '{f}'").fetchone()[0] for f in inputs if f.suffix == ".parquet"}
     out_dir = ROOT / CFG["paths"]["outputs_dir"]; out_dir.mkdir(parents=True, exist_ok=True)
