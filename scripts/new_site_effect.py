@@ -2,7 +2,7 @@
 
     python scripts/new_site_effect.py
 
-Events: hexagons with a reliable new LTE/5G cell (OpenCelliD first seen 2023 Q3–2024 Q4, still seen >= 180 days
+All seven countries, same rule (ADR-007 amendment 1). Events: hexagons with a reliable new LTE/5G cell (OpenCelliD first seen 2023 Q3–2024 Q4, still seen >= 180 days
 later). Type: new site (no cell of any kind in ring 0–1 before) or added capacity. Comparison places: never treated
 (no cell of any kind first seen since 2023 Q1 within ring 3) or not yet treated. Outcome: ln mobile download per
 hexagon-quarter. Writes data/outputs/p3_new_site_effect.json.
@@ -35,6 +35,7 @@ WIN = (2023 * 4 + 2 - Q0, 2024 * 4 + 3 - Q0)   # event window 2023 Q3 .. 2024 Q4
 T = 15
 EVENTS = range(-5, 9)
 REPS = 499
+MIN_EVENTS = 100     # ADR-007 amendment 1: report an estimand only with at least 100 event hexagons
 MORPH = {"rural": 0, "urban_cluster": 1, "urban_centre": 2}
 log = lambda *a: print(time.strftime("%H:%M:%S"), *a, flush=True)
 
@@ -132,14 +133,19 @@ def regression_arms(d: dict, G: np.ndarray) -> dict:
 
 def main() -> None:
     t0 = time.time(); c = connect(); res = {}
-    for k in ("DEU", "USA"):
+    for k in CFG["countries"]:          # all seven countries, same rule (ADR-007 amendment 1)
         d = build(k, c)
         Gn, Gc, G1 = G_for(d, d["new_site"]), G_for(d, d["capacity"]), G_for(d, d["ring1"])
         r = {"counts": {"new_site_hexagons": int(len(d["new_site"])), "capacity_hexagons": int(len(d["capacity"])),
                         "ring1_hexagons": int(len(d["ring1"])), "never_treated_units": int(d["never"].sum())}}
+        enough_ns, enough_cap = len(d["new_site"]) >= MIN_EVENTS, len(d["capacity"]) >= MIN_EVENTS
+        r["enough_events"] = {"new_site": enough_ns, "capacity": enough_cap}
+        r["capacity_ring0"] = run(d, Gc, d["Ym"]) if enough_cap else "too few events"
+        if not enough_ns:
+            r["new_site_ring0"] = "too few events"; r["gate"] = {"passed": None, "reason": "too few new-site events"}
+            res[k] = r; log(k, "too few new-site events"); continue
         r["new_site_ring0"] = run(d, Gn, d["Ym"]); log(k, "new site ring 0", r["new_site_ring0"].get("post_avg_0_4"), r["new_site_ring0"].get("pretrend"))
         r["new_site_ring1"] = run(d, G1, d["Ym"])
-        r["capacity_ring0"] = run(d, Gc, d["Ym"])
         r["negative_control_fixed"] = run(d, Gn, d["Yf"])
         # placebo timing: events moved 4 quarters earlier, only data before the real anticipation quarter
         Yp = d["Ym"].copy(); Gp = Gn.copy(); tr = np.isfinite(Gn) & ~np.isnan(Gn)
@@ -159,7 +165,7 @@ def main() -> None:
         res[k] = r
         log(k, "gate", r["gate"], "| neg. control", r["negative_control_fixed"].get("post_avg_0_4"), "| placebo", r["placebo_timing"].get("post_avg_0_4"))
     out = {"design": "ADR-007", "events_window": "2023Q3-2024Q4", "event_times": [EVENTS.start, EVENTS.stop - 1], "bootstrap_reps": REPS,
-           "countries": res, "gate_passed": {k: v["gate"]["passed"] for k, v in res.items()}, "seconds": round(time.time() - t0)}
+           "countries": res, "gate_passed": {k: v["gate"].get("passed") for k, v in res.items()}, "seconds": round(time.time() - t0)}
     (ROOT / CFG["paths"]["outputs_dir"] / "p3_new_site_effect.json").write_text(json.dumps(out, indent=1, default=lambda o: int(o) if isinstance(o, np.integer) else str(o)))
     log("done in", out["seconds"], "s")
 

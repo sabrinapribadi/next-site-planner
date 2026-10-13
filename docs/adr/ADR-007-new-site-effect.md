@@ -1,6 +1,6 @@
 # ADR-007: Did New Sites Raise Speeds Nearby? (P3)
 
-**Status:** Proposed — written and pushed before any P3 outcome is computed
+**Status:** Proposed — written and pushed before any P3 outcome was computed; Amendment 1 extends it to all seven countries
 **Date:** 2026-10-14
 **Deciders:** Sabrina Pribadi
 
@@ -23,6 +23,28 @@
 The question: **"When a new site or new capacity appears, how much does mobile download speed change in that hexagon and the ring around it, compared with similar places that have not yet received one?"**
 
 In plain words: compare speeds before and after a new site, and subtract the change that happened anyway in comparable places. That is difference-in-differences.
+
+## Amendment 1 (2026-10-14, before running any country other than Germany and the US)
+
+**Principle (user decision):** treat all countries the same, with one method and no country-specific data sources.
+
+- The analysis covers **all seven countries** with the identical event rule.
+- Counts under that rule, from locations and dates only:
+
+| Country | New-site hexagons | Added-capacity hexagons |
+|---|---|---|
+| France | 5,092 | 19,282 |
+| United States | 7,001 | 24,237 |
+| Germany | 2,219 | 15,809 |
+| Indonesia | 339 | 217 |
+| Philippines | 173 | 699 |
+| UAE | 116 | 547 |
+| Malaysia | 21 | 892 |
+
+- **Minimum:** an estimate is reported where an estimand has at least 100 event hexagons; otherwise it says "too few events" (Malaysia's new sites).
+- **Gate:** applied per country.
+- **Transfer:** where a country's own estimate exists, P4 uses it instead of transferring another country's effect.
+- **Disclosure:** Germany's new-site, ring-0 result had already been seen (+7%, interval −7% to +22%; pre-trends pass) when this amendment was written. The design is unchanged for every country, so seeing it cannot bias the others.
 
 ## Decision Drivers
 
