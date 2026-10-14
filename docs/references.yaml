@@ -120,3 +120,11 @@
   doi: 10.1007/s12532-017-0130-5
   used_in: [ADR-008]
   role: HiGHS exact solver (P4)
+- key: lakens_2017
+  doi: 10.1177/1948550617697177
+  used_in: [ADR-002, ADR-008]
+  role: practice of a pre-set smallest effect size of interest (the 10% margins are our own choice)
+- key: lakens_2018
+  doi: 10.1177/2515245918770963
+  used_in: [ADR-002, ADR-008]
+  role: equivalence testing tutorial (pre-set practical thresholds)

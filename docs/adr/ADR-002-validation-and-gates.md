@@ -56,6 +56,13 @@ Checks reported but not gated (ADR-003): urban-centre population share vs publis
 | 2026-10-13 | P1 | 95% intervals by Poisson bootstrap over speed tiles | Intervals miss their own estimate in Germany, France and the US (Germany below 10 Mbps: estimate 5.21%, interval 5.57–5.92%). 64% of German measured hexagons have one tile; dropping or reweighting tiles pushes hexagons across the bar more often downwards than upwards, so every resample is biased upwards (mean 5.73%; 6.25% if no hexagon is dropped) | **Spatial block bootstrap**: H3 resolution-5 blocks (~250 km²) with Poisson(1) weights; resolution 4 as sensitivity. Gate: each interval must contain its estimate | Tile intervals still computed and published next to the block intervals |
 | 2026-10-13 | P1 | Gi* p-values (method not stated; normal approximation used) | On spatially shuffled data, FDR still flagged 259 false slow hotspots in Indonesia (912 on real data): with 1–6 neighbours and skewed speeds, the normal approximation is wrong in the tails | **Exact conditional randomisation**: the neighbours' sum is compared with the k-fold convolution of the country's empirical distribution, so tail p-values are exact enough for FDR over 100,000+ tests | Both versions' counts on real and shuffled data are published |
 
+**About the 10% margins (P2, P4).** They are our own practical thresholds, fixed before the analysis. No published standard gives this number. What the literature supports is the practice: fix in advance the smallest difference worth acting on (the "smallest effect size of interest"; Lakens 2017; Lakens, Scheel & Isager 2018).
+
+- **Why 10%:**
+  - it is above the uncertainty of the inputs (e.g. P3's lift rates);
+  - it justifies the cost of switching to a more complex method.
+- **Readers' own threshold:** results always report the actual gain, so readers can apply a different one.
+
 ## Falsification
 
 | Result | Diagnosis | Next action |

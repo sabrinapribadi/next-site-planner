@@ -55,6 +55,24 @@ pop_h × P(typical speed_h < 25 Mbps) × θ
 - **Pass rule:** amendment 3's checks (pre-period average, within bands, fixed-broadband control).
 - **If it fails or is not estimable:** central θ_cap = 0, with a sensitivity of θ_cap = θ_new.
 
+### θ_cap result (2026-10-14, before any plan; `data/outputs/p4_capacity_crossing.json`)
+
+Percentage points of slow hexagons lifted above 25 Mbps after added capacity, using P3 amendment 3's checks:
+
+| Country | As pre-set | Fixed-broadband control | Checks | θ_cap used (cautious value; 0 if failed) |
+|---|---|---|---|---|
+| IDN | +23.1 | +28.0 (+9.8 to +44.6) | fail | 0 |
+| MYS | +10.1 | — | pass | 0.038 |
+| PHL | +19.8 | +25.0 (-13.3 to +47.2) | pass | 0.163 |
+| DEU | +11.2 | -1.1 (-4.7 to +2.2) | pass | 0.077 |
+| FRA | +14.6 | +4.5 (-0.3 to +8.5) | pass | 0.079 |
+| USA | +11.8 | +8.6 (+5.4 to +11.3) | fail | 0 |
+| ARE | — | — | fail | 0 |
+
+- **Reading:** added capacity lifts slow places about as much as a new site, at 0.30 of the cost.
+- **Failed in Indonesia and the US:** home broadband also rose, an area-wide change, so θ_cap = 0 there in the central plan, with θ_cap = θ_new as a sensitivity.
+- **UAE:** too few events, so 0 in the central plan.
+
 ### Optimiser
 
 **Objective:** maximise expected people lifted subject to Σ cost ≤ budget B.
@@ -75,7 +93,7 @@ pop_h × P(typical speed_h < 25 Mbps) × θ
 
 ### Gate (ADR-002 P4)
 
-- **Pass:** at the headline budget, the optimiser lifts **≥ 10% more** expected people than KPI ranking.
+- **Pass:** at the headline budget, the optimiser lifts **≥ 10% more** expected people than KPI ranking. The 10% is our own practical threshold (see ADR-002); the actual gain is always reported.
   - Judged per country, at central θ and central costs.
   - The gate passes if it holds in at least 5 of the 7 countries.
 - **Exports pass format checks:**
