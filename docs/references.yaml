@@ -3,7 +3,7 @@
 - key: church_revelle_1974
   doi: 10.1111/j.1435-5597.1974.tb00902.x
   used_in: [ADR-002, ADR-008]
-  role: covering optimiser (P4)
+  role: 3GPP service-area sensitivity (P4)
 - key: ord_getis_1995
   doi: 10.1111/j.1538-4632.1995.tb00912.x
   used_in: [ADR-002]
@@ -38,8 +38,8 @@
   role: imputation event-study estimator, head-to-head arm (P3)
 - key: stevens_2015
   doi: 10.1371/journal.pone.0107042
-  used_in: [ADR-001]
-  role: dasymetric population mapping (WorldPop cross-check)
+  used_in: [ADR-001, ADR-008]
+  role: dasymetric population mapping (WorldPop cross-check; second population map for nominals)
 - key: digital_divide_2026
   arxiv: "2605.30809"
   title: "Stratifying the Digital Divide: Analysis of Socio-Economic Influences on Internet Performance"
@@ -128,3 +128,7 @@
   doi: 10.1177/2515245918770963
   used_in: [ADR-002, ADR-008]
   role: equivalence testing tutorial (pre-set practical thresholds)
+- key: horn_1981
+  doi: 10.1109/PROC.1981.11918
+  used_in: [ADR-008]
+  role: slope from a 3 × 3 elevation window (nominal terrain flags)

@@ -11,6 +11,7 @@ Sources and licences
 - Kontur population 2023-11-01 on H3 resolution 8 (CC BY 4.0); WorldPop 2020 Indonesia as a cross-check
 - Overture Maps places (CDLA-Permissive 2.0)
 - geoBoundaries gbOpen (CC BY 4.0 / ODbL by country); Indonesia kecamatan from OCHA COD-AB (CC BY-IGO)
+- WorldPop 2020 constrained, UN-adjusted, 100 m (CC BY 4.0), the second population source
 - Natural Earth admin-0 countries (public domain), used to assign Ookla tiles to countries
 """
 
@@ -100,8 +101,8 @@ def opencellid() -> None:
 
 
 def population(release: str = "20231101") -> None:
-    """Kontur population on H3 resolution 8 (~400 m hexagons), one global file; seven countries extracted.
-    WorldPop's per-country server was too slow for the US (494 MB); WorldPop Indonesia is kept as a cross-check."""
+    """Kontur population on H3 resolution 8 (0.74 km² hexagons), one global file; seven countries extracted.
+    The second source, WorldPop, is the `worldpop` step."""
     d = DATA / "population"; d.mkdir(parents=True, exist_ok=True)
     gz, gpkg, out = d / f"kontur_population_{release}.gpkg.gz", d / f"kontur_population_{release}.gpkg", d / f"kontur_7_{release}.parquet"
     if out.exists():
@@ -193,7 +194,29 @@ def boundaries() -> None:
                 print(f"boundaries {k} {m['boundaryType']}: {m['admUnitCount']} units, licence {m['boundaryLicense']}", flush=True)
 
 
-STEPS = {"ookla": ookla, "opencellid": opencellid, "population": population, "overture": overture, "overture_us": overture_us, "overture_are": overture_are, "boundaries": boundaries}
+def worldpop() -> None:
+    """WorldPop 2020 constrained, UN-adjusted, 100 m, per country (CC BY 4.0; ADR-008 amendment 1). The server sends
+    one slow connection per file and ignores range requests, so each file is fetched whole, retried, and kept only at
+    its advertised size (the US file, 494 MB, takes hours). Then summed into H3 r8 by scripts/worldpop_hex.py."""
+    d = DATA / "population"; d.mkdir(parents=True, exist_ok=True)
+    base = "https://data.worldpop.org/GIS/Population/Global_2000_2020_Constrained/2020/BSGM/{I}/{i}_ppp_2020_UNadj_constrained.tif"
+    for k in COUNTRIES:
+        out = d / f"{k.lower()}_ppp_2020_UNadj_constrained.tif"
+        if out.exists():
+            continue
+        url = base.format(I=k, i=k.lower())
+        for attempt in range(6):
+            head = subprocess.run(["curl", "-sI", "-m", "60", url], capture_output=True, text=True).stdout
+            n = next((int(x.split(":")[1]) for x in head.splitlines() if x.lower().startswith("content-length:")), None)
+            subprocess.run(["curl", "-sS", "-m", "14400", "-o", f"{out}.dl", url])
+            if n and Path(f"{out}.dl").exists() and Path(f"{out}.dl").stat().st_size == n:
+                os.replace(f"{out}.dl", out); print(f"worldpop {k}: {n / 1e6:.0f} MB", flush=True); break
+            time.sleep(20)
+        else:
+            raise SystemExit(f"worldpop {k} failed 6 times")
+
+
+STEPS = {"ookla": ookla, "opencellid": opencellid, "population": population, "worldpop": worldpop, "overture": overture, "overture_us": overture_us, "overture_are": overture_are, "boundaries": boundaries}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("steps", nargs="+", choices=list(STEPS)); a = ap.parse_args()

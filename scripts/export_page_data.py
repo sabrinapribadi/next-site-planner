@@ -81,6 +81,24 @@ def map_layer(h: pd.DataFrame, iso3: str) -> dict:
 GAP = {"none": 0, "capacity": 1, "coverage": 2, "slow_type_unknown": 3, "unmeasured": 4}
 MOR = {"rural": 0, "urban_cluster": 1, "urban_centre": 2}
 DDIR = ROOT / "docs" / "data" / "d"
+CDIR = ROOT / "docs" / "data" / "cells"
+NEAR_RING = 3        # ~3 km around each nominal
+
+
+def cells_layer(k: str, cells: pd.DataFrame, nominal_h3: list[str]) -> dict:
+    """Existing LTE/5G cells recorded in OpenCelliD, for the nominal map (written to docs/data/cells/<ISO>.js, loaded on
+    demand): counts per ~250 km² hexagon (resolution 5) for the country view, and the 0.74 km² hexagons with cells within
+    ring 3 (~3 km) of any nominal for the close view. Cells are crowdsourced positions, not tower positions."""
+    r5 = cells.groupby(cells.h3.map(lambda x: h3.cell_to_parent(x, 5))).n.sum()
+    near = set()
+    for x in nominal_h3:
+        near.update(h3.grid_disk(x, NEAR_RING))
+    nb = cells[cells.h3.isin(near)]
+    out = {"r5": [[x[:-7], int(n)] for x, n in r5.items()], "near": [[x[:-5], int(n)] for x, n in zip(nb.h3, nb.n)]}
+    CDIR.mkdir(parents=True, exist_ok=True)
+    (CDIR / f"{k}.js").write_text("window.GEO1_CELLS = window.GEO1_CELLS || {};\nwindow.GEO1_CELLS[" + json.dumps(k) + "] = "
+                                  + json.dumps(out, separators=(",", ":")) + ";\n")
+    return {"r5_areas": len(out["r5"]), "near_hexagons": len(out["near"]), "cells_total": int(cells.n.sum())}
 NOISE = None   # set in main() from derived/hex_noise.parquet when the ADR-005 follow-up has run
 
 
@@ -143,6 +161,8 @@ def main() -> None:
     p0 = json.loads((ROOT / "data/outputs/p0_foundation.json").read_text())
     p1 = json.loads((ROOT / "data/outputs/p1_experience_gap.json").read_text())
     hex8 = pd.read_parquet(DATA / "derived" / "hex_p1.parquet")
+    hl = pd.read_parquet(DATA / "derived" / "hex_latest.parquet", columns=["iso3", "h3", "cells_lte", "cells_nr"])
+    hl = hl.assign(n=hl.cells_lte + hl.cells_nr)[lambda x: x.n > 0][["iso3", "h3", "n"]]
     p2f = DATA / "derived" / "hex_p2.parquet"
     p2 = pd.read_parquet(p2f, columns=["iso3", "h3", "pred_ln", "sigma"]) if p2f.exists() else None
     global NOISE
@@ -158,6 +178,9 @@ def main() -> None:
     p3c = json.loads(p3cf.read_text()) if p3cf.exists() else {}
     p4f = ROOT / "data/outputs/p4_site_plan.json"
     p4 = json.loads(p4f.read_text())["countries"] if p4f.exists() else {}
+    p4bf, p1bf = ROOT / "data/outputs/p4b_nominal_validation.json", ROOT / "data/outputs/p1b_population_crosscheck.json"
+    p4b = json.loads(p4bf.read_text())["countries"] if p4bf.exists() else {}
+    p1b = json.loads(p1bf.read_text())["countries"] if p1bf.exists() else {}
     DDIR.mkdir(parents=True, exist_ok=True)
     for f in DDIR.glob("*.js"):
         f.unlink()
@@ -215,10 +238,23 @@ def main() -> None:
                                          "service_areas": round(v["sensitivity"]["3gpp_service_areas"]["jaccard"], 2)},
                            "theta_new": round(v["theta"]["new"][0], 3), "theta_cap": round(v["theta"]["capacity"][0], 3), "own_theta": v["theta"]["own_new_estimate"],
                            "pts": [[round(a, 4), round(o, 4), t[0]] for a, o, t in zip(plan.lat, plan.lon, plan.intervention)]}
+                c["p4"]["validated"] = bool(v.get("validated", False)); c["p4"]["pending"] = v.get("pending")
+                c["p4"]["cells"] = cells_layer(k, hl[hl.iso3 == k], plan.h3.tolist())
                 dnames = sorted(set(plan.district.fillna("")))
                 dpos = {n: i for i, n in enumerate(dnames)}
-                c["p4"]["nominals"] = {"districts": dnames, "rows": [[r.rank, r.h3[:-5], round(r.lat, 5), round(r.lon, 5), r.intervention[0], int(r.people), round(float(r.p_below_25), 2),
-                                                                       round(float(r.expected_lifted), 1), dpos[r.district if isinstance(r.district, str) else ""]] for r in plan.itertuples()]}
+                val = "site_lat" in plan.columns                     # ADR-008 amendment 1: site point and check results
+                num = lambda x: None if pd.isna(x) else x
+                c["p4"]["nominals"] = {"validated": val, "districts": dnames, "rows": [
+                    [r.rank, r.h3[:-5], round(r.site_lat if val else r.lat, 5), round(r.site_lon if val else r.lon, 5), r.intervention[0], int(r.people), round(float(r.p_below_25), 2),
+                     round(float(r.expected_lifted), 1), dpos[r.district if isinstance(r.district, str) else ""]]
+                    + ([int(r.kontur_people), int(r.worldpop_people), int(r.built_m2), num(r.elevation_m), num(r.slope_deg), ("s" if r.steep else "") + ("h" if r.high else ""), int(r.places)] if val else [])
+                    for r in plan.itertuples()]}
+            if k in p4b:
+                c["p4"]["validation"] = {kk: (round(vv, 4) if isinstance(vv, float) else vv) for kk, vv in p4b[k].items() if kk != "validation"}
+            if k in p1b:
+                c["population_check"] = {blk: {src: round(v / 1e6, 2) for src, v in p1b[k][blk].items()} for blk in ("total", "expected_below_25_all", "expected_below_25_untested", "tested_below_25_p1")} | {
+                    "poorly_served_difference": round(p1b[k]["adr001_poorly_served_difference"], 3), "share_disagreeing": round(p1b[k]["kontur_share_in_disagreeing_hexagons"], 3),
+                    "share_disagreeing_poorly_served": round(p1b[k]["kontur_share_in_disagreeing_poorly_served"], 3)}
             c["untested"] = {"people_m": round(tot["untested_people"] / 1e6, 2),
                              "expected_below_m": {str(b): round(tot[f"expected_untested_below_{b}"] / 1e6, 2) for b in BARS},
                              "all_people_share_below": {str(b): round(tot[f"all_people_share_below_{b}"], 4) for b in BARS}}
@@ -233,6 +269,8 @@ def main() -> None:
                      "people_weighted": {m: round(p2j["designs"]["r6"][m]["rmse_people_weighted"], 3) for m in ("kriging", "gbm")}},
             "noise_scores": None if not p2b else {m: {kk: round(vv, 3) for kk, vv in v.items()} for m, v in p2b["p2_noise_aware_scores"].items() if isinstance(v, dict)},
             "p0": {"gate_passed": p0["gate_passed"], "panel_rows": p0["panel_rows"], "inputs": p0["inputs_in_manifest"]},
+            "population_check": None if not p1bf.exists() else {blk: {src: round(v / 1e6, 2) for src, v in x.items()} for blk, x in json.loads(p1bf.read_text())["all_countries"].items()} | {"pending": json.loads(p1bf.read_text()).get("pending_countries", [])},
+            "p4_validation": None if not p4bf.exists() else {kk: v for kk, v in json.loads(p4bf.read_text()).items() if kk in ("validated_gate_countries_passed", "validated_gate_passed", "built_up_minimum_m2", "pending_countries")},
             "p1": {"gate_passed": p1["gate_passed"], "density_deciles_edges": p1["density_deciles_edges_people_per_hex"]}}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("// Generated by scripts/export_page_data.py from data/outputs/*.json — do not edit by hand.\nwindow.GEO1 = "

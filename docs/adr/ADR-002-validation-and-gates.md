@@ -45,9 +45,9 @@ Checks reported but not gated (ADR-003): urban-centre population share vs publis
 |---|---|---|---|
 | P0 | ≥ 99% of people and tests assigned per country; contracts; manifest | **Passed.** 100.1–100.8% of people and 100.1–101.7% of tests. Above 100% = coastal hexagons whose centre lies just offshore; ≤ 0.3% sit in a neighbouring country. Contracts clean; 40 inputs fingerprinted | `data/outputs/p0_foundation.json` |
 | P1 | Intervals; clusters at FDR 5%; every populated hexagon typed | **Passed**, after two logged deviations (block bootstrap, exact p-values). Every interval contains its estimate (14 of 14) | `data/outputs/p1_experience_gap.json` |
-| P2 | LightGBM ≤ 0.90 × best kriging RMSE (resolution-6 blocks) | **Failed.** 0.929 (7% better). Kriging is deployed. Same on the other designs (0.92–0.94) | `data/outputs/p2_speed_model.json`, ADR-004 |
+| P2 | LightGBM ≤ 0.90 × best kriging RMSE (resolution-6 blocks) | **Failed.** 0.929 (7% better). Kriging is deployed. Same on the other designs (0.92–0.93) | `data/outputs/p2_speed_model.json`, ADR-004 |
 | P3 | Parallel pre-trends per country (new sites, ring 0); effect with interval | **Passed:** Germany, France, US, Philippines. **Failed:** Indonesia, UAE. Malaysia has too few sites. Effects: slow places lifted above 25 Mbps +12.1 pts (France), +12.6 (Germany) as pre-set; after regression-to-the-mean checks the cautious values are +12.1, +5.2 and +1.5 (US). Average speed ≈ 0 except the US (+7–12%) | `data/outputs/p3_new_site_effect.json`, ADR-007 |
-| P4 | ≥ +10% people lifted vs KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid | **Passed:** 6 of 7 (+56% to +776%); UAE: KPI ranking lifts nobody. Exports valid | `data/outputs/p4_site_plan.json`, ADR-008 |
+| P4 | ≥ +10% people lifted vs KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid | **Original plan: passed** 6 of 7 (+56% to +776%; UAE: KPI ranking lifted nobody). **Checked plans** (ADR-008 amendment 1: two population maps, built-up land, terrain): **6 of 6 checked countries pass** (+50% to +281%); the US is pending its WorldPop file, so the seven-country verdict is open. Exports valid; every site point lies inside its search hexagon | `data/outputs/p4_site_plan.json`, `p4b_nominal_validation.json`, ADR-008 |
 | P5–P7 | — | Not yet run | — |
 
 ## Deviations from the pre-registered plan (logged when found, with evidence)
@@ -56,6 +56,7 @@ Checks reported but not gated (ADR-003): urban-centre population share vs publis
 |---|---|---|---|---|---|
 | 2026-10-13 | P1 | 95% intervals by Poisson bootstrap over speed tiles | Intervals miss their own estimate in Germany, France and the US (Germany below 10 Mbps: estimate 5.21%, interval 5.57–5.92%). 64% of German measured hexagons have one tile; dropping or reweighting tiles pushes hexagons across the bar more often downwards than upwards, so every resample is biased upwards (mean 5.73%; 6.25% if no hexagon is dropped) | **Spatial block bootstrap**: H3 resolution-5 blocks (~250 km²) with Poisson(1) weights; resolution 4 as sensitivity. Gate: each interval must contain its estimate | Tile intervals still computed and published next to the block intervals |
 | 2026-10-13 | P1 | Gi* p-values (method not stated; normal approximation used) | On spatially shuffled data, FDR still flagged 259 false slow hotspots in Indonesia (912 on real data): with 1–6 neighbours and skewed speeds, the normal approximation is wrong in the tails | **Exact conditional randomisation**: the neighbours' sum is compared with the k-fold convolution of the country's empirical distribution, so tail p-values are exact enough for FDR over 100,000+ tests | Both versions' counts on real and shuffled data are published |
+| 2026-10-14 | P4 | ADR-001: Kontur cross-checked against WorldPop before P4 uses population totals | Not run before P4. On the nominal map, Indonesia's top nominals sat in the Papua highlands; one had 28,665 people in Kontur and 0 in WorldPop | **ADR-008 amendment 1** (pushed before running): WorldPop for all seven countries, plans count the smaller of the two maps, at least 1,000 m² of buildings, terrain flags; the checked plans replace the original | `data/outputs/p1b_population_crosscheck.json`, `p4b_nominal_validation.json`; the original plan is kept |
 
 **About the 10% margins (P2, P4).** They are our own practical thresholds, fixed before the analysis. No published standard gives this number. What the literature supports is the practice: fix in advance the smallest difference worth acting on (the "smallest effect size of interest"; Lakens 2017; Lakens, Scheel & Isager 2018).
 
@@ -77,7 +78,7 @@ Checks reported but not gated (ADR-003): urban-centre population share vs publis
 
 | Reference | Venue | Peer-reviewed | Year | Citations | Per year | Used for |
 |---|---|---|---|---|---|---|
-| The maximal covering location problem | Papers of the Regional Science Association | yes | 1974 | 2,710 | 51.1 | covering optimiser (P4) |
+| The maximal covering location problem | Papers of the Regional Science Association | yes | 1974 | 2,710 | 51.1 | 3GPP service-area sensitivity (P4) |
 | Local spatial autocorrelation statistics: distributional issues and an application | Geographical Analysis | yes | 1995 | 3,649 | 114.0 | Gi* hotspot statistic (P1) |
 | Controlling the false discovery rate: a new application to account for multiple and dependent tests in local statistics of spatial association | Geographical Analysis | yes | 2006 | 330 | 15.7 | false-discovery control (P1) |
 | Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure | Ecography | yes | 2016 | 3,316 | 301.5 | spatial block CV (P2) |

@@ -87,7 +87,7 @@ In plain words: compare speeds before and after a new site, and subtract the cha
 
 ### Gate (ADR-002 P3, made precise here)
 
-Germany and the US are judged separately, for new sites, ring 0.
+Each country is judged separately, for new sites, ring 0 (amendment 1 extended this from Germany and the US to all seven countries).
 
 1. **Parallel pre-trends:** every pre-period estimate (event time −5 to −3) has a 95% interval that includes 0, **and** a joint test of all three gives p > 0.05.
 2. **Effect reported:** average effect over event time 0 to +4, with its 95% interval. It is also shown as a percentage change, (e^β − 1).

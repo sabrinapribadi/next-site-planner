@@ -69,9 +69,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     const nm = await page.$("#nmap"); await nm.scrollIntoView(); await wait(2500);
     const nmr = await page.evaluate(() => { const ls = nlayer ? nlayer.getLayers() : []; if (ls.length) ls[0].openPopup();
       const pop = document.querySelector("#nmap .leaflet-popup-content"); return { markers: ls.length, popup: pop ? pop.textContent.replace(/\s+/g, " ").slice(0, 70) : "",
-        sat: !!(pop && pop.querySelector('a[href*="google.com/maps"]')), tiles: document.querySelectorAll("#nmap img.leaflet-tile-loaded").length }; });
+        sat: !!(pop && pop.querySelector('a[href*="google.com/maps"]')), tiles: document.querySelectorAll("#nmap img.leaflet-tile-loaded").length,
+        checks: !!(pop && /WorldPop/.test(pop.textContent) && /built-up/.test(pop.textContent)), cells: ncells ? ncells.getLayers().length : 0 }; });
     if (nmr.markers) await nm.screenshot({ path: `${outDir}/${mode}_nominals.png` });
     rows.push({ id: "nominals", ok: nmr.markers > 0 && /people/.test(nmr.popup) && nmr.sat && nmr.tiles > 0, w: nmr.markers, h: nmr.tiles, inside: true, gone: true, text: nmr.popup });
+    rows.push({ id: "nom-checks", ok: nmr.checks && nmr.cells > 0, w: nmr.cells, h: 0, inside: true, gone: true, text: `popup shows population sources and built-up land: ${nmr.checks} · existing-cell shapes drawn: ${nmr.cells}` });
     rows.push({ id: "district", ok: !!dt && dt.inside && /0\.74 km/.test(dt.text) && back, ...(dt || {}), gone: back, text: (dt ? dt.text : "") + " | " + head });
     summary.push({ mode, onLoad, closedOnLoad, hScroll, errs: errs.length, pass: rows.filter((r) => r.ok).length, total: rows.length });
     console.log(`\n== ${mode}: tooltips visible on load=${onLoad} · page scrolls sideways=${hScroll} · JS errors=${errs.length}`);

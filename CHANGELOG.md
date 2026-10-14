@@ -2,6 +2,45 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.8.0] — 2026-10-14 — Nominals checked on the ground; full document audit (interim: US pending its WorldPop file)
+**Files:** docs/adr/ADR-001, ADR-002, ADR-007, ADR-008 (amendments 1–2), docs/adr/README.md, docs/PRD.md, README.md, Makefile, src/groundcheck.py, tests/test_groundcheck.py, scripts/worldpop_hex.py, scripts/population_crosscheck.py, scripts/nominal_validation_report.py, scripts/validation_tables.py, scripts/site_plan.py, scripts/acquire_public_data.py, scripts/export_page_data.py, data/outputs/p1b_population_crosscheck.json, p4b_nominal_validation.json, p4_site_plan.json, p4_site_plan_original.json, p4_original_plans/*, docs/data/plans/*, docs/data/cells/*, docs/index.html, docs/build.html, tests/browser/hover_test.js
+- **Situation:**
+  - The new terrain map of nominals showed Indonesia's top sites in the Papua highlands.
+  - One had 28,665 people in Kontur and 0 in WorldPop.
+  - ADR-001's promised WorldPop cross-check had never run.
+- **Task:** Make sure no nominal sits in a lake, a forest or on an empty mountain, and audit every document against the outputs.
+- **Action:**
+  - **Pre-registered first:** ADR-008 amendment 1 (pushed 10:54, before any check) set the same rules for all seven countries:
+    - two population maps, counting the smaller;
+    - at least 1,000 m² of buildings (ESA WorldCover 10 m);
+    - a site point on built land;
+    - terrain flags (Copernicus DEM).
+  - **Re-planning:** the plan and the KPI baseline were re-solved until every pick had passed.
+  - **WorldPop for seven countries:** summed into hexagons. The server ignores resume requests, so the US file (494 MB) is still downloading.
+  - **Crowding:** both maps over-crowd some remote towns. Handled as a sensitivity, not a rule change: amendment 2, pushed before computing.
+  - **Existing cells on the map:** recorded LTE/5G cells (OpenCelliD) are shown, so nominals' gaps are visible. The page and ADR-008 now say that "new site" means "no tower on record", which in Southeast Asia is not "no tower".
+  - **Audit fixes:**
+    - an unverifiable reference removed;
+    - P3 scope (all seven countries) corrected in README, PRD and ADR-007;
+    - the optimiser described as an exact knapsack, not "covering";
+    - capacity lift +3.8 to +16.3 points (was +7.7 to +16), with its intervals;
+    - the P2 range 0.92–0.93 (was 0.92–0.94);
+    - Overture places described as model input and baseline, not "daytime demand";
+    - stale "phases 2–4 next" text removed;
+    - the decision log put in order;
+    - WorldPop added to `make data`, and the checks to `make pipeline`.
+- **Result:**
+  - **Population:**
+    - The maps agree in Germany and France (−7%, −9% in poorly served places).
+    - They disagree by 27–37% in Indonesia, Malaysia, the Philippines and the UAE, so those counts are now ranges. For example, 22–30M untested Indonesians are likely below 25 Mbps.
+  - **Original nominals:**
+    - Indonesia: 23% had nobody in WorldPop and 8% had no buildings.
+    - UAE: 31% had no buildings, so its original plan is stated as a failure.
+  - **Checked plans:** +50% (Germany) to +281% (UAE) more people than KPI ranking in 6 of 6 checked countries; before the checks this was +56% to +776%. Indonesia's original plan, re-scored, lifts 90k people, not 197k.
+  - **Crowding:** the cap changes the chosen sites little (overlap 0.95–1.00).
+  - **Tests:** 30 unit tests; browser checks 11 of 11 in three modes.
+- **Talking point:** "A plan that looked 9× better than ranking was partly chasing people only one map could see. Checking every nominal against a second population map and satellite land cover cut the gain to a believable 1.5–3.8× and put every pin on built land, not in a forest."
+
 ## [0.7.0] — 2026-10-14 — P4: costed site plans for seven countries
 **Files:** docs/adr/ADR-008-budgeted-site-plan.md, docs/adr/ADR-002-validation-and-gates.md, docs/adr/README.md, docs/references.yaml, docs/PRD.md, src/plan.py, tests/test_plan.py, scripts/site_plan.py, scripts/new_site_crossing_checks.py, data/outputs/p4_capacity_crossing.json, data/outputs/p4_site_plan.json, docs/data/plans/*, scripts/export_page_data.py, docs/index.html, docs/build.html, README.md, Makefile
 - **Situation:** Planners rank places by agreed KPI scores; P3 showed new sites and added capacity lift some slow places above 25 Mbps.

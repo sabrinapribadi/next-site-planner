@@ -776,10 +776,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </header>
 
 <div class="glance" id="glance">
-  <div class="card"><span class="eyebrow">Data</span><b class="big" id="g-data">899M people</b><span class="muted small">7 countries · 15 quarters of speed tests · five public sources on one 0.74 km² hexagon grid</span></div>
+  <div class="card"><span class="eyebrow">Data</span><b class="big" id="g-data">899M people</b><span class="muted small">7 countries · 15 quarters of speed tests · eight public sources on one 0.74 km² hexagon grid</span></div>
   <div class="card"><span class="eyebrow">Problem</span><b class="big">Rank sites, or count people?</b><span class="muted small">Site lists are ranked on weighted KPIs; countries are compared on national medians that mix cities with islands.</span></div>
   <div class="card"><span class="eyebrow">Approach</span><b class="big">People below a bar</b><span class="muted small">Count people on slow mobile, measure what new sites did, then choose the costed set of sites that lifts the most people.</span></div>
-  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">1 in 9 people</b><span class="muted small" id="g-result-sub">typically get under 25 Mbps on mobile — and 2 in 3 of them were never tested.</span></div>
+  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">1 in 9 to 1 in 11 people</b><span class="muted small" id="g-result-sub">typically get under 25 Mbps on mobile, and about 3 in 5 to 2 in 3 of them were never tested. The range comes from two population maps (US: one map until its second arrives).</span></div>
 </div>
 
 <section class="block" id="problem">
@@ -799,13 +799,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <section class="block" id="data">
   <span class="eyebrow">2 · Data</span>
-  <h2>Five public sources on one hexagon grid</h2>
+  <h2>Eight public sources on one hexagon grid</h2>
   <div class="table-wrap"><table>
     <thead><tr><th>Source</th><th>What</th><th class="num">Size</th><th>Licence</th><th>Used for</th></tr></thead>
     <tbody>
       <tr><td>Ookla open speed tiles</td><td>Mobile and fixed, 2023 Q1 – 2026 Q3</td><td class="num">48.5M tile rows</td><td>CC BY-NC-SA 4.0</td><td>Measured download speed</td></tr>
       <tr><td>Kontur population 2023</td><td>People per H3 hexagon</td><td class="num">6.4M hexagons</td><td>CC BY 4.0</td><td>Where people live</td></tr>
-      <tr><td>Overture Maps places</td><td>Shops, offices, services (2026-09)</td><td class="num">29.8M places</td><td>CDLA-Permissive 2.0</td><td>Daytime demand (phase 2 on)</td></tr>
+      <tr><td>Overture Maps places</td><td>Shops, offices, services (2026-09)</td><td class="num">29.8M places</td><td>CDLA-Permissive 2.0</td><td>Speed-model input and KPI baseline; shown per nominal. Not counted as demand: plans count residents only</td></tr>
       <tr><td>OpenCelliD</td><td>Crowdsourced cell locations (2026-10-13)</td><td class="num">1.6M cells</td><td>CC BY-SA 4.0</td><td>Cells nearby, gap types</td></tr>
       <tr><td>Natural Earth, geoBoundaries</td><td>Country borders, district names</td><td class="num">7 countries</td><td>Public domain, CC BY</td><td>Assignment, place names</td></tr>
     </tbody></table></div>
@@ -841,7 +841,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <tr><td>Gap types</td><td>Type every slow hexagon</td><td>Type only where cell data is complete</td><td>Cell records near only 2% of fast rural Indonesian hexagons</td></tr>
       <tr><td>Speed where nobody tested</td><td>LightGBM (machine learning)</td><td>Kriging (standard spatial averaging)</td><td>LightGBM only 7% more accurate — below the 10% set in advance to justify its 16 extra inputs, so the simpler kriging is used</td></tr>
       <tr><td>Effect of a new site</td><td>Before vs after at new sites</td><td>Compared with similar places that had not got one yet (staggered difference-in-differences)</td><td>Indonesia: speeds were already falling a year before new sites (−12%)</td></tr>
-      <tr><td>Choosing sites</td><td>Rank places by an equal-weight KPI score</td><td>Pick the set that lifts the most people per cost (exact)</td><td>+56% (Germany) to +776% (Indonesia) more people at the same budget</td></tr>
+      <tr><td>Choosing sites</td><td>Rank places by an equal-weight KPI score</td><td>Pick the set that lifts the most people per cost (exact)</td><td>+50% (Germany) to +281% (UAE) more people at the same budget, after the ground checks</td></tr>
+      <tr><td>Where exactly</td><td>Hexagon centre, one population map</td><td>Two population maps must agree; ≥ 1,000 m² of buildings; pin on built land; terrain flagged</td><td>Indonesia: 23% of the original nominals had nobody on the second map</td></tr>
       <tr><td>Test noise</td><td>Take each hexagon's few tests at face value</td><td>Blend with the neighbourhood by how many tests it has</td><td>Blended speeds 28–44% closer to the next quarter's tests</td></tr>
     </tbody></table></div>
   <p class="muted small">Every change after a gate was set is logged as a deviation, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
@@ -868,7 +869,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div style="display:grid; gap:8px; min-width:0">
       <span class="eyebrow" id="top-h">Districts with the most people below the bar</span>
       <ol class="toplist" id="toplist"></ol>
-      <p class="muted small">Click a district to zoom to its 0.74 km² analysis hexagons. A starting list for planners, not yet a site plan: phases 2–4 add untested areas, measured site effects and costs.</p>
+      <p class="muted small">Click a district to zoom to its 0.74 km² analysis hexagons. This shows where people below the bar live. The costed site plan, with checked nominals, is further down.</p>
     </div>
   </div>
 
@@ -880,18 +881,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <svg class="plot" id="c-p3" role="img" aria-label="Effect of a new site on slow places"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><p>Each row compares hexagons that were below 25 Mbps when a new site appeared nearby with similar slow hexagons that had not got one yet. The dot is how many more of them rose above 25 Mbps over the next year, in percentage points; the line is the 95% interval. The hollow circle is the measure fixed in advance (slow = below 25 Mbps in one quarter). The filled dot is the most cautious estimate that passed later checks: slow defined over a whole year, so places that were just unlucky once do not count. Example: France +12 points under both means about 1 in 8 slow places crossed 25 Mbps because of the site; Germany drops from +13 to +5 (about 1 in 20). Colour shows how far the comparison can be trusted. <b>So what:</b> a new site lifts some slow places over the bar, average speeds barely move, and phase 4 plans across this range.</p></details>
 
-  <div class="chart"><div class="key"><span><i style="background:var(--accent)"></i>The plan (people lifted per cost)</span><span><i style="background:var(--muted)"></i>KPI ranking, same budget</span><span class="mono">expected people lifted above 25 Mbps · budget 1,000 new-tower equivalents</span></div>
+  <div class="chart"><div class="key"><span><i style="background:var(--accent)"></i>The plan (people lifted per cost)</span><span><i style="background:var(--muted)"></i>KPI ranking, same budget</span><span><i style="background:var(--surface); box-shadow:0 0 0 2px var(--accent)"></i>* not yet checked on the ground</span><span class="mono">expected people lifted above 25 Mbps · budget 1,000 new-tower equivalents</span></div>
     <svg class="plot" id="c-p4" role="img" aria-label="People lifted by the plan vs KPI ranking"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><p>For each country, the same budget (1,000 new-tower equivalents; a new macro site = 1, a small cell 0.5, extra capacity on an existing site 0.3) is spent two ways. Teal: the plan, which picks the places where expected people lifted per cost is highest. Grey: the usual practice of ranking places by an equal-weight score of low speed, population and points of interest. "Expected people lifted" = people × chance their typical speed is below 25 Mbps × the lift rate measured in phase 3. Example: Indonesia — about 197,000 people with the plan vs 22,500 with KPI ranking. The scale is logarithmic. <b>So what:</b> counting the people you would lift beats scoring places, in every country we could test.</p></details>
+  <details class="how"><summary>How to read this</summary><p>For each country, the same budget (1,000 new-tower equivalents; a new macro site = 1, a small cell 0.5, extra capacity on an existing site 0.3) is spent two ways. Teal: the plan, which picks the places where expected people lifted per cost is highest. Grey: the usual practice of ranking places by an equal-weight score of low speed, population and points of interest. "Expected people lifted" = people × chance their typical speed is below 25 Mbps × the lift rate measured in phase 3. Both use only checked places: people on both population maps (the smaller number counts) and at least 1,000 m² of buildings. Example: Indonesia — about 122,500 people with the plan vs 42,900 with KPI ranking. The US is shown before its checks; its second population map is still downloading. The scale is logarithmic. <b>So what:</b> counting the people you would lift beats scoring places in every country checked so far.</p></details>
   <p class="small" id="plan-dl"></p>
 
   <div style="display:grid; gap:8px; min-width:0">
     <div class="maphead"><b id="nmap-h">Check the nominals on the ground</b><span class="muted" id="nmap-sub"></span></div>
     <div id="nmap" role="region" aria-label="Map of planned search areas with a terrain basemap"></div>
-    <div class="nom-legend"><span><i style="background:#0d6b7d"></i>new macro site</span><span><i style="background:#a86a12"></i>small cell</span><span><i style="background:#2d7d4f"></i>extra capacity on an existing site</span><span>zoom in to see each 0.74 km² search hexagon</span></div>
+    <div class="nom-legend"><span><i style="background:#0d6b7d"></i>new macro site</span><span><i style="background:#a86a12"></i>small cell</span><span><i style="background:#2d7d4f"></i>extra capacity on an existing site</span><span><i style="background:var(--surface); box-shadow:0 0 0 2.5px var(--fg)"></i>steep (&gt; 20°) or high (&gt; 2,500 m): check access</span><span><i style="background:#5b2a86; border-radius:2px; opacity:.7"></i>existing LTE/5G cells recorded in OpenCelliD (shaded per ~250 km²; zoom in for hexagons near nominals)</span><span>zoom in to see each 0.74 km² search hexagon</span></div>
     <p class="muted small" id="nmap-note"></p>
   </div>
-  <details class="how"><summary>How to read this map</summary><p>Each dot is a nominal: the centre of a planned 0.74 km² search area, coloured by the kind of site. The terrain basemap shows relief, forest, water and roads; switch to streets in the top-right corner. Click a dot for its rank, the people there, the chance their typical speed is below 25 Mbps and the expected people lifted, with links to satellite imagery and OpenStreetMap at that spot. Example: a dot in a lake or dense forest with no roads is a search area to move or drop. <b>So what:</b> a planner can check every nominal sits on reachable ground before sending anyone to look for a rooftop or tower.</p></details>
+  <details class="how"><summary>How to read this map</summary><p>Each dot is a nominal: a site point inside a planned 0.74 km² search area, coloured by the kind of site. Every nominal passed three checks before it could enter the plan: two independent population maps (Kontur and WorldPop) must both place people there, and the plan counts the smaller number; satellite land cover (ESA WorldCover, 10 m) must show at least 1,000 m² of buildings, about seven village houses; and the dot sits on the built-up pixel nearest the centre of those buildings, so never in a lake or forest. Elevation and slope come from the Copernicus 30 m elevation model; a dark ring marks steep or high sites, where access will cost more. Purple shows existing LTE/5G cells recorded in OpenCelliD: shading per ~250 km² when zoomed out, and the 0.74 km² hexagons with cells within about 3 km of a nominal when zoomed in. New sites go where no cell is recorded nearby, so they sit in the gaps between purple areas; extra capacity goes on top of purple. Caveat: OpenCelliD is crowdsourced and very incomplete in Indonesia, Malaysia, the Philippines and the UAE (it records a cell near only 2% of fast rural Indonesian hexagons), so a "new site" there means "no tower on record", not "no tower": check it against an operator's site list first. Click a dot for the numbers and links to satellite imagery. Example: a dot with 0 people in WorldPop never reaches the plan, however many people the other map shows. <b>So what:</b> every nominal is on inhabited, built ground; a planner still confirms a rooftop or tower inside the hexagon.</p></details>
 
 
 
@@ -901,13 +902,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <li><b>Tests are not a random sample:</b> people test when it is slow or new; shares count people, not tests.</li>
         <li><b>Untested speeds are predictions, and may be too optimistic:</b> the deployed method (kriging) borrows from nearby tested places; a machine-learning model predicts untested places 30–45% slower. A test on the next quarter's data, fixed in advance, will decide (<a href="#d-p2">accuracy</a>).</li>
         <li><b>Not a licence check:</b> regulators test obligations with their own measurements, not crowdsourced averages.</li>
+        <li><b>Population maps disagree where data is thin:</b> Kontur and WorldPop agree in Germany and France, but in poorly served places in Indonesia, Malaysia, the Philippines and the UAE they differ by 27–37%. Counts there are ranges, and plans count the smaller number (<a href="#d-p4">details</a>).</li>
+        <li><b>"New site" means no tower on record:</b> OpenCelliD misses most towers in Southeast Asia and the UAE, so check new-site nominals against an operator's site list.</li>
         <li><b>Gap types only where cell data allows:</b> coverage vs capacity is known mainly for city areas in Germany, France, the US and the UAE (<a href="#d-findings">details</a>).</li>
       </ul></div>
     <div><span class="eyebrow">FAQ</span>
       <details class="faq"><summary>Is Germany really behind Indonesia?</summary><p>No. As measured they look close (14.6% vs 13.3% below 25 Mbps), but Indonesia's tested people live mostly in cities. At equal density Indonesia is at 22.0% and Germany at 17.7%. Counting everyone, including people nobody tested, Indonesia is at about 18–20% and Germany at about 11–16%.</p></details>
       <details class="faq"><summary>What is "typical speed"?</summary><p>The speed most people in a hexagon usually get. One test can be unlucky (a busy hour, a cheap plan, indoors). We blend each hexagon's tests with its neighbourhood: a hexagon with 1 test takes about 75–90% from its neighbours, one with 200 tests keeps its own. Checked against the next quarter's tests: 28–44% closer than the raw value.</p></details>
       <details class="faq"><summary>Why 10 and 25 Mbps?</summary><p>Both were fixed before the analysis. 5, 50 and 100 Mbps are shown as sensitivity; 100 Mbps matches Germany's 2019 licence obligation and the IMT-2020 user-experienced rate.</p></details>
-      <details class="faq"><summary>Where should the next site go?</summary><p>In the search areas of each country's plan (dots on the map; site lists to download under the plan chart): 0.74 km² hexagons ranked by people lifted per cost, each tagged new macro, small cell or extra capacity. A planner then picks the actual rooftop or tower inside the hexagon.</p></details>
+      <details class="faq"><summary>Where should the next site go?</summary><p>In the search areas of each country's plan (dots on the map; site lists to download under the plan chart): 0.74 km² hexagons ranked by people lifted per cost, each tagged new macro, small cell or extra capacity. Every one has people on both population maps and at least 1,000 m² of buildings, and its pin sits on built land. A planner then picks the actual rooftop or tower inside the hexagon.</p></details>
+      <details class="faq"><summary>Why two population maps?</summary><p>Each map estimates where people live from satellite images and census totals, and each can be wrong in remote places. Kontur spreads people over rural land; WorldPop places them only where it detected settlements. Example: one of Indonesia's original top nominals had 28,665 people in Kontur and none in WorldPop. Satellite land cover showed few buildings there, so it was dropped. Counting the smaller of the two keeps plans where both maps agree people live.</p></details>
       <details class="faq"><summary>How often can it refresh?</summary><p>Quarterly, after each Ookla release. Every refresh records a fingerprint of all 40 inputs.</p></details>
     </div>
   </div>
@@ -921,9 +925,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <li><b>Untested places hold most of the gap:</b> about 23M Filipinos and 30M Indonesians nobody tested are likely below 25 Mbps — more than among those who did test.</li>
     <li><b>Single tests mislead:</b> once test noise is removed, the US, France and the UAE have far fewer slow places than raw numbers suggest; Indonesia and the Philippines do not.</li>
     <li><b>New sites lift some slow places, not averages:</b> up to about 1 in 8 slow places crossed 25 Mbps because of a new site — France under every check, Germany and the US less under the strictest one; average speeds barely moved, except in the US (+7% to +12%).</li>
-    <li><b>Count people, not scores:</b> at the same budget the plan lifts 1.6× (Germany) to 9× (Indonesia) more people than KPI ranking, and the same money lifts about 80× more people in the Philippines than in the US.</li>
+    <li><b>Count people, not scores:</b> at the same budget the checked plan lifts 1.5× (Germany) to 3.8× (UAE) more people than KPI ranking, and the same money lifts about 26× more people in the Philippines than in Malaysia.</li>
+    <li><b>Check every nominal on the ground:</b> before the checks, the plan looked up to 9× better than ranking; part of that was people only one population map could see. Two maps, satellite land cover and terrain put every nominal on built land.</li>
     <li><b>Local, not regional:</b> real slow clusters exist only in Indonesia and the Philippines; elsewhere slow places are scattered, so plans must target places, not regions.</li>
-    <li><b>What would change our view:</b> new sites found not to lift nearby speeds (phase 3), or the next quarter's tests disagreeing with the predictions.</li>
+    <li><b>What would change our view:</b> the 2026 Q4 tests disagreeing with the predictions (a test fixed in advance), local cost data changing the cost ratios, or a third population map placing people differently from both maps used here.</li>
   </ul>
 </section>
 
@@ -969,21 +974,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   <details class="more" id="d-p4"><summary><span class="eyebrow">The site plans · people lifted, cost per person, stability, per country</span></summary><div class="body">
     <div class="table-wrap"><table id="t-p4"></table></div>
-    <details class="how"><summary>How to read this</summary><p>"People lifted" is the expected number above 25 Mbps after the plan, with a range from the lowest to the highest plausible lift rate. "Per 1,000 lifted" is the budget needed, in new-tower equivalents, to lift 1,000 people. "Stays the same" is the share of chosen places that survive when the lift rate is high, extra capacity is assumed to work like a new site, co-location costs change, or service areas follow 3GPP spacing (1 = identical plan). Example: Germany — 3,305 capacity additions and a handful of new sites; 97% of places stay the same if capacity works like a new site. <b>So what:</b> the cheapest wins are in the Philippines and Indonesia; plans are stable to costs and service areas, and most sensitive to whether extra capacity really lifts people.</p></details>
+    <details class="how"><summary>How to read this</summary><p>"People lifted" is the expected number above 25 Mbps after the plan, with a range from the lowest to the highest plausible lift rate. "Per 1,000 lifted" is the budget needed, in new-tower equivalents, to lift 1,000 people. "Stays the same" is the share of chosen places that survive when the lift rate is high, extra capacity is assumed to work like a new site, co-location costs change, or service areas follow 3GPP spacing (1 = identical plan). Example: Germany — 3,315 capacity additions and 7 new sites; 96% of places stay the same if capacity works like a new site. <b>So what:</b> the cheapest wins are in the Philippines and Indonesia; plans are stable to costs and service areas, and most sensitive to whether extra capacity really lifts people.</p></details>
   </div></details>
 
   <details class="more" id="d-decisions"><summary><span class="eyebrow">Decision log · every choice against a named alternative</span></summary><div class="body">
     <ul class="points">
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-001-framing-and-analysis-unit.md">ADR-001</a> — people below a bar on H3 resolution 8; raw and density-adjusted; untested people reported.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-002-validation-and-gates.md">ADR-002</a> — gates for every phase, set before analysis; two logged deviations (block bootstrap, exact p-values).</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-002-validation-and-gates.md">ADR-002</a> — gates for every phase, set before analysis; three logged deviations (block bootstrap, exact p-values, the population cross-check run late).</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-003-industry-alignment.md">ADR-003</a> — how planners work: gap types, Degree of Urbanisation, 3GPP site spacing, co-location costs, regulator benchmarks; OpenCelliD completeness finding.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-004-speed-model-for-untested-areas.md">ADR-004</a> — speed where nobody tested: kriging vs LightGBM, test blocks sized to real distances; the gate failed and kriging is used.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-008-budgeted-site-plan.md">ADR-008</a> — the site plan: people lifted per cost, exact solution, KPI-ranking baseline, capacity lift estimated first, sensitivities, planner exports.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-007-new-site-effect.md">ADR-007</a> — what new sites did: staggered difference-in-differences in all seven countries, pre-trend gate, home-broadband control, two amendments logged before running.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md">ADR-006</a> — machine learning vs kriging, decided on 2026 Q4 data with predictions frozen and fingerprinted beforehand.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-005-measurement-noise.md">ADR-005</a> — test noise (written after the gate failed, before running): noise model, blending with the neighbourhood, cross-quarter check.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md">ADR-006</a> — machine learning vs kriging, decided on 2026 Q4 data with predictions frozen and fingerprinted beforehand.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-007-new-site-effect.md">ADR-007</a> — what new sites did: staggered difference-in-differences in all seven countries, pre-trend gate, home-broadband control, two amendments logged before running.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-008-budgeted-site-plan.md">ADR-008</a> — the site plan: people lifted per cost, exact solution, KPI-ranking baseline, capacity lift estimated first, sensitivities, planner exports; amendment 1 checks every nominal against WorldPop, land cover and terrain.</li>
     </ul>
-    <p class="muted small">The three method changes made after checks failed are in the method table above and ADR-002; the noise follow-up is ADR-005.</p>
+    <p class="muted small">The method changes made after checks failed are in the method table above and ADR-002; the noise follow-up is ADR-005.</p>
   </div></details>
 
   <details class="more" id="appendix"><summary><span class="eyebrow">Technical appendix · glossary, gates, intervals, assignment checks</span></summary><div class="body">
@@ -1005,6 +1010,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <dt>Area of applicability</dt><dd>Where a prediction's inputs resemble the places the model learned from; outside it, predictions are flagged.</dd>
       <dt>New-tower equivalent</dt><dd>The cost unit for plans: a new macro site = 1, a small cell = 0.5, extra capacity on an existing site = 0.3 (ratios from a US regulator report).</dd>
       <dt>Expected people lifted</dt><dd>People × chance their typical speed is below 25 Mbps × the lift rate measured for that kind of site.</dd>
+      <dt>Two population maps</dt><dd>Kontur (2023) and WorldPop (2020) estimate where people live from satellite images and census totals, by different methods. Where they disagree, the plan counts the smaller number. Example: a hexagon with 28,665 people in Kontur and 0 in WorldPop counts 0, so it cannot be chosen.</dd>
+      <dt>Built-up check</dt><dd>At least 1,000 m² of buildings inside the hexagon in ESA WorldCover (10 m satellite land cover), about seven village houses. Below that, the hexagon is excluded.</dd>
+      <dt>Site point</dt><dd>The built-up 10 m pixel nearest the centre of the hexagon's buildings: where a planner starts looking for a rooftop or tower. It replaces the hexagon centre, which can fall in a field, forest or lake.</dd>
+      <dt>Steep / high</dt><dd>Slope above 20° or elevation above 2,500 m at the site point (Copernicus 30 m elevation model). Not a rejection: hilltop towers are normal, but access costs more.</dd>
       <dt>✓ credible / ⚠ provisional</dt><dd>Whether the noise-corrected country share passed the cross-quarter level check (within 1.5 points).</dd>
     </dl>
     <div class="table-wrap"><table>
@@ -1014,7 +1023,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <tr><td>P1</td><td>Shares with 95% intervals containing their estimate; clusters at FDR 5%; every populated hexagon typed</td><td id="a-p1">Passed</td></tr>
         <tr><td>P2</td><td>Machine learning ≤ 0.90 × kriging error (spatial blocks)</td><td><span class="badge warn">Failed</span> 0.93 → kriging used</td></tr>
         <tr><td>P3</td><td>Pre-trends parallel (per country); effect with interval</td><td><span class="badge ok">Passed</span> Germany, France, US, Philippines · <span class="badge warn">Failed</span> Indonesia, UAE · Malaysia too few sites</td></tr>
-        <tr><td>P4</td><td>≥ 10% more people lifted than KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid (10% is our own pre-set threshold)</td><td><span class="badge ok">Passed</span> 6 of 7 (+56% to +776%); UAE: KPI ranking lifts nobody</td></tr>
+        <tr><td>P4</td><td>≥ 10% more people lifted than KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid (10% is our own pre-set threshold)</td><td><span class="badge ok">Passed</span> original plan 6 of 7 (+56% to +776%). Checked plans: 6 of 6 checked countries (+50% to +281%); US pending its second population map</td></tr>
       </tbody></table></div>
     <div class="table-wrap"><table id="t-ci"></table></div>
     <details class="how"><summary>How to read this</summary><p>Two ways of computing the 95% interval for the share below 25 Mbps. The pre-registered one (resampling speed tiles) is biased: ✕ marks where its interval does not even contain the measured share. The one used resamples ~250 km² blocks. <b>So what:</b> intervals on this page come from the block method; the failed method is kept for transparency.</p></details>
@@ -1024,6 +1033,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <ul class="sources">
         <li>Speedtest® by Ookla® Global Fixed and Mobile Network Performance Maps (AWS Open Data Registry), CC BY-NC-SA 4.0.</li>
         <li>Kontur Population Dataset 2023-11-01, CC BY 4.0. · Overture Maps Foundation, places release 2026-09-23.1, CDLA-Permissive 2.0. · OpenCelliD, CC BY-SA 4.0.</li>
+        <li>WorldPop (2020) constrained, UN-adjusted 100 m population, CC BY 4.0; Stevens et al. (2015), PLoS ONE 10. · ESA WorldCover 10 m 2021 v200 (Zanaga et al. 2022), CC BY 4.0. · Copernicus DEM GLO-30 (ESA 2021). · Horn (1981), Proceedings of the IEEE 69 (slope).</li>
         <li>Natural Earth admin-0; geoBoundaries (Runfola et al., PLoS ONE 2020); World Bank population indicator SP.POP.TOTL.</li>
         <li>Eurostat, FAO, ILO, OECD, UN-Habitat, World Bank (2021). Applying the Degree of Urbanisation. · Dijkstra et al. (2021), Journal of Urban Economics 125.</li>
         <li>3GPP TR 38.901 §7.2 (evaluation scenarios). · ITU-R M.2410-0 (2017). · FCC 17-126 (2017), para. 46. · Bundesnetzagentur press release, 4 Sep 2019. · Decision (EU) 2022/2481.</li>
@@ -1348,26 +1358,50 @@ function chartP4() {
   rows.forEach((k, r) => {
     const p = C[k].p4, y = top + r * rowH + rowH / 2;
     s += `<g class="row" tabindex="0" data-k="${k}"><rect class="band" x="0" y="${y - rowH / 2}" width="${W}" height="${rowH}" fill="transparent"/>
-      <text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(phone ? k : label(k))}</text>
+      <text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(phone ? k : label(k))}${p.validated ? "" : " *"}</text>
       <line x1="${x(Math.max(p.lifted_low, 100))}" x2="${x(p.lifted_high)}" y1="${y}" y2="${y}" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
       <rect x="${x(Math.max(p.kpi, 100)) - 5}" y="${y - 5}" width="10" height="10" fill="var(--muted)"/>
-      <circle cx="${x(p.lifted)}" cy="${y}" r="6" fill="var(--accent)"/></g>`;
+      <circle cx="${x(p.lifted)}" cy="${y}" r="6" fill="${p.validated ? "var(--accent)" : "var(--surface)"}" stroke="var(--accent)" stroke-width="2"/></g>`;
   });
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
   bindRows(svg, (k) => { const p = C[k].p4, mix = Object.entries(p.mix).map(([t, n]) => `${n.toLocaleString("en")} ${t.replace("_", " ")}`).join(", ");
     return `<b>${esc(C[k].name)} · budget ${p.budget.toLocaleString("en")}</b>Plan: ≈ ${p.lifted.toLocaleString("en")} people lifted (range ${p.lifted_low.toLocaleString("en")}–${p.lifted_high.toLocaleString("en")})`
       + `<br>KPI ranking: ≈ ${p.kpi.toLocaleString("en")} · ${p.gain == null ? "KPI ranking lifts nobody" : (p.gain > 0 ? "+" : "") + Math.round(100 * p.gain) + "% with the plan"}`
-      + `<br>${p.sites.toLocaleString("en")} search areas: ${mix}<br>${p.per_1000} new-tower equivalents per 1,000 people lifted`; });
+      + `<br>${p.sites.toLocaleString("en")} search areas: ${mix}<br>${p.per_1000} new-tower equivalents per 1,000 people lifted`
+      + (p.validated ? "" : "<br><b>* Not yet checked on the ground:</b> its second population map is still downloading"); });
   $("#plan-dl").innerHTML = "<b>Site lists (search areas), budget 1,000:</b> " + ISOS.filter((k) => C[k].p4).map((k) =>
     `${label(k)} <a href="data/plans/${k}.csv">CSV</a> · <a href="data/plans/${k}.geojson">GeoJSON</a> · <a href="data/plans/${k}.kml">KML</a>`).join(" &nbsp;|&nbsp; ");
 }
 // ---------- nominal map: Leaflet with a terrain basemap (tiles load on the live page; the preview blocks them)
-let nmap = null, nlayer = null, nhex = null, tileFails = 0, tileLoads = 0;
+let nmap = null, nlayer = null, nhex = null, ncells = null, tileFails = 0, tileLoads = 0;
+const CELL_ZOOM = 10;
+function loadCells(k, cb) {                 // existing LTE/5G cells (OpenCelliD), one small file per country, on demand
+  if (window.GEO1_CELLS && window.GEO1_CELLS[k]) return cb();
+  const sc = document.createElement("script"); sc.src = `data/cells/${k}.js`; sc.onload = cb;
+  sc.onerror = () => { $("#nmap-note").textContent = "The existing-cells layer could not be loaded."; }; document.head.appendChild(sc);
+}
+function drawCells() {
+  if (!nmap || !ncells) return; ncells.clearLayers();
+  const k = state.iso, cl = (window.GEO1_CELLS || {})[k]; if (!cl) return;
+  const bb = nmap.getBounds().pad(0.2), z = nmap.getZoom(), renderer = L.canvas({ padding: 0.3, pane: "cellsPane" });
+  if (z < CELL_ZOOM) {
+    const mx = Math.log1p(Math.max(...cl.r5.map((r) => r[1])));
+    cl.r5.forEach(([h, n]) => { const ll = h3.cellToLatLng(h + "fffffff"); if (!bb.contains(ll)) return;
+      L.polygon(h3.cellToBoundary(h + "fffffff"), { renderer, pane: "cellsPane", color: "#5b2a86", weight: 0.6, opacity: 0.7, fillColor: "#5b2a86", fillOpacity: 0.18 + 0.47 * Math.log1p(n) / mx, interactive: false }).addTo(ncells); });
+  } else {
+    cl.near.forEach(([h, n]) => { const ll = h3.cellToLatLng(h + "fffff"); if (!bb.contains(ll)) return;
+      L.polygon(h3.cellToBoundary(h + "fffff"), { renderer, pane: "cellsPane", color: "#5b2a86", weight: 1.2, fillColor: "#5b2a86", fillOpacity: 0.45 })
+        .bindTooltip(`${n.toLocaleString("en")} LTE/5G cell record${n === 1 ? "" : "s"} in this 0.74 km² hexagon (OpenCelliD; approximate)`).addTo(ncells); });
+  }
+}
 const NCOL = { m: "#0d6b7d", s: "#a86a12", c: "#2d7d4f" }, NTYPE = { m: "new macro site", s: "small cell", c: "extra capacity" };
 function nominalPopup(k, r) {
-  const n = C[k].p4.nominals, [rank, h, la, lo, t, pp, p25, lifted, di] = r;
+  const n = C[k].p4.nominals, [rank, h, la, lo, t, pp, p25, lifted, di, kp, wp, bm, el, sl, fl, pl] = r;
   const g = `https://www.google.com/maps/@${la},${lo},400m/data=!3m1!1e3`, o = `https://www.openstreetmap.org/?mlat=${la}&mlon=${lo}#map=16/${la}/${lo}`;
-  return `<b>#${rank} · ${NTYPE[t]}</b><br>${esc(n.districts[di] || "")}<br>${pp.toLocaleString("en")} people · ${Math.round(100 * p25)}% chance typical speed &lt; 25 Mbps<br>expected lifted ≈ ${lifted.toLocaleString("en")}<br>${la}, ${lo}<br><a href="${g}" target="_blank" rel="noopener">Satellite (Google Maps)</a> · <a href="${o}" target="_blank" rel="noopener">OpenStreetMap</a>`;
+  const checks = n.validated ? `<br>people: ${kp.toLocaleString("en")} (Kontur) · ${wp.toLocaleString("en")} (WorldPop); plan uses the smaller`
+    + `<br>built-up land ${bm.toLocaleString("en")} m² · ${pl.toLocaleString("en")} places`
+    + `<br>${el == null ? "elevation n/a" : `elevation ${el.toLocaleString("en")} m · slope ${sl}°`}${fl.includes("s") ? " · <b>steep</b>" : ""}${fl.includes("h") ? " · <b>high</b>" : ""}` : "";
+  return `<b>#${rank} · ${NTYPE[t]}</b><br>${esc(n.districts[di] || "")}<br>${pp.toLocaleString("en")} people · ${Math.round(100 * p25)}% chance typical speed &lt; 25 Mbps<br>expected lifted ≈ ${lifted.toLocaleString("en")}${checks}<br>site point ${la}, ${lo}<br><a href="${g}" target="_blank" rel="noopener">Satellite (Google Maps)</a> · <a href="${o}" target="_blank" rel="noopener">OpenStreetMap</a>`;
 }
 function renderNominalMap() {
   const el = $("#nmap");
@@ -1380,21 +1414,26 @@ function renderNominalMap() {
     [terrain, streets].forEach((t) => { t.on("tileerror", () => { tileFails++; noteTiles(); }); t.on("tileload", () => { tileLoads++; noteTiles(); }); });
     terrain.addTo(nmap);
     L.control.layers({ "Terrain": terrain, "Streets": streets }, {}, { collapsed: false }).addTo(nmap);
+    nmap.createPane("cellsPane").style.zIndex = 350;      // below the nominal dots
+    ncells = L.layerGroup().addTo(nmap);
     nhex = L.layerGroup().addTo(nmap);
-    nmap.on("zoomend moveend", drawNominalHexes);
+    nmap.on("zoomend moveend", () => { drawNominalHexes(); drawCells(); });
   }
   if (nlayer) nlayer.remove();
   nlayer = L.layerGroup();
   if (!p || !p.nominals) { $("#nmap-sub").textContent = "no plan for this country"; return; }
   const rows = p.nominals.rows, renderer = L.canvas({ padding: 0.3 });
-  rows.forEach((r) => { L.circleMarker([r[2], r[3]], { renderer, radius: 5, weight: 1, color: "#ffffff", fillColor: NCOL[r[4]], fillOpacity: 0.9 })
+  rows.forEach((r) => { const flag = (r[14] || "").length > 0;
+    L.circleMarker([r[2], r[3]], { renderer, radius: flag ? 6 : 5, weight: flag ? 2.5 : 1, color: flag ? "#1d1d1d" : "#ffffff", fillColor: NCOL[r[4]], fillOpacity: 0.9 })
     .bindPopup(() => nominalPopup(k, r)).addTo(nlayer); });
   nlayer.addTo(nmap);
   const b = L.latLngBounds(rows.map((r) => [r[2], r[3]]));
   nmap.fitBounds(b.pad(0.05));
   $("#nmap-h").textContent = `${C[k].name}: ${rows.length.toLocaleString("en")} nominals on the ground`;
-  $("#nmap-sub").textContent = `budget ${p.budget.toLocaleString("en")} new-tower equivalents · click a dot for details and satellite imagery`;
+  $("#nmap-sub").textContent = `budget ${p.budget.toLocaleString("en")} new-tower equivalents · click a dot for details and satellite imagery`
+    + (p.validated ? "" : " · NOT YET CHECKED on the ground (second population map still downloading): dots are hexagon centres");
   setTimeout(() => nmap.invalidateSize(), 50);
+  ncells.clearLayers(); loadCells(k, drawCells);
 }
 function noteTiles() {
   $("#nmap-note").textContent = tileLoads === 0 && tileFails > 4 ? "The terrain basemap is blocked in this preview; it shows on the live page (sabrinapribadi.github.io/next-site-planner). Dots and links still work." : "";

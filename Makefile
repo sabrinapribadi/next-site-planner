@@ -10,7 +10,7 @@ env:
 
 # Raw data into GEO_DATA_DIR (see .env); resumable
 data:
-	$(PY) scripts/acquire_public_data.py opencellid boundaries overture population ookla
+	$(PY) scripts/acquire_public_data.py opencellid boundaries overture population worldpop ookla
 
 # Evidence table for every cited paper (rule R2)
 evidence:
@@ -28,7 +28,8 @@ hover-test:
 page-data:
 	$(PY) scripts/export_page_data.py
 
-# Full pipeline (needs GEO_DATA_DIR from .env): P0 grid → P1 gap → P2 speed model → ADR-005 noise follow-up → page data
+# Full pipeline (needs GEO_DATA_DIR from .env): P0 grid → P1 gap → P2 speed model → noise follow-up → P3 new-site effect
+# → P4 site plan → nominal validation (WorldPop, WorldCover, Copernicus DEM; ADR-008 amendment 1) → page data
 pipeline:
 	$(PY) scripts/build_hex_table.py
 	$(PY) scripts/experience_gap.py
@@ -39,5 +40,11 @@ pipeline:
 	$(PY) scripts/new_site_diagnostics.py
 	$(PY) scripts/new_site_crossing_checks.py
 	$(PY) scripts/new_site_crossing_checks.py --estimand capacity
+	$(PY) scripts/worldpop_hex.py
+	$(PY) scripts/population_crosscheck.py
 	$(PY) scripts/site_plan.py
+	cp data/outputs/p4_site_plan.json data/outputs/p4_site_plan_original.json
+	mkdir -p data/outputs/p4_original_plans && cp docs/data/plans/*.csv data/outputs/p4_original_plans/
+	$(PY) scripts/site_plan.py --validated
+	$(PY) scripts/nominal_validation_report.py
 	$(PY) scripts/export_page_data.py

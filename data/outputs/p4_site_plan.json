@@ -1,6 +1,8 @@
 {
- "design": "ADR-008",
+ "design": "ADR-008 amendment 1 (validated nominals)",
  "headline_budget": 1000,
+ "population": "min(Kontur 2023, WorldPop 2020)",
+ "built_up_minimum_m2": 1000.0,
  "countries": {
   "IDN": {
    "theta": {
@@ -16,140 +18,160 @@
     ],
     "own_new_estimate": false
    },
-   "candidates": 830939,
-   "likely_slow_hexagons": 300124,
+   "candidates": 275331,
+   "likely_slow_hexagons": 47596,
    "headline_budget": 1000,
    "budgets": {
     "100": {
-     "people_lifted": 59400.078573258346,
+     "people_lifted": 34541.57833827476,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 122929.05771152716,
-     "greedy": 59400.078573258346,
-     "kpi_ranking": 3360.958759467714,
-     "slowest_first": 491.1471905097719,
-     "gain_vs_kpi": 16.673551752436776,
+     "people_lifted_high": 71484.14242846842,
+     "greedy": 34541.57833827476,
+     "kpi_ranking": 12953.479592944708,
+     "slowest_first": 2201.9626935374877,
+     "gain_vs_kpi": 1.66658684953565,
      "cost_used": 100.0,
-     "sites": 158,
+     "sites": 185,
      "mix": {
-      "small_cell": 116,
-      "macro": 42
+      "small_cell": 170,
+      "macro": 15
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 810245
+      "candidates": 257199
      }
     },
     "500": {
-     "people_lifted": 137320.76514212097,
+     "people_lifted": 83456.44788449995,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 284186.69922006596,
-     "greedy": 137320.76514212097,
-     "kpi_ranking": 12437.012151023955,
-     "slowest_first": 875.7194187898097,
-     "gain_vs_kpi": 10.041298623384812,
+     "people_lifted_high": 172713.9550116927,
+     "greedy": 83456.44788449995,
+     "kpi_ranking": 28100.525429622143,
+     "slowest_first": 13306.505354639685,
+     "gain_vs_kpi": 1.9699248184350466,
      "cost_used": 500.0,
-     "sites": 803,
+     "sites": 871,
      "mix": {
-      "small_cell": 606,
-      "macro": 197
+      "small_cell": 742,
+      "macro": 129
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 810245
+      "candidates": 257199
      }
     },
     "1000": {
-     "people_lifted": 197111.21478234557,
+     "people_lifted": 122505.92962982846,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 407923.63376564183,
-     "greedy": 197111.21478234557,
-     "kpi_ranking": 22509.455799116826,
-     "slowest_first": 3320.832970309888,
-     "gain_vs_kpi": 7.756818314109548,
+     "people_lifted_high": 253527.24870382927,
+     "greedy": 122505.92962982846,
+     "kpi_ranking": 42932.587441703516,
+     "slowest_first": 18315.290768146537,
+     "gain_vs_kpi": 1.8534485557427556,
      "cost_used": 1000.0,
-     "sites": 1571,
+     "sites": 1640,
      "mix": {
-      "small_cell": 1142,
-      "macro": 429
+      "small_cell": 1280,
+      "macro": 360
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 810245
+      "candidates": 257199
      }
     },
     "5000": {
-     "people_lifted": 455529.68879444804,
+     "people_lifted": 296215.6747596416,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 942723.2547186678,
-     "greedy": 455529.68879444804,
-     "kpi_ranking": 119291.4019239801,
-     "slowest_first": 41754.81844457514,
-     "gain_vs_kpi": 2.818629687030922,
+     "people_lifted_high": 613021.3065741658,
+     "greedy": 296215.67026185524,
+     "kpi_ranking": 137674.99312106002,
+     "slowest_first": 58396.9356399391,
+     "gain_vs_kpi": 1.1515575780648413,
      "cost_used": 5000.0,
-     "sites": 6844,
+     "sites": 6848,
      "mix": {
-      "small_cell": 3688,
-      "macro": 3156
+      "small_cell": 3696,
+      "macro": 3152
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 810245
+      "candidates": 257199
      }
     }
    },
+   "validation": {
+    "solve_rounds": {
+     "plan": 3,
+     "kpi": 2
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 24,
+    "checked_in_country": 3636
+   },
    "sensitivity": {
+    "crowding_cap": {
+     "jaccard": 0.9607142857142857,
+     "rounds": 1,
+     "capped_plan_people_lifted": 115968.23599886912,
+     "headline_plan_under_cap": 115217.52948980572,
+     "headline_people_lifted": 122505.92962982846,
+     "headline_top10_crowded": 6,
+     "headline_crowded_benefit_share": 0.10559662745823117
+    },
     "capacity_equals_new": {
-     "jaccard": 0.6983805668016194,
+     "jaccard": 0.6321995464852608,
      "mix": {
-      "small_cell": 1003,
-      "capacity": 405,
-      "macro": 377
+      "small_cell": 1127,
+      "capacity": 565,
+      "macro": 267
      },
-     "people_lifted": 215395.1920413972,
-     "kpi_ranking": 25610.34192741182,
-     "gain_vs_kpi": 7.41
+     "people_lifted": 133777.21591327543,
+     "kpi_ranking": 48349.70752363285,
+     "gain_vs_kpi": 1.767
     },
     "colocation_0.20": {
      "jaccard": 1.0,
-     "people_lifted": 197111.21478234557
+     "people_lifted": 122505.92962982846
     },
     "colocation_0.50": {
      "jaccard": 1.0,
-     "people_lifted": 197111.21478234557
+     "people_lifted": 122505.92962982846
     },
     "small_cell_0.25": {
-     "jaccard": 0.450046685340803,
-     "people_lifted": 246464.13302218507
+     "jaccard": 0.44870283018867924,
+     "people_lifted": 157765.52018772994
     },
     "theta_low": {
      "jaccard": 0.0
     },
     "theta_high": {
-     "jaccard": 0.9114302812687014
+     "jaccard": 0.8815642458100559
     },
     "3gpp_service_areas": {
-     "jaccard": 0.9251700680272109,
-     "people_lifted": 199062.11492294757
+     "jaccard": 0.9353115727002967,
+     "people_lifted": 123639.55408826412
     },
     "covering_exact_vs_greedy": {
-     "district": "Tangerang, Banten",
-     "candidates": 298,
-     "greedy": 6002.654660293421,
-     "exact": 6002.65466029342
+     "district": "Bekasi, West Java",
+     "candidates": 289,
+     "greedy": 2916.4862687238056,
+     "exact": 2916.486268723806
     }
    },
    "exports": {
-    "sites": 1571,
+    "sites": 1640,
     "geojson_valid": true,
-    "kml_placemarks": 1571,
+    "kml_placemarks": 1640,
     "kml_ok": true,
-    "csv_schema_ok": true
+    "csv_schema_ok": true,
+    "site_points_inside": true
    },
-   "gate_gain_10pct": true
+   "gate_gain_10pct": true,
+   "validated": true
   },
   "MYS": {
    "theta": {
@@ -165,19 +187,19 @@
     ],
     "own_new_estimate": false
    },
-   "candidates": 142630,
-   "likely_slow_hexagons": 9357,
+   "candidates": 51448,
+   "likely_slow_hexagons": 2054,
    "headline_budget": 1000,
    "budgets": {
     "100": {
-     "people_lifted": 3479.1915643465977,
+     "people_lifted": 2556.5475607164044,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 8944.185789735648,
-     "greedy": 3476.821346901321,
-     "kpi_ranking": 250.3273606299732,
-     "slowest_first": 202.24109387883973,
-     "gain_vs_kpi": 12.898566882944289,
-     "cost_used": 100.0,
+     "people_lifted_high": 6545.983983778995,
+     "greedy": 2556.5475607164044,
+     "kpi_ranking": 294.4461223629203,
+     "slowest_first": 355.0656728648273,
+     "gain_vs_kpi": 7.682564878763543,
+     "cost_used": 100.00000000000001,
      "sites": 118,
      "mix": {
       "macro": 92,
@@ -187,18 +209,18 @@
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 142630
+      "candidates": 51445
      }
     },
     "500": {
-     "people_lifted": 10341.075303571593,
+     "people_lifted": 7087.480690987523,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 25096.57247238508,
-     "greedy": 10341.075303571593,
-     "kpi_ranking": 1666.7090683391552,
-     "slowest_first": 913.419513932923,
-     "gain_vs_kpi": 5.204487333759024,
-     "cost_used": 500.0,
+     "people_lifted_high": 17218.37530356883,
+     "greedy": 7087.480690987523,
+     "kpi_ranking": 1524.697813509766,
+     "slowest_first": 2417.082601658338,
+     "gain_vs_kpi": 3.648449435808236,
+     "cost_used": 499.99999999999994,
      "sites": 560,
      "mix": {
       "macro": 474,
@@ -208,17 +230,17 @@
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 142630
+      "candidates": 51445
      }
     },
     "1000": {
-     "people_lifted": 15941.88145869303,
+     "people_lifted": 10539.914414140007,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 37955.50024938166,
-     "greedy": 15940.038263615763,
-     "kpi_ranking": 3366.6936595743537,
-     "slowest_first": 2188.4985478539197,
-     "gain_vs_kpi": 3.7351743492779024,
+     "people_lifted_high": 25119.664416142135,
+     "greedy": 10539.914414140007,
+     "kpi_ranking": 2943.8013243036003,
+     "slowest_first": 4523.053483422153,
+     "gain_vs_kpi": 2.5803755936665933,
      "cost_used": 1000.0,
      "sites": 1102,
      "mix": {
@@ -229,32 +251,50 @@
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 142630
+      "candidates": 51445
      }
     },
     "5000": {
-     "people_lifted": 37704.25490316164,
+     "people_lifted": 21990.477629306806,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 86897.37587937879,
-     "greedy": 37703.92793313528,
-     "kpi_ranking": 18256.552983274683,
-     "slowest_first": 11945.988257990524,
-     "gain_vs_kpi": 1.0652450075161242,
+     "people_lifted_high": 51151.36336414848,
+     "greedy": 21990.477629306806,
+     "kpi_ranking": 12324.106422325463,
+     "slowest_first": 15279.24377071705,
+     "gain_vs_kpi": 0.7843466191975137,
      "cost_used": 5000.0,
-     "sites": 5373,
+     "sites": 5402,
      "mix": {
-      "macro": 4839,
-      "capacity": 530,
-      "small_cell": 4
+      "macro": 4826,
+      "capacity": 570,
+      "small_cell": 6
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 142630
+      "candidates": 51445
      }
     }
    },
+   "validation": {
+    "solve_rounds": {
+     "plan": 3,
+     "kpi": 2
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 3,
+    "checked_in_country": 3330
+   },
    "sensitivity": {
+    "crowding_cap": {
+     "jaccard": 0.9981867633726201,
+     "rounds": 1,
+     "capped_plan_people_lifted": 10538.071590183528,
+     "headline_plan_under_cap": 10535.723046716601,
+     "headline_people_lifted": 10539.914414140007,
+     "headline_top10_crowded": 0,
+     "headline_crowded_benefit_share": 0.0016861817149834857
+    },
     "capacity_equals_new": {
      "jaccard": 0.891846921797005,
      "mix": {
@@ -262,37 +302,37 @@
       "capacity": 245,
       "small_cell": 1
      },
-     "people_lifted": 16453.963888437516,
-     "kpi_ranking": 3467.2901367511713,
-     "gain_vs_kpi": 3.745
+     "people_lifted": 10872.280402923405,
+     "kpi_ranking": 3021.5193981778707,
+     "gain_vs_kpi": 2.598
     },
     "colocation_0.20": {
      "jaccard": 0.9102990033222591,
-     "people_lifted": 16126.39837663315
+     "people_lifted": 10647.095058546107
     },
     "colocation_0.50": {
-     "jaccard": 0.910394265232975,
-     "people_lifted": 15755.875024199844
+     "jaccard": 0.9287646528403968,
+     "people_lifted": 10425.072957768016
     },
     "small_cell_0.25": {
-     "jaccard": 0.9972826086956522,
-     "people_lifted": 15945.49758638738
+     "jaccard": 0.9918625678119349,
+     "people_lifted": 10542.681551457687
     },
     "theta_low": {
      "jaccard": 0.0
     },
     "theta_high": {
-     "jaccard": 0.5671912832929782
+     "jaccard": 0.6412614980289093
     },
     "3gpp_service_areas": {
-     "jaccard": 0.5512820512820513,
-     "people_lifted": 19184.836969789176
+     "jaccard": 0.6794478527607362,
+     "people_lifted": 11872.505525189847
     },
     "covering_exact_vs_greedy": {
-     "district": "Pontian, Johor",
-     "candidates": 299,
-     "greedy": 545.2984678349424,
-     "exact": 552.2698311048863
+     "district": "Lahad Datu, Sabah",
+     "candidates": 294,
+     "greedy": 794.1484267477393,
+     "exact": 794.1484267477393
     }
    },
    "exports": {
@@ -300,9 +340,11 @@
     "geojson_valid": true,
     "kml_placemarks": 1102,
     "kml_ok": true,
-    "csv_schema_ok": true
+    "csv_schema_ok": true,
+    "site_points_inside": true
    },
-   "gate_gain_10pct": true
+   "gate_gain_10pct": true,
+   "validated": true
   },
   "PHL": {
    "theta": {
@@ -318,144 +360,163 @@
     ],
     "own_new_estimate": false
    },
-   "candidates": 269841,
-   "likely_slow_hexagons": 161249,
+   "candidates": 66513,
+   "likely_slow_hexagons": 28575,
    "headline_budget": 1000,
    "budgets": {
     "100": {
-     "people_lifted": 119703.93034676545,
+     "people_lifted": 85469.41475768383,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 237849.76536573863,
-     "greedy": 119703.93034676545,
-     "kpi_ranking": 22495.74609039985,
-     "slowest_first": 1110.1392209676333,
-     "gain_vs_kpi": 4.321180718600375,
-     "cost_used": 99.99999999999999,
-     "sites": 290,
+     "people_lifted_high": 168225.58046839852,
+     "greedy": 85469.41475768383,
+     "kpi_ranking": 22566.67792960207,
+     "slowest_first": 1815.7838241790978,
+     "gain_vs_kpi": 2.7874167843539106,
+     "cost_used": 100.0,
+     "sites": 314,
      "mix": {
-      "capacity": 235,
-      "small_cell": 51,
-      "macro": 4
+      "capacity": 285,
+      "small_cell": 29
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 269841
+      "candidates": 66496
      }
     },
     "500": {
-     "people_lifted": 280372.6326128081,
+     "people_lifted": 203230.48401276287,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 556891.994086307,
-     "greedy": 280372.6326128081,
-     "kpi_ranking": 70871.40810649522,
-     "slowest_first": 5615.754302131709,
-     "gain_vs_kpi": 2.9560753779790145,
+     "people_lifted_high": 402213.6592301242,
+     "greedy": 203230.48401276287,
+     "kpi_ranking": 74452.17131354805,
+     "slowest_first": 8039.262194718166,
+     "gain_vs_kpi": 1.7296784019485143,
      "cost_used": 499.9999999999999,
-     "sites": 1425,
+     "sites": 1422,
      "mix": {
-      "capacity": 1180,
-      "small_cell": 198,
-      "macro": 47
+      "capacity": 1200,
+      "small_cell": 164,
+      "macro": 58
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 269841
+      "candidates": 66496
      }
     },
     "1000": {
-     "people_lifted": 388941.16812990676,
+     "people_lifted": 279482.77916025417,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 775155.7646532275,
-     "greedy": 388941.16812990676,
-     "kpi_ranking": 127114.4106017748,
-     "slowest_first": 9765.330537612037,
-     "gain_vs_kpi": 2.059772423036954,
-     "cost_used": 999.9999999999998,
-     "sites": 2619,
+     "people_lifted_high": 556163.5326052284,
+     "greedy": 279470.4797000861,
+     "kpi_ranking": 119381.80965848654,
+     "slowest_first": 16103.629313273792,
+     "gain_vs_kpi": 1.3410834528289164,
+     "cost_used": 1000.0,
+     "sites": 2532,
      "mix": {
-      "capacity": 2020,
-      "small_cell": 410,
-      "macro": 189
+      "capacity": 1910,
+      "small_cell": 390,
+      "macro": 232
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 269841
+      "candidates": 66496
      }
     },
     "5000": {
-     "people_lifted": 768608.6368140243,
+     "people_lifted": 536566.6915284388,
      "people_lifted_low": 0.0,
-     "people_lifted_high": 1551498.7872019936,
-     "greedy": 768608.6368140243,
-     "kpi_ranking": 395754.519164662,
-     "slowest_first": 58668.88055129509,
-     "gain_vs_kpi": 0.9421348325632852,
-     "cost_used": 4999.999999999999,
-     "sites": 8950,
+     "people_lifted_high": 1083284.8262386264,
+     "greedy": 536562.7029650909,
+     "kpi_ranking": 360807.79978523985,
+     "slowest_first": 97355.75067912132,
+     "gain_vs_kpi": 0.48712608720713413,
+     "cost_used": 5000.0,
+     "sites": 8389,
      "mix": {
-      "capacity": 4520,
-      "macro": 2858,
-      "small_cell": 1572
+      "capacity": 3805,
+      "macro": 3133,
+      "small_cell": 1451
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 269841
+      "candidates": 66496
      }
     }
    },
+   "validation": {
+    "solve_rounds": {
+     "plan": 3,
+     "kpi": 2
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 17,
+    "checked_in_country": 4161
+   },
    "sensitivity": {
+    "crowding_cap": {
+     "jaccard": 0.9507692307692308,
+     "rounds": 1,
+     "capped_plan_people_lifted": 272935.4215284237,
+     "headline_plan_under_cap": 271206.1740390308,
+     "headline_people_lifted": 279482.77916025417,
+     "headline_top10_crowded": 3,
+     "headline_crowded_benefit_share": 0.06862164338462803
+    },
     "capacity_equals_new": {
-     "jaccard": 0.4381625441696113,
+     "jaccard": 0.49017615176151763,
      "mix": {
-      "capacity": 765,
-      "small_cell": 645,
-      "macro": 448
+      "capacity": 825,
+      "small_cell": 579,
+      "macro": 463
      },
-     "people_lifted": 247061.54793166628,
-     "kpi_ranking": 101997.94693137088,
-     "gain_vs_kpi": 1.422
+     "people_lifted": 170885.40650185387,
+     "kpi_ranking": 95994.15807080625,
+     "gain_vs_kpi": 0.78
     },
     "colocation_0.20": {
-     "jaccard": 0.7281067556296914,
-     "people_lifted": 431824.5552902833
+     "jaccard": 0.7560465810689758,
+     "people_lifted": 306834.49870647007
     },
     "colocation_0.50": {
-     "jaccard": 0.6544090056285178,
-     "people_lifted": 336607.7260328396
+     "jaccard": 0.693853427895981,
+     "people_lifted": 243115.9121221205
     },
     "small_cell_0.25": {
-     "jaccard": 0.7671696951031721,
-     "people_lifted": 418343.54615172645
+     "jaccard": 0.7962962962962963,
+     "people_lifted": 298706.5551827291
     },
     "theta_low": {
      "jaccard": 0.0
     },
     "theta_high": {
-     "jaccard": 0.9592760180995475
+     "jaccard": 0.9648711943793911
     },
     "3gpp_service_areas": {
-     "jaccard": 0.9939024390243902,
-     "people_lifted": 389039.16092658567
+     "jaccard": 0.9952681388012619,
+     "people_lifted": 279547.7946087258
     },
     "covering_exact_vs_greedy": {
-     "district": "Cagayan, Cagayan Valley",
-     "candidates": 294,
-     "greedy": 7121.169765135856,
-     "exact": 7121.169765135857
+     "district": "Zambales, Central Luzon",
+     "candidates": 293,
+     "greedy": 8220.268827732301,
+     "exact": 8220.268827732301
     }
    },
    "exports": {
-    "sites": 2619,
+    "sites": 2532,
     "geojson_valid": true,
-    "kml_placemarks": 2619,
+    "kml_placemarks": 2532,
     "kml_ok": true,
-    "csv_schema_ok": true
+    "csv_schema_ok": true,
+    "site_points_inside": true
    },
-   "gate_gain_10pct": true
+   "gate_gain_10pct": true,
+   "validated": true
   },
   "DEU": {
    "theta": {
@@ -471,18 +532,18 @@
     ],
     "own_new_estimate": true
    },
-   "candidates": 360734,
-   "likely_slow_hexagons": 44312,
+   "candidates": 278574,
+   "likely_slow_hexagons": 30627,
    "headline_budget": 1000,
    "budgets": {
     "100": {
-     "people_lifted": 24256.52887469825,
-     "people_lifted_low": 1352.628311461691,
-     "people_lifted_high": 47410.95377929644,
-     "greedy": 24256.52887469825,
-     "kpi_ranking": 14517.074748617477,
-     "slowest_first": 631.777710897549,
-     "gain_vs_kpi": 0.6708964646619529,
+     "people_lifted": 21831.309975520933,
+     "people_lifted_low": 1218.1479393760687,
+     "people_lifted_high": 42624.567392896155,
+     "greedy": 21809.881814693083,
+     "kpi_ranking": 13288.327701940118,
+     "slowest_first": 872.8235285265484,
+     "gain_vs_kpi": 0.6428937083131632,
      "cost_used": 100.0,
      "sites": 332,
      "mix": {
@@ -492,122 +553,142 @@
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 360734
+      "candidates": 278574
      }
     },
     "500": {
-     "people_lifted": 72752.89335915183,
-     "people_lifted_low": 4063.1250420619185,
-     "people_lifted_high": 141824.73515425486,
-     "greedy": 72752.89335915183,
-     "kpi_ranking": 44640.79896011319,
-     "slowest_first": 3194.416018751909,
-     "gain_vs_kpi": 0.629739947624077,
+     "people_lifted": 64356.11064352734,
+     "people_lifted_low": 3601.5452386213133,
+     "people_lifted_high": 125007.7931143769,
+     "greedy": 64352.138587480906,
+     "kpi_ranking": 40967.017365917505,
+     "slowest_first": 3610.928181043172,
+     "gain_vs_kpi": 0.5709249728555632,
      "cost_used": 499.9999999999999,
-     "sites": 1660,
+     "sites": 1663,
      "mix": {
-      "capacity": 1655,
-      "small_cell": 3,
-      "macro": 2
+      "capacity": 1660,
+      "small_cell": 2,
+      "macro": 1
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 360734
+      "candidates": 278574
      }
     },
     "1000": {
-     "people_lifted": 110687.14902984005,
-     "people_lifted_low": 6172.600610342669,
-     "people_lifted_high": 216326.89223239187,
-     "greedy": 110676.56041185747,
-     "kpi_ranking": 71104.72492605481,
-     "slowest_first": 5746.236825607164,
-     "gain_vs_kpi": 0.5566778318170682,
+     "people_lifted": 97126.95092221307,
+     "people_lifted_low": 5429.400575329843,
+     "people_lifted_high": 189033.77918049274,
+     "greedy": 97124.57331677688,
+     "kpi_ranking": 64874.57080368263,
+     "slowest_first": 6336.763085253003,
+     "gain_vs_kpi": 0.49714980336640036,
      "cost_used": 999.9999999999998,
-     "sites": 3317,
+     "sites": 3322,
      "mix": {
-      "capacity": 3305,
-      "small_cell": 7,
-      "macro": 5
+      "capacity": 3315,
+      "macro": 4,
+      "small_cell": 3
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 360734
+      "candidates": 278574
      }
     },
     "5000": {
-     "people_lifted": 249789.02862327913,
-     "people_lifted_low": 13291.831835366982,
-     "people_lifted_high": 527006.1776979977,
-     "greedy": 249786.8891830945,
-     "kpi_ranking": 183091.7482012819,
-     "slowest_first": 26932.46771381879,
-     "gain_vs_kpi": 0.36428337747189765,
-     "cost_used": 4999.999999999999,
-     "sites": 15668,
+     "people_lifted": 214401.98121739458,
+     "people_lifted_low": 11365.084249666084,
+     "people_lifted_high": 455006.95248674863,
+     "greedy": 214398.43893015402,
+     "kpi_ranking": 161588.1530599945,
+     "slowest_first": 28815.69357637065,
+     "gain_vs_kpi": 0.32684220443927803,
+     "cost_used": 4999.999999999998,
+     "sites": 15564,
      "mix": {
-      "capacity": 15200,
-      "macro": 412,
-      "small_cell": 56
+      "capacity": 15065,
+      "macro": 462,
+      "small_cell": 37
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 360734
+      "candidates": 278574
      }
     }
    },
+   "validation": {
+    "solve_rounds": {
+     "plan": 1,
+     "kpi": 1
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 0,
+    "checked_in_country": 4613
+   },
    "sensitivity": {
+    "crowding_cap": {
+     "jaccard": 0.9993981342160698,
+     "rounds": 1,
+     "capped_plan_people_lifted": 97120.93558081123,
+     "headline_plan_under_cap": 97110.44900079494,
+     "headline_people_lifted": 97126.95092221307,
+     "headline_top10_crowded": 0,
+     "headline_crowded_benefit_share": 0.0004496926059488588
+    },
     "capacity_equals_new": {
-     "jaccard": 0.971573907839617,
+     "jaccard": 0.9624217118997912,
      "mix": {
-      "capacity": 3235,
-      "macro": 22,
-      "small_cell": 15
+      "capacity": 3220,
+      "macro": 30,
+      "small_cell": 8
      },
-     "people_lifted": 75018.83250788273,
-     "kpi_ranking": 51906.20809088,
-     "gain_vs_kpi": 0.445
+     "people_lifted": 65764.23992237666,
+     "kpi_ranking": 47351.241116647856,
+     "gain_vs_kpi": 0.389
     },
     "colocation_0.20": {
-     "jaccard": 0.665194700923324,
-     "people_lifted": 138744.2150081643
+     "jaccard": 0.6663322632423756,
+     "people_lifted": 121147.71334149607
     },
     "colocation_0.50": {
-     "jaccard": 0.5933933933933934,
-     "people_lifted": 81837.07466347289
+     "jaccard": 0.5928592859285928,
+     "people_lifted": 72121.23943849507
     },
     "small_cell_0.25": {
-     "jaccard": 0.988031119090365,
-     "people_lifted": 110929.79479442186
+     "jaccard": 0.9943028485757122,
+     "people_lifted": 97219.82344337649
     },
     "theta_low": {
-     "jaccard": 0.9880418535127056
+     "jaccard": 0.9925149700598802
     },
     "theta_high": {
-     "jaccard": 0.7453363482193329
+     "jaccard": 0.7354019746121297
     },
     "3gpp_service_areas": {
-     "jaccard": 0.9843796936016822,
-     "people_lifted": 110748.51154393301
+     "jaccard": 0.9784366576819407,
+     "people_lifted": 97257.83594547643
     },
     "covering_exact_vs_greedy": {
      "district": "Trier, Rheinland-Pfalz",
-     "candidates": 295,
-     "greedy": 1593.4070836474193,
-     "exact": 1593.4070836474193
+     "candidates": 300,
+     "greedy": 1460.1702555216166,
+     "exact": 1460.1702555216164
     }
    },
    "exports": {
-    "sites": 3317,
+    "sites": 3322,
     "geojson_valid": true,
-    "kml_placemarks": 3317,
+    "kml_placemarks": 3322,
     "kml_ok": true,
-    "csv_schema_ok": true
+    "csv_schema_ok": true,
+    "site_points_inside": true
    },
-   "gate_gain_10pct": true
+   "gate_gain_10pct": true,
+   "validated": true
   },
   "FRA": {
    "theta": {
@@ -623,144 +704,349 @@
     ],
     "own_new_estimate": true
    },
-   "candidates": 590326,
-   "likely_slow_hexagons": 31901,
+   "candidates": 365704,
+   "likely_slow_hexagons": 13482,
    "headline_budget": 1000,
    "budgets": {
     "100": {
-     "people_lifted": 10801.936838899986,
-     "people_lifted_low": 73.35441393739049,
-     "people_lifted_high": 28652.58143740765,
-     "greedy": 10789.129227874324,
-     "kpi_ranking": 4673.0057146115505,
-     "slowest_first": 941.7326327868539,
-     "gain_vs_kpi": 1.3115608023171252,
+     "people_lifted": 9785.375322190226,
+     "people_lifted_low": 64.09632412146966,
+     "people_lifted_high": 25964.550985443886,
+     "greedy": 9779.135630245895,
+     "kpi_ranking": 5403.913540993796,
+     "slowest_first": 1128.7482500624421,
+     "gain_vs_kpi": 0.8107942045998511,
      "cost_used": 99.99999999999999,
-     "sites": 325,
+     "sites": 324,
      "mix": {
       "capacity": 320,
-      "macro": 3,
+      "macro": 4
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 365704
+     }
+    },
+    "500": {
+     "people_lifted": 25385.03838983225,
+     "people_lifted_low": 546.0472167441912,
+     "people_lifted_high": 65995.45439751782,
+     "greedy": 25382.10084430382,
+     "kpi_ranking": 15225.958725402143,
+     "slowest_first": 3024.828350467259,
+     "gain_vs_kpi": 0.6672210169256052,
+     "cost_used": 499.9999999999999,
+     "sites": 1530,
+     "mix": {
+      "capacity": 1470,
+      "macro": 58,
       "small_cell": 2
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 590326
-     }
-    },
-    "500": {
-     "people_lifted": 28308.64215710802,
-     "people_lifted_low": 632.8693175130613,
-     "people_lifted_high": 73510.38285454344,
-     "greedy": 28302.115957723374,
-     "kpi_ranking": 14950.958617716244,
-     "slowest_first": 2616.0544103328293,
-     "gain_vs_kpi": 0.8934332493946908,
-     "cost_used": 499.9999999999999,
-     "sites": 1533,
-     "mix": {
-      "capacity": 1470,
-      "macro": 55,
-      "small_cell": 8
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 590326
+      "candidates": 365704
      }
     },
     "1000": {
-     "people_lifted": 41911.88233323538,
-     "people_lifted_low": 1304.5101365521464,
-     "people_lifted_high": 107517.14404654219,
-     "greedy": 41907.284986509636,
-     "kpi_ranking": 23407.22699830787,
-     "slowest_first": 3882.625431925884,
-     "gain_vs_kpi": 0.790553077315191,
+     "people_lifted": 37568.39736570016,
+     "people_lifted_low": 1201.2521987385596,
+     "people_lifted_high": 96260.27437799628,
+     "greedy": 37564.30099567465,
+     "kpi_ranking": 23525.403884012252,
+     "slowest_first": 4832.445290275884,
+     "gain_vs_kpi": 0.5969289008139604,
      "cost_used": 999.9999999999998,
-     "sites": 2969,
+     "sites": 2945,
      "mix": {
-      "capacity": 2805,
-      "macro": 153,
-      "small_cell": 11
+      "capacity": 2775,
+      "macro": 165,
+      "small_cell": 5
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 590326
+      "candidates": 365704
      }
     },
     "5000": {
-     "people_lifted": 97358.4460010636,
-     "people_lifted_low": 5658.2361892988665,
-     "people_lifted_high": 240335.01001513662,
-     "greedy": 97358.4460010636,
-     "kpi_ranking": 64051.218343944,
-     "slowest_first": 13854.664265759107,
-     "gain_vs_kpi": 0.5200092756747503,
-     "cost_used": 4999.999999999999,
-     "sites": 13205,
+     "people_lifted": 86270.50664307045,
+     "people_lifted_low": 5352.093588020053,
+     "people_lifted_high": 211751.27202331918,
+     "greedy": 86270.50664307045,
+     "kpi_ranking": 61364.57746407727,
+     "slowest_first": 17057.766669051838,
+     "gain_vs_kpi": 0.40586817685778187,
+     "cost_used": 5000.0,
+     "sites": 12923,
      "mix": {
-      "capacity": 11700,
-      "macro": 1475,
-      "small_cell": 30
+      "capacity": 11305,
+      "macro": 1599,
+      "small_cell": 19
      },
      "solver": {
       "method": "exact enumeration over cost classes",
       "mip_gap": 0.0,
-      "candidates": 590326
+      "candidates": 365704
      }
     }
    },
+   "validation": {
+    "solve_rounds": {
+     "plan": 1,
+     "kpi": 1
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 0,
+    "checked_in_country": 4837
+   },
    "sensitivity": {
+    "crowding_cap": {
+     "jaccard": 1.0,
+     "rounds": 1,
+     "capped_plan_people_lifted": 37568.39736570016,
+     "headline_plan_under_cap": 37568.39736570016,
+     "headline_people_lifted": 37568.39736570016,
+     "headline_top10_crowded": 0,
+     "headline_crowded_benefit_share": 0.0
+    },
     "capacity_equals_new": {
-     "jaccard": 0.8677360774818402,
+     "jaccard": 0.852710843373494,
      "mix": {
-      "capacity": 3140,
+      "capacity": 3150,
       "macro": 54,
-      "small_cell": 8
+      "small_cell": 2
      },
-     "people_lifted": 62099.07932849528,
-     "kpi_ranking": 32789.01825769305,
-     "gain_vs_kpi": 0.894
+     "people_lifted": 55646.136289812835,
+     "kpi_ranking": 32744.465641747374,
+     "gain_vs_kpi": 0.699
     },
     "colocation_0.20": {
-     "jaccard": 0.6319549686079238,
-     "people_lifted": 50704.54202420017
+     "jaccard": 0.629379760609358,
+     "people_lifted": 45314.94820219581
     },
     "colocation_0.50": {
-     "jaccard": 0.5459300424975482,
-     "people_lifted": 33250.50698594385
+     "jaccard": 0.5506767910201387,
+     "people_lifted": 29843.892809308152
     },
     "small_cell_0.25": {
-     "jaccard": 0.9963087248322148,
-     "people_lifted": 41997.53913983934
+     "jaccard": 0.9945872801082544,
+     "people_lifted": 37608.329430259095
     },
     "theta_low": {
-     "jaccard": 0.0429769392033543
+     "jaccard": 0.04493787998942638
     },
     "theta_high": {
-     "jaccard": 0.8712811171827566
+     "jaccard": 0.8632218844984803
     },
     "3gpp_service_areas": {
-     "jaccard": 0.8214860083628176,
-     "people_lifted": 44017.514167751244
+     "jaccard": 0.844147375285295,
+     "people_lifted": 39383.096851838534
     },
     "covering_exact_vs_greedy": {
-     "district": "Ard\u00e8che, Auvergne-Rh\u00f4ne-Alpes",
-     "candidates": 296,
-     "greedy": 1154.8021139045466,
-     "exact": 1160.1134038210255
+     "district": "Gironde, Nouvelle-Aquitaine",
+     "candidates": 288,
+     "greedy": 702.7919293433793,
+     "exact": 705.7708552778389
     }
    },
    "exports": {
-    "sites": 2969,
+    "sites": 2945,
     "geojson_valid": true,
-    "kml_placemarks": 2969,
+    "kml_placemarks": 2945,
     "kml_ok": true,
-    "csv_schema_ok": true
+    "csv_schema_ok": true,
+    "site_points_inside": true
    },
-   "gate_gain_10pct": true
+   "gate_gain_10pct": true,
+   "validated": true
+  },
+  "ARE": {
+   "theta": {
+    "new": [
+     0.0584073323909889,
+     0.0,
+     0.12087455954141801
+    ],
+    "capacity": [
+     0.0,
+     0.0,
+     0.0584073323909889
+    ],
+    "own_new_estimate": false
+   },
+   "candidates": 8684,
+   "likely_slow_hexagons": 13,
+   "headline_budget": 29.3,
+   "budgets": {
+    "29.3": {
+     "people_lifted": 310.81461338749233,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 643.2339563250711,
+     "greedy": 310.81461338749233,
+     "kpi_ranking": 81.58089013202837,
+     "slowest_first": 197.0386429590371,
+     "gain_vs_kpi": 2.809894852636176,
+     "cost_used": 29.0,
+     "sites": 29,
+     "mix": {
+      "macro": 29
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 4444
+     }
+    },
+    "100": {
+     "people_lifted": 468.649885223462,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 969.8756326741898,
+     "greedy": 468.649885223462,
+     "kpi_ranking": 261.55969789579785,
+     "slowest_first": 367.7696934764907,
+     "gain_vs_kpi": 0.7917511336557908,
+     "cost_used": 100.0,
+     "sites": 100,
+     "mix": {
+      "macro": 100
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 4444
+     }
+    },
+    "500": {
+     "people_lifted": 564.6881286209174,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 1168.6277395516115,
+     "greedy": 564.6881286209174,
+     "kpi_ranking": 454.5414103373803,
+     "slowest_first": 518.9537718144547,
+     "gain_vs_kpi": 0.24232493625120188,
+     "cost_used": 500.0,
+     "sites": 503,
+     "mix": {
+      "macro": 497,
+      "small_cell": 6
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 4444
+     }
+    },
+    "1000": {
+     "people_lifted": 569.0565278802993,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 1177.6681855840402,
+     "greedy": 569.0565278802993,
+     "kpi_ranking": 512.0643486839635,
+     "slowest_first": 543.7671245893132,
+     "gain_vs_kpi": 0.11129886183798798,
+     "cost_used": 1000.0,
+     "sites": 1004,
+     "mix": {
+      "macro": 996,
+      "small_cell": 8
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 4444
+     }
+    },
+    "5000": {
+     "people_lifted": 569.343223572556,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 1178.2615051914477,
+     "greedy": 569.3432235725561,
+     "kpi_ranking": 568.2672828978409,
+     "slowest_first": 569.0196448930393,
+     "gain_vs_kpi": 0.0018933707906398922,
+     "cost_used": 4379.0,
+     "sites": 4417,
+     "mix": {
+      "macro": 4341,
+      "small_cell": 76
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 4444
+     }
+    }
+   },
+   "validation": {
+    "solve_rounds": {
+     "plan": 1,
+     "kpi": 1
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 0,
+    "checked_in_country": 113
+   },
+   "sensitivity": {
+    "crowding_cap": {
+     "jaccard": 1.0,
+     "rounds": 1,
+     "capped_plan_people_lifted": 310.81461338749233,
+     "headline_plan_under_cap": 310.81461338749233,
+     "headline_people_lifted": 310.81461338749233,
+     "headline_top10_crowded": 0,
+     "headline_crowded_benefit_share": 0.0
+    },
+    "capacity_equals_new": {
+     "jaccard": 0.65,
+     "mix": {
+      "macro": 26,
+      "capacity": 11
+     },
+     "people_lifted": 383.947945598408,
+     "kpi_ranking": 153.06000729687182,
+     "gain_vs_kpi": 1.508
+    },
+    "colocation_0.20": {
+     "jaccard": 1.0,
+     "people_lifted": 310.81461338749233
+    },
+    "colocation_0.50": {
+     "jaccard": 1.0,
+     "people_lifted": 310.81461338749233
+    },
+    "small_cell_0.25": {
+     "jaccard": 0.9666666666666667,
+     "people_lifted": 311.12041720946183
+    },
+    "theta_low": {
+     "jaccard": 0.0
+    },
+    "theta_high": {
+     "jaccard": 0.8484848484848485
+    },
+    "3gpp_service_areas": {
+     "jaccard": 0.5263157894736842,
+     "people_lifted": 333.6645728677624
+    },
+    "covering_exact_vs_greedy": {
+     "district": "Umm al-Quwain",
+     "candidates": 210,
+     "greedy": 0.045630903781859744,
+     "exact": 0.04563090378170593
+    }
+   },
+   "exports": {
+    "sites": 29,
+    "geojson_valid": true,
+    "kml_placemarks": 29,
+    "kml_ok": true,
+    "csv_schema_ok": true,
+    "site_points_inside": true
+   },
+   "gate_gain_10pct": true,
+   "validated": true
   },
   "USA": {
    "theta": {
@@ -909,175 +1195,15 @@
     "kml_ok": true,
     "csv_schema_ok": true
    },
-   "gate_gain_10pct": true
-  },
-  "ARE": {
-   "theta": {
-    "new": [
-     0.0584073323909889,
-     0.0,
-     0.12087455954141801
-    ],
-    "capacity": [
-     0.0,
-     0.0,
-     0.0584073323909889
-    ],
-    "own_new_estimate": false
-   },
-   "candidates": 22822,
-   "likely_slow_hexagons": 30,
-   "headline_budget": 29.3,
-   "budgets": {
-    "29.3": {
-     "people_lifted": 538.7771462383447,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 1115.0047019197452,
-     "greedy": 538.7771462383447,
-     "kpi_ranking": 0.0,
-     "slowest_first": 282.3382687049517,
-     "gain_vs_kpi": null,
-     "cost_used": 29.0,
-     "sites": 29,
-     "mix": {
-      "macro": 29
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 16469
-     }
-    },
-    "100": {
-     "people_lifted": 954.1916157421371,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 1974.70910841905,
-     "greedy": 954.1916157421371,
-     "kpi_ranking": 67.06110886213092,
-     "slowest_first": 333.0517028316431,
-     "gain_vs_kpi": 13.228688310296706,
-     "cost_used": 100.0,
-     "sites": 100,
-     "mix": {
-      "macro": 100
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 16469
-     }
-    },
-    "500": {
-     "people_lifted": 1542.9458505131338,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 3193.141895756352,
-     "greedy": 1542.9458505131338,
-     "kpi_ranking": 771.936197548118,
-     "slowest_first": 761.9300159501634,
-     "gain_vs_kpi": 0.9987997135177167,
-     "cost_used": 500.0,
-     "sites": 500,
-     "mix": {
-      "macro": 500
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 16469
-     }
-    },
-    "1000": {
-     "people_lifted": 1771.1672741211896,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 3665.4484183667746,
-     "greedy": 1771.1672741211896,
-     "kpi_ranking": 1081.8810737600866,
-     "slowest_first": 1036.894413681254,
-     "gain_vs_kpi": 0.6371182721271602,
-     "cost_used": 1000.0,
-     "sites": 1001,
-     "mix": {
-      "macro": 999,
-      "small_cell": 2
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 16469
-     }
-    },
-    "5000": {
-     "people_lifted": 2047.4506578761934,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 4237.219649013681,
-     "greedy": 2047.4506578761934,
-     "kpi_ranking": 1735.593586395573,
-     "slowest_first": 1648.148683576071,
-     "gain_vs_kpi": 0.1796832357097351,
-     "cost_used": 5000.0,
-     "sites": 5007,
-     "mix": {
-      "macro": 4993,
-      "small_cell": 14
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 16469
-     }
-    }
-   },
-   "sensitivity": {
-    "capacity_equals_new": {
-     "jaccard": 0.65,
-     "mix": {
-      "macro": 26,
-      "capacity": 11
-     },
-     "people_lifted": 625.6395459047483,
-     "kpi_ranking": 62.593411573444016,
-     "gain_vs_kpi": 8.995
-    },
-    "colocation_0.20": {
-     "jaccard": 1.0,
-     "people_lifted": 538.7771462383447
-    },
-    "colocation_0.50": {
-     "jaccard": 1.0,
-     "people_lifted": 538.7771462383447
-    },
-    "small_cell_0.25": {
-     "jaccard": 0.9666666666666667,
-     "people_lifted": 539.0829500603141
-    },
-    "theta_low": {
-     "jaccard": 0.0
-    },
-    "theta_high": {
-     "jaccard": 0.8484848484848485
-    },
-    "3gpp_service_areas": {
-     "jaccard": 0.6571428571428571,
-     "people_lifted": 588.6755568325655
-    },
-    "covering_exact_vs_greedy": {
-     "district": "Ajman",
-     "candidates": 103,
-     "greedy": 0.10360665934756398,
-     "exact": 0.10360738719239576
-    }
-   },
-   "exports": {
-    "sites": 29,
-    "geojson_valid": true,
-    "kml_placemarks": 29,
-    "kml_ok": true,
-    "csv_schema_ok": true
-   },
-   "gate_gain_10pct": false
+   "gate_gain_10pct": true,
+   "validated": false,
+   "pending": "WorldPop file still downloading; original (unchecked) plan shown"
   }
  },
  "gate_countries_passed": 6,
- "gate_passed": true,
- "seconds": 167
+ "gate_passed": null,
+ "seconds": 62,
+ "pending_countries": [
+  "USA"
+ ]
 }

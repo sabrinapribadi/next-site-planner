@@ -10,7 +10,7 @@
    "year": 1974,
    "citations": 2711,
    "citations_per_year": 51.2,
-   "role": "covering optimiser (P4)",
+   "role": "3GPP service-area sensitivity (P4)",
    "used_in": [
     "ADR-002",
     "ADR-008"
@@ -139,9 +139,10 @@
    "year": 2015,
    "citations": 1066,
    "citations_per_year": 88.8,
-   "role": "dasymetric population mapping (WorldPop cross-check)",
+   "role": "dasymetric population mapping (WorldPop cross-check; second population map for nominals)",
    "used_in": [
-    "ADR-001"
+    "ADR-001",
+    "ADR-008"
    ],
    "openalex_id": "https://openalex.org/W2057442840"
   },
@@ -440,6 +441,20 @@
     "ADR-008"
    ],
    "openalex_id": "https://openalex.org/W2788930055"
+  },
+  {
+   "key": "horn_1981",
+   "title": "Hill shading and the reflectance map",
+   "venue": "Proceedings of the IEEE",
+   "peer_reviewed": true,
+   "year": 1981,
+   "citations": 1346,
+   "citations_per_year": 29.3,
+   "role": "slope from a 3 \u00d7 3 elevation window (nominal terrain flags)",
+   "used_in": [
+    "ADR-008"
+   ],
+   "openalex_id": "https://openalex.org/W2032075694"
   }
  ]
 }

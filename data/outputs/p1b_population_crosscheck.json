@@ -1,0 +1,220 @@
+{
+ "design": "ADR-001 falsification row 3; ADR-008 amendment 1 check A",
+ "worldpop": "2020 constrained UN-adjusted 100 m",
+ "kontur": "2023-11-01 H3 r8",
+ "disagreement_ratio": 3.0,
+ "countries": {
+  "IDN": {
+   "total": {
+    "kontur": 269734124.0,
+    "worldpop": 273523622.20517516,
+    "smaller": 179312209.64343882
+   },
+   "tested_below_25_p1": {
+    "kontur": 23305958.0,
+    "worldpop": 21854782.971278906,
+    "smaller": 14694223.28517437
+   },
+   "expected_below_25_all": {
+    "kontur": 49078528.697075695,
+    "worldpop": 39483115.37515694,
+    "smaller": 22319930.550694786
+   },
+   "expected_below_25_untested": {
+    "kontur": 30335517.56900717,
+    "worldpop": 21813900.20613751,
+    "smaller": 10611312.761983551
+   },
+   "people_in_poorly_served_hexagons": {
+    "kontur": 31888769.0,
+    "worldpop": 23407304.941210985
+   },
+   "kontur_share_in_disagreeing_hexagons": 0.1772989501320938,
+   "kontur_share_in_disagreeing_poorly_served": 0.37434151189718234,
+   "worldpop_people_outside_kontur_hexagons": 16272251.331826448,
+   "adr001_poorly_served_difference": -0.26597025613591463,
+   "adr001_row3_triggered": true
+  },
+  "MYS": {
+   "total": {
+    "kontur": 33318291.0,
+    "worldpop": 32364543.51968893,
+    "smaller": 24512284.37183186
+   },
+   "tested_below_25_p1": {
+    "kontur": 1413137.0,
+    "worldpop": 1056075.7031925023,
+    "smaller": 751278.9954425395
+   },
+   "expected_below_25_all": {
+    "kontur": 1311714.3532806928,
+    "worldpop": 918137.1981480576,
+    "smaller": 541877.8477066322
+   },
+   "expected_below_25_untested": {
+    "kontur": 769114.6542824178,
+    "worldpop": 495898.62064411025,
+    "smaller": 254826.33134887862
+   },
+   "people_in_poorly_served_hexagons": {
+    "kontur": 519345.0,
+    "worldpop": 374359.3684540987
+   },
+   "kontur_share_in_disagreeing_hexagons": 0.060233881743814534,
+   "kontur_share_in_disagreeing_poorly_served": 0.15901760871867449,
+   "worldpop_people_outside_kontur_hexagons": 1422034.916036941,
+   "adr001_poorly_served_difference": -0.2791701692437615,
+   "adr001_row3_triggered": true
+  },
+  "PHL": {
+   "total": {
+    "kontur": 107900697.0,
+    "worldpop": 95017189.67450356,
+    "smaller": 65957852.98182346
+   },
+   "tested_below_25_p1": {
+    "kontur": 10475782.0,
+    "worldpop": 9277984.040282844,
+    "smaller": 6894253.182821581
+   },
+   "expected_below_25_all": {
+    "kontur": 33359462.754154406,
+    "worldpop": 22332377.846674193,
+    "smaller": 13929668.944482
+   },
+   "expected_below_25_untested": {
+    "kontur": 23362610.357579667,
+    "worldpop": 13338313.966726389,
+    "smaller": 7241807.25066687
+   },
+   "people_in_poorly_served_hexagons": {
+    "kontur": 31981309.0,
+    "worldpop": 20254457.916580174
+   },
+   "kontur_share_in_disagreeing_hexagons": 0.2350889540593051,
+   "kontur_share_in_disagreeing_poorly_served": 0.4364072777633961,
+   "worldpop_people_outside_kontur_hexagons": 7789880.986564115,
+   "adr001_poorly_served_difference": -0.36667827084312987,
+   "adr001_row3_triggered": true
+  },
+  "DEU": {
+   "total": {
+    "kontur": 83253701.0,
+    "worldpop": 83783659.39363873,
+    "smaller": 67816113.71040808
+   },
+   "tested_below_25_p1": {
+    "kontur": 8031593.0,
+    "worldpop": 7798554.695670895,
+    "smaller": 6611514.896444313
+   },
+   "expected_below_25_all": {
+    "kontur": 9528754.621834714,
+    "worldpop": 8878187.528459935,
+    "smaller": 7211972.454796315
+   },
+   "expected_below_25_untested": {
+    "kontur": 5536199.89483867,
+    "worldpop": 4816450.561069826,
+    "smaller": 3830891.692484393
+   },
+   "people_in_poorly_served_hexagons": {
+    "kontur": 3867729.0,
+    "worldpop": 3600822.7588120326
+   },
+   "kontur_share_in_disagreeing_hexagons": 0.01035099929071021,
+   "kontur_share_in_disagreeing_poorly_served": 0.005751437083621939,
+   "worldpop_people_outside_kontur_hexagons": 897080.923519589,
+   "adr001_poorly_served_difference": -0.06900851667424668,
+   "adr001_row3_triggered": false
+  },
+  "FRA": {
+   "total": {
+    "kontur": 63873188.0,
+    "worldpop": 65247675.959569775,
+    "smaller": 50801824.98486938
+   },
+   "tested_below_25_p1": {
+    "kontur": 2846721.0,
+    "worldpop": 2826789.313161835,
+    "smaller": 2327705.0442011803
+   },
+   "expected_below_25_all": {
+    "kontur": 4104956.900754747,
+    "worldpop": 3871103.920191847,
+    "smaller": 2778419.93963724
+   },
+   "expected_below_25_untested": {
+    "kontur": 3355744.863967397,
+    "worldpop": 3063793.3988536466,
+    "smaller": 2153335.374060193
+   },
+   "people_in_poorly_served_hexagons": {
+    "kontur": 800358.0,
+    "worldpop": 732481.1579911485
+   },
+   "kontur_share_in_disagreeing_hexagons": 0.007426042363816254,
+   "kontur_share_in_disagreeing_poorly_served": 0.0009858088505393836,
+   "worldpop_people_outside_kontur_hexagons": 1313338.1656928454,
+   "adr001_poorly_served_difference": -0.08480810088591784,
+   "adr001_row3_triggered": false
+  },
+  "ARE": {
+   "total": {
+    "kontur": 9038504.0,
+    "worldpop": 9890399.767389297,
+    "smaller": 5845237.181684494
+   },
+   "tested_below_25_p1": {
+    "kontur": 199580.0,
+    "worldpop": 229232.5098490715,
+    "smaller": 145952.33880758286
+   },
+   "expected_below_25_all": {
+    "kontur": 38708.1700435331,
+    "worldpop": 20507.369387381998,
+    "smaller": 11459.376660285518
+   },
+   "expected_below_25_untested": {
+    "kontur": 33789.72679334956,
+    "worldpop": 13234.118160906737,
+    "smaller": 7220.404013556342
+   },
+   "people_in_poorly_served_hexagons": {
+    "kontur": 7803.0,
+    "worldpop": 5335.276999473572
+   },
+   "kontur_share_in_disagreeing_hexagons": 0.2423107850591204,
+   "kontur_share_in_disagreeing_poorly_served": 0.460720235806741,
+   "worldpop_people_outside_kontur_hexagons": 918535.1032218933,
+   "adr001_poorly_served_difference": -0.31625310784652416,
+   "adr001_row3_triggered": true
+  }
+ },
+ "all_countries": {
+  "total": {
+   "kontur": 567118505.0,
+   "worldpop": 559827090.5199654,
+   "smaller": 394245522.8740561
+  },
+  "tested_below_25_p1": {
+   "kontur": 46272771.0,
+   "worldpop": 43043419.233436055,
+   "smaller": 31424927.742891565
+  },
+  "expected_below_25_all": {
+   "kontur": 97422125.49714379,
+   "worldpop": 75503429.23801835,
+   "smaller": 46793329.11397726
+  },
+  "expected_below_25_untested": {
+   "kontur": 63392977.06646867,
+   "worldpop": 43541590.87159239,
+   "smaller": 24099393.81455744
+  }
+ },
+ "seconds": 32,
+ "pending_countries": [
+  "USA"
+ ]
+}

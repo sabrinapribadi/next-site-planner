@@ -298,7 +298,7 @@ const PHASES = [
     ["Serving & AI", "Predictions on the map", "5.76M untested hexagons get a typical speed and a chance below each bar; district view shows them striped.", "Planners see where a field test is needed.", "docs/index.html"]
   ],
   decisions: [["Kriging vs LightGBM, test blocks by distance matching", "004"], ["Measurement noise: blend, then check on the next quarter", "005"]],
-  results: [["Machine learning vs kriging error", "≤ 0.90", "0.929 (7% better)", "no"], ["Same on other test designs", "report", "0.92–0.94", "info"],
+  results: [["Machine learning vs kriging error", "≤ 0.90", "0.929 (7% better)", "no"], ["Same on other test designs", "report", "0.92–0.93", "info"],
             ["On well-tested hexagons (10+ tests)", "report", "0.82 (18% better)", "info"], ["80% ranges contain the truth", "≈ 80%", "84%", "ok"],
             ["Blended vs raw, next quarter", "lower error", "28–44% lower, all 7", "ok"], ["Untested people likely below 25 Mbps", "report", "≈ 68M", "info"]],
   obstacles: [
@@ -341,32 +341,39 @@ const PHASES = [
   lessons: ["One rule for every country.", "A failed check is information: Indonesia's sites follow falling speeds.", "Measure what decisions need: crossing the bar, not the average."],
   star: "I measured what 15,000 real new sites did in seven countries, and found they lift some slow places over 25 Mbps (up to about 1 in 8, less under the strictest test in Germany and France) rather than raising average speeds."
 },
-{ agg: [["Hexagon → benefit", "people × P(typical speed < 25 Mbps) × lift rate θ for its intervention (new site or added capacity)", "Expected people lifted, from measured effects"], ["Candidates → plan", "Exact 0/1 knapsack over three cost classes (enumerate counts per class; take the best benefits within each)", "Provably optimal and instant"], ["Plan → country totals", "Σ benefits of chosen hexagons; ranges from θ low/high", "Totals carry the uncertainty of θ"], ["Plan → planner files", "One row per search area: rank, h3, lat/lon, district, area type, intervention, cost, people, chance slow, expected lifted", "CSV, GeoJSON polygons, KML points"]], id: "p4", tag: "P4", name: "Where the next sites should go", dates: "14 Oct 2026", verdict: ["pass", "Gate passed"],
+{ agg: [["Hexagon → benefit", "people × P(typical speed < 25 Mbps) × lift rate θ for its intervention (new site or added capacity)", "Expected people lifted, from measured effects"], ["Candidates → plan", "Exact 0/1 knapsack over three cost classes (enumerate counts per class; take the best benefits within each)", "Provably optimal and instant"], ["Plan → country totals", "Σ benefits of chosen hexagons; ranges from θ low/high", "Totals carry the uncertainty of θ"], ["Nominal → checks", "WorldPop summed into each hexagon; WorldCover 10 m land cover and Copernicus 30 m elevation read only around each hexagon (cloud-optimised files)", "Two population maps, built-up m², site point, slope"], ["Plan → planner files", "One row per search area: rank, h3, site point, district, area type, intervention, cost, people on both maps, built-up m², elevation, slope, expected lifted", "CSV, GeoJSON polygons, KML pins on built land"]], id: "p4", tag: "P4", name: "Where the next sites should go", dates: "14 Oct 2026", verdict: ["pass", "Gate passed"],
   scqa: ["Site lists are usually built by ranking places on an agreed KPI score.",
          "A score does not say how many people a site would lift, and phase 3 showed sites help some slow places, not all.",
          "For a fixed budget, does choosing places by expected people lifted per cost beat KPI ranking by at least 10%?",
-         "Yes, in 6 of 7 countries: +56% (Germany) to +776% (Indonesia) more people at the same budget; the same money lifts about 80× more people in the Philippines than in the US."],
+         "Yes. Once every nominal is checked on the ground: +50% (Germany) to +281% (UAE) more people in 6 of 6 checked countries (US pending). Before the checks it looked like +56% to +776%."],
   steps: [
     ["Decision", "Design before plans", "ADR-008 pushed first: benefit, costs, optimiser, KPI baseline, gate, sensitivities, exports.", "The rule must not bend to the result.", "docs/adr/ADR-008-budgeted-site-plan.md"],
-    ["Evaluation", "Capacity lift measured first", "Same crossing checks as P3 for added capacity: +7.7 to +16 pts where they pass; 0 where they fail.", "Co-location is cheap; it needs evidence too.", "scripts/new_site_crossing_checks.py"],
+    ["Evaluation", "Capacity lift measured first", "Same crossing checks as P3 for added capacity: +3.8 to +16.3 pts where they pass (wide intervals; only Germany excludes 0); 0 where they fail.", "Co-location is cheap; it needs evidence too.", "scripts/new_site_crossing_checks.py"],
     ["Decision", "Is 10% a standard?", "No: our own pre-set threshold; the practice is cited, the actual gain always reported.", "Label judgements as judgements.", "docs/adr/ADR-002-validation-and-gates.md", "fix"],
     ["Model", "Exact solver too slow", "HiGHS spent minutes per solve in post-processing on 20,000 candidates.", "A tiny optimality gap is expensive.", "src/plan.py", "fail"],
     ["Model", "Exact by cost class", "Only three costs: the best k items per class are the top benefits, so enumerate counts. Provably optimal, about a second.", "Use the problem's structure.", "src/plan.py", "fix"],
-    ["Evaluation", "Plan vs KPI ranking", "+56% to +776% more people lifted in 6 of 7 countries; UAE: KPI ranking lifts nobody.", "Count people, not scores.", "data/outputs/p4_site_plan.json"],
-    ["Evaluation", "Is the gain an artefact?", "Re-scored with capacity assumed as effective as a new site: still +45% to +741%.", "Check the gain does not rest on one zero.", "data/outputs/p4_site_plan.json"],
-    ["Evaluation", "Stability", "Overlap with the central plan 0.55–0.99 under cost, lift-rate and service-area changes; greedy 98–100% of exact.", "Planners need a stable core.", "data/outputs/p4_site_plan.json"],
-    ["Serving & AI", "Planner exports", "Per country: CSV, GeoJSON hexagon search areas, KML for Google Earth; format-checked.", "Deliverables in planners' tools.", "docs/data/plans/"]
+    ["Evaluation", "Plan vs KPI ranking (original plan)", "+56% to +776% more people lifted in 6 of 7 countries; UAE: KPI ranking lifted nobody. Revised by the ground checks below.", "Count people, not scores.", "data/outputs/p4_site_plan.json"],
+    ["Evaluation", "Is the gain an artefact?", "Re-scored with capacity assumed as effective as a new site: still +39% to +260% (checked plans; +45% to +741% before the checks).", "Check the gain does not rest on one zero.", "data/outputs/p4_site_plan.json"],
+    ["Evaluation", "Stability", "Checked plans: overlap with the central plan 0.53–1.00 under cost, lift-rate and service-area changes; greedy covering 99.6–100% of exact.", "Planners need a stable core.", "data/outputs/p4_site_plan.json"],
+    ["Serving & AI", "Planner exports", "Per country: CSV, GeoJSON hexagon search areas, KML for Google Earth; format-checked.", "Deliverables in planners' tools.", "docs/data/plans/"],
+    ["Evaluation", "Nominals on a terrain map", "Indonesia's top nominals sat in the Papua highlands; one had 28,665 people on one map and 0 on the other.", "Look at the answer on a map before trusting it.", "docs/index.html", "fail"],
+    ["Decision", "Check every nominal, pre-registered", "Amendment pushed first: two population maps (count the smaller), ≥ 1,000 m² of buildings, pin on built land, terrain flags; re-solve until every pick passes.", "Same rules for all seven countries.", "docs/adr/ADR-008-budgeted-site-plan.md", "fix"],
+    ["Evaluation", "What the checks found", "Indonesia: 23% of the original nominals had nobody on WorldPop; UAE: 31% had no buildings. The checked plans still beat ranking by +50% to +281%.", "A large gain can be partly artefact.", "data/outputs/p4b_nominal_validation.json"],
+    ["Evaluation", "Crowding sensitivity", "Both maps over-crowd some remote towns; capping people at built-up m² ÷ 10 changes the chosen sites little (overlap 0.95–1.00).", "Test the doubt you cannot rule out.", "data/outputs/p4_site_plan.json"],
+    ["Serving & AI", "Existing cells on the map", "Recorded LTE/5G cells shown under the nominals, so the gaps they fill are visible; OpenCelliD's gaps in Southeast Asia stated.", "Context makes a plan checkable.", "docs/data/cells/"]
   ],
   decisions: [["Budgeted site plan: benefit, costs, exact solver, KPI baseline", "008"]],
-  results: [["Gain over KPI ranking", "≥ +10% in ≥ 5 of 7", "6 of 7 (+56% to +776%)", "ok"], ["Exports valid", "CSV, GeoJSON, KML", "all 7 countries", "ok"],
-            ["Greedy vs exact", "report", "99.99–100%", "info"], ["Cost per 1,000 people lifted", "report", "2.6 (Philippines) to 206 (US) new-tower equivalents", "info"]],
+  results: [["Gain over KPI ranking (original)", "≥ +10% in ≥ 5 of 7", "6 of 7 (+56% to +776%)", "ok"], ["Gain over KPI ranking (checked nominals)", "≥ +10% per country", "6 of 6 checked (+50% to +281%); US pending", "ok"], ["Exports valid", "CSV, GeoJSON, KML; pins inside their hexagon", "all countries", "ok"],
+            ["Greedy vs exact", "report", "99.99–100%", "info"], ["Cost per 1,000 people lifted (checked)", "report", "3.6 (Philippines) to 95 (Malaysia) new-tower equivalents", "info"]],
   obstacles: [
     ["Exact solver ran for minutes per country", "HiGHS post-processing on a 20,000-variable knapsack with a near-zero gap", "Exact enumeration over the three cost classes, tested against brute force", "Look for structure before reaching for a general solver"],
     ["Run crashed on the last country", "KPI ranking lifted nobody in the UAE, so the gain was undefined", "Reported as 'KPI lifts nobody'; counted as not passing", "Handle zero baselines explicitly"],
-    ["Killing the run also killed the status monitor", "The kill pattern matched the monitor's own command", "Split the pattern string", "Never match a pattern your watcher contains"]
+    ["Killing the run also killed the status monitor", "The kill pattern matched the monitor's own command", "Split the pattern string", "Never match a pattern your watcher contains"],
+    ["WorldPop's server: one slow stream per file, no resume", "Range requests ignored; 25–40 KB/s per connection", "Whole-file downloads with size checks and stall detection; the US file still downloading", "Test a server's behaviour before planning around it"],
+    ["Blank land-cover reads during laptop sleep", "Network reads returned no-data pixels instead of failing", "Audit pixel counts against hexagon area; require ≥ 97%; re-check the 12", "Validate what a remote read returns, not only that it returned"]
   ],
-  lessons: ["Measure the benefit of every intervention before costing it.", "A problem's structure can make exact solutions trivial.", "Show the gain under the assumption most likely to break it."],
-  star: "At the same budget, choosing sites by expected people lifted per cost lifted 1.6× to 9× more people than KPI ranking, and I shipped the plans as CSV, GeoJSON and KML."
+  lessons: ["Measure the benefit of every intervention before costing it.", "A problem's structure can make exact solutions trivial.", "Show the gain under the assumption most likely to break it.", "Check every answer on the ground with an independent source."],
+  star: "At the same budget, choosing sites by expected people lifted per cost lifted 1.5× to 3.8× more people than KPI ranking, after checking every nominal against a second population map, satellite land cover and terrain, and I shipped the plans as CSV, GeoJSON and KML."
 },
 { agg: [["Tool calls → cost", "Σ tokens × dated price → cost per 1,000 calls; p50/p95 latency (planned)", "Rule R13 budgets"]], id: "p5", tag: "P5", name: "API, MCP tools, grounded rationales", dates: "planned", verdict: ["plan", "Planned"],
   scqa: ["Planners and AI assistants need answers on demand.", "LLM rationales can invent numbers.", "Can agents query gaps and sites with grounded answers at a known cost?", "Planned."],
@@ -392,7 +399,7 @@ const MAP = {
   "Data": {p0: ["7 countries, 12 sources", "Official CLI for places"], p3: ["Cells first seen ≤ 2024"]},
   "Compute (DuckDB · Spark)": {p0: ["Tiles → H3 r8", "Atomic writes, memory cap"], p6: ["Spark refresh"]},
   "Spatial statistics": {p1: ["Shares below 10/25 Mbps", "Density-adjusted", "Gi* + FDR"]},
-  "Model": {p2: ["Kriging vs boosting"], p3: ["Event study"], p4: ["Covering optimiser"]},
+  "Model": {p2: ["Kriging vs boosting"], p3: ["Event study"], p4: ["Exact budgeted optimiser"]},
   "Evaluation": {p0: ["Assignment gate"], p1: ["Bootstrap intervals"], p2: ["Spatial block CV"], p3: ["Pre-trend placebo"], p4: ["vs ranking"]},
   "Serving & AI": {p5: ["API + MCP tools"], p7: ["Hexagon web map"]},
   "Platform": {p6: ["Databricks job, registry, drift"]}
