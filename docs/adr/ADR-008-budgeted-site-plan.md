@@ -1,6 +1,6 @@
 # ADR-008: Budgeted Site Plan — Where the Next Sites Should Go (P4)
 
-**Status:** Accepted — written and pushed before any P4 plan; gate passed (results below)
+**Status:** Accepted — written and pushed before any P4 plan; gate passed (results below). Amendment 1 (nominal validation) pre-registered before its checks ran
 **Date:** 2026-10-14
 **Deciders:** Sabrina Pribadi
 
@@ -181,6 +181,70 @@ Percentage points of slow hexagons lifted above 25 Mbps after added capacity, us
 - Ranking by an equal-weight KPI score favours busy commercial hexagons, which are mostly fast. Counting expected people lifted per cost wins everywhere, by +56% to +776%.
 - The same budget lifts about 80× more people in the Philippines than in the US.
 - The plans are most sensitive to whether added capacity really lifts slow places, in the US and the Philippines.
+
+## Amendment 1 (2026-10-14, written and pushed before any check runs): are the nominals on inhabited, buildable ground?
+
+**Why.** On the nominal map, Indonesia's top nominals sit in the Papua highlands. A spot check of three of them against WorldPop found the two population layers disagreeing by up to 30× in a single hexagon (one hexagon: Kontur 28,665 people, WorldPop 0). A nominal in a lake, a forest or on an empty mountain lifts nobody, whatever the model says.
+
+**Process miss (disclosed).** ADR-001 said the WorldPop cross-check of Kontur would be "reported before P4 uses population totals". P4 ran without it. This amendment runs it for all seven countries, not only Indonesia, because every country is treated the same.
+
+### Check A: do two independent population sources agree? (ADR-001 falsification row 3)
+
+- **Second source:** WorldPop 2020, constrained, UN-adjusted, 100 m (CC BY 4.0). Pixels are summed into H3 resolution-8 hexagons by pixel centre.
+- **Country level:** Kontur and WorldPop totals are reported for:
+  - all populated hexagons;
+  - people in hexagons whose typical speed is below 25 Mbps (P1, P2).
+
+  As ADR-001 set, a difference above 10% means both are reported and the range is carried into the headline numbers.
+- **Hexagon level:** disagreement = (larger + 100) ÷ (smaller + 100). The +100 keeps near-empty hexagons from flagging on noise. A value above 3 means the sources disagree.
+- **Planning population (new central value):** the smaller of the two, meaning people both sources agree live there. The Kontur-only plan is kept for comparison.
+  - Known bias: WorldPop is three years older than Kontur and is constrained to mapped settlements, so this is deliberately cautious.
+
+### Check B: is there built-up land in the hexagon? (ESA WorldCover 2021 v200, 10 m, CC BY 4.0)
+
+- **Measured:** each checked hexagon's land-cover shares, with built-up area (class 50) in m².
+- **Reject:** built-up area below **1,000 m²**, about seven village houses. No buildings means nobody to serve and nothing to build next to.
+- **Site point:** the built-up pixel nearest the centre of the hexagon's built-up area. It is on built land by construction, never in water or forest, and replaces the hexagon centre in the exports. The hexagon stays the search area.
+- **Reported:** share of each nominal hexagon under water, tree cover, wetland or mangrove.
+
+### Check C: terrain at the site point (Copernicus DEM GLO-30, 30 m, free licence)
+
+- **Measured:** elevation, and slope from the 3 × 3 neighbourhood (Horn 1981).
+- **Flags, not rejections:**
+  - **steep:** slope above 20°;
+  - **high:** elevation above 2,500 m.
+- **Why flags only:** towers on hills are normal, and checks A and B already reject places with no people or buildings. Steep or high sites raise access and build cost, which the planner must see. Both thresholds are our own judgement.
+
+### Re-planning (same for all seven countries)
+
+1. **Validated plan:** exact knapsack with the planning population (check A), excluding rejected hexagons (check B).
+2. **Iteration:** every newly chosen hexagon is checked, and the plan is re-solved until every chosen hexagon has passed (at most 20 rounds; rounds reported).
+3. **Baseline:** the KPI ranking gets identical treatment, with the same population, the same exclusions and its own picks checked. The gate is recomputed on the validated plans; original and validated gains are both reported.
+4. **Sensitivities:** θ, costs and 3GPP sensitivities and the other budgets are recomputed with the validated population and exclusion list. Their extra picks are not individually checked (stated in the results).
+5. **Deliverable:** the validated plan becomes the headline and the exports. Exports gain these columns:
+   - site point;
+   - WorldPop people and the disagreement ratio;
+   - built-up m²;
+   - water/forest share;
+   - elevation, slope and terrain flags.
+
+### Reported per country
+
+- Share of the original nominals that:
+  - disagree on population (> 3×);
+  - fail the built-up check;
+  - carry terrain flags.
+- People lifted: original vs validated plan; overlap (Jaccard).
+- Validated gain vs KPI ranking; whether the country still passes +10%.
+- Kontur vs WorldPop for the earlier headline counts (people below 25 Mbps; untested people likely below 25 Mbps).
+
+### What would change conclusions
+
+| Result | Next action |
+|---|---|
+| A country's validated gain vs KPI falls below +10% | Gate verdict for that country changes; the gate is re-judged (≥ 5 of 7) |
+| Country-level difference > 10% for people below 25 Mbps | Earlier headline counts are shown as a Kontur–WorldPop range |
+| > 20% of a country's original nominals fail check B | Stated as a failure of the original plan, not only a refinement |
 
 ## Consequences
 
