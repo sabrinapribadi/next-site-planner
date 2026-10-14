@@ -59,17 +59,18 @@ pop_h × P(typical speed_h < 25 Mbps) × θ
 
 Percentage points of slow hexagons lifted above 25 Mbps after added capacity, using P3 amendment 3's checks:
 
-| Country | As pre-set | Fixed-broadband control | Checks | θ_cap used (cautious value; 0 if failed) |
-|---|---|---|---|---|
-| IDN | +23.1 | +28.0 (+9.8 to +44.6) | fail | 0 |
-| MYS | +10.1 | — | pass | 0.038 |
-| PHL | +19.8 | +25.0 (-13.3 to +47.2) | pass | 0.163 |
-| DEU | +11.2 | -1.1 (-4.7 to +2.2) | pass | 0.077 |
-| FRA | +14.6 | +4.5 (-0.3 to +8.5) | pass | 0.079 |
-| USA | +11.8 | +8.6 (+5.4 to +11.3) | fail | 0 |
-| ARE | — | — | fail | 0 |
+| Country | As pre-set | Fixed-broadband control | Checks | θ_cap used (cautious value; 0 if failed) | 95% interval of θ_cap |
+|---|---|---|---|---|---|
+| IDN | +23.1 | +28.0 (+9.8 to +44.6) | fail | 0 | — |
+| MYS | +10.1 | — | pass | 0.038 | −0.309 to +0.312 |
+| PHL | +19.8 | +25.0 (-13.3 to +47.2) | pass | 0.163 | −0.032 to +0.318 |
+| DEU | +11.2 | -1.1 (-4.7 to +2.2) | pass | 0.077 | +0.004 to +0.148 |
+| FRA | +14.6 | +4.5 (-0.3 to +8.5) | pass | 0.079 | −0.039 to +0.211 |
+| USA | +11.8 | +8.6 (+5.4 to +11.3) | fail | 0 | — |
+| ARE | — | — | fail | 0 | — |
 
 - **Reading:** added capacity lifts slow places about as much as a new site, at 0.30 of the cost.
+- **Uncertainty:** only Germany's interval excludes 0. The plan's low end uses the lower bound clipped at 0, so its range already includes "capacity lifts nobody".
 - **Failed in Indonesia and the US:** home broadband also rose, an area-wide change, so θ_cap = 0 there in the central plan, with θ_cap = θ_new as a sensitivity.
 - **UAE:** too few events, so 0 in the central plan.
 
@@ -245,6 +246,23 @@ Percentage points of slow hexagons lifted above 25 Mbps after added capacity, us
 | A country's validated gain vs KPI falls below +10% | Gate verdict for that country changes; the gate is re-judged (≥ 5 of 7) |
 | Country-level difference > 10% for people below 25 Mbps | Earlier headline counts are shown as a Kontur–WorldPop range |
 | > 20% of a country's original nominals fail check B | Stated as a failure of the original plan, not only a refinement |
+
+## Amendment 2 (2026-10-14, after amendment 1's results for six countries; written and pushed before this sensitivity is computed)
+
+**Why.** Amendment 1's checks keep nominals where both population maps agree. In some remote towns both maps agree on implausible crowding, because a district's census total is spread over the few settlements detected from space. Example (Yalimo, Papua): 17,698 people on 30,706 m² of buildings, about 1.7 m² per person. These towns are real and buildable, but their benefit is overstated, which lifts them up the ranking.
+
+**Disclosed.** This was seen in the results; it was not pre-registered. It therefore enters as a sensitivity, and the headline plan stays as amendment 1 defined it.
+
+### Crowding sensitivity (same for all seven countries)
+
+- **Crowding diagnostic (report-only, per nominal):** built-up m² per person. Below **10 m² per person** is flagged as implausibly crowded. 10 m² is our own judgement, not a published standard.
+- **Capped plan:** people per hexagon = min(planning population, built-up m² ÷ 10). Re-solved with the same iteration as amendment 1 (newly chosen hexagons are checked; at most 20 rounds).
+- **Reported per country:**
+  - overlap with the headline plan (Jaccard);
+  - people lifted, both plans scored under the capped population;
+  - how many of the headline top-10 nominals are flagged;
+  - share of the headline plan's benefit from flagged nominals.
+- **No verdict changes on this sensitivity.** The gate stays on the headline plan.
 
 ## Consequences
 
