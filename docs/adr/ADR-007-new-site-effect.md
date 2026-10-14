@@ -126,6 +126,42 @@ The interval is a block bootstrap of the treated gaps, holding the first stage f
 - **Test volume:** the same event study with ln(number of tests) as the outcome. Did more people start testing when new cells appeared?
 - **Mobile minus fixed:** the same event study on ln(mobile) − ln(fixed) in hexagons with both. This removes changes that hit both networks, such as who lives there or who tests.
 
+## Amendment 3 (2026-10-14, before these runs): is the crossing measure inflated by regression to the mean?
+
+**Problem.** "Slow" is defined by one base quarter (g − 2). Hexagons that look slow in one noisy quarter (ADR-005) tend to bounce back anyway. Comparison places bounce back too, but by a different amount if their speeds below 25 Mbps differ. Also, the home-broadband control was never run for the crossing measure.
+
+**Checks (all reported; P4 uses the most conservative estimate that passes):**
+
+1. **Slow by pre-period average.** A hexagon is slow if its mean ln speed over the available quarters g − 5 … g − 2 is below ln 25. Effect = change in the share above 25 Mbps, same estimator.
+2. **Within speed bands.** Base-quarter bands (< 10 and 10–25 Mbps) are estimated separately, then combined with treated-count weights. Treated and comparison places then start from similar speeds.
+3. **Home-broadband control.** The same crossing measure, on fixed broadband. Expected ≈ 0.
+
+**Pass rule for P4's input:** for a country, checks 1 and 2 have the same sign as the original and check 3's interval includes 0.
+
+### Amendment 3: results and timing (2026-10-14)
+
+**Timing (disclosed).** The amendment text and script were written before the run, but git was blocked by OneDrive downloads, so the push came after the results:
+
+| File | Last written |
+|---|---|
+| ADR-007 (this amendment) | 08:44:41 |
+| `scripts/new_site_crossing_checks.py` | 08:45:15 |
+| `data/outputs/p3c_crossing_checks.json` (results) | 08:49:55 |
+
+**Results** (percentage points of slow hexagons lifted above 25 Mbps):
+
+| Country | As pre-set | Slow by year average | Within speed bands | Fixed-broadband control | Pass | P4 value (most cautious passing) |
+|---|---|---|---|---|---|---|
+| France | +12.1 (+3.0 to +21.6) | +17.9 (−0.2 to +36.0) | +12.7 (−2.7 to +28.3) | +4.5 (−1.5 to +10.4) | yes | **+12.1** |
+| Germany | +12.6 (+5.6 to +19.4) | +5.2 (−17.3 to +27.6) | +16.5 (+3.1 to +27.0) | +2.8 (−6.0 to +9.9) | yes | **+5.2** |
+| United States | +9.6 (+4.8 to +14.7) | +1.5 (−16.0 to +19.8) | +10.9 (+3.1 to +18.1) | +4.6 (−1.2 to +10.7) | yes | **+1.5** |
+| Philippines | +5.8 | −9.4 | +8.1 | — | no (sign flips) | — |
+| Indonesia | +1.4 | +2.1 | −1.8 | +7.6 | no | — |
+
+- **Year-average intervals** are conservative (treated-count-weighted averages of per-group intervals).
+- **Reading:** part of the pre-set effect was regression to the mean in Germany and the US; France holds.
+- **P4:** uses this range (0 to about +12 points). Southeast Asia has no reliable estimate of its own.
+
 ## SOTA comparison
 
 | Family | Method | Tested | Cited, not tested (why) |

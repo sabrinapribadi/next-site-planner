@@ -1,32 +1,40 @@
 .PHONY: data evidence test build-test hover-test page-data pipeline
 
+# Environments live outside OneDrive (shared by all portfolio projects; rebuild with `make env`)
+PY ?= $(HOME)/.venvs/portfolio/bin/python
+NODE_DIR ?= $(HOME)/.portfolio-node
+
+env:
+	uv venv $(HOME)/.venvs/portfolio --python 3.12 --allow-existing && VIRTUAL_ENV=$(HOME)/.venvs/portfolio uv pip install -r requirements.txt
+	mkdir -p $(NODE_DIR) && cd $(NODE_DIR) && (test -f package.json || echo '{"name": "portfolio-node", "private": true}' > package.json) && npm i -q puppeteer-core@23
+
 # Raw data into GEO_DATA_DIR (see .env); resumable
 data:
-	python scripts/acquire_public_data.py opencellid boundaries overture population ookla
+	$(PY) scripts/acquire_public_data.py opencellid boundaries overture population ookla
 
 # Evidence table for every cited paper (rule R2)
 evidence:
-	python scripts/evidence.py
+	$(PY) scripts/evidence.py
 
 test:
-	python -m pytest -q tests
+	$(PY) -m pytest -q tests
 
 build-test:
-	cd tests/browser && (test -d node_modules/puppeteer-core || npm i --no-save puppeteer-core@23) && node build_test.js $(CURDIR)/docs/build.html /tmp | grep -E "FAIL|build-page checks"
+	cd tests/browser && NODE_PATH=$(NODE_DIR)/node_modules node build_test.js $(CURDIR)/docs/build.html /tmp | grep -E "FAIL|build-page checks"
 
 hover-test:
-	cd tests/browser && (test -d node_modules/puppeteer-core || npm i --no-save puppeteer-core@23) && mkdir -p /tmp/geo1-shots && node hover_test.js $(CURDIR)/docs/index.html /tmp/geo1-shots
+	cd tests/browser && mkdir -p /tmp/geo1-shots && NODE_PATH=$(NODE_DIR)/node_modules node hover_test.js $(CURDIR)/docs/index.html /tmp/geo1-shots
 
 page-data:
-	python scripts/export_page_data.py
+	$(PY) scripts/export_page_data.py
 
 # Full pipeline (needs GEO_DATA_DIR from .env): P0 grid → P1 gap → P2 speed model → ADR-005 noise follow-up → page data
 pipeline:
-	python scripts/build_hex_table.py
-	python scripts/experience_gap.py
-	python scripts/speed_model.py
-	python scripts/noise_followup.py
-	python scripts/noise_validation.py
-	python scripts/new_site_effect.py
-	python scripts/new_site_diagnostics.py
-	python scripts/export_page_data.py
+	$(PY) scripts/build_hex_table.py
+	$(PY) scripts/experience_gap.py
+	$(PY) scripts/speed_model.py
+	$(PY) scripts/noise_followup.py
+	$(PY) scripts/noise_validation.py
+	$(PY) scripts/new_site_effect.py
+	$(PY) scripts/new_site_diagnostics.py
+	$(PY) scripts/export_page_data.py

@@ -275,9 +275,9 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><p>Red dot: share of tested people whose measured average is below the bar; the pale line is its 95% interval (the true share very likely lies inside). Hollow circle: the same share if every country had the same mix of dense and sparse areas (10 and 25 Mbps). Amber square: everyone, using typical speeds and including people nobody tested. Example at 25 Mbps: the Philippines is 16% for tested people, 34% at equal density, about 31% for everyone. <b>So what:</b> rankings built on tested people alone flatter dense, well-tested countries.</p></details>
 
-  <div class="chart"><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span class="mono">extra share of slow places lifted above 25 Mbps by a new site</span></div>
+  <div class="chart"><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span><i style="border:2px solid var(--muted);background:transparent"></i>Measure fixed in advance</span><span class="mono">filled: cautious estimate after checks · extra share of slow places lifted above 25 Mbps</span></div>
     <svg class="plot" id="c-p3" role="img" aria-label="Effect of a new site on slow places"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><p>Each row compares hexagons that were below 25 Mbps when a new site appeared nearby with similar slow hexagons that had not got one yet. The dot is how many more of them rose above 25 Mbps over the next year, in percentage points; the line is the 95% interval. Example: Germany +12.6 points means about 1 in 8 slow places crossed 25 Mbps because of the site. Colour shows how far the comparison can be trusted. <b>So what:</b> a new site's value is lifting slow places over the bar; average speeds barely move (details below).</p></details>
+  <details class="how"><summary>How to read this</summary><p>Each row compares hexagons that were below 25 Mbps when a new site appeared nearby with similar slow hexagons that had not got one yet. The dot is how many more of them rose above 25 Mbps over the next year, in percentage points; the line is the 95% interval. The hollow circle is the measure fixed in advance (slow = below 25 Mbps in one quarter). The filled dot is the most cautious estimate that passed later checks: slow defined over a whole year, so places that were just unlucky once do not count. Example: France +12 points under both means about 1 in 8 slow places crossed 25 Mbps because of the site; Germany drops from +13 to +5 (about 1 in 20). Colour shows how far the comparison can be trusted. <b>So what:</b> a new site lifts some slow places over the bar, average speeds barely move, and phase 4 plans across this range.</p></details>
 
 
 
@@ -306,7 +306,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     <li><b>Rural first:</b> in most countries rural people are 3 to 6 times more likely than city-centre people to be below 25 Mbps.</li>
     <li><b>Untested places hold most of the gap:</b> about 23M Filipinos and 30M Indonesians nobody tested are likely below 25 Mbps — more than among those who did test.</li>
     <li><b>Single tests mislead:</b> once test noise is removed, the US, France and the UAE have far fewer slow places than raw numbers suggest; Indonesia and the Philippines do not.</li>
-    <li><b>New sites lift slow places, not averages:</b> in Germany and France about 1 in 8 slow places crossed 25 Mbps because of a new site; average speeds barely moved, except in the US (+7% to +12%).</li>
+    <li><b>New sites lift some slow places, not averages:</b> up to about 1 in 8 slow places crossed 25 Mbps because of a new site — France under every check, Germany and the US less under the strictest one; average speeds barely moved, except in the US (+7% to +12%).</li>
     <li><b>Local, not regional:</b> real slow clusters exist only in Indonesia and the Philippines; elsewhere slow places are scattered, so plans must target places, not regions.</li>
     <li><b>What would change our view:</b> new sites found not to lift nearby speeds (phase 3), or the next quarter's tests disagreeing with the predictions.</li>
   </ul>
@@ -699,12 +699,15 @@ function chartP3() {
     const p = C[k].p3, c = p.crossing_pp, y = top + r * rowH + rowH / 2, col = VERD[c.pretrend_ok ? p.verdict : "association"][0];
     s += `<g class="row" tabindex="0" data-k="${k}"><rect class="band" x="0" y="${y - rowH / 2}" width="${W}" height="${rowH}" fill="transparent"/>
       <text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(phone ? k : label(k))}</text>
-      <line x1="${x(Math.max(c.ci[0], -0.15))}" x2="${x(Math.min(c.ci[1], 0.25))}" y1="${y}" y2="${y}" stroke="var(${col})" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
-      <circle cx="${x(c.att)}" cy="${y}" r="6" fill="var(${col})"/></g>`;
+      ${p.crossing_cautious ? `<line x1="${x(Math.max(p.crossing_cautious.ci[0], -0.15))}" x2="${x(Math.min(p.crossing_cautious.ci[1], 0.25))}" y1="${y}" y2="${y}" stroke="var(${col})" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="${x(p.crossing_cautious.att)}" cy="${y}" r="6" fill="var(${col})"/>` : `<line x1="${x(Math.max(c.ci[0], -0.15))}" x2="${x(Math.min(c.ci[1], 0.25))}" y1="${y}" y2="${y}" stroke="var(${col})" stroke-width="3" stroke-linecap="round" opacity="0.35"/>`}
+      <circle cx="${x(c.att)}" cy="${y}" r="6" fill="none" stroke="var(--muted)" stroke-width="2"/></g>`;
   });
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
   bindRows(svg, (k) => { const p = C[k].p3, c = p.crossing_pp, v = VERD[c.pretrend_ok ? p.verdict : "association"][1];
-    return `<b>${esc(C[k].name)} · ${p.new_site_events.toLocaleString("en")} new sites</b>Slow places lifted above 25 Mbps: ${c.att > 0 ? "+" : ""}${(100 * c.att).toFixed(1)} points (95% interval ${(100 * c.ci[0]).toFixed(1)} to ${(100 * c.ci[1]).toFixed(1)})<br>${v}`
+    const cc = p.crossing_cautious;
+    return `<b>${esc(C[k].name)} · ${p.new_site_events.toLocaleString("en")} new sites</b>Slow places lifted above 25 Mbps, measure fixed in advance: ${c.att > 0 ? "+" : ""}${(100 * c.att).toFixed(1)} points (95% interval ${(100 * c.ci[0]).toFixed(1)} to ${(100 * c.ci[1]).toFixed(1)})`
+      + (cc ? `<br>Cautious, after checks: ${cc.att > 0 ? "+" : ""}${(100 * cc.att).toFixed(1)} points (${(100 * cc.ci[0]).toFixed(0)} to ${(100 * cc.ci[1]).toFixed(0)})` : `<br>Did not pass the later checks`) + `<br>${v}`
       + `<br>Average speed change: ${(100 * p.avg_cs.pct).toFixed(1)}% (interval ${(100 * p.avg_cs.ci[0]).toFixed(0)}% to ${(100 * p.avg_cs.ci[1]).toFixed(0)}%)`; });
 }
 function stacked(svgId, parts, tipFor) {

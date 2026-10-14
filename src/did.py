@@ -18,9 +18,10 @@ from scipy.stats import chi2
 
 def event_study(Y: np.ndarray, G: np.ndarray, stratum: np.ndarray, block: np.ndarray, events: range,
                 anticipation: int = 1, base_offset: int = 2, reps: int = 499, seed: int = 0,
-                base_filter=None, min_cell: int = 5) -> dict:
+                base_filter=None, min_cell: int = 5, filter_Y: np.ndarray | None = None) -> dict:
     """Event-time ATTs with 95% bootstrap intervals, the average over post periods 0..4, and a joint pre-trend test.
-    base_filter(y_base) -> bool mask keeps only units whose base-period value passes (e.g. below a speed bar)."""
+    base_filter(y_base) -> bool mask keeps only units whose base-period value passes (e.g. below a speed bar);
+    it reads filter_Y when given (e.g. filter on speed while the outcome is an indicator), else Y."""
     U, T = Y.shape
     rng = np.random.default_rng(seed)
     blocks, binv = np.unique(block, return_inverse=True)
@@ -41,7 +42,7 @@ def event_study(Y: np.ndarray, G: np.ndarray, stratum: np.ndarray, block: np.nda
             d = Y[:, t] - Y[:, b]
             ok = ~np.isnan(d)
             if base_filter is not None:
-                ok &= base_filter(Y[:, b])
+                ok &= base_filter((Y if filter_Y is None else filter_Y)[:, b])
             tr_all = ok & (G == g)
             co_all = ok & (G > max(t, b) + anticipation)
             for s in strata:

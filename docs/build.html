@@ -314,7 +314,7 @@ const PHASES = [
   scqa: ["P4 needs to know what a new site actually does to people's speeds.",
          "Sites are built where demand already is, and crowdsourced data dates them only roughly.",
          "Compared with similar places that had not got one yet, do new sites raise speeds or lift slow places above 25 Mbps?",
-         "They lift slow places: about 1 in 8 slow hexagons crossed 25 Mbps in Germany and France. Average speeds barely moved, except in the US (+7–12%). Indonesia's sites went where speeds were already falling."],
+         "They lift some slow places: up to about 1 in 8 crossed 25 Mbps (France under every check; Germany about 1 in 20 and the US near 0 under the strictest). Average speeds barely moved, except in the US (+7–12%). Indonesia's sites went where speeds were already falling."],
   steps: [
     ["Decision", "Design before outcomes", "ADR-007 pushed before any speed was looked at: events, comparison places, pre-trend gate, home-broadband control.", "The test must be fixed before the answer.", "docs/adr/ADR-007-new-site-effect.md"],
     ["Data", "Events from cell records", "New LTE/5G cells first seen 2023 Q3–2024 Q4 and seen 180+ days; 'new site' if nothing within ~1.3 km before.", "Separate new coverage from added capacity.", "scripts/new_site_effect.py"],
@@ -325,10 +325,11 @@ const PHASES = [
     ["Spatial statistics", "Pre-trend gate per country", "Passed: Germany, France, US, Philippines. Failed: Indonesia, UAE.", "No causal claim where places diverged before.", "data/outputs/p3_new_site_effect.json"],
     ["Evaluation", "Home broadband moved too", "In France and the US, fixed speeds also fell where new cells appeared.", "Something about the area changed.", "data/outputs/p3_new_site_effect.json", "fail"],
     ["Evaluation", "Diagnostics declared first", "Imputation fixed; test volume and mobile minus fixed added (post-hoc, labelled) before running.", "Explain surprises without moving goalposts.", "scripts/new_site_diagnostics.py", "fix"],
-    ["Decision", "The number P4 uses", "Slow places lifted above 25 Mbps: +12.6 pts Germany, +12.1 France; Southeast Asia wide and lower.", "Planners need 'who crosses the bar', not averages.", "docs/index.html"]
+    ["Evaluation", "Regression to the mean", "Slow by one quarter partly picks unlucky places; re-defined over a year and within speed bands (amendment 3).", "A single noisy quarter is not a slow place.", "scripts/new_site_crossing_checks.py", "fix"],
+    ["Decision", "The number P4 uses", "Cautious estimates after regression-to-the-mean checks: France +12 pts, Germany +5, US +1.5; Southeast Asia not reliable.", "Planners need 'who crosses the bar', not averages.", "docs/index.html"]
   ],
   decisions: [["New-site effect: design, gate, amendments", "007"]],
-  results: [["Pre-trends parallel", "per country", "4 of 6 pass (Malaysia: too few)", "ok"], ["Germany: slow places lifted above 25 Mbps", "with interval", "+12.6 pts (+5.6 to +19.4)", "ok"],
+  results: [["Pre-trends parallel", "per country", "4 of 6 pass (Malaysia: too few)", "ok"], ["Germany: slow places lifted above 25 Mbps", "with interval", "+12.6 pts as pre-set; +5.2 (−17 to +28) with slow defined over a year", "info"],
             ["France: same", "with interval", "+12.1 pts (+3.0 to +21.6); home-broadband check failed", "info"], ["US: average speed", "with interval", "+7% to +12% (three methods)", "ok"],
             ["Indonesia", "with interval", "association only (speeds fell before sites)", "no"], ["Test volume changed?", "report", "No, in every country", "info"]],
   obstacles: [
@@ -338,7 +339,7 @@ const PHASES = [
     ["New sites seemed to lower speeds (Philippines, France)", "Averages mix everyone's tests; estimators disagreed", "Compared three methods and test volumes before concluding", "Do not explain a surprise before checking it"]
   ],
   lessons: ["One rule for every country.", "A failed check is information: Indonesia's sites follow falling speeds.", "Measure what decisions need: crossing the bar, not the average."],
-  star: "I measured what 15,000 real new sites did in seven countries, and found they lift slow places over 25 Mbps (about 1 in 8 in Germany and France) rather than raising average speeds."
+  star: "I measured what 15,000 real new sites did in seven countries, and found they lift some slow places over 25 Mbps (up to about 1 in 8, less under the strictest test in Germany and France) rather than raising average speeds."
 },
 { agg: [["Hexagons served → people lifted", "Σ people × share of the hexagon a site serves (3GPP spacing per morphology) × expected uplift from P3 (planned)", "An urban site serves part of a hexagon; a rural one several"], ["Sites → plan cost", "Σ intervention costs in new-tower equivalents (planned)", "Budget in money-like units, not site counts"], ["Hexagons → district", "Σ people and people-weighted shares per kecamatan, county or district (planned)", "Planners and regulators work by district"]], id: "p4", tag: "P4", name: "Budgeted site optimiser", dates: "planned", verdict: ["plan", "Planned"],
   scqa: ["Sites are usually picked one by one from a ranked list.", "Neighbouring top-ranked sites cover the same people.", "Does optimising the set lift more people than ranking?", "Planned."],

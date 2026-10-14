@@ -16,13 +16,13 @@ Status: **phases 0–3 of 7 done**. Data foundation and experience gap passed th
 - 61.7M people in tested areas get under 25 Mbps on mobile; 349M people live where nobody tested.
 - At equal population density the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
 - About 68M people nobody tested are likely below 25 Mbps (typical speed), including 23M in the Philippines and 30M in Indonesia.
-- New sites lift slow places, not averages: in Germany and France about 1 in 8 places below 25 Mbps crossed it because of a new site; average speed rose only in the US (+7–12%).
+- New sites lift slow places more than averages: a new site lifted up to about 1 in 8 slow places (below 25 Mbps) over the bar; France holds up under every check, while Germany (about 1 in 20) and the US (near 0) shrink under the strictest test. Average speed rose only in the US (+7–12%).
 - Single speed tests are mostly luck: two tests at the same place differ 3–5×. Each hexagon is blended with its neighbourhood (checked against the next quarter: 28–44% closer).
 
 ## Reproduce
 
 ```bash
-python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
+brew install uv && make env           # shared environment outside OneDrive: ~/.venvs/portfolio (+ ~/.portfolio-node for browser tests)
 cp .env.example .env            # set GEO_DATA_DIR (and OPENCELLID_TOKEN for `make data`)
 set -a; . ./.env; set +a
 make data                        # public sources into GEO_DATA_DIR (hours; resumable)

@@ -2,6 +2,30 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.6.1] — 2026-10-14 — P3 crossing measure checked for regression to the mean; environments outside OneDrive
+**Files:** docs/adr/ADR-007-new-site-effect.md, docs/adr/ADR-002-validation-and-gates.md, src/did.py, tests/test_did.py, scripts/new_site_crossing_checks.py, data/outputs/p3c_crossing_checks.json, scripts/export_page_data.py, docs/index.html, docs/build.html, docs/data/page_data.js, README.md, Makefile
+- **Situation:**
+  - P4 was about to rely on "slow places lifted above 25 Mbps", but "slow" came from one noisy quarter, which invites regression to the mean.
+  - The home-broadband control had not been run for that measure.
+  - Separately, an 856 MB `.venv` inside OneDrive blocked git.
+- **Task:** Test the crossing measure before P4 uses it, and stop environments living in synced folders.
+- **Action:**
+  - **Amendment 3:**
+    - "slow" defined over a year;
+    - estimates within speed bands;
+    - a fixed-broadband control.
+    - Written at 08:44, run at 08:49, pushed later because git was blocked; disclosed in the ADR with file times.
+  - **Estimator:** `filter_Y` option, unit-tested.
+  - **Pages:** the chart shows the pre-set and the cautious estimate; wording changed from "about 1 in 8" to "up to about 1 in 8".
+  - **Environments:** shared `~/.venvs/portfolio` (uv) and `~/.portfolio-node`; the in-repo copies deleted.
+- **Result:**
+  - **France** holds: +12.1 pts.
+  - **Germany** shrinks to +5.2 and the **US** to +1.5 under the strictest definition. The fixed control ≈ 0 everywhere.
+  - **Philippines and Indonesia** fail the checks.
+  - **P4:** gets an honest range of 0 to about +12 pts.
+  - **Tests:** 22 unit tests, 318 of 318 walkthrough checks, 8 of 8 hover checks in three modes.
+- **Talking point:** "Before using my own headline number, I tested it for regression to the mean — one country held, two shrank, and the plan now uses the range."
+
 ## [0.6.0] — 2026-10-14 — P3: what new sites did, in all seven countries
 **Files:** docs/adr/ADR-007-new-site-effect.md, docs/adr/ADR-002-validation-and-gates.md, docs/adr/README.md, docs/PRD.md, src/did.py, tests/test_did.py, scripts/new_site_effect.py, scripts/new_site_diagnostics.py, data/outputs/p3_new_site_effect.json, data/outputs/p3b_diagnostics.json, scripts/export_page_data.py, docs/index.html, docs/build.html, README.md, Makefile, docs/references.yaml
 - **Situation:** P4 needs the measured effect of a new site, but sites are built where demand already is and crowdsourced data dates them only roughly.

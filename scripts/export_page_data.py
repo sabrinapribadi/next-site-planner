@@ -154,6 +154,8 @@ def main() -> None:
     p3f, p3bf = ROOT / "data/outputs/p3_new_site_effect.json", ROOT / "data/outputs/p3b_diagnostics.json"
     p3 = json.loads(p3f.read_text())["countries"] if p3f.exists() else None
     p3b = json.loads(p3bf.read_text()) if p3bf.exists() else None
+    p3cf = ROOT / "data/outputs/p3c_crossing_checks.json"
+    p3c = json.loads(p3cf.read_text()) if p3cf.exists() else {}
     DDIR.mkdir(parents=True, exist_ok=True)
     for f in DDIR.glob("*.js"):
         f.unlink()
@@ -193,6 +195,11 @@ def main() -> None:
                           "s2_test": round(p2b["noise_model"][k]["s2_test"], 3), "s2_micro": round(p2b["noise_model"][k]["s2_micro"], 3)}
             if p3 and k in p3:
                 c["p3"] = p3_summary(p3[k], (p3b or {}).get(k))
+                cc = p3c.get(k)
+                if isinstance(cc, dict) and cc.get("p4_value"):
+                    c["p3"]["crossing_cautious"] = {"att": round(cc["p4_value"]["att"], 4), "ci": [round(x, 4) for x in cc["p4_value"]["ci95"]]}
+                if isinstance(cc, dict):
+                    c["p3"]["crossing_checks_pass"] = bool(cc.get("pass_for_p4"))
             c["untested"] = {"people_m": round(tot["untested_people"] / 1e6, 2),
                              "expected_below_m": {str(b): round(tot[f"expected_untested_below_{b}"] / 1e6, 2) for b in BARS},
                              "all_people_share_below": {str(b): round(tot[f"all_people_share_below_{b}"], 4) for b in BARS}}

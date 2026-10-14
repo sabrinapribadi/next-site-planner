@@ -42,3 +42,11 @@ def test_base_filter_restricts_units():
     Y, G, s, b = _panel(seed=4)
     r = event_study(Y, G, s, b, range(0, 2), reps=49, base_filter=lambda yb: yb < -100)   # nothing passes
     assert r["event_time"] == {}
+
+
+def test_filter_on_another_matrix():
+    Y, G, s, b = _panel(seed=5)
+    ind = np.where(np.isnan(Y), np.nan, (Y > 3).astype(float))
+    r_all = event_study(ind, G, s, b, range(0, 2), reps=49)
+    r_low = event_study(ind, G, s, b, range(0, 2), reps=49, filter_Y=Y, base_filter=lambda yb: yb < 3)
+    assert r_low["event_time"][0]["treated_obs"] < r_all["event_time"][0]["treated_obs"]
