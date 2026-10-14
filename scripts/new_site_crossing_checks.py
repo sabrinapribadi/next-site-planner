@@ -8,7 +8,8 @@ Outcome: share of hexagons whose mobile download is at or above 25 Mbps. Checks:
 2. Within base-speed bands (< 10 and 10-25 Mbps at the base quarter), combined with treated-count weights.
 3. Home-broadband control: the same measure on fixed broadband (should be about 0).
 Combined intervals are treated-count-weighted averages of the parts' intervals (conservative).
-Writes data/outputs/p3c_crossing_checks.json.
+Writes data/outputs/p3c_crossing_checks.json; with --estimand capacity (ADR-008: θ for added capacity),
+data/outputs/p4_capacity_crossing.json.
 """
 
 from __future__ import annotations
@@ -44,11 +45,13 @@ def post_n(r: dict) -> int:
 
 def main() -> None:
     t0 = time.time(); c = ns.connect(); out = {}
+    est = "capacity" if "--estimand" in sys.argv and sys.argv[sys.argv.index("--estimand") + 1] == "capacity" else "new_site"
+    outfile = ROOT / "data/outputs" / ("p4_capacity_crossing.json" if est == "capacity" else "p3c_crossing_checks.json")
     for k in ns.CFG["countries"]:
         d = ns.build(k, c)
-        if len(d["new_site"]) < ns.MIN_EVENTS:
-            out[k] = "too few new-site events"; continue
-        G = ns.G_for(d, d["new_site"]); m = ~np.isnan(G)
+        if len(d[est]) < ns.MIN_EVENTS:
+            out[k] = f"too few {est} events"; continue
+        G = ns.G_for(d, d[est]); m = ~np.isnan(G)
         Ym, Ya = d["Ym"], above(d["Ym"])
         r = {"original": ns.run(d, G, Ya, base_filter=lambda yb: yb == 0).get("post_avg_0_4")}
         # 1. slow by pre-period average, one group at a time
@@ -83,7 +86,7 @@ def main() -> None:
         out[k] = r
         ns.log(k, "orig", o and round(o["att"], 3), "| pre-avg", a1 and round(a1["att"], 3), "| bands", a2 and round(a2["att"], 3),
                "| fixed", fc and round(fc["att"], 3), fc and [round(x, 3) for x in fc["ci95"]], "| pass", r["pass_for_p4"])
-        (ROOT / "data/outputs/p3c_crossing_checks.json").write_text(json.dumps(out, indent=1, default=str))
+        outfile.write_text(json.dumps(out, indent=1, default=str))
     ns.log("done in", round(time.time() - t0), "s")
 
 
