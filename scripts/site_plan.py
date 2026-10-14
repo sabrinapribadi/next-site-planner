@@ -182,7 +182,10 @@ def main() -> None:
         # sensitivities at the headline budget
         sens = {}
         alt = benefit(d, th, 0, cap_equals_new=True); m2, _ = exact_knapsack(alt, c, head)
-        sens["capacity_equals_new"] = {"jaccard": jaccard(chosen, m2), "mix": d.intervention[m2].value_counts().to_dict()}
+        kp_alt = float(alt[kpi_ranking(score, c, head)].sum())
+        sens["capacity_equals_new"] = {"jaccard": jaccard(chosen, m2), "mix": d.intervention[m2].value_counts().to_dict(),
+                                       "people_lifted": float(alt[m2].sum()), "kpi_ranking": kp_alt,
+                                       "gain_vs_kpi": round(float(alt[m2].sum()) / kp_alt - 1, 3) if kp_alt > 0 else None}
         for nm, cc in (("colocation_0.20", {"capacity": 0.20}), ("colocation_0.50", {"capacity": 0.50}), ("small_cell_0.25", {"small_cell": 0.25})):
             cost2 = d.intervention.map({**COST, **cc}).to_numpy(); m3, _ = exact_knapsack(b["central"], cost2, head)
             sens[nm] = {"jaccard": jaccard(chosen, m3), "people_lifted": float(b["central"][m3].sum())}
@@ -211,7 +214,8 @@ def main() -> None:
         hb = r["budgets"][str(head)]
         r["gate_gain_10pct"] = bool(hb["gain_vs_kpi"] is not None and hb["gain_vs_kpi"] >= 0.10)
         res[k] = r
-        log(k, f"budget {head:g}: lifted {hb['people_lifted']:,.0f} ({hb['people_lifted_low']:,.0f}–{hb['people_lifted_high']:,.0f}) vs KPI {hb['kpi_ranking']:,.0f} → gain {hb['gain_vs_kpi']:+.1%} | mix {hb['mix']} | exports {r['exports']}")
+        g_txt = f"{hb['gain_vs_kpi']:+.1%}" if hb["gain_vs_kpi"] is not None else "n/a (KPI lifts nobody)"
+        log(k, f"budget {head:g}: lifted {hb['people_lifted']:,.0f} ({hb['people_lifted_low']:,.0f}–{hb['people_lifted_high']:,.0f}) vs KPI {hb['kpi_ranking']:,.0f} → gain {g_txt} | gain if capacity = new site {r['sensitivity']['capacity_equals_new'].get('gain_vs_kpi')} | mix {hb['mix']} | exports {r['exports']}")
     passed = sum(v["gate_gain_10pct"] for v in res.values())
     out = {"design": "ADR-008", "headline_budget": HEADLINE, "countries": res, "gate_countries_passed": int(passed),
            "gate_passed": bool(passed >= 5 and all(v["exports"]["geojson_valid"] and v["exports"]["kml_ok"] and v["exports"]["csv_schema_ok"] for v in res.values())),
