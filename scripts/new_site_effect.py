@@ -35,6 +35,7 @@ WIN = (2023 * 4 + 2 - Q0, 2024 * 4 + 3 - Q0)   # event window 2023 Q3 .. 2024 Q4
 T = 15
 EVENTS = range(-5, 9)
 REPS = 499
+MAX_NEVER_REG = 50_000   # memory cap for the regression arms (the US has 1.5M never-treated hexagons)
 MIN_EVENTS = 100     # ADR-007 amendment 1: report an estimand only with at least 100 event hexagons
 MORPH = {"rural": 0, "urban_cluster": 1, "urban_centre": 2}
 log = lambda *a: print(time.strftime("%H:%M:%S"), *a, flush=True)
@@ -100,7 +101,7 @@ def regression_arms(d: dict, G: np.ndarray) -> dict:
     Memory: one dummy per hexagon, so never-treated hexagons are sampled (seeded) up to 20× the treated count;
     every treated and not-yet-treated hexagon is kept. The Callaway–Sant'Anna estimate uses all units."""
     m = ~np.isnan(G)
-    nev = np.flatnonzero(m & np.isinf(G)); cap = 20 * int((m & np.isfinite(G)).sum())
+    nev = np.flatnonzero(m & np.isinf(G)); cap = min(20 * int((m & np.isfinite(G)).sum()), MAX_NEVER_REG)
     if len(nev) > cap:
         drop = np.random.default_rng(11).choice(nev, size=len(nev) - cap, replace=False)
         m = m.copy(); m[drop] = False
@@ -138,8 +139,12 @@ def regression_arms(d: dict, G: np.ndarray) -> dict:
 
 
 def main() -> None:
-    t0 = time.time(); c = connect(); res = {}
+    t0 = time.time(); c = connect()
+    part = ROOT / CFG["paths"]["outputs_dir"] / "p3_partial.json"
+    res = json.loads(part.read_text()) if part.exists() else {}      # resume: countries already finished are kept
     for k in CFG["countries"]:          # all seven countries, same rule (ADR-007 amendment 1)
+        if k in res:
+            log(k, "already done (resumed)"); continue
         d = build(k, c)
         Gn, Gc, G1 = G_for(d, d["new_site"]), G_for(d, d["capacity"]), G_for(d, d["ring1"])
         r = {"counts": {"new_site_hexagons": int(len(d["new_site"])), "capacity_hexagons": int(len(d["capacity"])),
@@ -163,6 +168,7 @@ def main() -> None:
         r["by_area_type"] = {m: run(d, Gn, d["Ym"], keep=d["strat"] == v) for m, v in MORPH.items()}
         Yc = np.where(np.isnan(d["Ym"]), np.nan, (d["Ym"] >= np.log(25)).astype(float))
         r["crossing_25_from_below"] = run(d, Gn, Yc, base_filter=lambda yb: yb == 0)
+        d["Nm"] = d["Yf"] = None                                        # free memory before the regression arms
         r["regressions_new_site_ring0"] = regression_arms(d, Gn)
         nr = r["new_site_ring0"]
         r["gate"] = {"pretrend_all_ci_include_0": nr.get("pretrend", {}).get("all_ci_include_0"),

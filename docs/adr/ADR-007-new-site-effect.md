@@ -80,7 +80,7 @@ In plain words: compare speeds before and after a new site, and subtract the cha
 | Role | Estimator | Notes |
 |---|---|---|
 | **Chosen** | Callaway & Sant'Anna (2021): group-time effects, each a 2×2 difference-in-differences against comparison places, aggregated to event time with group-size weights | Unconditional within country × area type strata, weighted by treated counts |
-| Head-to-head | Borusyak, Jaravel & Spiess (2024) imputation (two-stage form; `pyfixest.did2s`) | Hexagon and country × area-type × quarter fixed effects. Never-treated hexagons are sampled (seeded) up to 20× the treated count to fit in memory; the chosen estimator uses all units |
+| Head-to-head | Borusyak, Jaravel & Spiess (2024) imputation (two-stage form; `pyfixest.did2s`) | Hexagon and country × area-type × quarter fixed effects. Never-treated hexagons are sampled (seeded) up to 20× the treated count, at most 50,000, to fit in memory; the chosen estimator uses all units |
 | Shown only to illustrate bias | Two-way fixed-effects event study | Expected to differ when effects vary over time |
 
 **Inference:** cluster bootstrap over H3 resolution-5 blocks (~250 km²; nearby hexagons are correlated), 499 replicates, 95% percentile intervals.
