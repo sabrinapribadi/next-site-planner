@@ -121,6 +121,9 @@ svg.plot .row:hover .band, svg.plot .row:focus .band { fill: var(--accent-soft);
 svg.plot .row { outline: none; }
 .tip { position: absolute; z-index: 5; max-width: 300px; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-size: 13px; line-height: 1.45; box-shadow: 0 6px 22px rgba(0,0,0,0.14); pointer-events: none; }
 .tip b { display: block; font-weight: 600; margin-bottom: 2px; }
+.chart-head { display: grid; gap: 2px; padding: 2px 8px 8px; }
+.chart-title { font-size: 15px; font-weight: 600; color: var(--fg); text-wrap: balance; }
+.chart-sub { font-size: 13px; color: var(--muted); max-width: 70ch; }
 .key { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); padding: 0 8px 6px; }
 .key i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
 .key i.sq { border-radius: 2px; }
@@ -873,26 +876,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
     </div>
   </div>
 
-  <div class="chart"><div class="key"><span><i style="background:var(--slow)"></i>Tested people, measured (with 95% interval)</span><span><i style="border:2px solid var(--accent);background:transparent"></i>Tested, at equal density</span><span><i class="sq" style="background:var(--amber)"></i>Everyone, typical speed</span><span class="mono">right: people below (everyone)</span></div>
+  <div class="chart"><div class="chart-head"><b class="chart-title">Which countries leave the most people below the bar?</b><span class="chart-sub" id="sub-c-country"></span></div><div class="key"><span><i style="background:var(--slow)"></i>Tested people, measured (with 95% interval)</span><span><i style="border:2px solid var(--accent);background:transparent"></i>Tested, at equal density</span><span><i class="sq" style="background:var(--amber)"></i>Everyone, typical speed</span><span class="mono">right: people below (everyone)</span></div>
     <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><p>Red dot: share of tested people whose measured average is below the bar; the pale line is its 95% interval (the true share very likely lies inside). Hollow circle: the same share if every country had the same mix of dense and sparse areas (10 and 25 Mbps). Amber square: everyone, using typical speeds and including people nobody tested. Example at 25 Mbps: the Philippines is 16% for tested people, 34% at equal density, about 31% for everyone. <b>So what:</b> rankings built on tested people alone flatter dense, well-tested countries.</p></details>
 
-  <div class="chart"><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span><i style="border:2px solid var(--muted);background:transparent"></i>Measure fixed in advance</span><span class="mono">filled: cautious estimate after checks · extra share of slow places lifted above 25 Mbps</span></div>
+  <div class="chart"><div class="chart-head"><b class="chart-title">Did new sites lift slow places above 25 Mbps?</b><span class="chart-sub" id="sub-c-p3"></span></div><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span><i style="border:2px solid var(--muted);background:transparent"></i>Measure fixed in advance</span><span class="mono">filled: cautious estimate after checks · extra share of slow places lifted above 25 Mbps</span></div>
     <svg class="plot" id="c-p3" role="img" aria-label="Effect of a new site on slow places"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><p>Each row compares hexagons that were below 25 Mbps when a new site appeared nearby with similar slow hexagons that had not got one yet. The dot is how many more of them rose above 25 Mbps over the next year, in percentage points; the line is the 95% interval. The hollow circle is the measure fixed in advance (slow = below 25 Mbps in one quarter). The filled dot is the most cautious estimate that passed later checks: slow defined over a whole year, so places that were just unlucky once do not count. Example: France +12 points under both means about 1 in 8 slow places crossed 25 Mbps because of the site; Germany drops from +13 to +5 (about 1 in 20). Colour shows how far the comparison can be trusted. <b>So what:</b> a new site lifts some slow places over the bar, average speeds barely move, and phase 4 plans across this range.</p></details>
 
-  <div class="chart"><div class="key"><span><i style="background:var(--accent)"></i>The plan (people lifted per cost)</span><span><i style="background:var(--muted)"></i>KPI ranking, same budget</span><span><i style="background:var(--surface); box-shadow:0 0 0 2px var(--accent)"></i>* not yet checked on the ground</span><span class="mono">expected people lifted above 25 Mbps · budget 1,000 new-tower equivalents</span></div>
+  <div class="chart"><div class="chart-head"><b class="chart-title">Does counting people beat a KPI ranking, at the same budget?</b><span class="chart-sub" id="sub-c-p4"></span></div><div class="key"><span><i style="background:var(--accent)"></i>The plan (people lifted per cost)</span><span><i style="background:var(--muted)"></i>KPI ranking, same budget</span><span><i style="background:var(--surface); box-shadow:0 0 0 2px var(--accent)"></i>* not yet checked on the ground</span><span class="mono">expected people lifted above 25 Mbps · budget 1,000 new-tower equivalents</span></div>
     <svg class="plot" id="c-p4" role="img" aria-label="People lifted by the plan vs KPI ranking"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><p>For each country, the same budget (1,000 new-tower equivalents; a new macro site = 1, a small cell 0.5, extra capacity on an existing site 0.3) is spent two ways. Teal: the plan, which picks the places where expected people lifted per cost is highest. Grey: the usual practice of ranking places by an equal-weight score of low speed, population and points of interest. "Expected people lifted" = people × chance their typical speed is below 25 Mbps × the lift rate measured in phase 3. Both use only checked places: people on both population maps (the smaller number counts) and at least 1,000 m² of buildings. Example: Indonesia — about 122,500 people with the plan vs 42,900 with KPI ranking. The US is shown before its checks; its second population map is still downloading. The scale is logarithmic. <b>So what:</b> counting the people you would lift beats scoring places in every country checked so far.</p></details>
   <p class="small" id="plan-dl"></p>
 
   <div style="display:grid; gap:8px; min-width:0">
+    <div class="maphead"><span class="ctl-label">Country</span><div class="seg" id="nmap-iso" role="group" aria-label="Country for the nominal map"></div></div>
     <div class="maphead"><b id="nmap-h">Check the nominals on the ground</b><span class="muted" id="nmap-sub"></span></div>
     <div id="nmap" role="region" aria-label="Map of planned search areas with a terrain basemap"></div>
-    <div class="nom-legend"><span><i style="background:#0d6b7d"></i>new macro site</span><span><i style="background:#a86a12"></i>small cell</span><span><i style="background:#2d7d4f"></i>extra capacity on an existing site</span><span><i style="background:var(--surface); box-shadow:0 0 0 2.5px var(--fg)"></i>steep (&gt; 20°) or high (&gt; 2,500 m): check access</span><span><i style="background:#5b2a86; border-radius:2px; opacity:.7"></i>existing LTE/5G cells recorded in OpenCelliD (shaded per ~250 km²; zoom in for hexagons near nominals)</span><span>zoom in to see each 0.74 km² search hexagon</span></div>
+    <div class="nom-legend"><span><i style="background:#0d6b7d"></i>new macro site</span><span><i style="background:#a86a12"></i>small cell</span><span><i style="background:#2d7d4f"></i>extra capacity on an existing site</span><span><i style="background:var(--surface); box-shadow:0 0 0 2.5px var(--fg)"></i>steep (&gt; 20°) or high (&gt; 2,500 m): check access</span><span><i style="background:#5b2a86; border-radius:2px; opacity:.7"></i>existing LTE/5G cells recorded in OpenCelliD (shaded per ~250 km²; zoom in for each 0.74 km² hexagon)</span><span>zoom in to see each 0.74 km² search hexagon</span></div>
     <p class="muted small" id="nmap-note"></p>
   </div>
-  <details class="how"><summary>How to read this map</summary><p>Each dot is a nominal: a site point inside a planned 0.74 km² search area, coloured by the kind of site. Every nominal passed three checks before it could enter the plan: two independent population maps (Kontur and WorldPop) must both place people there, and the plan counts the smaller number; satellite land cover (ESA WorldCover, 10 m) must show at least 1,000 m² of buildings, about seven village houses; and the dot sits on the built-up pixel nearest the centre of those buildings, so never in a lake or forest. Elevation and slope come from the Copernicus 30 m elevation model; a dark ring marks steep or high sites, where access will cost more. Purple shows existing LTE/5G cells recorded in OpenCelliD: shading per ~250 km² when zoomed out, and the 0.74 km² hexagons with cells within about 3 km of a nominal when zoomed in. New sites go where no cell is recorded nearby, so they sit in the gaps between purple areas; extra capacity goes on top of purple. Caveat: OpenCelliD is crowdsourced and very incomplete in Indonesia, Malaysia, the Philippines and the UAE (it records a cell near only 2% of fast rural Indonesian hexagons), so a "new site" there means "no tower on record", not "no tower": check it against an operator's site list first. Click a dot for the numbers and links to satellite imagery. Example: a dot with 0 people in WorldPop never reaches the plan, however many people the other map shows. <b>So what:</b> every nominal is on inhabited, built ground; a planner still confirms a rooftop or tower inside the hexagon.</p></details>
+  <details class="how"><summary>How to read this map</summary><p>Each dot is a nominal: a site point inside a planned 0.74 km² search area, coloured by the kind of site. Every nominal passed three checks before it could enter the plan: two independent population maps (Kontur and WorldPop) must both place people there, and the plan counts the smaller number; satellite land cover (ESA WorldCover, 10 m) must show at least 1,000 m² of buildings, about seven village houses; and the dot sits on the built-up pixel nearest the centre of those buildings, so never in a lake or forest. Elevation and slope come from the Copernicus 30 m elevation model; a dark ring marks steep or high sites, where access will cost more. Purple shows existing LTE/5G cells recorded in OpenCelliD: shading per ~250 km² when zoomed out, and every 0.74 km² hexagon with a recorded cell when zoomed in. New sites go where no cell is recorded nearby, so they sit in the gaps between purple areas; extra capacity goes on top of purple. Caveat: OpenCelliD is crowdsourced and very incomplete in Indonesia, Malaysia, the Philippines and the UAE (it records a cell near only 2% of fast rural Indonesian hexagons), so a "new site" there means "no tower on record", not "no tower": check it against an operator's site list first. Click a dot for the numbers and links to satellite imagery. Example: a dot with 0 people in WorldPop never reaches the plan, however many people the other map shows. <b>So what:</b> every nominal is on inhabited, built ground; a planner still confirms a rooftop or tower inside the hexagon.</p></details>
 
 
 
@@ -935,13 +939,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <section class="block" id="deep">
   <span class="eyebrow">For readers who want the details</span>
   <details class="more" id="d-findings"><summary><span class="eyebrow">More findings · city vs rural, who is tested, gap types, slow clusters, cell data</span></summary><div class="body">
-  <div class="chart"><div class="key"><span><i style="background:var(--accent)"></i>Urban centre</span><span><i style="background:var(--amber)"></i>Town or suburb</span><span><i style="background:var(--slow)"></i>Rural</span><span class="mono">share of tested people below the bar</span></div>
+  <div class="chart"><div class="chart-head"><b class="chart-title">Is the gap in cities or in rural areas?</b><span class="chart-sub" id="sub-c-morph"></span></div><div class="key"><span><i style="background:var(--accent)"></i>Urban centre</span><span><i style="background:var(--amber)"></i>Town or suburb</span><span><i style="background:var(--slow)"></i>Rural</span><span class="mono">share of tested people below the bar</span></div>
     <svg class="plot" id="c-morph" role="img" aria-label="Share below the bar by area type"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><p>Each country has three dots: the share of tested people below the bar in city centres, towns and rural areas (the UN "Degree of Urbanisation" definition). Example: Philippines at 25 Mbps — city centres 8%, rural 49%. <b>So what:</b> site plans should start outside the cities.</p></details>
-    <div class="chart"><div class="key"><span><i class="sq" style="background:var(--ok)"></i>Tested, at or above the bar</span><span><i class="sq" style="background:var(--slow)"></i>Tested, below</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span></div>
+    <div class="chart"><div class="chart-head"><b class="chart-title">How many people were never tested?</b><span class="chart-sub" id="sub-c-tested"></span></div><div class="key"><span><i class="sq" style="background:var(--ok)"></i>Tested, at or above the bar</span><span><i class="sq" style="background:var(--slow)"></i>Tested, below</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span></div>
       <svg class="plot" id="c-tested" role="img" aria-label="People tested and untested by country"></svg><div class="tip" hidden></div></div>
     <details class="how"><summary>How to read this</summary><p>Each bar is 100% of a country's people, split into tested and at or above the bar, tested and below, and not tested. Example: France — 47% of people live where nobody tested this quarter. <b>So what:</b> where the grey part is large, measured shares alone miss many people; the predicted speeds fill that gap.</p></details>
-    <div class="chart"><div class="key"><span><i class="sq" style="background:var(--ok)"></i>No gap</span><span><i class="sq" style="background:var(--accent)"></i>Capacity gap</span><span><i class="sq" style="background:var(--amber)"></i>Coverage gap</span><span><i class="sq" style="background:var(--slow)"></i>Slow, type unknown</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span><span class="mono">at 25 Mbps</span></div>
+    <div class="chart"><div class="chart-head"><b class="chart-title">Coverage or capacity: what kind of gap is it?</b><span class="chart-sub" id="sub-c-gap"></span></div><div class="key"><span><i class="sq" style="background:var(--ok)"></i>No gap</span><span><i class="sq" style="background:var(--accent)"></i>Capacity gap</span><span><i class="sq" style="background:var(--amber)"></i>Coverage gap</span><span><i class="sq" style="background:var(--slow)"></i>Slow, type unknown</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span><span class="mono">at 25 Mbps</span></div>
       <svg class="plot" id="c-gap" role="img" aria-label="Gap types at 25 Mbps by country"></svg><div class="tip" hidden></div></div>
     <details class="how"><summary>How to read this</summary><p>For people below 25 Mbps: a <i>coverage gap</i> has no LTE/5G cell recorded within about 1.3 km (needs a new site); a <i>capacity gap</i> has cells nearby but is still slow (needs more capacity on existing sites). "Type unknown" is used where the public cell database is too incomplete to tell. Example: Germany — 5.5% of people are in capacity gaps, 1.1% in coverage gaps. <b>So what:</b> where the type is known (mostly city areas in Germany, France, the US and the UAE), slow areas need capacity far more often than new coverage; in Southeast Asia the type cannot be told from public data.</p></details>
     <div class="two">
@@ -1186,16 +1190,16 @@ const GAPN = ["no gap", "capacity gap", "coverage gap", "slow, type unknown", "n
 function cellTip(i) {
   if (state.detail) {
     const d = proj.g.d, p = pBelow(d, i, state.bar);
-    const sp = d.s[i] >= 0 ? `measured ${d.s[i]} Mbps${d.tm && d.tm[i] > 0 ? ` · typical ≈ ${d.tm[i]} Mbps` : ""}`
-      : d.pm && d.pm[i] > 0 ? `not tested · predicted typical ≈ ${d.pm[i]} Mbps` : "not tested";
+    const sp = d.s[i] >= 0 ? `Typical speed: ${d.tm && d.tm[i] > 0 ? d.tm[i] : d.s[i]} Mbps`
+      : d.pm && d.pm[i] > 0 ? `Not tested · predicted ${d.pm[i]} Mbps` : "Not tested";
     const nr = ((C[state.iso].p4 || {}).nominals || { rows: [] }).rows.find((r) => r[1] === d.h[i]);
-    return `<b>0.74 km² hexagon · ${ppl(d.p[i])} people${nr ? ` · planned search area #${nr[0]} (${NTYPE[nr[4]]})` : ""}</b>${AREAN[d.a[i]]} · ${sp}` + (p == null ? "" : `<br>${Math.round(100 * p)}% chance its typical speed is below ${state.bar} Mbps`)
-      + `<br>at 25 Mbps: ${GAPN[d.g[i]]}${d.x[i] ? " · in a slow 1 km cluster" : ""}`;
+    return `<b>${ppl(d.p[i])} people · ${AREAN[d.a[i]]}</b>${sp}` + (p == null ? "" : `<br>Chance below ${state.bar} Mbps: ${Math.round(100 * p)}%`)
+      + (nr ? `<br>Plan: #${nr[0]} ${NTYPE[nr[4]]}` : "");
   }
   const m = C[state.iso].map, bi = BARS.indexOf(state.bar), v = m.b[bi][i], p = m.p[i] * 1000, t = m.m[i];
   const nm = m.names[m.n[i]];
-  if (v < 0) return `<b>${esc(nm)}</b>${ppl(p)} people · nobody tested here this quarter`;
-  return `<b>${esc(nm)}</b>${ppl(p)} people · ${t}% live in tested hexagons<br>${v}% of tested people below ${state.bar} Mbps ≈ <b style="display:inline">${ppl(p * t / 100 * v / 100)}</b> people`;
+  if (v < 0) return `<b>${esc(nm)}</b>${ppl(p)} people · none tested`;
+  return `<b>${esc(nm)}</b>${ppl(p)} people · ${t}% tested<br>Below ${state.bar} Mbps: ${ppl(p * t / 100 * v / 100)} tested people`;
 }
 function cellCentre(i) {
   const g = proj.g; let la = 0, lo = 0; g.polys[i].forEach(([a, b]) => { la += a; lo += b; }); la /= g.polys[i].length; lo /= g.polys[i].length;
@@ -1226,7 +1230,7 @@ function districts() {
   return [...d.values()].filter((r) => r.v > 0).sort((a, b) => b.v - a.v);
 }
 function districtTip(r) {
-  return `<b>${esc(C[state.iso].map.names[r.n])}</b>${ppl(r.v)} tested people below ${state.bar} Mbps, out of ${ppl(r.p)} people · click to zoom to its 0.74 km² hexagons`;
+  return `<b>${esc(C[state.iso].map.names[r.n])}</b>${ppl(r.v)} tested people below ${state.bar} Mbps<br>of ${ppl(r.p)} people · click to zoom`;
 }
 function openDistrict(n) {
   const key = `${state.iso}_${n}`;
@@ -1299,11 +1303,9 @@ function chartCountry() {
   });
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
   bindRows(svg, (k) => { const c = C[k], ci = c.ci95[b], adj = c.density_adjusted[b], u = c.untested;
-    return `<b>${esc(c.name)} · below ${b} Mbps</b>Tested, measured: ${pct(c.below[b])}${ci ? ` (95% interval ${pct(ci[0])}–${pct(ci[1])})` : ""}`
-      + (adj != null ? `<br>Tested, at equal density: ${pct(adj)}` : "")
-      + `<br>Tested, typical speed: ${pct(c.noise.corrected_below[b])} ${c.noise.level_credible ? "(✓ checked)" : "(⚠ provisional)"}`
-      + `<br>Nobody tested: ${mil(u.people_m)} people, ≈ ${mil(u.expected_below_m[b])} likely below`
-      + `<br><b style="display:inline">Everyone: ≈ ${pct(every(k))} = ${mil(every(k) * c.population_m)} people</b>`; });
+    return `<b>${esc(c.name)} · below ${b} Mbps</b>Tested people: ${pct(c.below[b], 0)}`
+      + (adj != null ? `<br>Same density mix: ${pct(adj, 0)}` : "")
+      + `<br>Everyone: ${pct(every(k), 0)} · ${mil(every(k) * c.population_m)} people`; });
 }
 const MORPH = [["urban_centre", "--accent", "Urban centre"], ["urban_cluster", "--amber", "Town or suburb"], ["rural", "--slow", "Rural"]];
 function chartMorph() {
@@ -1323,8 +1325,7 @@ function chartMorph() {
   });
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
   bindRows(svg, (k) => { const c = C[k];
-    return `<b>${esc(c.name)} · below ${lbl} Mbps</b>` + MORPH.map(([m, , l]) => `${l}: ${pct(c.morphology[m][bar])} of tested · ${pct(c.morphology[m].share, 0)} of people, ${pct(c.morphology[m].measured, 0)} tested`).join("<br>")
-      + (state.bar !== 10 && state.bar !== 25 ? `<br><span class="muted">Area types are reported at 10 and 25 Mbps; showing 25.</span>` : ""); });
+    return `<b>${esc(c.name)} · below ${lbl} Mbps</b>` + MORPH.map(([m, , l]) => `${l}: ${pct(c.morphology[m][bar], 0)}`).join("<br>"); });
 }
 const VERD = { causal: ["--ok", "Fair comparison"], restricted: ["--amber", "Fair, but the home-broadband check failed"], association: ["--untested", "Association only (pre-trends failed)"] };
 function chartP3() {
@@ -1345,9 +1346,9 @@ function chartP3() {
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
   bindRows(svg, (k) => { const p = C[k].p3, c = p.crossing_pp, v = VERD[c.pretrend_ok ? p.verdict : "association"][1];
     const cc = p.crossing_cautious;
-    return `<b>${esc(C[k].name)} · ${p.new_site_events.toLocaleString("en")} new sites</b>Slow places lifted above 25 Mbps, measure fixed in advance: ${c.att > 0 ? "+" : ""}${(100 * c.att).toFixed(1)} points (95% interval ${(100 * c.ci[0]).toFixed(1)} to ${(100 * c.ci[1]).toFixed(1)})`
-      + (cc ? `<br>Cautious, after checks: ${cc.att > 0 ? "+" : ""}${(100 * cc.att).toFixed(1)} points (${(100 * cc.ci[0]).toFixed(0)} to ${(100 * cc.ci[1]).toFixed(0)})` : `<br>Did not pass the later checks`) + `<br>${v}`
-      + `<br>Average speed change: ${(100 * p.avg_cs.pct).toFixed(1)}% (interval ${(100 * p.avg_cs.ci[0]).toFixed(0)}% to ${(100 * p.avg_cs.ci[1]).toFixed(0)}%)`; });
+    return `<b>${esc(C[k].name)} · ${p.new_site_events.toLocaleString("en")} new sites</b>`
+      + (cc ? `Slow places lifted: ${cc.att > 0 ? "+" : ""}${(100 * cc.att).toFixed(1)} pts` : `Slow places lifted: not shown (failed the checks)`)
+      + `<br>Average speed: ${(100 * p.avg_cs.pct) > 0 ? "+" : ""}${(100 * p.avg_cs.pct).toFixed(0)}%<br>${v}`; });
 }
 function chartP4() {
   const svg = $("#c-p4"), W = svg.parentElement.clientWidth - 12, phone = W < 520;
@@ -1365,10 +1366,9 @@ function chartP4() {
   });
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
   bindRows(svg, (k) => { const p = C[k].p4, mix = Object.entries(p.mix).map(([t, n]) => `${n.toLocaleString("en")} ${t.replace("_", " ")}`).join(", ");
-    return `<b>${esc(C[k].name)} · budget ${p.budget.toLocaleString("en")}</b>Plan: ≈ ${p.lifted.toLocaleString("en")} people lifted (range ${p.lifted_low.toLocaleString("en")}–${p.lifted_high.toLocaleString("en")})`
-      + `<br>KPI ranking: ≈ ${p.kpi.toLocaleString("en")} · ${p.gain == null ? "KPI ranking lifts nobody" : (p.gain > 0 ? "+" : "") + Math.round(100 * p.gain) + "% with the plan"}`
-      + `<br>${p.sites.toLocaleString("en")} search areas: ${mix}<br>${p.per_1000} new-tower equivalents per 1,000 people lifted`
-      + (p.validated ? "" : "<br><b>* Not yet checked on the ground:</b> its second population map is still downloading"); });
+    return `<b>${esc(C[k].name)}</b>Plan: ${ppl(p.lifted)} people lifted`
+      + `<br>KPI ranking: ${ppl(p.kpi)}${p.gain == null ? "" : ` (plan ${(p.gain > 0 ? "+" : "") + Math.round(100 * p.gain)}%)`}`
+      + `<br>${p.sites.toLocaleString("en")} sites: ${mix}` + (p.validated ? "" : "<br>* Not yet checked on the ground"); });
   $("#plan-dl").innerHTML = "<b>Site lists (search areas), budget 1,000:</b> " + ISOS.filter((k) => C[k].p4).map((k) =>
     `${label(k)} <a href="data/plans/${k}.csv">CSV</a> · <a href="data/plans/${k}.geojson">GeoJSON</a> · <a href="data/plans/${k}.kml">KML</a>`).join(" &nbsp;|&nbsp; ");
 }
@@ -1380,6 +1380,12 @@ function loadCells(k, cb) {                 // existing LTE/5G cells (OpenCelliD
   const sc = document.createElement("script"); sc.src = `data/cells/${k}.js`; sc.onload = cb;
   sc.onerror = () => { $("#nmap-note").textContent = "The existing-cells layer could not be loaded."; }; document.head.appendChild(sc);
 }
+function loadCellHex(k, cb) {               // every 0.74 km² hexagon with a recorded cell, loaded on the first zoom-in
+  if (window.GEO1_CELLHEX && window.GEO1_CELLHEX[k]) return cb();
+  if (loadCellHex.busy === k) return; loadCellHex.busy = k;
+  const sc = document.createElement("script"); sc.src = `data/cells/${k}_hex.js`; sc.onload = () => { loadCellHex.busy = null; cb(); };
+  sc.onerror = () => { loadCellHex.busy = null; $("#nmap-note").textContent = "The existing-cell hexagons could not be loaded."; }; document.head.appendChild(sc);
+}
 function drawCells() {
   if (!nmap || !ncells) return; ncells.clearLayers();
   const k = state.iso, cl = (window.GEO1_CELLS || {})[k]; if (!cl) return;
@@ -1388,23 +1394,27 @@ function drawCells() {
     const mx = Math.log1p(Math.max(...cl.r5.map((r) => r[1])));
     cl.r5.forEach(([h, n]) => { const ll = h3.cellToLatLng(h + "fffffff"); if (!bb.contains(ll)) return;
       L.polygon(h3.cellToBoundary(h + "fffffff"), { renderer, pane: "cellsPane", color: "#5b2a86", weight: 0.6, opacity: 0.7, fillColor: "#5b2a86", fillOpacity: 0.18 + 0.47 * Math.log1p(n) / mx, interactive: false }).addTo(ncells); });
-  } else {
-    cl.near.forEach(([h, n]) => { const ll = h3.cellToLatLng(h + "fffff"); if (!bb.contains(ll)) return;
-      L.polygon(h3.cellToBoundary(h + "fffff"), { renderer, pane: "cellsPane", color: "#5b2a86", weight: 1.2, fillColor: "#5b2a86", fillOpacity: 0.45 })
-        .bindTooltip(`${n.toLocaleString("en")} LTE/5G cell record${n === 1 ? "" : "s"} in this 0.74 km² hexagon (OpenCelliD; approximate)`).addTo(ncells); });
+    return;
   }
+  const hx = (window.GEO1_CELLHEX || {})[k];
+  if (!hx) { loadCellHex(k, drawCells); return; }
+  hx.h.forEach((h, i) => { const ll = h3.cellToLatLng(h + "fffff"); if (!bb.contains(ll)) return;
+    L.polygon(h3.cellToBoundary(h + "fffff"), { renderer, pane: "cellsPane", color: "#5b2a86", weight: 0.8, opacity: 0.8, fillColor: "#5b2a86", fillOpacity: 0.15 })
+      .bindTooltip(`${hx.n[i].toLocaleString("en")} LTE/5G cell${hx.n[i] === 1 ? "" : "s"} recorded`).addTo(ncells); });
 }
 const NCOL = { m: "#0d6b7d", s: "#a86a12", c: "#2d7d4f" }, NTYPE = { m: "new macro site", s: "small cell", c: "extra capacity" };
 function nominalPopup(k, r) {
   const n = C[k].p4.nominals, [rank, h, la, lo, t, pp, p25, lifted, di, kp, wp, bm, el, sl, fl, pl] = r;
   const g = `https://www.google.com/maps/@${la},${lo},400m/data=!3m1!1e3`, o = `https://www.openstreetmap.org/?mlat=${la}&mlon=${lo}#map=16/${la}/${lo}`;
-  const checks = n.validated ? `<br>people: ${kp.toLocaleString("en")} (Kontur) · ${wp.toLocaleString("en")} (WorldPop); plan uses the smaller`
-    + `<br>built-up land ${bm.toLocaleString("en")} m² · ${pl.toLocaleString("en")} places`
-    + `<br>${el == null ? "elevation n/a" : `elevation ${el.toLocaleString("en")} m · slope ${sl}°`}${fl.includes("s") ? " · <b>steep</b>" : ""}${fl.includes("h") ? " · <b>high</b>" : ""}` : "";
-  return `<b>#${rank} · ${NTYPE[t]}</b><br>${esc(n.districts[di] || "")}<br>${pp.toLocaleString("en")} people · ${Math.round(100 * p25)}% chance typical speed &lt; 25 Mbps<br>expected lifted ≈ ${lifted.toLocaleString("en")}${checks}<br>site point ${la}, ${lo}<br><a href="${g}" target="_blank" rel="noopener">Satellite (Google Maps)</a> · <a href="${o}" target="_blank" rel="noopener">OpenStreetMap</a>`;
+  const people = n.validated ? `${pp.toLocaleString("en")} people (WorldPop ${wp.toLocaleString("en")} · Kontur ${kp.toLocaleString("en")})` : `${pp.toLocaleString("en")} people`;
+  const ground = n.validated ? `<br>Buildings ${bm.toLocaleString("en")} m²${el == null ? "" : ` · ${el.toLocaleString("en")} m · slope ${sl}°`}${fl.includes("s") ? " · <b>steep</b>" : ""}${fl.includes("h") ? " · <b>high</b>" : ""}` : "<br>Not yet checked on the ground";
+  return `<b>#${rank} · ${NTYPE[t]}</b><br>${esc(n.districts[di] || "")}<br>${people}<br>Likely below 25 Mbps: ${Math.round(100 * p25)}% · lifted ≈ ${Math.round(lifted).toLocaleString("en")}${ground}`
+    + `<br><a href="${g}" target="_blank" rel="noopener">Satellite</a> · <a href="${o}" target="_blank" rel="noopener">OpenStreetMap</a>`;
 }
 function renderNominalMap() {
-  const el = $("#nmap");
+  const el = $("#nmap"), seg = $("#nmap-iso");
+  seg.innerHTML = ISOS.map((k) => `<button type="button" data-iso="${k}" aria-pressed="${k === state.iso}" title="${esc(C[k].name)}">${k}</button>`).join("");
+  seg.querySelectorAll("button").forEach((x) => x.addEventListener("click", () => { state.iso = x.dataset.iso; state.sel = []; state.detail = null; renderAll(); }));
   if (typeof L === "undefined") { el.innerHTML = '<p class="muted small" style="padding:12px">The map library could not load here.</p>'; return; }
   const k = state.iso, p = C[k].p4;
   if (!nmap) {
@@ -1463,12 +1473,12 @@ function chartTested() {
   const b = String(state.bar);
   stacked("#c-tested", (k) => { const c = C[k], t = c.measured_share; return [[t * (1 - c.below[b]), "--ok"], [t * c.below[b], "--slow"], [1 - t, "--untested"]]; },
     (k) => { const c = C[k], t = c.measured_share, P = c.population_m;
-      return `<b>${esc(c.name)} · ${mil(P)} people</b>Tested, at or above ${b} Mbps: ${mil(P * t * (1 - c.below[b]))}<br>Tested, below: ${mil(P * t * c.below[b])}<br>Not tested: ${mil(c.unmeasured_people_m)} (${pct(1 - t, 0)})`; });
+      return `<b>${esc(c.name)} · ${mil(P)} people</b>Tested, fine: ${mil(P * t * (1 - c.below[b]))}<br>Tested, below ${b} Mbps: ${mil(P * t * c.below[b])}<br>Not tested: ${mil(c.unmeasured_people_m)} (${pct(1 - t, 0)})`; });
 }
 const GAPS = [["none", "--ok", "No gap"], ["capacity", "--accent", "Capacity gap"], ["coverage", "--amber", "Coverage gap"], ["slow_type_unknown", "--slow", "Slow, type unknown"], ["unmeasured", "--untested", "Not tested"]];
 function chartGap() {
   stacked("#c-gap", (k) => GAPS.map(([g, col]) => [C[k].gap_types_25[g] || 0, col]),
-    (k) => `<b>${esc(C[k].name)} · at 25 Mbps</b>` + GAPS.map(([g, , l]) => `${l}: ${pct(C[k].gap_types_25[g] || 0)}`).join("<br>"));
+    (k) => `<b>${esc(C[k].name)} · people at 25 Mbps</b>` + GAPS.map(([g, , l]) => `${l}: ${pct(C[k].gap_types_25[g] || 0, 0)}`).join("<br>"));
 }
 const fx = (e) => Math.exp(e).toFixed(1) + "×";
 const pp = (v) => (v > 0 ? "+" : "") + (100 * v).toFixed(1) + "%";
@@ -1516,7 +1526,27 @@ document.addEventListener("click", (e) => {
 document.querySelectorAll("details.more").forEach((d) => d.addEventListener("toggle", () => d.open && renderCharts()));
 
 // a redraw replaces the rows under the pointer, so their mouseleave never fires: hide chart tooltips first
-function renderCharts() { document.querySelectorAll(".chart > .tip").forEach((t) => (t.hidden = true)); chartCountry(); chartP3(); chartP4(); chartMorph(); chartTested(); chartGap(); }
+function renderSubs() {                    // one-line answer under each chart title, computed from the data
+  const b = String(state.bar), set = (id, t) => { const e = $("#sub-" + id); if (e) e.textContent = t; };
+  const ev = ISOS.map((k) => [k, C[k].untested.all_people_share_below[b]]).sort((x, y) => y[1] - x[1]);
+  const [hi, hv] = ev[0], [lo, lv] = ev[ev.length - 1];
+  set("c-country", `At ${b} Mbps, ${C[hi].name} is furthest behind: about ${pct(hv, 0)} of everyone (${mil(hv * C[hi].population_m)} people). ${C[lo].name} has the fewest (${pct(lv, 0)}).`);
+  const cc = ISOS.filter((k) => C[k].p3 && C[k].p3.crossing_cautious).sort((x, y) => C[y].p3.crossing_cautious.att - C[x].p3.crossing_cautious.att)
+    .map((k) => `${C[k].name} +${(100 * C[k].p3.crossing_cautious.att).toFixed(1)} pts`);
+  set("c-p3", cc.length ? `After the strictest checks: ${cc.join(", ")}. Elsewhere the evidence is too weak to say.` : "No country passed the strictest checks.");
+  const g = ISOS.filter((k) => C[k].p4 && C[k].p4.validated && C[k].p4.gain != null).sort((x, y) => C[x].p4.gain - C[y].p4.gain);
+  const pend = ISOS.filter((k) => C[k].p4 && !C[k].p4.validated).map((k) => C[k].name);
+  set("c-p4", g.length ? `Yes, in every checked country: +${Math.round(100 * C[g[0]].p4.gain)}% (${C[g[0]].name}) to +${Math.round(100 * C[g[g.length - 1]].p4.gain)}% (${C[g[g.length - 1]].name}) more people lifted.`
+    + (pend.length ? ` ${pend.join(", ")}: not yet checked.` : "") : "");
+  const mb = state.bar === 10 ? "below_10" : "below_25", rat = ISOS.map((k) => C[k].morphology.rural[mb] / Math.max(C[k].morphology.urban_centre[mb], 1e-9)).sort((x, y) => x - y);
+  set("c-morph", `Rural people are typically ${rat[Math.floor(rat.length / 2)].toFixed(0)}× as likely as city-centre people to be below ${state.bar === 10 ? 10 : 25} Mbps (median of seven countries).`);
+  const un = ISOS.map((k) => [k, 1 - C[k].measured_share]).sort((x, y) => y[1] - x[1]);
+  set("c-tested", `In ${un.filter((x) => x[1] > 0.2).length} of 7 countries more than 1 in 5 people live where nobody tested; the most in ${C[un[0][0]].name} (${pct(un[0][1], 0)}).`);
+  const gp = ISOS.filter((k) => (C[k].gap_types_25.capacity || 0) + (C[k].gap_types_25.coverage || 0) > 0.01);
+  const capMore = gp.filter((k) => (C[k].gap_types_25.capacity || 0) > (C[k].gap_types_25.coverage || 0)).length;
+  set("c-gap", `Where cell data can tell the two apart (${gp.map((k) => C[k].name).join(", ")}), capacity gaps outnumber coverage gaps in ${capMore} of ${gp.length}.`);
+}
+function renderCharts() { document.querySelectorAll(".chart > .tip").forEach((t) => (t.hidden = true)); chartCountry(); chartP3(); chartP4(); chartMorph(); chartTested(); chartGap(); renderSubs(); }
 function renderAll() { renderControls(); renderFacts(); renderLegend(); drawMap(); renderTop(); renderCharts(); renderNominalMap(); }
 let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { drawMap(); renderCharts(); }, 120); });
 const redrawTheme = () => { drawMap(); };

@@ -82,23 +82,20 @@ GAP = {"none": 0, "capacity": 1, "coverage": 2, "slow_type_unknown": 3, "unmeasu
 MOR = {"rural": 0, "urban_cluster": 1, "urban_centre": 2}
 DDIR = ROOT / "docs" / "data" / "d"
 CDIR = ROOT / "docs" / "data" / "cells"
-NEAR_RING = 3        # ~3 km around each nominal
-
-
-def cells_layer(k: str, cells: pd.DataFrame, nominal_h3: list[str]) -> dict:
-    """Existing LTE/5G cells recorded in OpenCelliD, for the nominal map (written to docs/data/cells/<ISO>.js, loaded on
-    demand): counts per ~250 km² hexagon (resolution 5) for the country view, and the 0.74 km² hexagons with cells within
-    ring 3 (~3 km) of any nominal for the close view. Cells are crowdsourced positions, not tower positions."""
+def cells_layer(k: str, cells: pd.DataFrame) -> dict:
+    """Existing LTE/5G cells recorded in OpenCelliD, for the nominal map. Two files, both loaded on demand:
+    docs/data/cells/<ISO>.js holds counts per ~250 km² hexagon (resolution 5) for the zoomed-out view;
+    docs/data/cells/<ISO>_hex.js holds every 0.74 km² hexagon with a recorded cell, loaded on the first zoom-in.
+    Cells are crowdsourced positions, not tower positions."""
     r5 = cells.groupby(cells.h3.map(lambda x: h3.cell_to_parent(x, 5))).n.sum()
-    near = set()
-    for x in nominal_h3:
-        near.update(h3.grid_disk(x, NEAR_RING))
-    nb = cells[cells.h3.isin(near)]
-    out = {"r5": [[x[:-7], int(n)] for x, n in r5.items()], "near": [[x[:-5], int(n)] for x, n in zip(nb.h3, nb.n)]}
     CDIR.mkdir(parents=True, exist_ok=True)
-    (CDIR / f"{k}.js").write_text("window.GEO1_CELLS = window.GEO1_CELLS || {};\nwindow.GEO1_CELLS[" + json.dumps(k) + "] = "
-                                  + json.dumps(out, separators=(",", ":")) + ";\n")
-    return {"r5_areas": len(out["r5"]), "near_hexagons": len(out["near"]), "cells_total": int(cells.n.sum())}
+    head = "window.GEO1_CELLS = window.GEO1_CELLS || {};\n"
+    (CDIR / f"{k}.js").write_text(head + "window.GEO1_CELLS[" + json.dumps(k) + "] = "
+                                  + json.dumps({"r5": [[x[:-7], int(n)] for x, n in r5.items()]}, separators=(",", ":")) + ";\n")
+    (CDIR / f"{k}_hex.js").write_text("window.GEO1_CELLHEX = window.GEO1_CELLHEX || {};\nwindow.GEO1_CELLHEX[" + json.dumps(k) + "] = "
+                                      + json.dumps({"h": [x[:-5] for x in cells.h3], "n": [int(n) for n in cells.n]}, separators=(",", ":")) + ";\n")
+    out = {"r5": r5}
+    return {"r5_areas": int(len(out["r5"])), "cell_hexagons": int(len(cells)), "cells_total": int(cells.n.sum())}
 NOISE = None   # set in main() from derived/hex_noise.parquet when the ADR-005 follow-up has run
 
 
@@ -239,7 +236,7 @@ def main() -> None:
                            "theta_new": round(v["theta"]["new"][0], 3), "theta_cap": round(v["theta"]["capacity"][0], 3), "own_theta": v["theta"]["own_new_estimate"],
                            "pts": [[round(a, 4), round(o, 4), t[0]] for a, o, t in zip(plan.lat, plan.lon, plan.intervention)]}
                 c["p4"]["validated"] = bool(v.get("validated", False)); c["p4"]["pending"] = v.get("pending")
-                c["p4"]["cells"] = cells_layer(k, hl[hl.iso3 == k], plan.h3.tolist())
+                c["p4"]["cells"] = cells_layer(k, hl[hl.iso3 == k])
                 dnames = sorted(set(plan.district.fillna("")))
                 dpos = {n: i for i, n in enumerate(dnames)}
                 val = "site_lat" in plan.columns                     # ADR-008 amendment 1: site point and check results

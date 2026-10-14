@@ -70,11 +70,17 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     const nmr = await page.evaluate(() => { const ls = nlayer ? nlayer.getLayers() : []; if (ls.length) ls[0].openPopup();
       const pop = document.querySelector("#nmap .leaflet-popup-content"); return { markers: ls.length, popup: pop ? pop.textContent.replace(/\s+/g, " ").slice(0, 70) : "",
         sat: !!(pop && pop.querySelector('a[href*="google.com/maps"]')), tiles: document.querySelectorAll("#nmap img.leaflet-tile-loaded").length,
-        checks: !!(pop && /WorldPop/.test(pop.textContent) && /built-up/.test(pop.textContent)), cells: ncells ? ncells.getLayers().length : 0 }; });
+        checks: !!(pop && /WorldPop/.test(pop.textContent) && /Buildings/.test(pop.textContent)), cells: ncells ? ncells.getLayers().length : 0 }; });
     if (nmr.markers) await nm.screenshot({ path: `${outDir}/${mode}_nominals.png` });
     rows.push({ id: "nominals", ok: nmr.markers > 0 && /people/.test(nmr.popup) && nmr.sat && nmr.tiles > 0, w: nmr.markers, h: nmr.tiles, inside: true, gone: true, text: nmr.popup });
     rows.push({ id: "nom-checks", ok: nmr.checks && nmr.cells > 0, w: nmr.cells, h: 0, inside: true, gone: true, text: `popup shows population sources and built-up land: ${nmr.checks} · existing-cell shapes drawn: ${nmr.cells}` });
-    rows.push({ id: "district", ok: !!dt && dt.inside && /0\.74 km/.test(dt.text) && back, ...(dt || {}), gone: back, text: (dt ? dt.text : "") + " | " + head });
+    // zoomed in over Jakarta: every recorded cell hexagon loads and draws; the map has its own country switcher
+    await page.evaluate(() => { nmap.closePopup(); nmap.setView([-6.2, 106.82], 12); }); await wait(3000);
+    const zh = await page.evaluate(() => ({ hex: ncells.getLayers().length, isoButtons: document.querySelectorAll("#nmap-iso button").length }));
+    rows.push({ id: "cell-hexes", ok: zh.hex > 0 && zh.isoButtons === 7, w: zh.hex, h: zh.isoButtons, inside: true, gone: true, text: `cell hexagons drawn at zoom 12: ${zh.hex} · country buttons on the map: ${zh.isoButtons}` });
+    const subs = await page.evaluate(() => [...document.querySelectorAll(".chart-sub")].map((e) => e.textContent.trim()));
+    rows.push({ id: "subtitles", ok: subs.length === 6 && subs.every((t) => t.length > 20 && !/undefined|NaN/.test(t)), w: subs.length, h: 0, inside: true, gone: true, text: subs.map((t) => t.slice(0, 40)).join(" | ") });
+    rows.push({ id: "district", ok: !!dt && dt.inside && /Typical speed|Not tested/.test(dt.text) && back, ...(dt || {}), gone: back, text: (dt ? dt.text : "") + " | " + head });
     summary.push({ mode, onLoad, closedOnLoad, hScroll, errs: errs.length, pass: rows.filter((r) => r.ok).length, total: rows.length });
     console.log(`\n== ${mode}: tooltips visible on load=${onLoad} · page scrolls sideways=${hScroll} · JS errors=${errs.length}`);
     for (const r of rows) console.log(`  ${r.ok ? "OK  " : "FAIL"} ${r.id.padEnd(8)} ${r.w ? `${r.w}×${r.h}px covers ${r.coverPct ?? "-"}% inside=${r.inside}${r.clipped ? " CLIPPED" : ""}` : "not shown"} hides=${r.gone} | ${r.text || ""}`);

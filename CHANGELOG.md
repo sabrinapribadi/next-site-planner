@@ -19,6 +19,11 @@ Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can b
   - **WorldPop for seven countries:** summed into hexagons. The server ignores resume requests, so the US file (494 MB) is still downloading.
   - **Crowding:** both maps over-crowd some remote towns. Handled as a sensitivity, not a rule change: amendment 2, pushed before computing.
   - **Existing cells on the map:** recorded LTE/5G cells (OpenCelliD) are shown, so nominals' gaps are visible. The page and ADR-008 now say that "new site" means "no tower on record", which in Southeast Asia is not "no tower".
+  - **Readability (hiring readers):**
+    - every chart has a question as its title and a one-line answer computed from the data;
+    - tooltips cut to 2–4 short lines (they now cover 5–8% of a chart, down from 15–51%);
+    - the nominal map has its own country switcher;
+    - zooming in shows every recorded cell hexagon (loaded on first zoom).
   - **Audit fixes:**
     - an unverifiable reference removed;
     - P3 scope (all seven countries) corrected in README, PRD and ADR-007;
