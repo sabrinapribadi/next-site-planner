@@ -25,17 +25,19 @@ def greedy_knapsack(b: np.ndarray, c: np.ndarray, budget: float) -> np.ndarray:
     return chosen
 
 
-def exact_knapsack(b: np.ndarray, c: np.ndarray, budget: float, top: int = 20000, time_limit: float = 120) -> tuple[np.ndarray, dict]:
-    """Exact 0/1 knapsack (HiGHS) on the `top` candidates by benefit ÷ cost; the rest cannot enter an optimal plan
-    unless the top set is exhausted (checked)."""
+def exact_knapsack(b: np.ndarray, c: np.ndarray, budget: float, top: int = 20000, time_limit: float = 30, gap: float = 1e-4) -> tuple[np.ndarray, dict]:
+    """0/1 knapsack (HiGHS) on the `top` candidates by benefit ÷ cost, solved to a proven relative gap of `gap`
+    (0.01% by default; the achieved gap is reported). The rest cannot enter an optimal plan unless the top set is
+    exhausted (checked)."""
     order = np.argsort(-(b / c), kind="stable")[:top]
     order = order[b[order] > 0]
     res = milp(c=-b[order], constraints=LinearConstraint(c[order][None, :], -np.inf, budget),
-               integrality=np.ones(len(order)), bounds=Bounds(0, 1), options={"time_limit": time_limit, "mip_rel_gap": 1e-6})
+               integrality=np.ones(len(order)), bounds=Bounds(0, 1), options={"time_limit": time_limit, "mip_rel_gap": gap})
     chosen = np.zeros(len(b), bool)
     if res.x is not None:
         chosen[order[res.x > 0.5]] = True
     return chosen, {"status": int(res.status), "message": str(res.message), "candidates": int(len(order)),
+                    "mip_gap": float(getattr(res, "mip_gap", float("nan")) or 0.0),
                     "budget_fits_in_top": bool(c[order].sum() > budget)}
 
 
