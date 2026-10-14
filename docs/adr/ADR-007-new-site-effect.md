@@ -111,6 +111,21 @@ Germany and the US are judged separately, for new sites, ring 0.
 - **Share of event hexagons that crossed 25 Mbps** after a new site vs comparison places: the input P4 needs.
 - **Transfer to Indonesia:** an assumption, stated. P4 uses the range across Germany, the US and the area types.
 
+## Amendment 2 (2026-10-14, after the first results; before these runs)
+
+**1. Imputation arm, bug fix.** `pyfixest.did2s` failed in every country (an array-shape error after it drops single-observation hexagons). The arm is re-implemented directly, which is the Borusyak et al. estimator by definition:
+
+- fit hexagon + country × area-type × quarter effects on observations not yet affected (event time < −1, or never treated);
+- predict treated hexagons' counterfactual;
+- average the gaps by event time.
+
+The interval is a block bootstrap of the treated gaps, holding the first stage fixed (slightly narrow).
+
+**2. Post-hoc diagnostics (labelled as such; not gates).** Prompted by negative mobile effects (Philippines, France) and failed fixed-broadband controls (France, US):
+
+- **Test volume:** the same event study with ln(number of tests) as the outcome. Did more people start testing when new cells appeared?
+- **Mobile minus fixed:** the same event study on ln(mobile) − ln(fixed) in hexagons with both. This removes changes that hit both networks, such as who lives there or who tests.
+
 ## SOTA comparison
 
 | Family | Method | Tested | Cited, not tested (why) |
