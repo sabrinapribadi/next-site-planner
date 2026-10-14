@@ -110,7 +110,8 @@
    "citations_per_year": 1260.4,
    "role": "staggered difference-in-differences (P3)",
    "used_in": [
-    "ADR-002"
+    "ADR-002",
+    "ADR-007"
    ],
    "openalex_id": "https://openalex.org/W3113269512"
   },
@@ -124,7 +125,8 @@
    "citations_per_year": 708.0,
    "role": "imputation event-study estimator, head-to-head arm (P3)",
    "used_in": [
-    "ADR-002"
+    "ADR-002",
+    "ADR-007"
    ],
    "openalex_id": "https://openalex.org/W3196836501"
   },
@@ -323,6 +325,62 @@
     "ADR-005"
    ],
    "openalex_id": "https://openalex.org/W2004014822"
+  },
+  {
+   "key": "goodman_bacon_2021",
+   "title": "Difference-in-differences with variation in treatment timing",
+   "venue": "Journal of Econometrics",
+   "peer_reviewed": true,
+   "year": 2021,
+   "citations": 7832,
+   "citations_per_year": 1305.3,
+   "role": "why two-way fixed effects is biased with staggered timing (P3)",
+   "used_in": [
+    "ADR-007"
+   ],
+   "openalex_id": "https://openalex.org/W2791859701"
+  },
+  {
+   "key": "sun_abraham_2021",
+   "title": "Estimating dynamic treatment effects in event studies with heterogeneous treatment effects",
+   "venue": "Journal of Econometrics",
+   "peer_reviewed": true,
+   "year": 2020,
+   "citations": 5457,
+   "citations_per_year": 779.6,
+   "role": "cited alternative, interaction-weighted event study (P3)",
+   "used_in": [
+    "ADR-007"
+   ],
+   "openalex_id": "https://openalex.org/W3112066496"
+  },
+  {
+   "key": "dechaisemartin_2020",
+   "title": "Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects",
+   "venue": "American Economic Review",
+   "peer_reviewed": true,
+   "year": 2020,
+   "citations": 4948,
+   "citations_per_year": 706.9,
+   "role": "cited alternative, heterogeneity-robust DiD (P3)",
+   "used_in": [
+    "ADR-007"
+   ],
+   "openalex_id": "https://openalex.org/W2979586175"
+  },
+  {
+   "key": "arkhangelsky_2021",
+   "title": "Synthetic Difference-in-Differences",
+   "venue": "American Economic Review",
+   "peer_reviewed": true,
+   "year": 2021,
+   "citations": 1482,
+   "citations_per_year": 247.0,
+   "role": "cited alternative, synthetic DiD (P3)",
+   "used_in": [
+    "ADR-007"
+   ],
+   "openalex_id": "https://openalex.org/W2952814763"
   }
  ]
 }

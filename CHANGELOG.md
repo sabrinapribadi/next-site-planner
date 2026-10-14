@@ -2,6 +2,26 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.6.0] — 2026-10-14 — P3: what new sites did, in all seven countries
+**Files:** docs/adr/ADR-007-new-site-effect.md, docs/adr/ADR-002-validation-and-gates.md, docs/adr/README.md, docs/PRD.md, src/did.py, tests/test_did.py, scripts/new_site_effect.py, scripts/new_site_diagnostics.py, data/outputs/p3_new_site_effect.json, data/outputs/p3b_diagnostics.json, scripts/export_page_data.py, docs/index.html, docs/build.html, README.md, Makefile, docs/references.yaml
+- **Situation:** P4 needs the measured effect of a new site, but sites are built where demand already is and crowdsourced data dates them only roughly.
+- **Task:** Estimate what new sites did to nearby speeds with a design fixed in advance, and treat every country the same.
+- **Action:**
+  - **Design first:** ADR-007 pushed before any outcome.
+  - **Amendment 1:** all seven countries under one rule, at least 100 events per estimate. Pushed before running the new countries; Germany's already-seen result disclosed.
+  - **Estimator:** Callaway–Sant'Anna written and unit-tested, with a spatial block bootstrap.
+  - **Checks:** home-broadband control, placebo timing, ≥ 5-test robustness, area types, crossing 25 Mbps.
+  - **Memory:** the regression arms sample never-treated hexagons (≤ 50k); results saved per country with resume.
+  - **Amendment 2:** pushed before running. A direct imputation estimator, plus post-hoc test-volume and mobile-minus-fixed diagnostics.
+  - **Pages:** a P3 chart, a details table, method rows, "How to read this" notes, the walkthrough's P3 phase.
+- **Result:**
+  - **Pre-trends:** pass in Germany, France, the US and the Philippines; fail in Indonesia (sites followed falling speeds: −12% the year before) and the UAE. Malaysia has too few sites.
+  - **Slow places lifted above 25 Mbps:** +12.6 pts in Germany (+5.6 to +19.4) and +12.1 in France (+3.0 to +21.6).
+  - **Average speed:** ≈ 0 except in the US (+7 to +12% across three methods).
+  - **Test volumes:** unchanged everywhere.
+  - **Tests:** 21 unit tests; browser checks 8 of 8 in three modes; walkthrough 318 of 318.
+- **Talking point:** "New sites lift slow places over the bar more than they raise averages — and where a check failed, I said so country by country."
+
 ## [0.5.2] — 2026-10-14 — ADR-006 pre-registered and frozen; explanations collapsible
 **Files:** docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md, docs/adr/README.md, scripts/freeze_p2v2.py, data/outputs/p2v2_frozen.json, docs/index.html, docs/build.html, README.md
 - **Situation:**

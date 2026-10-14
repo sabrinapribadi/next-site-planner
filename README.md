@@ -11,11 +11,12 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 
 **Live:** [results page](https://sabrinapribadi.github.io/next-site-planner/) · [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html)
 
-Status: **phases 0–2 of 7 done**. Data foundation and experience gap passed their gates. For speed where nobody tested (P2), machine learning was only 7% more accurate than kriging, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. New-site effect (P3) and site optimiser (P4) are next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
+Status: **phases 0–3 of 7 done**. Data foundation and experience gap passed their gates. For speed where nobody tested (P2), machine learning was only 7% more accurate than kriging, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. The measured effect of new sites (P3) is done; the site optimiser (P4) is next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
 
 - 61.7M people in tested areas get under 25 Mbps on mobile; 349M people live where nobody tested.
 - At equal population density the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
 - About 68M people nobody tested are likely below 25 Mbps (typical speed), including 23M in the Philippines and 30M in Indonesia.
+- New sites lift slow places, not averages: in Germany and France about 1 in 8 places below 25 Mbps crossed it because of a new site; average speed rose only in the US (+7–12%).
 - Single speed tests are mostly luck: two tests at the same place differ 3–5×. Each hexagon is blended with its neighbourhood (checked against the next quarter: 28–44% closer).
 
 ## Reproduce
@@ -35,6 +36,8 @@ make test build-test hover-test  # unit tests; browser checks of both pages
 | P1 gap | `experience_gap.py` | `p1_experience_gap.json` | ADR-001, ADR-002, ADR-003 |
 | P2 speed model | `speed_model.py` | `p2_speed_model.json` | ADR-004 |
 | Test noise, deployment | `noise_followup.py`, `noise_validation.py` | `p2b_noise_followup.json`, `p2c_noise_validation.json` | ADR-005 |
+| P3 new-site effect | `new_site_effect.py`, `new_site_diagnostics.py` | `p3_new_site_effect.json`, `p3b_diagnostics.json` | ADR-007 |
+| P2 version 2 freeze | `freeze_p2v2.py` | `p2v2_frozen.json` | ADR-006 |
 | Pages | `export_page_data.py` | `docs/data/` | — |
 
 ## Data

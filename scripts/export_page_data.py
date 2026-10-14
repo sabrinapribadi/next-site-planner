@@ -114,6 +114,31 @@ def district_details(iso3: str, hk: pd.DataFrame, m: dict, p2: pd.DataFrame | No
     return sorted(int(n) for n in keep)
 
 
+def p3_summary(r: dict, diag) -> dict:
+    """Compact P3 numbers for the page: verdict, average-speed effect by method, crossing above 25 Mbps."""
+    pc = lambda x: None if not isinstance(x, dict) or x.get("post_avg_0_4") is None else x["post_avg_0_4"]
+    out = {"new_site_events": r.get("counts", {}).get("new_site_hexagons")}
+    if isinstance(r.get("new_site_ring0"), str):
+        out["verdict"] = "too_few"; return out
+    ns_, cr = pc(r["new_site_ring0"]), pc(r["crossing_25_from_below"])
+    pre_ok = bool(r["gate"].get("passed")); nc = pc(r["negative_control_fixed"])
+    nc_ok = nc is None or (nc["ci95"][0] <= 0 <= nc["ci95"][1])
+    out.update({"pretrend_passed": pre_ok, "negative_control_ok": nc_ok,
+                "avg_cs": {"pct": round(ns_["pct_change"], 4), "ci": [round(x, 4) for x in ns_["pct_ci95"]]}})
+    if cr:
+        out["crossing_pp"] = {"att": round(cr["att"], 4), "ci": [round(x, 4) for x in cr["ci95"]],
+                              "pretrend_ok": bool(r["crossing_25_from_below"].get("pretrend", {}).get("all_ci_include_0"))}
+    if diag and isinstance(diag, dict):
+        im, mf, tv = (diag.get("imputation_new_site_ring0") or {}).get("post_avg_0_4"), pc(diag.get("posthoc_mobile_minus_fixed")), pc(diag.get("posthoc_tests_volume"))
+        if im: out["avg_imputation"] = {"pct": round(im["pct_change"], 4), "ci": [round(float(np.exp(x) - 1), 4) for x in im["ci95"]]}
+        if mf: out["avg_mobile_minus_fixed"] = {"pct": round(mf["pct_change"], 4), "ci": [round(x, 4) for x in mf["pct_ci95"]]}
+        if tv: out["tests_volume"] = {"pct": round(tv["pct_change"], 4), "ci": [round(x, 4) for x in tv["pct_ci95"]]}
+    cap = pc(r.get("capacity_ring0")) if isinstance(r.get("capacity_ring0"), dict) else None
+    if cap: out["capacity_avg"] = {"pct": round(cap["pct_change"], 4), "ci": [round(x, 4) for x in cap["pct_ci95"]]}
+    out["verdict"] = ("causal" if pre_ok and nc_ok else "restricted" if pre_ok else "association")
+    return out
+
+
 def main() -> None:
     p0 = json.loads((ROOT / "data/outputs/p0_foundation.json").read_text())
     p1 = json.loads((ROOT / "data/outputs/p1_experience_gap.json").read_text())
@@ -126,6 +151,9 @@ def main() -> None:
     p2j = json.loads((ROOT / "data/outputs/p2_speed_model.json").read_text()) if (ROOT / "data/outputs/p2_speed_model.json").exists() else None
     p2b = json.loads((ROOT / "data/outputs/p2b_noise_followup.json").read_text()) if (ROOT / "data/outputs/p2b_noise_followup.json").exists() else None
     p2c = json.loads((ROOT / "data/outputs/p2c_noise_validation.json").read_text()) if (ROOT / "data/outputs/p2c_noise_validation.json").exists() else None
+    p3f, p3bf = ROOT / "data/outputs/p3_new_site_effect.json", ROOT / "data/outputs/p3b_diagnostics.json"
+    p3 = json.loads(p3f.read_text())["countries"] if p3f.exists() else None
+    p3b = json.loads(p3bf.read_text()) if p3bf.exists() else None
     DDIR.mkdir(parents=True, exist_ok=True)
     for f in DDIR.glob("*.js"):
         f.unlink()
@@ -163,6 +191,8 @@ def main() -> None:
                           "level_credible": bool(credible),
                           "validation": {kk: round(vv, 4) if isinstance(vv, float) else vv for kk, vv in val.items()},
                           "s2_test": round(p2b["noise_model"][k]["s2_test"], 3), "s2_micro": round(p2b["noise_model"][k]["s2_micro"], 3)}
+            if p3 and k in p3:
+                c["p3"] = p3_summary(p3[k], (p3b or {}).get(k))
             c["untested"] = {"people_m": round(tot["untested_people"] / 1e6, 2),
                              "expected_below_m": {str(b): round(tot[f"expected_untested_below_{b}"] / 1e6, 2) for b in BARS},
                              "all_people_share_below": {str(b): round(tot[f"all_people_share_below_{b}"], 4) for b in BARS}}

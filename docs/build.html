@@ -211,7 +211,7 @@ footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line);
 <script>
 const REPO = "https://github.com/sabrinapribadi/next-site-planner/blob/main/";
 const ADR = {
-  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md", "003": "docs/adr/ADR-003-industry-alignment.md", "004": "docs/adr/ADR-004-speed-model-for-untested-areas.md", "005": "docs/adr/ADR-005-measurement-noise.md"
+  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md", "003": "docs/adr/ADR-003-industry-alignment.md", "004": "docs/adr/ADR-004-speed-model-for-untested-areas.md", "005": "docs/adr/ADR-005-measurement-noise.md", "006": "docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md", "007": "docs/adr/ADR-007-new-site-effect.md"
 };
 const LANES = ["Data", "Compute (DuckDB · Spark)", "Spatial statistics", "Model", "Evaluation", "Serving & AI", "Platform", "Decision"];
 
@@ -310,12 +310,36 @@ const PHASES = [
   lessons: ["Size the test to how the model will be used.", "Know the noise floor before comparing models.", "A failed gate is a result; publish it next to the follow-up."],
   star: "Machine learning failed my own 10% gate against kriging, so I shipped kriging, then showed the real limit was test noise — and that about 68 million untested people are likely on slow mobile."
 },
-{ agg: [["Tiles near a new site → effect", "Tiles within 500 m of a new cell; group-time effects aggregated to event time, weighted by group size (Callaway–Sant'Anna, planned)", "Avoids the bias of one pooled before/after regression"]], id: "p3", tag: "P3", name: "What new sites do", dates: "planned", verdict: ["plan", "Planned"],
-  scqa: ["Plans assume new sites lift nearby speeds.", "Nobody checks; sites go where demand is, which biases naive comparisons.", "How much does a new site lift speeds within 500 m?", "Planned."],
-  steps: [["Data", "New cells", "OpenCelliD cells first seen 2023–24 and observed ≥ 180 days (Germany ~40k, US ~61k).", "Only reliable first-seen dates.", "planned", "plan"],
-          ["Model", "Event study", "Callaway–Sant'Anna vs Borusyak imputation; pre-trend placebo.", "Staggered roll-outs bias two-way fixed effects.", "planned", "plan"],
-          ["Decision", "Transfer to Indonesia", "Effect measured in Germany and the US, carried to Indonesia as a stated assumption with a range.", "Indonesia has only ~1.3k reliable new cells.", "planned", "plan"]],
-  decisions: [["Staggered difference-in-differences", "002"]], results: [["Pre-trend intervals include 0", "pass", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ agg: [["Cells → events", "First reliable new LTE/5G cell per hexagon (first seen 2023 Q3–2024 Q4, seen ≥ 180 days); new site if no cell of any kind within ring 1 before", "A crowdsourced proxy for a built site"], ["Hexagon-quarters → group-time effects", "For each start quarter and quarter: mean change in treated hexagons minus mean change in comparison hexagons (base two quarters before)", "Compare like with like, never early-treated with late-treated"], ["Group-time effects → event time", "Weighted by the number of treated hexagons, within country × area type", "One curve per country"], ["Event time 0–4 → one number", "Average of the five post quarters; interval from a block bootstrap (~250 km² blocks)", "Nearby hexagons move together"]], id: "p3", tag: "P3", name: "What new sites did", dates: "14 Oct 2026", verdict: ["pass", "Done · mixed by country"],
+  scqa: ["P4 needs to know what a new site actually does to people's speeds.",
+         "Sites are built where demand already is, and crowdsourced data dates them only roughly.",
+         "Compared with similar places that had not got one yet, do new sites raise speeds or lift slow places above 25 Mbps?",
+         "They lift slow places: about 1 in 8 slow hexagons crossed 25 Mbps in Germany and France. Average speeds barely moved, except in the US (+7–12%). Indonesia's sites went where speeds were already falling."],
+  steps: [
+    ["Decision", "Design before outcomes", "ADR-007 pushed before any speed was looked at: events, comparison places, pre-trend gate, home-broadband control.", "The test must be fixed before the answer.", "docs/adr/ADR-007-new-site-effect.md"],
+    ["Data", "Events from cell records", "New LTE/5G cells first seen 2023 Q3–2024 Q4 and seen 180+ days; 'new site' if nothing within ~1.3 km before.", "Separate new coverage from added capacity.", "scripts/new_site_effect.py"],
+    ["Decision", "Same rule for all countries", "Planned for Germany and the US only; amended to all seven before running the others (France has 5,092 new sites).", "Treat every country the same.", "docs/adr/ADR-007-new-site-effect.md", "fix"],
+    ["Model", "Staggered difference-in-differences", "Callaway–Sant'Anna written from scratch, vectorised, with a spatial block bootstrap; tested on simulated data.", "Two-way fixed effects is biased with staggered timing.", "src/did.py"],
+    ["Evaluation", "Out of memory twice", "The regression arms died on Indonesia and the US (one dummy per hexagon).", "Some estimators scale with units.", "scripts/new_site_effect.py", "fail"],
+    ["Evaluation", "Sample, cap and resume", "Never-treated hexagons sampled (≤ 50k) for the regression arms only; results saved per country; resume.", "Finish without losing finished work.", "scripts/new_site_effect.py", "fix"],
+    ["Spatial statistics", "Pre-trend gate per country", "Passed: Germany, France, US, Philippines. Failed: Indonesia, UAE.", "No causal claim where places diverged before.", "data/outputs/p3_new_site_effect.json"],
+    ["Evaluation", "Home broadband moved too", "In France and the US, fixed speeds also fell where new cells appeared.", "Something about the area changed.", "data/outputs/p3_new_site_effect.json", "fail"],
+    ["Evaluation", "Diagnostics declared first", "Imputation fixed; test volume and mobile minus fixed added (post-hoc, labelled) before running.", "Explain surprises without moving goalposts.", "scripts/new_site_diagnostics.py", "fix"],
+    ["Decision", "The number P4 uses", "Slow places lifted above 25 Mbps: +12.6 pts Germany, +12.1 France; Southeast Asia wide and lower.", "Planners need 'who crosses the bar', not averages.", "docs/index.html"]
+  ],
+  decisions: [["New-site effect: design, gate, amendments", "007"]],
+  results: [["Pre-trends parallel", "per country", "4 of 6 pass (Malaysia: too few)", "ok"], ["Germany: slow places lifted above 25 Mbps", "with interval", "+12.6 pts (+5.6 to +19.4)", "ok"],
+            ["France: same", "with interval", "+12.1 pts (+3.0 to +21.6); home-broadband check failed", "info"], ["US: average speed", "with interval", "+7% to +12% (three methods)", "ok"],
+            ["Indonesia", "with interval", "association only (speeds fell before sites)", "no"], ["Test volume changed?", "report", "No, in every country", "info"]],
+  obstacles: [
+    ["Only two countries were planned", "An early assumption that cell dates were reliable only in Germany and the US", "Same rule for all seven; ≥ 100 events per estimate; amendment pushed first", "Apply one rule everywhere, then let sample size decide"],
+    ["Run killed without an error message (twice)", "Regression arms with one dummy per hexagon (377k in Indonesia, 2.5M in the US)", "Sample never-treated hexagons (≤ 50k) for those arms; save per country; resume", "Estimate memory before fitting fixed effects"],
+    ["Imputation failed in every country", "The library dropped single-observation hexagons and misaligned arrays", "Implemented the estimator directly (fit untreated, predict, average gaps)", "Write the estimator when a library hides its steps"],
+    ["New sites seemed to lower speeds (Philippines, France)", "Averages mix everyone's tests; estimators disagreed", "Compared three methods and test volumes before concluding", "Do not explain a surprise before checking it"]
+  ],
+  lessons: ["One rule for every country.", "A failed check is information: Indonesia's sites follow falling speeds.", "Measure what decisions need: crossing the bar, not the average."],
+  star: "I measured what 15,000 real new sites did in seven countries, and found they lift slow places over 25 Mbps (about 1 in 8 in Germany and France) rather than raising average speeds."
+},
 { agg: [["Hexagons served → people lifted", "Σ people × share of the hexagon a site serves (3GPP spacing per morphology) × expected uplift from P3 (planned)", "An urban site serves part of a hexagon; a rural one several"], ["Sites → plan cost", "Σ intervention costs in new-tower equivalents (planned)", "Budget in money-like units, not site counts"], ["Hexagons → district", "Σ people and people-weighted shares per kecamatan, county or district (planned)", "Planners and regulators work by district"]], id: "p4", tag: "P4", name: "Budgeted site optimiser", dates: "planned", verdict: ["plan", "Planned"],
   scqa: ["Sites are usually picked one by one from a ranked list.", "Neighbouring top-ranked sites cover the same people.", "Does optimising the set lift more people than ranking?", "Planned."],
   steps: [["Data", "Candidate locations", "Hexagons with people below the bar and no nearby cell, from P1 and P2.", "Only places a site could help.", "planned", "plan"],

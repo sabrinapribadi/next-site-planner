@@ -27,4 +27,6 @@ pipeline:
 	python scripts/speed_model.py
 	python scripts/noise_followup.py
 	python scripts/noise_validation.py
+	python scripts/new_site_effect.py
+	python scripts/new_site_diagnostics.py
 	python scripts/export_page_data.py

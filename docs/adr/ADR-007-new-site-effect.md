@@ -1,6 +1,6 @@
 # ADR-007: Did New Sites Raise Speeds Nearby? (P3)
 
-**Status:** Proposed — written and pushed before any P3 outcome was computed; Amendment 1 extends it to all seven countries
+**Status:** Accepted — pre-registered before any outcome; amendments 1–2 logged before their runs; results below
 **Date:** 2026-10-14
 **Deciders:** Sabrina Pribadi
 
@@ -156,6 +156,31 @@ The interval is a block bootstrap of the treated gaps, holding the first stage f
 | Fixed broadband also "improves" | Area-wide change (e.g. fibre roll-out), not the site | Report; restrict claims |
 | Effect ≈ 0 | Sites added where capacity was not binding, or dating too noisy | Report; P4 uses small effects |
 | Germany and the US differ a lot | Market differences (spectrum, density) | Report separately; Indonesia's range spans both |
+
+## Results (2026-10-14; `data/outputs/p3_new_site_effect.json`, `p3b_diagnostics.json`)
+
+**Per country (new sites):**
+
+| Country | New sites | Pre-trends | Home-broadband control | Average speed, ring 0: Callaway–Sant'Anna / imputation / mobile − fixed | Slow places (< 25 Mbps) lifted above 25 | Verdict |
+|---|---|---|---|---|---|---|
+| United States | 7,001 | pass (p 0.82) | **changed** (−6%) | +6.8% / **+10.0%** / **+12.5%** | +9.6 pts (crossing pre-trend fails) | Clearest average gain. Claims restricted by the control; the mobile − fixed check is positive |
+| Germany | 2,219 | pass (p 0.25) | unchanged | +7.1% / −2.5% / +2.6% (all intervals include 0) | **+12.6 pts** (+5.6 to +19.4) | Causal: lifts slow places; average ≈ 0 |
+| France | 5,092 | pass (p 0.16) | **changed** (−14%) | −8.0% / −2.0% / −3.7% (all include 0) | **+12.1 pts** (+3.0 to +21.6) | Restricted (control failed) |
+| Philippines | 173 | pass (p 0.44) | unchanged | −12.5% / −5.5% / −11.0% (only the first excludes 0) | +5.8 pts (−8.3 to +19.1) | Causal design; the average effect is not robust |
+| Indonesia | 339 | **fail** (p 0.036) | unchanged | −3.0% / −7.0% / −5.8% | +1.4 pts (−9.3 to +11.2) | Association only: speeds fell 12% in the year *before* sites (placebo) |
+| UAE | 116 | **fail** | unchanged | intervals span about −58% to +82% | — | Uninformative |
+| Malaysia | 21 | — | — | — | — | Too few new sites (added capacity: −20%, its pre-trends fail) |
+
+**Other estimands:**
+
+- **Ring 1:** ≈ 0 everywhere; no spill-over beyond the site's own hexagon.
+- **Added capacity:** ≈ 0 where pre-trends pass.
+- **Test volume (post-hoc):** no change in any country (e.g. US +0.8%). The change in who tests is not "more testers".
+
+**For P4:**
+
+- The usable effect is the **crossing rate** for slow places: about +10 to +13 points in Germany and France, intervals +3 to +22.
+- Southeast Asia's own estimates are wide and centred lower (+1 to +6 points). P4 uses a range from 0 to the Germany/France level there and reports how the plan changes across that range.
 
 ## Consequences
 

@@ -170,7 +170,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
   <span class="eyebrow">Portfolio · GIS + MLOps · public data only · seven countries</span>
   <h1>Where would one more mobile site help the most people?</h1>
   <p class="lede">Measured mobile speed, where people live and where cells are, on one equal-area grid for Indonesia, Malaysia, the Philippines, Germany, France, the US and the UAE.</p>
-  <div class="status"><span class="chip">Phases 0–2 of 7 done</span><span class="muted">Data foundation, experience gap and speed for untested areas are live. New-site effect and site optimiser come next.</span></div>
+  <div class="status"><span class="chip">Phases 0–3 of 7 done</span><span class="muted">Data foundation, experience gap, speed for untested areas and the measured effect of new sites are live. The site optimiser comes next.</span></div>
   <div class="status"><a href="build.html">Technical walkthrough →</a><a href="https://github.com/sabrinapribadi/next-site-planner">GitHub repository</a></div>
   <nav class="toc" aria-label="Sections"><a href="#problem"><span class="n">1</span>Problem</a><a href="#data"><span class="n">2</span>Data</a><a href="#approach"><span class="n">3</span>Approach</a><a href="#solution"><span class="n">4</span>Solution</a><a href="#take"><span class="n">5</span>Our take</a></nav>
 </header>
@@ -240,6 +240,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
       <tr><td>Slow clusters</td><td>Normal-approximation p-values</td><td>Exact p-values</td><td>False clusters on shuffled data: up to 318 → 0</td></tr>
       <tr><td>Gap types</td><td>Type every slow hexagon</td><td>Type only where cell data is complete</td><td>Cell records near only 2% of fast rural Indonesian hexagons</td></tr>
       <tr><td>Speed where nobody tested</td><td>LightGBM (machine learning)</td><td>Kriging (standard spatial averaging)</td><td>LightGBM only 7% more accurate — below the 10% set in advance to justify its 16 extra inputs, so the simpler kriging is used</td></tr>
+      <tr><td>Effect of a new site</td><td>Before vs after at new sites</td><td>Compared with similar places that had not got one yet (staggered difference-in-differences)</td><td>Indonesia: speeds were already falling a year before new sites (−12%)</td></tr>
       <tr><td>Test noise</td><td>Take each hexagon's few tests at face value</td><td>Blend with the neighbourhood by how many tests it has</td><td>Blended speeds 28–44% closer to the next quarter's tests</td></tr>
     </tbody></table></div>
   <p class="muted small">Every change after a gate was set is logged as a deviation, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
@@ -274,6 +275,10 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><p>Red dot: share of tested people whose measured average is below the bar; the pale line is its 95% interval (the true share very likely lies inside). Hollow circle: the same share if every country had the same mix of dense and sparse areas (10 and 25 Mbps). Amber square: everyone, using typical speeds and including people nobody tested. Example at 25 Mbps: the Philippines is 16% for tested people, 34% at equal density, about 31% for everyone. <b>So what:</b> rankings built on tested people alone flatter dense, well-tested countries.</p></details>
 
+  <div class="chart"><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span class="mono">extra share of slow places lifted above 25 Mbps by a new site</span></div>
+    <svg class="plot" id="c-p3" role="img" aria-label="Effect of a new site on slow places"></svg><div class="tip" hidden></div></div>
+  <details class="how"><summary>How to read this</summary><p>Each row compares hexagons that were below 25 Mbps when a new site appeared nearby with similar slow hexagons that had not got one yet. The dot is how many more of them rose above 25 Mbps over the next year, in percentage points; the line is the 95% interval. Example: Germany +12.6 points means about 1 in 8 slow places crossed 25 Mbps because of the site. Colour shows how far the comparison can be trusted. <b>So what:</b> a new site's value is lifting slow places over the bar; average speeds barely move (details below).</p></details>
+
 
 
   <div class="two">
@@ -288,7 +293,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
       <details class="faq"><summary>Is Germany really behind Indonesia?</summary><p>No. As measured they look close (14.6% vs 13.3% below 25 Mbps), but Indonesia's tested people live mostly in cities. At equal density Indonesia is at 22.0% and Germany at 17.7%. Counting everyone, including people nobody tested, Indonesia is at about 18–20% and Germany at about 11–16%.</p></details>
       <details class="faq"><summary>What is "typical speed"?</summary><p>The speed most people in a hexagon usually get. One test can be unlucky (a busy hour, a cheap plan, indoors). We blend each hexagon's tests with its neighbourhood: a hexagon with 1 test takes about 75–90% from its neighbours, one with 200 tests keeps its own. Checked against the next quarter's tests: 28–44% closer than the raw value.</p></details>
       <details class="faq"><summary>Why 10 and 25 Mbps?</summary><p>Both were fixed before the analysis. 5, 50 and 100 Mbps are shown as sensitivity; 100 Mbps matches Germany's 2019 licence obligation and the IMT-2020 user-experienced rate.</p></details>
-      <details class="faq"><summary>Where should the next site go?</summary><p>Not yet answered. The list shows where most people are below the bar today. Phase 2 predicts untested areas, phase 3 measures what new sites do, phase 4 chooses a costed set.</p></details>
+      <details class="faq"><summary>Where should the next site go?</summary><p>Phase 4 answers it: a costed set of 0.74 km² search areas that lifts the most people above the bar, using the measured effect of real new sites. Until then, the district list shows where most people are below the bar today.</p></details>
       <details class="faq"><summary>How often can it refresh?</summary><p>Quarterly, after each Ookla release. Every refresh records a fingerprint of all 40 inputs.</p></details>
     </div>
   </div>
@@ -301,6 +306,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     <li><b>Rural first:</b> in most countries rural people are 3 to 6 times more likely than city-centre people to be below 25 Mbps.</li>
     <li><b>Untested places hold most of the gap:</b> about 23M Filipinos and 30M Indonesians nobody tested are likely below 25 Mbps — more than among those who did test.</li>
     <li><b>Single tests mislead:</b> once test noise is removed, the US, France and the UAE have far fewer slow places than raw numbers suggest; Indonesia and the Philippines do not.</li>
+    <li><b>New sites lift slow places, not averages:</b> in Germany and France about 1 in 8 slow places crossed 25 Mbps because of a new site; average speeds barely moved, except in the US (+7% to +12%).</li>
     <li><b>Local, not regional:</b> real slow clusters exist only in Indonesia and the Philippines; elsewhere slow places are scattered, so plans must target places, not regions.</li>
     <li><b>What would change our view:</b> new sites found not to lift nearby speeds (phase 3), or the next quarter's tests disagreeing with the predictions.</li>
   </ul>
@@ -341,12 +347,19 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     </ul>
   </div></details>
 
+  <details class="more" id="d-p3"><summary><span class="eyebrow">What new sites did · every method and check, per country</span></summary><div class="body">
+    <div class="table-wrap"><table id="t-p3"></table></div>
+    <details class="how"><summary>How to read this</summary><p>"Average speed" is the change in a hexagon's mean measured download after a new site, compared with similar places without one yet, by three methods: the chosen estimator (Callaway–Sant'Anna), imputation, and mobile minus home broadband (which removes changes that hit both). "Pre-trends" asks whether the places moved in step before the site; "home broadband" should not change at all. Example: US +7% / +10% / +13% — all three agree on a real gain. <b>So what:</b> only the US shows a clear average gain; everywhere, the clearer effect is slow places crossing 25 Mbps. Test counts did not rise anywhere, so "new users" do not explain the results.</p></details>
+  </div></details>
+
   <details class="more" id="d-decisions"><summary><span class="eyebrow">Decision log · every choice against a named alternative</span></summary><div class="body">
     <ul class="points">
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-001-framing-and-analysis-unit.md">ADR-001</a> — people below a bar on H3 resolution 8; raw and density-adjusted; untested people reported.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-002-validation-and-gates.md">ADR-002</a> — gates for every phase, set before analysis; two logged deviations (block bootstrap, exact p-values).</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-003-industry-alignment.md">ADR-003</a> — how planners work: gap types, Degree of Urbanisation, 3GPP site spacing, co-location costs, regulator benchmarks; OpenCelliD completeness finding.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-004-speed-model-for-untested-areas.md">ADR-004</a> — speed where nobody tested: kriging vs LightGBM, test blocks sized to real distances; the gate failed and kriging is used.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-007-new-site-effect.md">ADR-007</a> — what new sites did: staggered difference-in-differences in all seven countries, pre-trend gate, home-broadband control, two amendments logged before running.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md">ADR-006</a> — machine learning vs kriging, decided on 2026 Q4 data with predictions frozen and fingerprinted beforehand.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-005-measurement-noise.md">ADR-005</a> — test noise (written after the gate failed, before running): noise model, blending with the neighbourhood, cross-quarter check.</li>
     </ul>
     <p class="muted small">The three method changes made after checks failed are in the method table above and ADR-002; the noise follow-up is ADR-005.</p>
@@ -377,7 +390,7 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
         <tr><td>P0</td><td>≥ 99% of people and tests assigned per country; data contracts pass; inputs fingerprinted</td><td id="a-p0">Passed</td></tr>
         <tr><td>P1</td><td>Shares with 95% intervals containing their estimate; clusters at FDR 5%; every populated hexagon typed</td><td id="a-p1">Passed</td></tr>
         <tr><td>P2</td><td>Machine learning ≤ 0.90 × kriging error (spatial blocks)</td><td><span class="badge warn">Failed</span> 0.93 → kriging used</td></tr>
-        <tr><td>P3</td><td>Pre-trend placebo interval includes 0; new-site effect with interval</td><td class="muted">Planned</td></tr>
+        <tr><td>P3</td><td>Pre-trends parallel (per country); effect with interval</td><td><span class="badge ok">Passed</span> Germany, France, US, Philippines · <span class="badge warn">Failed</span> Indonesia, UAE · Malaysia too few sites</td></tr>
         <tr><td>P4</td><td>≥ 10% more people lifted than a ranking, at equal cost</td><td class="muted">Planned</td></tr>
       </tbody></table></div>
     <div class="table-wrap"><table id="t-ci"></table></div>
@@ -395,7 +408,8 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
         <li>Roberts et al. (2017), Ecography 40. · Ploton et al. (2020), Nature Communications 11. · Wadoux et al. (2021), Ecological Modelling 457. · Meyer & Pebesma (2021), Methods in Ecology and Evolution 12.</li>
         <li>Speed where nobody tested: Hengl et al. (2018), PeerJ. · Sekulić et al. (2020), Remote Sensing 12. · Ke et al. (2017), LightGBM, NeurIPS. · Linnenbrink et al. (2024), Geoscientific Model Development 17. · Milà et al. (2022), Methods in Ecology and Evolution 13. · Pebesma (2004), Computers & Geosciences 30. · Cressie (1985), Mathematical Geology 17. · Cressie (1993), Statistics for Spatial Data.</li>
         <li>Test noise: Fay & Herriot (1979), Journal of the American Statistical Association 74. · Ghosh & Rao (1994), Statistical Science 9. · Besag, York & Mollié (1991), Annals of the Institute of Statistical Mathematics 43 (cited alternative).</li>
-        <li>Planned phases: Callaway & Sant'Anna (2021), Journal of Econometrics 225. · Borusyak, Jaravel & Spiess (2024), Review of Economic Studies. · Church & ReVelle (1974), Papers of the Regional Science Association 32.</li>
+        <li>New-site effect: Callaway & Sant'Anna (2021), Journal of Econometrics 225. · Borusyak, Jaravel & Spiess (2024), Review of Economic Studies 91. · Goodman-Bacon (2021), Journal of Econometrics 225. · Sun & Abraham (2021), Journal of Econometrics 225. · de Chaisemartin & D'Haultfœuille (2020), American Economic Review 110. · Arkhangelsky et al. (2021), American Economic Review 111.</li>
+        <li>Planned phases: Church & ReVelle (1974), Papers of the Regional Science Association 32.</li>
       </ul></div></details>
   </div></details>
 </section>
@@ -673,6 +687,26 @@ function chartMorph() {
     return `<b>${esc(c.name)} · below ${lbl} Mbps</b>` + MORPH.map(([m, , l]) => `${l}: ${pct(c.morphology[m][bar])} of tested · ${pct(c.morphology[m].share, 0)} of people, ${pct(c.morphology[m].measured, 0)} tested`).join("<br>")
       + (state.bar !== 10 && state.bar !== 25 ? `<br><span class="muted">Area types are reported at 10 and 25 Mbps; showing 25.</span>` : ""); });
 }
+const VERD = { causal: ["--ok", "Fair comparison"], restricted: ["--amber", "Fair, but the home-broadband check failed"], association: ["--untested", "Association only (pre-trends failed)"] };
+function chartP3() {
+  const svg = $("#c-p3"), W = svg.parentElement.clientWidth - 12, phone = W < 520;
+  const rows = ISOS.filter((k) => C[k].p3 && C[k].p3.crossing_pp).sort((a, c) => C[c].p3.crossing_pp.att - C[a].p3.crossing_pp.att);
+  const L = phone ? 92 : 120, R = 16, rowH = 34, top = 6, H = top + rows.length * rowH + 22;
+  const x = (v) => L + ((v + 0.15) / 0.40) * (W - L - R);
+  let s = axis(x, -0.15, 0.25, top, top + rows.length * rowH, [-0.1, 0, 0.1, 0.2], (t) => (t > 0 ? "+" : "") + Math.round(100 * t) + " pts");
+  s += `<line x1="${x(0)}" x2="${x(0)}" y1="${top}" y2="${top + rows.length * rowH}" stroke="var(--muted)" stroke-dasharray="3 3"/>`;
+  rows.forEach((k, r) => {
+    const p = C[k].p3, c = p.crossing_pp, y = top + r * rowH + rowH / 2, col = VERD[c.pretrend_ok ? p.verdict : "association"][0];
+    s += `<g class="row" tabindex="0" data-k="${k}"><rect class="band" x="0" y="${y - rowH / 2}" width="${W}" height="${rowH}" fill="transparent"/>
+      <text x="${L - 10}" y="${y + 4}" text-anchor="end">${esc(phone ? k : label(k))}</text>
+      <line x1="${x(Math.max(c.ci[0], -0.15))}" x2="${x(Math.min(c.ci[1], 0.25))}" y1="${y}" y2="${y}" stroke="var(${col})" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="${x(c.att)}" cy="${y}" r="6" fill="var(${col})"/></g>`;
+  });
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
+  bindRows(svg, (k) => { const p = C[k].p3, c = p.crossing_pp, v = VERD[c.pretrend_ok ? p.verdict : "association"][1];
+    return `<b>${esc(C[k].name)} · ${p.new_site_events.toLocaleString("en")} new sites</b>Slow places lifted above 25 Mbps: ${c.att > 0 ? "+" : ""}${(100 * c.att).toFixed(1)} points (95% interval ${(100 * c.ci[0]).toFixed(1)} to ${(100 * c.ci[1]).toFixed(1)})<br>${v}`
+      + `<br>Average speed change: ${(100 * p.avg_cs.pct).toFixed(1)}% (interval ${(100 * p.avg_cs.ci[0]).toFixed(0)}% to ${(100 * p.avg_cs.ci[1]).toFixed(0)}%)`; });
+}
 function stacked(svgId, parts, tipFor) {
   const svg = $(svgId), W = svg.parentElement.clientWidth - 12, phone = W < 520;
   const L = phone ? 92 : 120, R = 10, rowH = 30, top = 6, n = ISOS.length, H = top + n * rowH + 22;
@@ -699,7 +733,15 @@ function chartGap() {
     (k) => `<b>${esc(C[k].name)} · at 25 Mbps</b>` + GAPS.map(([g, , l]) => `${l}: ${pct(C[k].gap_types_25[g] || 0)}`).join("<br>"));
 }
 const fx = (e) => Math.exp(e).toFixed(1) + "×";
+const pp = (v) => (v > 0 ? "+" : "") + (100 * v).toFixed(1) + "%";
 function tables() {
+  $("#t-p3").innerHTML = `<thead><tr><th>Country</th><th class="num">New sites</th><th>Pre-trends</th><th>Home broadband</th><th class="num">Average speed (3 methods)</th><th class="num">Slow places above 25 Mbps</th><th class="num">Test counts</th></tr></thead><tbody>` +
+    ISOS.map((k) => { const p = C[k].p3; if (!p) return "";
+      if (p.verdict === "too_few") return `<tr><td>${esc(C[k].name)}</td><td class="num">${p.new_site_events}</td><td colspan="5" class="muted">Too few new sites (minimum 100)</td></tr>`;
+      const m3 = [p.avg_cs, p.avg_imputation, p.avg_mobile_minus_fixed].map((x) => (x ? pp(x.pct) : "—")).join(" / ");
+      return `<tr><td>${esc(C[k].name)}</td><td class="num">${p.new_site_events.toLocaleString("en")}</td><td>${p.pretrend_passed ? '<span class="badge ok">parallel</span>' : '<span class="badge warn">not parallel</span>'}</td>`
+        + `<td>${p.negative_control_ok ? '<span class="badge ok">unchanged</span>' : '<span class="badge warn">also changed</span>'}</td><td class="num">${m3}</td>`
+        + `<td class="num">${p.crossing_pp ? (p.crossing_pp.att > 0 ? "+" : "") + (100 * p.crossing_pp.att).toFixed(1) + " pts" : "—"}</td><td class="num">${p.tests_volume ? pp(p.tests_volume.pct) : "—"}</td></tr>`; }).join("") + `</tbody>`;
   const P = G.p2, N = G.noise_scores, D = { r6: "~36 km² blocks (the rule)", r7: "~5 km² blocks", r5: "~250 km² blocks", random: "random hexagons (optimistic)" };
   $("#t-p2").innerHTML = `<thead><tr><th>Test design</th><th class="num">Kriging error</th><th class="num">Machine-learning error</th><th class="num">Ratio</th><th>Plain words</th></tr></thead><tbody>` +
     Object.entries(D).map(([d, l]) => `<tr><td>${l}</td><td class="num">${P[d].rmse.toFixed(2)} <span class="muted">(${fx(P[d].rmse)})</span></td><td class="num">${P[d].gbm.toFixed(2)} <span class="muted">(${fx(P[d].gbm)})</span></td><td class="num">${P[d].ratio.toFixed(2)}</td><td>${Math.round(100 * (1 - P[d].ratio))}% smaller error${d === "r6" ? " — rule needed 10%: kriging used" : ""}</td></tr>`).join("") +
@@ -732,7 +774,7 @@ document.addEventListener("click", (e) => {
 document.querySelectorAll("details.more").forEach((d) => d.addEventListener("toggle", () => d.open && renderCharts()));
 
 // a redraw replaces the rows under the pointer, so their mouseleave never fires: hide chart tooltips first
-function renderCharts() { document.querySelectorAll(".chart > .tip").forEach((t) => (t.hidden = true)); chartCountry(); chartMorph(); chartTested(); chartGap(); }
+function renderCharts() { document.querySelectorAll(".chart > .tip").forEach((t) => (t.hidden = true)); chartCountry(); chartP3(); chartMorph(); chartTested(); chartGap(); }
 function renderAll() { renderControls(); renderFacts(); renderLegend(); drawMap(); renderTop(); renderCharts(); }
 let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { drawMap(); renderCharts(); }, 120); });
 const redrawTheme = () => { drawMap(); };
