@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+<name>ARE site plan (search areas)</name>
+<Placemark><name>1. 8843a67157fffff</name><description>macro · 611 people · P(below 25 Mbps) 0.971 · expected lifted 34.6</description><Point><coordinates>53.29503,23.55579</coordinates></Point></Placemark>
+<Placemark><name>2. 8843a67889fffff</name><description>macro · 960 people · P(below 25 Mbps) 0.606 · expected lifted 34.0</description><Point><coordinates>53.38023,23.4737</coordinates></Point></Placemark>
+<Placemark><name>3. 88534d669dfffff</name><description>macro · 2209 people · P(below 25 Mbps) 0.228 · expected lifted 29.4</description><Point><coordinates>52.25754,23.70996</coordinates></Point></Placemark>
+<Placemark><name>4. 8843a67105fffff</name><description>macro · 458 people · P(below 25 Mbps) 0.996 · expected lifted 26.7</description><Point><coordinates>53.29112,23.53408</coordinates></Point></Placemark>
+<Placemark><name>5. 8843b5992bfffff</name><description>macro · 1495 people · P(below 25 Mbps) 0.3 · expected lifted 26.2</description><Point><coordinates>52.88791,22.9049</coordinates></Point></Placemark>
+<Placemark><name>6. 8843a69501fffff</name><description>macro · 1289 people · P(below 25 Mbps) 0.341 · expected lifted 25.7</description><Point><coordinates>52.74822,24.13059</coordinates></Point></Placemark>
+<Placemark><name>7. 8843a67027fffff</name><description>macro · 617 people · P(below 25 Mbps) 0.693 · expected lifted 25.0</description><Point><coordinates>53.31246,23.5671</coordinates></Point></Placemark>
+<Placemark><name>8. 8843a6630dfffff</name><description>macro · 769 people · P(below 25 Mbps) 0.547 · expected lifted 24.6</description><Point><coordinates>53.38811,23.51709</coordinates></Point></Placemark>
+<Placemark><name>9. 8843a67117fffff</name><description>macro · 411 people · P(below 25 Mbps) 0.973 · expected lifted 23.3</description><Point><coordinates>53.31661,23.54742</coordinates></Point></Placemark>
+<Placemark><name>10. 8843b511ddfffff</name><description>macro · 1276 people · P(below 25 Mbps) 0.284 · expected lifted 21.1</description><Point><coordinates>53.20983,22.86786</coordinates></Point></Placemark>
+<Placemark><name>11. 885349d4d9fffff</name><description>macro · 857 people · P(below 25 Mbps) 0.4 · expected lifted 20.0</description><Point><coordinates>52.17929,23.42538</coordinates></Point></Placemark>
+<Placemark><name>12. 8843a69547fffff</name><description>macro · 1064 people · P(below 25 Mbps) 0.319 · expected lifted 19.8</description><Point><coordinates>52.73331,24.13369</coordinates></Point></Placemark>
+<Placemark><name>13. 8853493125fffff</name><description>macro · 964 people · P(below 25 Mbps) 0.338 · expected lifted 19.1</description><Point><coordinates>52.53481,22.99705</coordinates></Point></Placemark>
+<Placemark><name>14. 8843a67115fffff</name><description>macro · 376 people · P(below 25 Mbps) 0.775 · expected lifted 17.0</description><Point><coordinates>53.30855,23.54539</coordinates></Point></Placemark>
+<Placemark><name>15. 8843a6710bfffff</name><description>macro · 329 people · P(below 25 Mbps) 0.852 · expected lifted 16.4</description><Point><coordinates>53.29372,23.54856</coordinates></Point></Placemark>
+<Placemark><name>16. 8843a6956bfffff</name><description>macro · 779 people · P(below 25 Mbps) 0.337 · expected lifted 15.3</description><Point><coordinates>52.73206,24.1264</coordinates></Point></Placemark>
+<Placemark><name>17. 8843a69097fffff</name><description>macro · 1533 people · P(below 25 Mbps) 0.167 · expected lifted 15.0</description><Point><coordinates>52.7159,24.1222</coordinates></Point></Placemark>
+<Placemark><name>18. 8843a67103fffff</name><description>macro · 256 people · P(below 25 Mbps) 0.985 · expected lifted 14.7</description><Point><coordinates>53.30048,23.54335</coordinates></Point></Placemark>
+<Placemark><name>19. 8843a69093fffff</name><description>macro · 1084 people · P(below 25 Mbps) 0.214 · expected lifted 13.5</description><Point><coordinates>52.71714,24.12949</coordinates></Point></Placemark>
+<Placemark><name>20. 8843a6954dfffff</name><description>macro · 866 people · P(below 25 Mbps) 0.252 · expected lifted 12.7</description><Point><coordinates>52.71839,24.13679</coordinates></Point></Placemark>
+<Placemark><name>21. 8843a67111fffff</name><description>macro · 223 people · P(below 25 Mbps) 0.966 · expected lifted 12.6</description><Point><coordinates>53.30985,23.55263</coordinates></Point></Placemark>
+<Placemark><name>22. 8843b5272bfffff</name><description>macro · 1032 people · P(below 25 Mbps) 0.205 · expected lifted 12.3</description><Point><coordinates>53.78765,22.97711</coordinates></Point></Placemark>
+<Placemark><name>23. 8843a69543fffff</name><description>macro · 769 people · P(below 25 Mbps) 0.275 · expected lifted 12.3</description><Point><coordinates>52.73455,24.14098</coordinates></Point></Placemark>
+<Placemark><name>24. 8843a66141fffff</name><description>macro · 406 people · P(below 25 Mbps) 0.513 · expected lifted 12.2</description><Point><coordinates>53.42187,23.49106</coordinates></Point></Placemark>
+<Placemark><name>25. 8853499639fffff</name><description>macro · 979 people · P(below 25 Mbps) 0.199 · expected lifted 11.4</description><Point><coordinates>52.48808,23.65848</coordinates></Point></Placemark>
+<Placemark><name>26. 8843a672b5fffff</name><description>macro · 385 people · P(below 25 Mbps) 0.489 · expected lifted 11.0</description><Point><coordinates>53.331,23.62708</coordinates></Point></Placemark>
+<Placemark><name>27. 8843a20b63fffff</name><description>macro · 499 people · P(below 25 Mbps) 0.376 · expected lifted 11.0</description><Point><coordinates>54.14068,23.21455</coordinates></Point></Placemark>
+<Placemark><name>28. 88534d7369fffff</name><description>macro · 1308 people · P(below 25 Mbps) 0.143 · expected lifted 10.9</description><Point><coordinates>51.94996,23.90724</coordinates></Point></Placemark>
+<Placemark><name>29. 8843b5a9c5fffff</name><description>macro · 723 people · P(below 25 Mbps) 0.259 · expected lifted 10.9</description><Point><coordinates>53.44113,23.00773</coordinates></Point></Placemark>
+</Document></kml>

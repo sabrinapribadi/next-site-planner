@@ -1,0 +1,1144 @@
+rank,h3,lat,lon,district,area_type,intervention,cost,cumulative_cost,people,p_below_25,typical_mbps,tested,expected_lifted,expected_lifted_low,expected_lifted_high
+1,882a33132dfffff,42.00023,-71.50459,"Providence, Rhode Island",urban_cluster,macro,1.0,1.0,3220,0.775,17.5,True,37.8,0.0,494.2
+2,882aa8c313fffff,39.36119,-76.68585,"Baltimore, Maryland",urban_centre,small_cell,0.5,1.5,2433,0.999,4.8,True,36.8,0.0,481.2
+3,8848e33483fffff,31.33068,-109.51889,"Cochise, Arizona",urban_cluster,macro,1.0,2.5,5322,0.433,28.0,True,34.9,0.0,456.0
+4,882a142083fffff,41.333,-72.9324,"New Haven, Connecticut",urban_centre,small_cell,0.5,3.0,4076,0.429,27.9,True,26.5,0.0,346.3
+5,8844465497fffff,30.03166,-90.2418,"Jefferson, Louisiana",urban_centre,small_cell,0.5,3.5,3129,0.491,25.3,True,23.3,0.0,304.3
+6,8829a0d6c7fffff,33.53753,-117.14183,"Riverside, California",urban_centre,small_cell,0.5,4.0,2132,0.708,18.6,True,22.8,0.0,298.8
+7,88485934b9fffff,32.5731,-116.61049,"San Diego, California",urban_cluster,macro,1.0,5.0,2897,0.52,24.3,True,22.8,0.0,297.9
+8,882ab31a25fffff,41.4346,-82.11491,"Lorain, Ohio",urban_cluster,macro,1.0,6.0,1519,0.91,12.3,True,20.9,0.0,273.6
+9,8828346ea1fffff,37.65575,-122.04256,"Alameda, California",urban_cluster,macro,1.0,7.0,1484,0.916,13.3,True,20.6,0.0,269.1
+10,882a30c02dfffff,43.13326,-70.92268,"Strafford, New Hampshire",urban_cluster,macro,1.0,8.0,1959,0.637,19.8,True,18.9,0.0,246.8
+11,88485bb71bfffff,32.65348,-115.52932,"Imperial, California",urban_centre,small_cell,0.5,8.5,8861,0.14,51.5,True,18.7,0.0,245.1
+12,8826463493fffff,38.67281,-90.2578,"St. Louis, Missouri",urban_centre,small_cell,0.5,9.0,2047,0.602,21.6,True,18.7,0.0,244.1
+13,8829a4c949fffff,32.57222,-116.65873,"San Diego, California",urban_cluster,macro,1.0,10.0,3379,0.36,31.0,True,18.4,0.0,240.6
+14,8829a08f1dfffff,33.67963,-117.38249,"Riverside, California",urban_cluster,macro,1.0,11.0,3349,0.358,30.0,True,18.2,0.0,237.5
+15,882a931847fffff,39.31545,-84.5569,"Hamilton, Ohio",urban_cluster,macro,1.0,12.0,1238,0.969,9.1,True,18.1,0.0,237.4
+16,882a135143fffff,40.2054,-74.95731,"Bucks, Pennsylvania",urban_cluster,macro,1.0,13.0,1198,1.0,2.2,True,18.1,0.0,237.2
+17,882759634bfffff,42.09361,-88.69553,"DeKalb, Illinois",urban_cluster,macro,1.0,14.0,1876,0.574,22.7,True,16.3,0.0,213.1
+18,88275e34c1fffff,43.5331,-89.99722,"Sauk, Wisconsin",urban_cluster,macro,1.0,15.0,1363,0.789,15.3,True,16.3,0.0,213.0
+19,88485bb627fffff,32.6517,-115.53971,"Imperial, California",urban_centre,small_cell,0.5,15.5,8045,0.126,53.7,True,15.3,0.0,200.5
+20,88446c0341fffff,29.5692,-95.04452,"Harris, Texas",urban_cluster,macro,1.0,16.5,2283,0.442,27.1,True,15.3,0.0,199.9
+21,882a93d4b1fffff,39.50452,-84.40711,"Butler, Ohio",urban_cluster,macro,1.0,17.5,983,1.0,4.4,True,14.9,0.0,194.6
+22,8829a004a1fffff,34.10335,-117.44274,"San Bernardino, California",urban_centre,small_cell,0.5,18.0,3259,0.296,34.7,True,14.6,0.0,190.9
+23,8829a93557fffff,36.84168,-121.38277,"San Benito, California",urban_cluster,macro,1.0,19.0,2260,0.42,27.4,True,14.3,0.0,187.7
+24,882a10b103fffff,40.88169,-73.22502,"Suffolk, New York",urban_cluster,macro,1.0,20.0,1662,0.547,23.5,True,13.8,0.0,180.1
+25,882a10b739fffff,40.78697,-73.06664,"Suffolk, New York",urban_cluster,macro,1.0,21.0,1191,0.763,16.5,True,13.8,0.0,180.0
+26,8826290c4dfffff,42.48689,-92.36265,"Black Hawk, Iowa",urban_cluster,macro,1.0,22.0,1694,0.526,23.9,True,13.5,0.0,176.4
+27,882ad354adfffff,33.75799,-78.93494,"Horry, South Carolina",urban_cluster,macro,1.0,23.0,1179,0.747,16.8,True,13.3,0.0,174.3
+28,8828d4a481fffff,47.12576,-122.26975,"Pierce, Washington",urban_cluster,macro,1.0,24.0,898,0.98,7.4,True,13.3,0.0,174.1
+29,88446e16e5fffff,29.96459,-94.08054,"Jefferson, Texas",rural,macro,1.0,25.0,1393,0.621,21.4,True,13.1,0.0,171.2
+30,8844ad2591fffff,27.96649,-81.91045,"Polk, Florida",urban_cluster,macro,1.0,26.0,1169,0.726,17.2,True,12.8,0.0,167.9
+31,88275902abfffff,42.32925,-88.29517,"McHenry, Illinois",urban_cluster,macro,1.0,27.0,1830,0.452,26.7,True,12.5,0.0,163.9
+32,882a32b5ddfffff,42.56413,-71.5899,"Middlesex, Massachusetts",urban_cluster,macro,1.0,28.0,971,0.825,13.4,True,12.1,0.0,158.7
+33,8828d5cd15fffff,47.4523,-122.36319,"King, Washington",urban_cluster,macro,1.0,29.0,938,0.85,13.1,True,12.1,0.0,157.9
+34,882830212bfffff,38.50511,-122.47253,"Sonoma, California",urban_cluster,macro,1.0,30.0,942,0.843,13.5,True,12.0,0.0,157.3
+35,8826644647fffff,41.55571,-87.69078,"Cook, Illinois",urban_cluster,macro,1.0,31.0,1323,0.6,21.8,True,12.0,0.0,157.0
+36,882ab2d503fffff,42.51133,-82.99523,"Macomb, Michigan",urban_centre,small_cell,0.5,31.5,1636,0.479,25.8,True,11.9,0.0,155.1
+37,8848b176a9fffff,26.40678,-99.03793,"Starr, Texas",urban_cluster,macro,1.0,32.5,1579,0.49,25.4,True,11.7,0.0,153.1
+38,882a101131fffff,40.98848,-73.77142,"Westchester, New York",urban_cluster,macro,1.0,33.5,900,0.831,15.0,True,11.3,0.0,148.0
+39,88485bb449fffff,32.65835,-115.5466,"Imperial, California",urban_centre,small_cell,0.5,34.0,2288,0.326,32.7,True,11.3,0.0,147.9
+40,8826cbc249fffff,32.69164,-97.18545,"Tarrant, Texas",urban_centre,small_cell,0.5,34.5,1843,0.404,28.8,True,11.3,0.0,147.6
+41,882a10b9d5fffff,40.83298,-73.40172,"Suffolk, New York",urban_centre,small_cell,0.5,35.0,1645,0.449,27.0,True,11.2,0.0,146.1
+42,882a956051fffff,40.01191,-82.84532,"Franklin, Ohio",urban_cluster,macro,1.0,36.0,1418,0.517,24.4,True,11.1,0.0,145.2
+43,884459cc97fffff,33.91559,-90.51588,"Sunflower, Mississippi",rural,macro,1.0,37.0,3179,0.227,43.5,False,10.9,0.0,143.1
+44,8826640337fffff,41.58291,-87.37635,"Lake, Indiana",urban_cluster,macro,1.0,38.0,1178,0.613,21.2,True,10.9,0.0,142.9
+45,882a36b4a7fffff,43.46174,-70.79402,"York, Maine",urban_cluster,macro,1.0,39.0,807,0.894,11.7,True,10.9,0.0,142.7
+46,882af6466bfffff,37.24453,-76.73236,"Surry, Virginia",urban_cluster,macro,1.0,40.0,1067,0.673,19.9,True,10.9,0.0,142.2
+47,882a10a8b5fffff,40.66494,-73.47196,"Nassau, New York",urban_centre,small_cell,0.5,40.5,1641,0.437,27.2,True,10.9,0.0,142.1
+48,8844a98ac3fffff,28.15859,-81.49398,"Osceola, Florida",urban_cluster,macro,1.0,41.5,1279,0.56,22.8,True,10.8,0.0,141.8
+49,882986a1cbfffff,36.226,-115.33295,"Clark, Nevada",urban_centre,small_cell,0.5,42.0,2116,0.338,31.2,True,10.8,0.0,141.8
+50,882810a015fffff,40.87662,-121.65885,"Shasta, California",rural,macro,1.0,43.0,919,0.778,14.9,False,10.8,0.0,141.5
+51,88444a6a69fffff,34.05916,-91.58065,"Jefferson, Arkansas",rural,macro,1.0,44.0,3190,0.22,52.8,False,10.6,0.0,139.2
+52,8828f36c91fffff,47.09979,-122.67559,"Pierce, Washington",urban_cluster,macro,1.0,45.0,972,0.718,17.0,True,10.6,0.0,138.1
+53,882aaa86cdfffff,39.04778,-77.385,"Loudoun, Virginia",urban_centre,small_cell,0.5,45.5,3997,0.174,46.8,True,10.5,0.0,137.5
+54,882b89183bfffff,42.80073,-73.96581,"Schenectady, New York",urban_centre,small_cell,0.5,46.0,1821,0.376,29.5,True,10.4,0.0,135.5
+55,8826aa7963fffff,40.11216,-104.93952,"Weld, Colorado",urban_cluster,macro,1.0,47.0,1291,0.526,24.1,True,10.3,0.0,134.5
+56,8848d0585bfffff,32.9524,-103.36348,"Lea, New Mexico",urban_cluster,macro,1.0,48.0,1516,0.444,27.5,False,10.2,0.0,133.3
+57,882ad02231fffff,34.23842,-77.93602,"Brunswick, North Carolina",urban_cluster,macro,1.0,49.0,1502,0.443,27.5,True,10.1,0.0,131.8
+58,8826e429bbfffff,39.09091,-96.80207,"Riley, Kansas",urban_cluster,macro,1.0,50.0,1497,0.441,27.4,True,10.0,0.0,130.6
+59,882631d49bfffff,45.48401,-98.4799,"Brown, South Dakota",urban_cluster,macro,1.0,51.0,1080,0.609,21.3,True,10.0,0.0,130.2
+60,8826b2d6e5fffff,42.72256,-110.9301,"Lincoln, Wyoming",rural,macro,1.0,52.0,743,0.884,12.5,True,9.9,0.0,130.1
+61,882a13d6e1fffff,40.32608,-74.32774,"Middlesex, New Jersey",urban_cluster,macro,1.0,53.0,753,0.858,14.7,True,9.8,0.0,127.8
+62,882a100681fffff,40.71485,-73.59735,"Nassau, New York",urban_centre,small_cell,0.5,53.5,1470,0.434,27.3,True,9.6,0.0,126.2
+63,88275e34c5fffff,43.53389,-90.00904,"Sauk, Wisconsin",urban_cluster,macro,1.0,54.5,890,0.715,19.3,True,9.6,0.0,126.1
+64,8829a4452bfffff,33.02099,-116.81275,"San Diego, California",urban_cluster,macro,1.0,55.5,729,0.862,14.1,True,9.5,0.0,124.3
+65,8844f614b1fffff,29.53401,-81.2219,"Flagler, Florida",urban_centre,small_cell,0.5,56.0,1254,0.5,25.0,True,9.5,0.0,124.2
+66,882a10b73dfffff,40.78941,-73.07738,"Suffolk, New York",urban_cluster,macro,1.0,57.0,1552,0.401,28.4,True,9.4,0.0,123.2
+67,882810a03bfffff,40.88466,-121.65565,"Shasta, California",rural,macro,1.0,58.0,622,1.0,2.8,True,9.4,0.0,123.1
+68,8826cbca69fffff,32.62551,-97.38954,"Johnson, Texas",urban_centre,small_cell,0.5,58.5,1986,0.312,34.7,True,9.4,0.0,122.7
+69,8826c93469fffff,32.34196,-95.27671,"Smith, Texas",urban_cluster,macro,1.0,59.5,1247,0.495,25.2,True,9.3,0.0,122.1
+70,8826b3392bfffff,41.49601,-109.45399,"Sweetwater, Wyoming",urban_cluster,macro,1.0,60.5,1889,0.323,31.7,True,9.2,0.0,120.9
+71,8826b33929fffff,41.50254,-109.46116,"Sweetwater, Wyoming",urban_cluster,macro,1.0,61.5,2013,0.301,34.6,True,9.2,0.0,119.9
+72,88274c2053fffff,43.3818,-84.65981,"Gratiot, Michigan",urban_cluster,macro,1.0,62.5,1003,0.603,21.7,True,9.1,0.0,119.7
+73,8829a07753fffff,34.24338,-117.23163,"San Bernardino, California",urban_cluster,macro,1.0,63.5,1017,0.59,22.1,True,9.1,0.0,118.8
+74,8826aa4c99fffff,40.14896,-104.9392,"Weld, Colorado",urban_cluster,macro,1.0,64.5,1849,0.321,34.1,True,9.0,0.0,117.6
+75,882a907633fffff,39.89035,-84.04615,"Montgomery, Ohio",urban_cluster,macro,1.0,65.5,861,0.689,18.4,True,9.0,0.0,117.4
+76,88264a4dbdfffff,35.24831,-89.8383,"Shelby, Tennessee",urban_cluster,macro,1.0,66.5,606,0.978,9.5,True,9.0,0.0,117.4
+77,882a10b08dfffff,40.82524,-73.13806,"Suffolk, New York",urban_cluster,macro,1.0,67.5,1894,0.31,33.9,True,8.9,0.0,116.2
+78,882aaa86c1fffff,39.04016,-77.38209,"Loudoun, Virginia",urban_centre,small_cell,0.5,68.0,3525,0.166,47.8,True,8.8,0.0,115.7
+79,882aa262a5fffff,41.2175,-79.38856,"Clarion, Pennsylvania",urban_cluster,macro,1.0,69.0,782,0.744,16.6,True,8.8,0.0,115.2
+80,882a157b0bfffff,40.80164,-72.84008,"Suffolk, New York",urban_cluster,macro,1.0,70.0,1650,0.35,32.3,True,8.7,0.0,114.3
+81,8848ca911bfffff,35.06832,-108.84757,"McKinley, New Mexico",rural,macro,1.0,71.0,1570,0.367,31.5,False,8.7,0.0,113.9
+82,8812da6117fffff,47.9294,-119.03626,"Okanogan, Washington",rural,macro,1.0,72.0,638,0.9,11.2,True,8.7,0.0,113.6
+83,8848e81913fffff,32.18878,-111.08287,"Pima, Arizona",urban_cluster,macro,1.0,73.0,1426,0.403,28.6,True,8.7,0.0,113.6
+84,882a10d085fffff,41.32531,-73.794,"Putnam, New York",urban_cluster,macro,1.0,74.0,1057,0.542,23.7,True,8.7,0.0,113.5
+85,88485bb711fffff,32.65526,-115.51892,"Imperial, California",urban_centre,small_cell,0.5,74.5,7149,0.08,63.9,True,8.6,0.0,113.1
+86,882749aa29fffff,41.89551,-84.0365,"Lenawee, Michigan",urban_cluster,macro,1.0,75.5,1387,0.409,28.8,True,8.6,0.0,112.3
+87,88264635e5fffff,38.7156,-90.38881,"St. Louis, Missouri",urban_cluster,macro,1.0,76.5,1019,0.55,23.2,True,8.5,0.0,110.9
+88,882986a843fffff,36.25918,-115.17879,"Clark, Nevada",urban_centre,small_cell,0.5,77.0,1881,0.298,34.3,True,8.5,0.0,110.8
+89,882a1042c5fffff,40.97864,-74.23348,"Morris, New Jersey",urban_cluster,macro,1.0,78.0,1174,0.475,25.8,True,8.4,0.0,110.4
+90,88446c654bfffff,30.10794,-94.93569,"Liberty, Texas",rural,macro,1.0,79.0,2098,0.265,35.2,True,8.4,0.0,110.1
+91,8848eb9289fffff,32.81043,-111.51793,"Pinal, Arizona",urban_cluster,macro,1.0,80.0,4039,0.137,65.6,False,8.4,0.0,109.8
+92,8844ddd6cbfffff,34.50585,-82.66084,"Anderson, South Carolina",urban_cluster,macro,1.0,81.0,888,0.621,20.6,True,8.3,0.0,109.2
+93,8848d05853fffff,32.96046,-103.35906,"Lea, New Mexico",urban_cluster,macro,1.0,82.0,1293,0.425,28.4,False,8.3,0.0,108.8
+94,8826e80701fffff,35.90672,-94.97822,"Cherokee, Oklahoma",urban_cluster,macro,1.0,83.0,921,0.596,21.7,True,8.3,0.0,108.6
+95,882a13199bfffff,40.00205,-74.61209,"Burlington, New Jersey",rural,macro,1.0,84.0,4843,0.112,48.2,True,8.2,0.0,107.6
+96,882a14071bfffff,41.6927,-72.94503,"Hartford, Connecticut",urban_cluster,macro,1.0,85.0,1226,0.443,27.3,True,8.2,0.0,107.5
+97,882aac10a5fffff,39.96038,-75.84071,"Chester, Pennsylvania",urban_cluster,macro,1.0,86.0,866,0.622,21.2,True,8.2,0.0,106.7
+98,88281b96c7fffff,43.3971,-124.22558,"Coos, Oregon",urban_cluster,macro,1.0,87.0,1017,0.526,24.0,True,8.1,0.0,106.0
+99,8848eb928bfffff,32.81732,-111.52466,"Pinal, Arizona",urban_cluster,macro,1.0,88.0,4097,0.129,67.9,False,8.0,0.0,104.8
+100,8826aa7929fffff,40.10448,-104.94414,"Weld, Colorado",urban_cluster,macro,1.0,89.0,1090,0.484,25.5,True,8.0,0.0,104.4
+101,88275d763dfffff,43.09711,-88.02568,"Milwaukee, Wisconsin",urban_centre,small_cell,0.5,89.5,2413,0.218,37.4,True,8.0,0.0,104.3
+102,882a10b835fffff,40.85181,-73.38722,"Suffolk, New York",urban_cluster,macro,1.0,90.5,972,0.541,23.6,True,8.0,0.0,104.1
+103,882a339525fffff,42.08989,-71.03569,"Plymouth, Massachusetts",urban_centre,small_cell,0.5,91.0,2866,0.182,45.8,True,7.9,0.0,103.3
+104,8826f5b55dfffff,38.89857,-98.86101,"Russell, Kansas",rural,macro,1.0,92.0,761,0.686,18.6,True,7.9,0.0,103.3
+105,882a3385ebfffff,41.91579,-71.09453,"Bristol, Massachusetts",urban_cluster,macro,1.0,93.0,1329,0.392,29.4,True,7.9,0.0,103.2
+106,88485bb735fffff,32.66901,-115.48421,"Imperial, California",urban_centre,small_cell,0.5,93.5,5193,0.1,50.3,True,7.9,0.0,103.1
+107,8848cc11a9fffff,33.83886,-109.96357,"Gila, Arizona",rural,macro,1.0,94.5,569,0.915,11.4,True,7.9,0.0,103.0
+108,882a300441fffff,42.61361,-70.67013,"Essex, Massachusetts",urban_cluster,macro,1.0,95.5,3576,0.144,42.1,True,7.8,0.0,101.9
+109,882816b589fffff,40.37584,-120.52743,"Lassen, California",rural,macro,1.0,96.5,592,0.868,12.4,True,7.8,0.0,101.8
+110,8826b2b2dbfffff,42.55633,-110.10818,"Sublette, Wyoming",rural,macro,1.0,97.5,660,0.777,15.0,True,7.8,0.0,101.6
+111,8829a1c731fffff,34.24172,-118.22367,"Los Angeles, California",urban_cluster,macro,1.0,98.5,844,0.6,21.6,True,7.7,0.0,100.3
+112,882a896507fffff,35.86541,-78.63002,"Wake, North Carolina",urban_centre,small_cell,0.5,99.0,2190,0.231,37.6,True,7.7,0.0,100.3
+113,882a10b72bfffff,40.79729,-73.07968,"Suffolk, New York",urban_cluster,macro,1.0,100.0,1774,0.285,36.5,True,7.7,0.0,100.2
+114,8829a294ebfffff,34.10213,-116.4277,"San Bernardino, California",urban_cluster,macro,1.0,101.0,781,0.646,19.8,True,7.6,0.0,99.9
+115,88264a4da3fffff,35.24877,-89.8484,"Shelby, Tennessee",urban_cluster,macro,1.0,102.0,695,0.712,18.1,True,7.5,0.0,98.0
+116,884446d54bfffff,29.567,-90.37744,"Lafourche, Louisiana",urban_cluster,macro,1.0,103.0,763,0.648,20.3,True,7.5,0.0,97.9
+117,88485bb44dfffff,32.66013,-115.5362,"Imperial, California",urban_centre,small_cell,0.5,103.5,4574,0.108,45.9,True,7.5,0.0,97.8
+118,8829a295d1fffff,34.1161,-116.39277,"San Bernardino, California",urban_cluster,macro,1.0,104.5,747,0.656,20.4,True,7.4,0.0,97.0
+119,8848cc034bfffff,33.86924,-109.96898,"Gila, Arizona",rural,macro,1.0,105.5,762,0.639,18.3,False,7.4,0.0,96.4
+120,882a138d09fffff,40.0951,-74.23474,"Ocean, New Jersey",urban_centre,small_cell,0.5,106.0,1128,0.431,28.1,True,7.4,0.0,96.3
+121,882a8432c9fffff,40.33315,-79.29353,"Westmoreland, Pennsylvania",rural,macro,1.0,107.0,647,0.745,16.6,True,7.3,0.0,95.4
+122,88281ea311fffff,42.31674,-122.96182,"Jackson, Oregon",rural,macro,1.0,108.0,998,0.482,25.7,True,7.3,0.0,95.2
+123,8828f56ccdfffff,45.45131,-123.8221,"Tillamook, Oregon",urban_cluster,macro,1.0,109.0,835,0.574,23.1,True,7.3,0.0,94.9
+124,8848cc118dfffff,33.82928,-109.97827,"Gila, Arizona",rural,macro,1.0,110.0,607,0.789,14.6,True,7.2,0.0,94.8
+125,882b996341fffff,43.24671,-78.19344,"Orleans, New York",urban_cluster,macro,1.0,111.0,1489,0.321,33.2,True,7.2,0.0,94.7
+126,8848cb2eadfffff,36.71267,-110.24655,"Navajo, Arizona",rural,macro,1.0,112.0,1059,0.45,26.5,True,7.2,0.0,94.3
+127,8826c93541fffff,32.34146,-95.32797,"Smith, Texas",urban_cluster,macro,1.0,113.0,907,0.515,24.6,True,7.1,0.0,92.6
+128,8829a1b291fffff,34.23394,-119.04854,"Ventura, California",urban_centre,small_cell,0.5,113.5,2149,0.215,39.2,True,7.0,0.0,91.4
+129,8844f614c3fffff,29.49944,-81.23773,"Flagler, Florida",urban_cluster,macro,1.0,114.5,997,0.462,26.3,True,7.0,0.0,91.3
+130,882a10d19dfffff,41.32932,-73.84613,"Putnam, New York",urban_cluster,macro,1.0,115.5,777,0.585,21.7,True,6.9,0.0,89.9
+131,882b1a2d51fffff,44.06348,-69.2288,"Knox, Maine",rural,macro,1.0,116.5,571,0.794,16.6,True,6.9,0.0,89.7
+132,8844ac4901fffff,26.66394,-80.23827,"Palm Beach, Florida",urban_cluster,macro,1.0,117.5,1763,0.256,37.6,True,6.8,0.0,89.5
+133,8827599669fffff,42.762,-87.78694,"Racine, Wisconsin",urban_centre,small_cell,0.5,118.0,1285,0.348,30.5,True,6.8,0.0,88.4
+134,882681b21bfffff,40.17901,-105.13928,"Boulder, Colorado",urban_centre,small_cell,0.5,118.5,1323,0.336,31.5,True,6.7,0.0,88.1
+135,8844c9da23fffff,35.7409,-85.25094,"Cumberland, Tennessee",rural,macro,1.0,119.5,636,0.699,18.1,True,6.7,0.0,87.9
+136,88485bb559fffff,32.6823,-115.49799,"Imperial, California",urban_centre,small_cell,0.5,120.0,3263,0.136,44.1,True,6.7,0.0,87.9
+137,88269c1a13fffff,39.09757,-108.54721,"Mesa, Colorado",urban_cluster,macro,1.0,121.0,1371,0.321,32.7,True,6.7,0.0,87.0
+138,882681b25bfffff,40.20124,-105.13685,"Boulder, Colorado",urban_cluster,macro,1.0,122.0,1031,0.425,28.0,True,6.6,0.0,86.7
+139,88260d8193fffff,41.56592,-93.73435,"Polk, Iowa",urban_cluster,macro,1.0,123.0,1400,0.312,31.7,True,6.6,0.0,86.5
+140,8826969017fffff,41.23871,-111.95699,"Weber, Utah",urban_centre,small_cell,0.5,123.5,1703,0.255,37.4,True,6.6,0.0,86.0
+141,884448d085fffff,32.90156,-93.02096,"Claiborne, Louisiana",rural,macro,1.0,124.5,1774,0.243,49.1,False,6.5,0.0,85.4
+142,8826aa792bfffff,40.0976,-104.93737,"Weld, Colorado",urban_cluster,macro,1.0,125.5,843,0.512,24.6,True,6.5,0.0,85.4
+143,8826b04de7fffff,42.55761,-110.09655,"Sublette, Wyoming",rural,macro,1.0,126.5,583,0.739,16.2,False,6.5,0.0,85.2
+144,882a953a29fffff,40.09607,-82.43922,"Licking, Ohio",urban_cluster,macro,1.0,127.5,1496,0.287,36.4,True,6.5,0.0,85.1
+145,88274e2333fffff,43.21898,-86.24273,"Muskegon, Michigan",urban_cluster,macro,1.0,128.5,965,0.442,27.5,True,6.5,0.0,84.5
+146,8826640ad9fffff,41.53051,-87.41842,"Cook, Illinois",urban_cluster,macro,1.0,129.5,1366,0.312,32.5,True,6.5,0.0,84.4
+147,882a99c623fffff,37.09394,-81.81505,"Russell, Virginia",rural,macro,1.0,130.5,501,0.848,13.8,True,6.4,0.0,84.1
+148,882758aebdfffff,42.91332,-88.83478,"Jefferson, Wisconsin",urban_cluster,macro,1.0,131.5,891,0.475,25.8,True,6.4,0.0,83.7
+149,8844c10415fffff,33.7842,-84.21131,"DeKalb, Georgia",urban_cluster,macro,1.0,132.5,1120,0.377,29.0,True,6.4,0.0,83.6
+150,8827599441fffff,42.7142,-87.81116,"Racine, Wisconsin",urban_centre,small_cell,0.5,133.0,2444,0.171,41.6,True,6.3,0.0,82.8
+151,8848593495fffff,32.57123,-116.62082,"San Diego, California",urban_cluster,macro,1.0,134.0,3252,0.128,53.4,True,6.3,0.0,82.4
+152,8848b38815fffff,26.20779,-97.90637,"Hidalgo, Texas",rural,macro,1.0,135.0,673,0.618,20.4,True,6.3,0.0,82.4
+153,88489171ddfffff,29.0865,-97.28691,"DeWitt, Texas",urban_cluster,macro,1.0,136.0,851,0.487,25.4,True,6.3,0.0,82.1
+154,882b8a2c51fffff,43.01237,-76.14274,"Onondaga, New York",urban_centre,small_cell,0.5,136.5,2291,0.181,40.3,True,6.3,0.0,82.1
+155,882aae2a3dfffff,39.4493,-77.37102,"Frederick, Maryland",urban_cluster,macro,1.0,137.5,1844,0.224,41.5,True,6.2,0.0,81.7
+156,8844ae82c1fffff,26.58163,-80.10335,"Palm Beach, Florida",urban_centre,small_cell,0.5,138.0,1961,0.21,42.8,True,6.2,0.0,81.6
+157,8829b2daddfffff,34.69841,-111.97696,"Yavapai, Arizona",urban_cluster,macro,1.0,139.0,1376,0.299,32.8,True,6.2,0.0,81.4
+158,882832724bfffff,38.98691,-120.87776,"Placer, California",rural,macro,1.0,140.0,567,0.725,18.1,True,6.2,0.0,81.4
+159,884450cc83fffff,30.52088,-87.91142,"Baldwin, Alabama",urban_cluster,macro,1.0,141.0,741,0.554,23.0,True,6.2,0.0,81.3
+160,8829a40ab7fffff,32.93041,-117.13668,"San Diego, California",urban_centre,small_cell,0.5,141.5,3810,0.108,42.9,True,6.2,0.0,81.3
+161,8829861457fffff,36.19364,-115.01836,"Clark, Nevada",urban_centre,small_cell,0.5,142.0,3088,0.133,43.0,True,6.2,0.0,81.2
+162,8826702f63fffff,40.40962,-91.3846,"Hancock, Illinois",urban_cluster,macro,1.0,143.0,752,0.545,23.4,True,6.2,0.0,81.1
+163,882a13d6a1fffff,40.30725,-74.34172,"Middlesex, New Jersey",urban_cluster,macro,1.0,144.0,882,0.461,26.4,True,6.2,0.0,80.5
+164,8828327259fffff,38.9905,-120.89585,"Placer, California",rural,macro,1.0,145.0,516,0.785,14.8,True,6.1,0.0,80.2
+165,882a845087fffff,40.72676,-80.0786,"Butler, Pennsylvania",urban_cluster,macro,1.0,146.0,545,0.742,17.6,True,6.1,0.0,80.1
+166,8829a1ba65fffff,34.25816,-118.77215,"Ventura, California",urban_centre,small_cell,0.5,146.5,1823,0.221,38.0,True,6.1,0.0,79.8
+167,882a10b547fffff,40.7755,-73.11347,"Suffolk, New York",urban_cluster,macro,1.0,147.5,734,0.549,23.0,True,6.1,0.0,79.7
+168,882662cb0bfffff,40.72502,-89.60348,"Tazewell, Illinois",urban_cluster,macro,1.0,148.5,1792,0.224,41.5,True,6.1,0.0,79.4
+169,8826f5b551fffff,38.89133,-98.85485,"Russell, Kansas",rural,macro,1.0,149.5,617,0.649,19.3,False,6.1,0.0,79.3
+170,8826290e1dfffff,42.49809,-92.30462,"Black Hawk, Iowa",urban_cluster,macro,1.0,150.5,812,0.493,25.2,True,6.1,0.0,79.3
+171,8848d05a33fffff,32.93705,-103.36169,"Lea, New Mexico",urban_cluster,macro,1.0,151.5,908,0.441,27.7,False,6.1,0.0,79.2
+172,8826b2d6edfffff,42.73026,-110.92583,"Lincoln, Wyoming",rural,macro,1.0,152.5,424,0.939,8.9,True,6.0,0.0,78.8
+173,88269492d1fffff,41.79807,-110.54114,"Lincoln, Wyoming",rural,macro,1.0,153.5,719,0.55,23.2,True,6.0,0.0,78.2
+174,882a10b1c9fffff,40.85863,-73.18806,"Suffolk, New York",urban_cluster,macro,1.0,154.5,768,0.514,24.4,True,6.0,0.0,78.1
+175,8844a1909bfffff,25.48827,-80.42089,"Miami-Dade, Florida",urban_centre,small_cell,0.5,155.0,2038,0.193,41.3,True,6.0,0.0,77.9
+176,88268cd1d7fffff,39.74741,-104.88603,"Denver, Colorado",urban_centre,small_cell,0.5,155.5,1940,0.202,41.7,True,5.9,0.0,77.5
+177,8829ae2599fffff,36.06846,-119.00169,"Tulare, California",urban_centre,small_cell,0.5,156.0,1827,0.214,40.6,True,5.9,0.0,77.3
+178,88488b20c5fffff,32.04601,-102.10181,"Midland, Texas",urban_cluster,macro,1.0,157.0,1318,0.294,33.1,True,5.9,0.0,76.7
+179,88446cab35fffff,29.66369,-95.34379,"Harris, Texas",urban_centre,small_cell,0.5,157.5,2531,0.153,47.3,True,5.9,0.0,76.7
+180,8848814007fffff,28.68675,-100.4712,"Maverick, Texas",urban_cluster,macro,1.0,158.5,1359,0.285,33.3,True,5.9,0.0,76.6
+181,8844c061d1fffff,33.24451,-82.953,"Hancock, Georgia",rural,macro,1.0,159.5,966,0.4,31.3,False,5.8,0.0,76.4
+182,8826c80d37fffff,33.17136,-96.87029,"Collin, Texas",urban_centre,small_cell,0.5,160.0,2607,0.148,44.3,True,5.8,0.0,76.2
+183,88445a191dfffff,33.49917,-88.36685,"Lowndes, Mississippi",urban_cluster,macro,1.0,161.0,1087,0.354,31.6,True,5.8,0.0,76.2
+184,882661945dfffff,40.13691,-86.21639,"Hamilton, Indiana",rural,macro,1.0,162.0,954,0.402,28.6,True,5.8,0.0,75.9
+185,882a14011dfffff,41.79365,-73.12822,"Litchfield, Connecticut",urban_cluster,macro,1.0,163.0,1398,0.273,37.4,True,5.8,0.0,75.7
+186,8826752de3fffff,40.57084,-90.03676,"Fulton, Illinois",urban_cluster,macro,1.0,164.0,583,0.656,20.1,True,5.8,0.0,75.7
+187,8812d87937fffff,48.54176,-117.90256,"Stevens, Washington",rural,macro,1.0,165.0,943,0.403,28.1,True,5.7,0.0,75.2
+188,8848b1740dfffff,26.40201,-98.98272,"Starr, Texas",urban_cluster,macro,1.0,166.0,1884,0.201,43.8,True,5.7,0.0,74.8
+189,88485bb715fffff,32.65704,-115.50852,"Imperial, California",urban_centre,small_cell,0.5,166.5,4802,0.078,64.4,True,5.7,0.0,74.5
+190,882a148065fffff,42.07741,-72.6658,"Hampden, Massachusetts",urban_cluster,macro,1.0,167.5,540,0.695,18.6,True,5.7,0.0,74.3
+191,8844684015fffff,30.79474,-94.39355,"Tyler, Texas",rural,macro,1.0,168.5,823,0.456,26.9,True,5.7,0.0,74.3
+192,88489e2687fffff,30.44507,-97.80837,"Travis, Texas",urban_centre,small_cell,0.5,169.0,1628,0.23,40.9,True,5.7,0.0,74.2
+193,882aa485c7fffff,42.70886,-76.42297,"Cayuga, New York",rural,macro,1.0,170.0,540,0.692,17.9,True,5.7,0.0,74.0
+194,88441e58a3fffff,27.07271,-82.18145,"Charlotte, Florida",urban_cluster,macro,1.0,171.0,590,0.63,20.3,True,5.6,0.0,73.6
+195,882ad5c509fffff,34.89779,-76.90283,"Craven, North Carolina",urban_cluster,macro,1.0,172.0,1610,0.231,39.6,True,5.6,0.0,73.5
+196,8844d8b041fffff,35.02839,-81.96072,"Spartanburg, South Carolina",urban_cluster,macro,1.0,173.0,588,0.631,21.0,True,5.6,0.0,73.5
+197,882a10a041fffff,40.75976,-73.23933,"Suffolk, New York",urban_centre,small_cell,0.5,173.5,2957,0.125,53.8,True,5.6,0.0,73.5
+198,8848cb2ea3fffff,36.72623,-110.26035,"Navajo, Arizona",rural,macro,1.0,174.5,694,0.533,23.8,True,5.6,0.0,73.3
+199,88275e34cdfffff,43.5406,-90.0025,"Sauk, Wisconsin",urban_cluster,macro,1.0,175.5,784,0.471,26.2,True,5.6,0.0,73.1
+200,882a13d1e7fffff,40.42352,-74.57894,"Middlesex, New Jersey",urban_cluster,macro,1.0,176.5,838,0.44,27.2,True,5.6,0.0,73.0
+201,8828843ac9fffff,43.53174,-116.30982,"Ada, Idaho",urban_cluster,macro,1.0,177.5,1209,0.304,33.0,True,5.6,0.0,72.7
+202,8844d07499fffff,32.90388,-80.09521,"Charleston, South Carolina",urban_cluster,macro,1.0,178.5,1407,0.26,35.4,True,5.5,0.0,72.5
+203,882a924145fffff,40.0698,-85.98122,"Hamilton, Indiana",urban_cluster,macro,1.0,179.5,2117,0.172,42.3,True,5.5,0.0,72.3
+204,882b8a250bfffff,43.03395,-76.02296,"Onondaga, New York",urban_cluster,macro,1.0,180.5,408,0.894,11.5,True,5.5,0.0,72.2
+205,88260a74a5fffff,40.27566,-96.72843,"Gage, Nebraska",urban_cluster,macro,1.0,181.5,1007,0.361,29.8,True,5.5,0.0,72.0
+206,88441e44bbfffff,27.29976,-82.42955,"Sarasota, Florida",urban_cluster,macro,1.0,182.5,865,0.42,28.6,True,5.5,0.0,72.0
+207,882a1019b5fffff,40.93018,-73.97562,"Westchester, New York",urban_centre,small_cell,0.5,183.0,1798,0.2,39.2,True,5.5,0.0,71.3
+208,8829897255fffff,39.61883,-119.6691,"Washoe, Nevada",urban_cluster,macro,1.0,184.0,1606,0.224,36.7,True,5.4,0.0,71.3
+209,882743424dfffff,44.50448,-88.037,"Brown, Wisconsin",urban_cluster,macro,1.0,185.0,1574,0.228,36.6,True,5.4,0.0,71.2
+210,8826c93763fffff,32.37964,-95.31426,"Smith, Texas",urban_cluster,macro,1.0,186.0,1383,0.259,33.5,True,5.4,0.0,70.9
+211,882748b627fffff,42.75396,-84.6103,"Eaton, Michigan",urban_cluster,macro,1.0,187.0,644,0.555,23.1,True,5.4,0.0,70.8
+212,88281a7745fffff,43.7451,-122.47888,"Lane, Oregon",rural,macro,1.0,188.0,1038,0.344,31.1,True,5.4,0.0,70.6
+213,882a89670dfffff,35.9162,-78.57659,"Wake, North Carolina",urban_cluster,macro,1.0,189.0,1335,0.266,35.8,True,5.4,0.0,70.2
+214,8826f5b557fffff,38.88388,-98.85978,"Russell, Kansas",rural,macro,1.0,190.0,555,0.639,19.2,False,5.4,0.0,70.2
+215,8828f00751fffff,45.55203,-122.8289,"Multnomah, Oregon",urban_centre,small_cell,0.5,190.5,1739,0.202,41.7,True,5.3,0.0,69.5
+216,88298972cdfffff,39.64254,-119.69895,"Washoe, Nevada",urban_cluster,macro,1.0,191.5,477,0.735,16.9,True,5.3,0.0,69.4
+217,8826f5b555fffff,38.89111,-98.86594,"Russell, Kansas",rural,macro,1.0,192.5,565,0.619,20.4,False,5.3,0.0,69.2
+218,88279aadb9fffff,44.76278,-108.75687,"Park, Wyoming",urban_cluster,macro,1.0,193.5,1151,0.304,35.2,True,5.3,0.0,69.2
+219,8848cc11c3fffff,33.81969,-109.99298,"Gila, Arizona",rural,macro,1.0,194.5,439,0.795,14.3,False,5.3,0.0,69.1
+220,8826362199fffff,46.09609,-100.63527,"Sioux, North Dakota",rural,macro,1.0,195.5,398,0.875,11.6,True,5.3,0.0,69.0
+221,8826e85aa1fffff,36.05668,-95.71634,"Tulsa, Oklahoma",urban_cluster,macro,1.0,196.5,474,0.735,17.6,True,5.3,0.0,69.0
+222,8848c2c85dfffff,32.89675,-105.93831,"Otero, New Mexico",urban_cluster,macro,1.0,197.5,1515,0.23,41.0,True,5.3,0.0,68.8
+223,88264a530bfffff,35.66976,-89.74474,"Tipton, Tennessee",rural,macro,1.0,198.5,2293,0.152,67.8,False,5.3,0.0,68.8
+224,8826c87299fffff,33.14093,-96.86851,"Denton, Texas",urban_centre,small_cell,0.5,199.0,1236,0.281,35.7,True,5.2,0.0,68.6
+225,88268c6c27fffff,38.74955,-104.83899,"El Paso, Colorado",urban_cluster,macro,1.0,200.0,736,0.469,26.3,True,5.2,0.0,68.3
+226,882a92af5bfffff,39.83305,-84.88249,"Wayne, Indiana",urban_cluster,macro,1.0,201.0,1544,0.223,41.6,True,5.2,0.0,68.2
+227,88446c8c4dfffff,29.39592,-95.27738,"Brazoria, Texas",urban_cluster,macro,1.0,202.0,642,0.536,23.5,True,5.2,0.0,68.1
+228,8829a54b55fffff,33.49244,-117.71615,"Orange, California",urban_cluster,macro,1.0,203.0,1928,0.178,44.5,True,5.2,0.0,67.9
+229,884459543bfffff,34.01671,-90.43564,"Tallahatchie, Mississippi",rural,macro,1.0,204.0,1852,0.185,59.5,False,5.2,0.0,67.9
+230,882681a6ddfffff,39.91257,-104.95035,"Adams, Colorado",urban_centre,small_cell,0.5,204.5,3180,0.107,53.5,True,5.2,0.0,67.6
+231,882a157863fffff,40.75923,-72.848,"Suffolk, New York",urban_cluster,macro,1.0,205.5,873,0.391,29.4,True,5.2,0.0,67.5
+232,882a1004b3fffff,40.64978,-73.66792,"Nassau, New York",urban_centre,small_cell,0.5,206.0,3468,0.098,59.2,True,5.2,0.0,67.4
+233,882a10b839fffff,40.85488,-73.36801,"Suffolk, New York",urban_centre,small_cell,0.5,206.5,1649,0.206,43.3,True,5.1,0.0,67.2
+234,882a339533fffff,42.06042,-71.00788,"Plymouth, Massachusetts",urban_centre,small_cell,0.5,207.0,1516,0.223,41.6,True,5.1,0.0,67.0
+235,882a3382c9fffff,42.07381,-71.03169,"Bristol, Massachusetts",urban_centre,small_cell,0.5,207.5,2750,0.123,46.2,True,5.1,0.0,67.0
+236,8844ad2585fffff,27.95016,-81.88564,"Polk, Florida",urban_cluster,macro,1.0,208.5,1216,0.277,37.1,True,5.1,0.0,66.7
+237,88446c00d1fffff,29.69044,-95.13949,"Harris, Texas",urban_centre,small_cell,0.5,209.0,1881,0.179,42.6,True,5.1,0.0,66.7
+238,882670576dfffff,40.99716,-91.97059,"Jefferson, Iowa",urban_cluster,macro,1.0,210.0,981,0.343,32.2,True,5.1,0.0,66.5
+239,8827481915fffff,42.86692,-85.62494,"Kent, Michigan",urban_centre,small_cell,0.5,210.5,1395,0.24,40.0,True,5.1,0.0,66.4
+240,882a914cb7fffff,39.2032,-83.62129,"Highland, Ohio",urban_cluster,macro,1.0,211.5,547,0.613,21.4,True,5.1,0.0,66.4
+241,8829a93425fffff,36.84537,-121.40045,"San Benito, California",urban_cluster,macro,1.0,212.5,2775,0.121,51.2,True,5.1,0.0,66.4
+242,882b89d5e9fffff,43.07828,-73.82159,"Saratoga, New York",urban_cluster,macro,1.0,213.5,786,0.426,28.3,True,5.1,0.0,66.3
+243,882899a355fffff,47.3161,-116.5791,"Benewah, Idaho",rural,macro,1.0,214.5,643,0.521,24.1,True,5.1,0.0,66.3
+244,882661aaa7fffff,39.69109,-86.38516,"Hendricks, Indiana",urban_cluster,macro,1.0,215.5,1359,0.246,35.6,True,5.1,0.0,66.2
+245,882a140151fffff,41.80467,-73.11095,"Litchfield, Connecticut",urban_cluster,macro,1.0,216.5,1211,0.276,34.5,True,5.1,0.0,66.2
+246,8828364d49fffff,37.98223,-120.37762,"Tuolumne, California",urban_cluster,macro,1.0,217.5,800,0.417,28.7,True,5.0,0.0,66.1
+247,882748970dfffff,43.15972,-84.87417,"Ionia, Michigan",rural,macro,1.0,218.5,1532,0.218,46.0,False,5.0,0.0,66.0
+248,884450864dfffff,30.35125,-88.5432,"Jackson, Mississippi",urban_cluster,macro,1.0,219.5,929,0.358,31.4,True,5.0,0.0,65.8
+249,8826656919fffff,40.43136,-86.91048,"Tippecanoe, Indiana",urban_centre,small_cell,0.5,220.0,2758,0.121,49.3,True,5.0,0.0,65.8
+250,8848eb92d5fffff,32.80898,-111.5285,"Pinal, Arizona",urban_cluster,macro,1.0,221.0,2550,0.13,67.6,False,5.0,0.0,65.8
+251,882a8074bdfffff,39.27709,-80.35766,"Harrison, West Virginia",urban_cluster,macro,1.0,222.0,1711,0.194,44.5,True,5.0,0.0,65.6
+252,882a142087fffff,41.33547,-72.94327,"New Haven, Connecticut",urban_centre,small_cell,0.5,222.5,1312,0.252,39.1,True,5.0,0.0,65.4
+253,8844c16e33fffff,34.11706,-83.81983,"Jackson, Georgia",urban_cluster,macro,1.0,223.5,1352,0.244,38.3,True,5.0,0.0,65.2
+254,8844f5ca21fffff,29.63666,-82.61345,"Alachua, Florida",rural,macro,1.0,224.5,538,0.612,20.7,True,5.0,0.0,65.2
+255,882a128293fffff,41.04472,-74.75145,"Sussex, New Jersey",urban_cluster,macro,1.0,225.5,1330,0.247,37.1,True,5.0,0.0,65.2
+256,8844e30069fffff,31.54434,-84.63609,"Calhoun, Georgia",rural,macro,1.0,226.5,1138,0.289,42.8,False,5.0,0.0,65.1
+257,8828d50b11fffff,47.5904,-122.60362,"Kitsap, Washington",urban_cluster,macro,1.0,227.5,627,0.524,24.1,True,5.0,0.0,65.0
+258,88265a8acdfffff,35.90416,-92.63068,"Searcy, Arkansas",rural,macro,1.0,228.5,342,0.958,8.9,True,5.0,0.0,64.9
+259,882a868627fffff,40.64854,-80.57665,"Hancock, West Virginia",urban_cluster,macro,1.0,229.5,595,0.549,23.2,True,4.9,0.0,64.7
+260,882a937883fffff,38.94572,-84.85686,"Ohio, Indiana",rural,macro,1.0,230.5,844,0.387,29.9,True,4.9,0.0,64.6
+261,8844438901fffff,31.55719,-91.22337,"Adams, Mississippi",rural,macro,1.0,231.5,1802,0.181,56.0,False,4.9,0.0,64.5
+262,88489e2645fffff,30.36154,-97.76715,"Travis, Texas",urban_centre,small_cell,0.5,232.0,1569,0.207,37.6,True,4.9,0.0,64.4
+263,882a154e61fffff,40.93289,-72.89781,"Suffolk, New York",urban_cluster,macro,1.0,233.0,1087,0.299,33.9,True,4.9,0.0,64.4
+264,8826429643fffff,38.47086,-90.53029,"Jefferson, Missouri",urban_cluster,macro,1.0,234.0,1414,0.229,41.0,True,4.9,0.0,64.2
+265,8829a4c94dfffff,32.57408,-116.6484,"San Diego, California",urban_cluster,macro,1.0,235.0,2569,0.126,48.5,True,4.9,0.0,64.2
+266,882a1342d3fffff,40.02413,-74.88746,"Philadelphia, Pennsylvania",urban_cluster,macro,1.0,236.0,1703,0.19,42.8,True,4.9,0.0,64.2
+267,882a10bad9fffff,40.85741,-73.24804,"Suffolk, New York",urban_cluster,macro,1.0,237.0,1302,0.249,37.4,True,4.9,0.0,64.1
+268,882a8961a5fffff,35.93402,-78.75002,"Wake, North Carolina",urban_cluster,macro,1.0,238.0,783,0.412,29.0,True,4.9,0.0,63.8
+269,88262c9865fffff,44.83888,-93.03267,"Washington, Minnesota",urban_cluster,macro,1.0,239.0,1605,0.201,39.0,True,4.9,0.0,63.8
+270,88444c373dfffff,32.55191,-93.82915,"Caddo, Louisiana",urban_cluster,macro,1.0,240.0,736,0.436,27.8,True,4.9,0.0,63.5
+271,88274816e3fffff,42.78403,-85.1286,"Ionia, Michigan",rural,macro,1.0,241.0,397,0.807,16.9,True,4.8,0.0,63.5
+272,8829a05057fffff,33.8959,-116.75497,"Riverside, California",rural,macro,1.0,242.0,331,0.967,8.4,True,4.8,0.0,63.4
+273,8826aa56e3fffff,40.43393,-104.74501,"Weld, Colorado",urban_centre,small_cell,0.5,242.5,1294,0.247,37.1,True,4.8,0.0,63.3
+274,882aa86a63fffff,38.72279,-77.08599,"Charles, Maryland",urban_cluster,macro,1.0,243.5,905,0.353,31.6,True,4.8,0.0,63.2
+275,882759b121fffff,42.4393,-87.84268,"Lake, Illinois",urban_cluster,macro,1.0,244.5,1806,0.176,38.6,True,4.8,0.0,63.0
+276,8829a1bb25fffff,34.29564,-118.70021,"Ventura, California",urban_centre,small_cell,0.5,245.0,1869,0.17,44.8,True,4.8,0.0,63.0
+277,8826362183fffff,46.09533,-100.65939,"Sioux, North Dakota",rural,macro,1.0,246.0,434,0.734,16.4,False,4.8,0.0,63.0
+278,8844c12a81fffff,34.07068,-84.18552,"Forsyth, Georgia",urban_centre,small_cell,0.5,246.5,1468,0.216,42.2,True,4.8,0.0,62.8
+279,8829a858dbfffff,36.19698,-119.08606,"Tulare, California",urban_cluster,macro,1.0,247.5,769,0.412,29.0,True,4.8,0.0,62.7
+280,8848d05aadfffff,32.9597,-103.3697,"Lea, New Mexico",urban_cluster,macro,1.0,248.5,715,0.442,27.6,False,4.8,0.0,62.6
+281,8826e85a21fffff,36.10883,-95.75617,"Tulsa, Oklahoma",urban_cluster,macro,1.0,249.5,1793,0.176,44.7,True,4.8,0.0,62.5
+282,882a929061fffff,40.43797,-84.98366,"Jay, Indiana",urban_cluster,macro,1.0,250.5,862,0.366,29.9,True,4.8,0.0,62.5
+283,882659b749fffff,35.24164,-89.85349,"Shelby, Tennessee",urban_cluster,macro,1.0,251.5,1021,0.309,34.1,True,4.8,0.0,62.4
+284,882692261bfffff,39.26939,-111.63373,"Sanpete, Utah",rural,macro,1.0,252.5,704,0.446,26.6,True,4.8,0.0,62.2
+285,88268c1a65fffff,39.4618,-104.74176,"Douglas, Colorado",urban_cluster,macro,1.0,253.5,948,0.331,31.1,True,4.7,0.0,62.1
+286,8826ecaa41fffff,37.06751,-94.50106,"Newton, Missouri",urban_cluster,macro,1.0,254.5,1130,0.277,33.2,True,4.7,0.0,61.9
+287,88441e58a1fffff,27.0652,-82.17766,"Charlotte, Florida",urban_cluster,macro,1.0,255.5,484,0.646,20.0,True,4.7,0.0,61.9
+288,8844f54cb9fffff,30.19319,-82.50414,"Columbia, Florida",rural,macro,1.0,256.5,2980,0.105,84.3,False,4.7,0.0,61.8
+289,882740408dfffff,45.41886,-87.61226,"Menominee, Michigan",rural,macro,1.0,257.5,320,0.973,8.2,True,4.7,0.0,61.6
+290,8826c8704dfffff,33.17699,-96.96974,"Denton, Texas",rural,macro,1.0,258.5,855,0.364,30.8,True,4.7,0.0,61.6
+291,882a149101fffff,42.20711,-72.60993,"Hampden, Massachusetts",urban_cluster,macro,1.0,259.5,3366,0.092,57.2,True,4.7,0.0,61.5
+292,882a10b9ebfffff,40.84568,-73.42563,"Suffolk, New York",urban_centre,small_cell,0.5,260.0,1599,0.194,44.5,True,4.7,0.0,61.5
+293,882810a013fffff,40.87993,-121.67723,"Shasta, California",rural,macro,1.0,261.0,414,0.75,15.9,False,4.7,0.0,61.4
+294,884469d02dfffff,30.97826,-95.63413,"Houston, Texas",rural,macro,1.0,262.0,2466,0.126,68.9,False,4.7,0.0,61.3
+295,882a16b095fffff,41.69621,-73.89887,"Dutchess, New York",urban_cluster,macro,1.0,263.0,1265,0.244,38.2,True,4.7,0.0,61.1
+296,8826622c3dfffff,39.84121,-88.9761,"Macon, Illinois",urban_cluster,macro,1.0,264.0,2175,0.142,51.2,True,4.7,0.0,61.0
+297,882a992665fffff,36.41092,-81.48403,"Ashe, North Carolina",rural,macro,1.0,265.0,352,0.875,11.6,True,4.7,0.0,61.0
+298,882894982dfffff,43.47782,-112.03618,"Bonneville, Idaho",urban_cluster,macro,1.0,266.0,1237,0.248,37.9,True,4.6,0.0,60.8
+299,88485bb713fffff,32.6619,-115.52581,"Imperial, California",urban_centre,small_cell,0.5,266.5,3286,0.093,61.1,False,4.6,0.0,60.7
+300,88283395c9fffff,38.81453,-122.55867,"Lake, California",rural,macro,1.0,267.5,765,0.399,28.8,True,4.6,0.0,60.4
+301,8844dd249bfffff,35.47563,-83.00049,"Haywood, North Carolina",urban_cluster,macro,1.0,268.5,762,0.4,29.0,True,4.6,0.0,60.3
+302,884450cc8bfffff,30.51364,-87.91633,"Baldwin, Alabama",urban_cluster,macro,1.0,269.5,644,0.473,26.1,True,4.6,0.0,60.2
+303,8829b2dad9fffff,34.69691,-111.9877,"Yavapai, Arizona",urban_cluster,macro,1.0,270.5,1254,0.243,39.8,True,4.6,0.0,60.2
+304,8848b2a4e7fffff,25.93208,-97.47475,"Cameron, Texas",urban_centre,small_cell,0.5,271.0,1990,0.153,45.2,True,4.6,0.0,60.2
+305,8826299415fffff,42.95855,-91.80365,"Fayette, Iowa",rural,macro,1.0,272.0,664,0.456,26.8,True,4.6,0.0,59.9
+306,882b8e1997fffff,44.58119,-75.68876,"St. Lawrence, New York",rural,macro,1.0,273.0,437,0.692,18.8,True,4.6,0.0,59.8
+307,882a10b023fffff,40.86409,-73.1796,"Suffolk, New York",urban_cluster,macro,1.0,274.0,1018,0.296,34.4,True,4.6,0.0,59.7
+308,882759ba8bfffff,42.39716,-87.84839,"Lake, Illinois",urban_centre,small_cell,0.5,274.5,2664,0.113,43.4,True,4.6,0.0,59.6
+309,8844f41217fffff,29.06234,-82.22466,"Marion, Florida",urban_cluster,macro,1.0,275.5,721,0.418,28.1,True,4.6,0.0,59.6
+310,882a810ed9fffff,38.64531,-79.33109,"Pendleton, West Virginia",rural,macro,1.0,276.5,301,0.999,4.4,True,4.5,0.0,59.5
+311,8844a81955fffff,27.57373,-80.40879,"Indian River, Florida",urban_cluster,macro,1.0,277.5,1111,0.27,36.0,True,4.5,0.0,59.4
+312,8829a41a27fffff,32.7097,-117.06253,"San Diego, California",urban_centre,small_cell,0.5,278.0,4254,0.07,46.2,True,4.5,0.0,59.2
+313,8826f5b553fffff,38.8841,-98.8487,"Russell, Kansas",rural,macro,1.0,279.0,448,0.668,18.6,False,4.5,0.0,59.2
+314,882a8e494dfffff,37.96203,-80.68802,"Greenbrier, West Virginia",rural,macro,1.0,280.0,457,0.653,19.2,True,4.5,0.0,59.1
+315,8826c804a7fffff,33.19157,-96.60046,"Collin, Texas",urban_cluster,macro,1.0,281.0,1242,0.239,37.1,True,4.5,0.0,58.9
+316,8829b6d93bfffff,33.61278,-111.86236,"Maricopa, Arizona",urban_cluster,macro,1.0,282.0,1463,0.203,41.0,True,4.5,0.0,58.8
+317,882a86aa27fffff,40.37453,-80.73688,"Jefferson, Ohio",urban_cluster,macro,1.0,283.0,297,0.999,6.2,True,4.5,0.0,58.8
+318,88275909bbfffff,42.24199,-88.6085,"McHenry, Illinois",urban_cluster,macro,1.0,284.0,913,0.325,32.5,True,4.5,0.0,58.7
+319,882b898997fffff,42.89953,-73.69183,"Saratoga, New York",urban_cluster,macro,1.0,285.0,1587,0.186,41.1,True,4.5,0.0,58.5
+320,882a10a00dfffff,40.74885,-73.25619,"Suffolk, New York",urban_centre,small_cell,0.5,285.5,1634,0.18,46.0,True,4.5,0.0,58.4
+321,8827594d67fffff,42.25906,-89.08866,"Winnebago, Illinois",urban_cluster,macro,1.0,286.5,1568,0.187,43.5,True,4.4,0.0,58.1
+322,882a992753fffff,36.39962,-81.49757,"Ashe, North Carolina",rural,macro,1.0,287.5,453,0.646,20.4,True,4.4,0.0,57.9
+323,882b8a2527fffff,43.02899,-76.07435,"Onondaga, New York",urban_cluster,macro,1.0,288.5,910,0.321,34.1,True,4.4,0.0,57.9
+324,8829b2d137fffff,34.69014,-111.98083,"Yavapai, Arizona",urban_cluster,macro,1.0,289.5,981,0.298,32.4,True,4.4,0.0,57.9
+325,8848cb2ea9fffff,36.71133,-110.25753,"Navajo, Arizona",rural,macro,1.0,290.5,940,0.311,34.0,True,4.4,0.0,57.8
+326,882ad41a59fffff,35.59672,-77.57919,"Greene, North Carolina",rural,macro,1.0,291.5,790,0.369,28.8,True,4.4,0.0,57.8
+327,8844e2a1b9fffff,30.885,-84.20129,"Grady, Georgia",urban_cluster,macro,1.0,292.5,736,0.396,29.4,True,4.4,0.0,57.7
+328,882a10b517fffff,40.73853,-73.11271,"Suffolk, New York",urban_cluster,macro,1.0,293.5,1343,0.215,40.9,True,4.4,0.0,57.3
+329,882664b0e3fffff,41.60133,-86.69328,"LaPorte, Indiana",urban_cluster,macro,1.0,294.5,613,0.471,26.1,True,4.4,0.0,57.2
+330,88281c3497fffff,42.05924,-124.29188,"Curry, Oregon",urban_cluster,macro,1.0,295.5,984,0.292,36.0,True,4.3,0.0,56.8
+331,882ab66e51fffff,42.69731,-82.7581,"Macomb, Michigan",urban_cluster,macro,1.0,296.5,1032,0.278,36.1,True,4.3,0.0,56.8
+332,8844681733fffff,30.69655,-95.01449,"Polk, Texas",rural,macro,1.0,297.5,2412,0.119,60.0,False,4.3,0.0,56.6
+333,8844f6103dfffff,29.36295,-81.07901,"Volusia, Florida",urban_cluster,macro,1.0,298.5,575,0.497,25.1,True,4.3,0.0,56.6
+334,882661a5e9fffff,39.6037,-86.15004,"Johnson, Indiana",urban_cluster,macro,1.0,299.5,388,0.736,18.4,True,4.3,0.0,56.5
+335,88260b9a59fffff,40.43902,-95.38438,"Atchison, Missouri",rural,macro,1.0,300.5,607,0.47,26.2,True,4.3,0.0,56.5
+336,8848ca9025fffff,35.06016,-108.8517,"McKinley, New Mexico",rural,macro,1.0,301.5,782,0.364,31.6,False,4.3,0.0,56.4
+337,882a993597fffff,36.42222,-81.47048,"Ashe, North Carolina",rural,macro,1.0,302.5,352,0.809,13.8,False,4.3,0.0,56.4
+338,8844d94865fffff,35.83798,-81.57205,"Caldwell, North Carolina",rural,macro,1.0,303.5,367,0.776,15.1,True,4.3,0.0,56.4
+339,8844cecec5fffff,34.44851,-83.59692,"Banks, Georgia",rural,macro,1.0,304.5,1275,0.223,44.0,False,4.3,0.0,56.3
+340,882ab0264dfffff,41.82113,-81.06271,"Lake, Ohio",rural,macro,1.0,305.5,590,0.482,25.8,True,4.3,0.0,56.3
+341,8826640045fffff,41.57863,-87.33092,"Lake, Indiana",urban_cluster,macro,1.0,306.5,1700,0.167,41.6,True,4.3,0.0,56.2
+342,88444438abfffff,29.98702,-91.81333,"Iberia, Louisiana",urban_cluster,macro,1.0,307.5,591,0.478,26.0,True,4.3,0.0,55.9
+343,882a9399adfffff,39.5613,-84.30617,"Montgomery, Ohio",urban_cluster,macro,1.0,308.5,1101,0.256,35.2,True,4.3,0.0,55.8
+344,88446c1465fffff,29.57379,-95.21978,"Harris, Texas",urban_centre,small_cell,0.5,309.0,2784,0.101,58.6,True,4.3,0.0,55.7
+345,8826e5cb27fffff,39.20053,-96.30847,"Wabaunsee, Kansas",rural,macro,1.0,310.0,1043,0.268,37.8,True,4.2,0.0,55.4
+346,8829a84325fffff,36.21149,-119.08997,"Tulare, California",urban_cluster,macro,1.0,311.0,2797,0.1,52.5,True,4.2,0.0,55.3
+347,8827595a35fffff,42.52486,-89.04821,"Rock, Wisconsin",urban_cluster,macro,1.0,312.0,587,0.476,25.9,True,4.2,0.0,55.3
+348,8828146903fffff,40.41437,-120.66023,"Lassen, California",urban_cluster,macro,1.0,313.0,839,0.332,31.2,True,4.2,0.0,55.1
+349,882758b2b1fffff,43.19641,-88.71335,"Dodge, Wisconsin",urban_cluster,macro,1.0,314.0,1425,0.195,40.1,True,4.2,0.0,55.0
+350,882a10b107fffff,40.88412,-73.2358,"Suffolk, New York",urban_cluster,macro,1.0,315.0,1567,0.177,46.4,True,4.2,0.0,54.9
+351,8826843b63fffff,41.45402,-106.81773,"Carbon, Wyoming",rural,macro,1.0,316.0,381,0.728,18.9,True,4.2,0.0,54.9
+352,882810a017fffff,40.88229,-121.66644,"Shasta, California",rural,macro,1.0,317.0,572,0.485,25.6,True,4.2,0.0,54.9
+353,882600a691fffff,43.30537,-96.58613,"Lincoln, South Dakota",urban_cluster,macro,1.0,318.0,1756,0.158,43.2,True,4.2,0.0,54.8
+354,8827488a05fffff,43.09086,-85.22991,"Ionia, Michigan",rural,macro,1.0,319.0,1359,0.203,43.5,True,4.2,0.0,54.7
+355,882ab6cc9dfffff,43.27626,-82.62463,"Sanilac, Michigan",rural,macro,1.0,320.0,522,0.525,24.1,True,4.1,0.0,54.2
+356,8848d03485fffff,33.35908,-104.5322,"Chaves, New Mexico",urban_cluster,macro,1.0,321.0,1832,0.149,44.3,True,4.1,0.0,53.9
+357,8848d05ae7fffff,32.95164,-103.37412,"Lea, New Mexico",urban_cluster,macro,1.0,322.0,348,0.781,14.9,True,4.1,0.0,53.8
+358,8828d1825bfffff,48.07172,-123.11851,"Clallam, Washington",urban_cluster,macro,1.0,323.0,401,0.678,18.4,True,4.1,0.0,53.8
+359,88446e10c7fffff,29.91225,-93.93453,"Jefferson, Texas",urban_cluster,macro,1.0,324.0,1342,0.202,37.3,True,4.1,0.0,53.7
+360,8848cc101dfffff,33.784,-110.03037,"Gila, Arizona",rural,macro,1.0,325.0,351,0.771,15.1,False,4.1,0.0,53.6
+361,882aaa8695fffff,39.00606,-77.38868,"Loudoun, Virginia",urban_centre,small_cell,0.5,325.5,2326,0.116,47.6,True,4.1,0.0,53.6
+362,882a131253fffff,40.09883,-74.28558,"Ocean, New Jersey",urban_cluster,macro,1.0,326.5,1088,0.248,39.4,True,4.1,0.0,53.4
+363,88446c6549fffff,30.10036,-94.93037,"Liberty, Texas",rural,macro,1.0,327.5,457,0.59,22.3,True,4.1,0.0,53.4
+364,8844a90d85fffff,28.65851,-81.25652,"Seminole, Florida",urban_cluster,macro,1.0,328.5,691,0.39,29.2,True,4.1,0.0,53.3
+365,882681a44bfffff,39.91386,-105.03662,"Adams, Colorado",urban_centre,small_cell,0.5,329.0,1621,0.165,40.6,True,4.1,0.0,53.1
+366,882a105559fffff,41.00254,-74.13985,"Bergen, New Jersey",urban_centre,small_cell,0.5,329.5,1142,0.235,37.4,True,4.1,0.0,53.1
+367,88268cd585fffff,39.65371,-104.74651,"Arapahoe, Colorado",urban_centre,small_cell,0.5,330.0,1947,0.137,48.8,True,4.0,0.0,53.0
+368,88274ed403fffff,43.96985,-86.44646,"Mason, Michigan",urban_cluster,macro,1.0,331.0,565,0.473,26.1,True,4.0,0.0,53.0
+369,882a14014bfffff,41.82064,-73.11566,"Litchfield, Connecticut",urban_cluster,macro,1.0,332.0,1039,0.257,36.8,True,4.0,0.0,52.9
+370,882babd4bdfffff,44.93052,-72.2149,"Orleans, Vermont",rural,macro,1.0,333.0,692,0.385,31.0,False,4.0,0.0,52.8
+371,8844468055fffff,29.64116,-90.74943,"Terrebonne, Louisiana",urban_cluster,macro,1.0,334.0,1086,0.245,39.6,True,4.0,0.0,52.7
+372,882a12ae67fffff,40.61987,-74.78349,"Hunterdon, New Jersey",rural,macro,1.0,335.0,616,0.431,27.5,True,4.0,0.0,52.5
+373,8829a1d257fffff,33.96276,-118.14235,"Los Angeles, California",urban_centre,small_cell,0.5,335.5,3207,0.083,47.6,True,4.0,0.0,52.5
+374,882a896e59fffff,35.89072,-78.65866,"Wake, North Carolina",urban_centre,small_cell,0.5,336.0,1167,0.227,39.1,True,4.0,0.0,52.4
+375,8848b38121fffff,26.14224,-97.97154,"Hidalgo, Texas",urban_cluster,macro,1.0,337.0,582,0.454,26.5,True,4.0,0.0,52.4
+376,882810a011fffff,40.87425,-121.66964,"Shasta, California",rural,macro,1.0,338.0,285,0.928,9.4,True,4.0,0.0,52.4
+377,882a809533fffff,39.89971,-79.72247,"Fayette, Pennsylvania",urban_cluster,macro,1.0,339.0,1124,0.235,39.2,True,4.0,0.0,52.3
+378,882a148169fffff,42.09802,-72.72322,"Hampden, Massachusetts",urban_cluster,macro,1.0,340.0,633,0.417,27.6,True,4.0,0.0,52.2
+379,88445a1953fffff,33.49254,-88.38168,"Lowndes, Mississippi",urban_cluster,macro,1.0,341.0,738,0.357,31.9,True,4.0,0.0,52.2
+380,8848d34041fffff,34.17894,-103.36246,"Roosevelt, New Mexico",urban_cluster,macro,1.0,342.0,669,0.394,28.8,True,4.0,0.0,52.1
+381,882a10b097fffff,40.7937,-73.12883,"Suffolk, New York",urban_cluster,macro,1.0,343.0,1158,0.227,41.5,False,4.0,0.0,52.1
+382,8828f07ab9fffff,45.8613,-122.40082,"Clark, Washington",rural,macro,1.0,344.0,594,0.443,27.0,True,4.0,0.0,52.1
+383,882a14871dfffff,41.97203,-72.53301,"Hartford, Connecticut",urban_cluster,macro,1.0,345.0,455,0.578,22.7,True,4.0,0.0,52.1
+384,88275e3035fffff,43.65497,-90.21883,"Juneau, Wisconsin",rural,macro,1.0,346.0,316,0.831,13.2,True,4.0,0.0,52.0
+385,8848caa8abfffff,35.68229,-109.05904,"McKinley, New Mexico",rural,macro,1.0,347.0,681,0.386,29.9,True,4.0,0.0,52.0
+386,8826463741fffff,38.82146,-90.35202,"St. Louis, Missouri",urban_centre,small_cell,0.5,347.5,1419,0.184,40.3,True,3.9,0.0,51.7
+387,882834cf0bfffff,36.92077,-121.74366,"Santa Cruz, California",urban_centre,small_cell,0.5,348.0,3304,0.079,65.0,False,3.9,0.0,51.6
+388,8828347ae1fffff,37.41057,-121.85706,"Santa Clara, California",urban_centre,small_cell,0.5,348.5,3103,0.084,50.6,True,3.9,0.0,51.4
+389,882a33b813fffff,41.77944,-71.1216,"Bristol, Massachusetts",urban_cluster,macro,1.0,349.5,780,0.332,33.4,True,3.9,0.0,51.3
+390,882986a135fffff,36.23022,-115.26136,"Clark, Nevada",urban_centre,small_cell,0.5,350.0,2605,0.099,55.0,True,3.9,0.0,51.2
+391,882a1431bbfffff,41.46916,-72.91082,"New Haven, Connecticut",urban_cluster,macro,1.0,351.0,774,0.334,33.3,True,3.9,0.0,51.1
+392,882a1466c5fffff,41.39261,-73.2954,"Fairfield, Connecticut",rural,macro,1.0,352.0,323,0.799,16.8,True,3.9,0.0,51.1
+393,882babd6edfffff,45.00854,-72.14941,"Orleans, Vermont",rural,macro,1.0,353.0,444,0.58,22.0,True,3.9,0.0,51.0
+394,8826c8333bfffff,33.18583,-96.49081,"Collin, Texas",urban_cluster,macro,1.0,354.0,521,0.494,25.2,True,3.9,0.0,51.0
+395,8826c8314bfffff,33.1778,-96.51639,"Collin, Texas",urban_cluster,macro,1.0,355.0,644,0.399,28.8,True,3.9,0.0,50.9
+396,882626c123fffff,46.90571,-97.20697,"Cass, North Dakota",rural,macro,1.0,356.0,725,0.354,30.3,True,3.9,0.0,50.8
+397,8848e845d3fffff,32.45736,-110.94856,"Pima, Arizona",urban_cluster,macro,1.0,357.0,264,0.973,8.0,True,3.9,0.0,50.8
+398,882a10af47fffff,40.67786,-73.36555,"Suffolk, New York",urban_centre,small_cell,0.5,357.5,1934,0.133,47.6,True,3.9,0.0,50.8
+399,8844dca16bfffff,34.15879,-82.14389,"Greenwood, South Carolina",urban_cluster,macro,1.0,358.5,1025,0.25,39.4,False,3.9,0.0,50.8
+400,882a1420b1fffff,41.32206,-72.94953,"New Haven, Connecticut",urban_centre,small_cell,0.5,359.0,4009,0.064,69.1,True,3.9,0.0,50.7
+401,882694928bfffff,41.78898,-110.55694,"Lincoln, Wyoming",rural,macro,1.0,360.0,383,0.668,18.6,False,3.9,0.0,50.7
+402,88441a09cbfffff,28.25976,-82.25043,"Pasco, Florida",rural,macro,1.0,361.0,323,0.791,16.6,True,3.9,0.0,50.6
+403,8848e856c1fffff,32.20421,-111.02637,"Pima, Arizona",urban_cluster,macro,1.0,362.0,1585,0.16,46.0,True,3.8,0.0,50.1
+404,8828c24817fffff,48.11666,-123.46272,"Clallam, Washington",urban_cluster,macro,1.0,363.0,1096,0.231,36.4,True,3.8,0.0,50.1
+405,8848eba139fffff,33.356,-111.69267,"Maricopa, Arizona",urban_centre,small_cell,0.5,363.5,1332,0.19,42.8,True,3.8,0.0,50.1
+406,882a138cd3fffff,40.01197,-74.11937,"Ocean, New Jersey",urban_cluster,macro,1.0,364.5,1023,0.247,38.3,True,3.8,0.0,50.1
+407,882ab65a23fffff,43.3283,-83.07913,"Sanilac, Michigan",rural,macro,1.0,365.5,905,0.279,37.1,False,3.8,0.0,50.0
+408,8844dab0a9fffff,35.25355,-80.72372,"Mecklenburg, North Carolina",urban_cluster,macro,1.0,366.5,1312,0.192,44.7,True,3.8,0.0,49.8
+409,8848cc11cbfffff,33.81144,-109.99698,"Gila, Arizona",rural,macro,1.0,367.5,319,0.788,13.8,False,3.8,0.0,49.7
+410,882a149107fffff,42.20161,-72.61869,"Hampden, Massachusetts",urban_cluster,macro,1.0,368.5,3718,0.067,67.9,True,3.8,0.0,49.6
+411,882aa485cbfffff,42.7125,-76.40316,"Cayuga, New York",rural,macro,1.0,369.5,549,0.455,27.2,False,3.8,0.0,49.5
+412,88278570b5fffff,48.10721,-105.19689,"Roosevelt, Montana",rural,macro,1.0,370.5,357,0.7,17.6,True,3.8,0.0,49.5
+413,882a930a49fffff,39.23328,-84.56248,"Hamilton, Ohio",urban_cluster,macro,1.0,371.5,621,0.402,28.5,True,3.8,0.0,49.5
+414,882a99275bfffff,36.40527,-81.4908,"Ashe, North Carolina",rural,macro,1.0,372.5,305,0.819,13.5,False,3.8,0.0,49.4
+415,882a12aaa3fffff,40.66939,-74.88037,"Hunterdon, New Jersey",urban_cluster,macro,1.0,373.5,467,0.534,23.8,True,3.8,0.0,49.4
+416,8826f5b55bfffff,38.89156,-98.84377,"Russell, Kansas",rural,macro,1.0,374.5,292,0.852,13.2,True,3.8,0.0,49.3
+417,8828342b35fffff,37.46112,-122.26678,"San Mateo, California",urban_centre,small_cell,0.5,375.0,1238,0.201,38.5,True,3.8,0.0,49.3
+418,882aa8c227fffff,39.36473,-76.66743,"Baltimore, Maryland",urban_cluster,macro,1.0,376.0,908,0.274,36.1,True,3.8,0.0,49.2
+419,882812a741fffff,41.48754,-120.54684,"Modoc, California",rural,macro,1.0,377.0,429,0.579,22.6,True,3.8,0.0,49.2
+420,882a92ae21fffff,39.81817,-84.87422,"Wayne, Indiana",urban_cluster,macro,1.0,378.0,1254,0.198,41.5,True,3.7,0.0,49.0
+421,882a13d319fffff,40.49223,-74.49091,"Middlesex, New Jersey",urban_cluster,macro,1.0,379.0,925,0.267,34.7,True,3.7,0.0,49.0
+422,882a10b50dfffff,40.77005,-73.12192,"Suffolk, New York",urban_cluster,macro,1.0,380.0,454,0.544,23.3,True,3.7,0.0,48.9
+423,88276b2311fffff,43.59657,-83.17832,"Tuscola, Michigan",rural,macro,1.0,381.0,526,0.469,26.3,True,3.7,0.0,48.9
+424,88264a4111fffff,35.45258,-89.80682,"Tipton, Tennessee",urban_cluster,macro,1.0,382.0,1307,0.189,45.1,True,3.7,0.0,48.9
+425,8844dab5ddfffff,35.34695,-80.81142,"Mecklenburg, North Carolina",urban_cluster,macro,1.0,383.0,1246,0.198,38.4,True,3.7,0.0,48.8
+426,882a142f55fffff,41.32287,-73.05126,"New Haven, Connecticut",urban_cluster,macro,1.0,384.0,1046,0.236,37.9,True,3.7,0.0,48.8
+427,8826969019fffff,41.25442,-111.94875,"Weber, Utah",urban_centre,small_cell,0.5,384.5,1714,0.144,50.8,True,3.7,0.0,48.8
+428,8848caa885fffff,35.67415,-109.06318,"McKinley, New Mexico",rural,macro,1.0,385.5,760,0.323,32.6,True,3.7,0.0,48.6
+429,88266cada3fffff,38.76569,-85.417,"Jefferson, Indiana",urban_cluster,macro,1.0,386.5,629,0.39,29.7,True,3.7,0.0,48.6
+430,882a14a91bfffff,41.65787,-72.79188,"Hartford, Connecticut",urban_centre,small_cell,0.5,387.0,2112,0.116,49.9,True,3.7,0.0,48.6
+431,884445cc31fffff,30.2186,-92.37683,"Acadia, Louisiana",urban_cluster,macro,1.0,388.0,1044,0.235,36.2,True,3.7,0.0,48.5
+432,882aa851abfffff,39.14698,-77.04929,"Howard, Maryland",urban_cluster,macro,1.0,389.0,1015,0.241,40.0,True,3.7,0.0,48.5
+433,884413390dfffff,26.62806,-81.92507,"Lee, Florida",urban_cluster,macro,1.0,390.0,1033,0.237,40.4,True,3.7,0.0,48.4
+434,8848b2a487fffff,25.94671,-97.49532,"Cameron, Texas",urban_cluster,macro,1.0,391.0,1232,0.198,42.5,True,3.7,0.0,48.2
+435,88278570b1fffff,48.10814,-105.18462,"Roosevelt, Montana",rural,macro,1.0,392.0,486,0.501,25.0,False,3.7,0.0,48.2
+436,8844ccd813fffff,33.98019,-84.6448,"Cobb, Georgia",urban_cluster,macro,1.0,393.0,539,0.451,27.0,True,3.7,0.0,48.1
+437,8829a084cdfffff,33.64975,-117.62479,"Orange, California",urban_centre,small_cell,0.5,393.5,2807,0.087,48.2,True,3.7,0.0,48.1
+438,882a13bb25fffff,40.00418,-74.11694,"Ocean, New Jersey",urban_cluster,macro,1.0,394.5,620,0.391,28.9,True,3.7,0.0,48.0
+439,882a10d2b7fffff,41.33713,-73.74675,"Putnam, New York",urban_cluster,macro,1.0,395.5,709,0.342,32.8,True,3.7,0.0,48.0
+440,8844a91a21fffff,28.31131,-81.24066,"Orange, Florida",urban_cluster,macro,1.0,396.5,636,0.381,29.1,True,3.7,0.0,48.0
+441,8848d3433bfffff,34.1739,-103.32394,"Roosevelt, New Mexico",urban_cluster,macro,1.0,397.5,735,0.33,33.5,True,3.7,0.0,48.0
+442,8848ebba25fffff,33.19915,-111.58637,"Maricopa, Arizona",urban_centre,small_cell,0.5,398.0,2212,0.11,56.8,True,3.7,0.0,48.0
+443,882aaa863bfffff,39.05374,-77.41674,"Loudoun, Virginia",urban_centre,small_cell,0.5,398.5,2617,0.093,60.6,True,3.7,0.0,47.9
+444,882a140109fffff,41.80961,-73.13293,"Litchfield, Connecticut",urban_cluster,macro,1.0,399.5,2031,0.119,55.5,False,3.7,0.0,47.9
+445,882a10d0e3fffff,41.33324,-73.79644,"Putnam, New York",urban_cluster,macro,1.0,400.5,395,0.609,20.8,True,3.6,0.0,47.6
+446,88441e6d3bfffff,27.65191,-82.3752,"Manatee, Florida",rural,macro,1.0,401.5,432,0.557,22.7,True,3.6,0.0,47.6
+447,88275e3ae9fffff,43.65584,-90.34386,"Vernon, Wisconsin",rural,macro,1.0,402.5,823,0.292,36.2,False,3.6,0.0,47.5
+448,882a1055bdfffff,40.92988,-74.17759,"Bergen, New Jersey",urban_centre,small_cell,0.5,403.0,6906,0.035,76.0,True,3.6,0.0,47.5
+449,882836026dfffff,37.65638,-120.94928,"Stanislaus, California",urban_centre,small_cell,0.5,403.5,2066,0.116,49.9,True,3.6,0.0,47.5
+450,88445e85ddfffff,32.32055,-89.17745,"Newton, Mississippi",rural,macro,1.0,404.5,431,0.556,22.8,True,3.6,0.0,47.4
+451,88489ea0e7fffff,29.99592,-97.8305,"Hays, Texas",urban_cluster,macro,1.0,405.5,632,0.379,30.7,True,3.6,0.0,47.4
+452,88266ba2d7fffff,36.99114,-85.94878,"Barren, Kentucky",urban_cluster,macro,1.0,406.5,924,0.259,38.5,True,3.6,0.0,47.4
+453,8844ea698bfffff,33.81973,-84.80495,"Douglas, Georgia",urban_cluster,macro,1.0,407.5,1300,0.184,45.6,True,3.6,0.0,47.3
+454,88269492d7fffff,41.79031,-110.54541,"Lincoln, Wyoming",rural,macro,1.0,408.5,1139,0.21,39.7,True,3.6,0.0,47.3
+455,8826aa4cd3fffff,40.15664,-104.93458,"Weld, Colorado",urban_cluster,macro,1.0,409.5,1293,0.184,45.6,True,3.6,0.0,47.1
+456,8827596341fffff,42.09454,-88.70701,"DeKalb, Illinois",urban_cluster,macro,1.0,410.5,551,0.43,27.1,True,3.6,0.0,46.9
+457,882babd481fffff,44.94175,-72.1962,"Orleans, Vermont",rural,macro,1.0,411.5,546,0.434,27.7,True,3.6,0.0,46.9
+458,882a34098dfffff,43.62534,-70.27427,"Cumberland, Maine",urban_cluster,macro,1.0,412.5,1118,0.211,42.7,True,3.6,0.0,46.8
+459,882a993593fffff,36.42065,-81.46034,"Ashe, North Carolina",rural,macro,1.0,413.5,263,0.898,10.7,True,3.6,0.0,46.7
+460,8848c67415fffff,32.38451,-106.49593,"Doña Ana, New Mexico",rural,macro,1.0,414.5,886,0.266,38.1,False,3.6,0.0,46.7
+461,88485bb731fffff,32.66723,-115.49461,"Imperial, California",urban_centre,small_cell,0.5,415.0,2368,0.1,39.8,True,3.6,0.0,46.7
+462,88446842a9fffff,30.77915,-94.43324,"Tyler, Texas",rural,macro,1.0,416.0,354,0.667,18.8,True,3.6,0.0,46.7
+463,8826c8310dfffff,33.16224,-96.53635,"Collin, Texas",rural,macro,1.0,417.0,541,0.436,27.6,True,3.6,0.0,46.7
+464,8848c94ad9fffff,35.80569,-110.53393,"Navajo, Arizona",rural,macro,1.0,418.0,329,0.716,17.5,True,3.6,0.0,46.7
+465,882ad5c543fffff,34.90304,-76.89574,"Craven, North Carolina",urban_cluster,macro,1.0,419.0,728,0.323,32.8,True,3.6,0.0,46.6
+466,8848d6a9a5fffff,32.44045,-103.15466,"Lea, New Mexico",rural,macro,1.0,420.0,1155,0.204,40.2,True,3.6,0.0,46.5
+467,8844f598bdfffff,29.63007,-83.09495,"Dixie, Florida",rural,macro,1.0,421.0,939,0.25,36.8,True,3.6,0.0,46.5
+468,882b891b5bfffff,42.87732,-73.93748,"Schenectady, New York",urban_cluster,macro,1.0,422.0,530,0.443,27.1,True,3.6,0.0,46.5
+469,8826aa42b7fffff,40.33355,-104.92617,"Larimer, Colorado",urban_cluster,macro,1.0,423.0,805,0.292,33.9,True,3.6,0.0,46.5
+470,8826b2d633fffff,42.7289,-110.93746,"Lincoln, Wyoming",rural,macro,1.0,424.0,276,0.85,12.4,False,3.6,0.0,46.5
+471,8826949291fffff,41.77611,-110.54241,"Lincoln, Wyoming",rural,macro,1.0,425.0,369,0.636,19.8,False,3.5,0.0,46.4
+472,882a14b651fffff,41.70568,-72.22337,"Tolland, Connecticut",urban_cluster,macro,1.0,426.0,235,0.998,4.9,True,3.5,0.0,46.4
+473,882a14010bfffff,41.80163,-73.13057,"Litchfield, Connecticut",urban_cluster,macro,1.0,427.0,1932,0.121,55.1,False,3.5,0.0,46.3
+474,882aa85b45fffff,39.25322,-77.19758,"Montgomery, Maryland",urban_cluster,macro,1.0,428.0,962,0.243,38.6,True,3.5,0.0,46.3
+475,88276ba8e3fffff,43.8008,-82.99994,"Huron, Michigan",rural,macro,1.0,429.0,612,0.382,30.6,False,3.5,0.0,46.3
+476,8826b2b299fffff,42.54096,-110.11685,"Sublette, Wyoming",rural,macro,1.0,430.0,325,0.719,16.2,False,3.5,0.0,46.3
+477,882aa485c9fffff,42.7205,-76.40614,"Cayuga, New York",rural,macro,1.0,431.0,555,0.421,29.0,False,3.5,0.0,46.2
+478,882a12c055fffff,41.20078,-75.36376,"Monroe, Pennsylvania",urban_cluster,macro,1.0,432.0,719,0.324,33.0,True,3.5,0.0,46.2
+479,8848cb2ea1fffff,36.71945,-110.25345,"Navajo, Arizona",rural,macro,1.0,433.0,654,0.357,32.1,False,3.5,0.0,46.2
+480,8828326643fffff,39.21632,-121.06063,"Nevada, California",urban_cluster,macro,1.0,434.0,1450,0.161,40.5,True,3.5,0.0,46.1
+481,882a1422e5fffff,41.40008,-72.90102,"New Haven, Connecticut",urban_cluster,macro,1.0,435.0,1111,0.209,42.9,True,3.5,0.0,46.1
+482,8829a45865fffff,32.83084,-116.52512,"San Diego, California",rural,macro,1.0,436.0,450,0.517,24.4,True,3.5,0.0,46.0
+483,882a34556dfffff,43.83632,-70.4091,"Cumberland, Maine",rural,macro,1.0,437.0,650,0.358,31.9,True,3.5,0.0,46.0
+484,8828d584edfffff,47.2377,-123.19419,"Mason, Washington",rural,macro,1.0,438.0,1818,0.128,47.2,True,3.5,0.0,46.0
+485,882a3216b5fffff,42.68774,-72.04911,"Cheshire, New Hampshire",rural,macro,1.0,439.0,1170,0.198,44.0,True,3.5,0.0,46.0
+486,882a906f1bfffff,39.74819,-84.35666,"Montgomery, Ohio",rural,macro,1.0,440.0,236,0.984,7.0,True,3.5,0.0,46.0
+487,882a1042e5fffff,40.97777,-74.26356,"Morris, New Jersey",urban_cluster,macro,1.0,441.0,1483,0.157,49.0,True,3.5,0.0,46.0
+488,882a32b5d9fffff,42.56149,-71.57884,"Middlesex, Massachusetts",urban_cluster,macro,1.0,442.0,473,0.491,25.4,True,3.5,0.0,46.0
+489,8829137a05fffff,34.67427,-120.50302,"Santa Barbara, California",rural,macro,1.0,443.0,2706,0.086,63.1,False,3.5,0.0,45.9
+490,8826610dc1fffff,39.63046,-86.86031,"Putnam, Indiana",urban_cluster,macro,1.0,444.0,602,0.385,30.4,True,3.5,0.0,45.9
+491,8848d05a31fffff,32.92976,-103.35548,"Lea, New Mexico",urban_cluster,macro,1.0,445.0,560,0.414,29.0,False,3.5,0.0,45.9
+492,8844a81917fffff,27.60221,-80.40637,"Indian River, Florida",urban_cluster,macro,1.0,446.0,1056,0.219,40.2,True,3.5,0.0,45.8
+493,8826904863fffff,40.01426,-111.68279,Utah,rural,macro,1.0,447.0,1021,0.226,41.3,True,3.5,0.0,45.7
+494,882aa86a43fffff,38.72436,-77.05735,"Charles, Maryland",urban_centre,small_cell,0.5,447.5,1123,0.205,43.3,True,3.5,0.0,45.6
+495,8828c20431fffff,47.95574,-124.37911,"Clallam, Washington",rural,macro,1.0,448.5,611,0.377,30.8,True,3.5,0.0,45.6
+496,8829a54b43fffff,33.48598,-117.70915,"Orange, California",urban_cluster,macro,1.0,449.5,1838,0.125,50.5,True,3.5,0.0,45.6
+497,8812da6009fffff,47.96754,-118.97376,"Okanogan, Washington",rural,macro,1.0,450.5,482,0.477,25.8,True,3.5,0.0,45.6
+498,882a16b097fffff,41.68825,-73.89639,"Dutchess, New York",urban_cluster,macro,1.0,451.5,2478,0.093,61.2,False,3.5,0.0,45.5
+499,882834cf03fffff,36.92905,-121.74059,"Santa Cruz, California",urban_centre,small_cell,0.5,452.0,1566,0.147,48.2,True,3.5,0.0,45.5
+500,882a92b58dfffff,39.90579,-84.6775,"Darke, Ohio",rural,macro,1.0,453.0,347,0.662,19.8,True,3.5,0.0,45.4
+501,8828f36c33fffff,47.082,-122.60056,"Pierce, Washington",urban_cluster,macro,1.0,454.0,1433,0.16,46.0,True,3.5,0.0,45.4
+502,8812da6043fffff,47.97494,-118.97001,"Okanogan, Washington",rural,macro,1.0,455.0,341,0.672,18.5,False,3.5,0.0,45.4
+503,8829a1b05bfffff,34.22325,-118.98599,"Ventura, California",urban_centre,small_cell,0.5,455.5,1556,0.147,40.8,True,3.5,0.0,45.2
+504,882a897b0dfffff,36.1445,-78.79835,"Granville, North Carolina",urban_cluster,macro,1.0,456.5,3255,0.07,67.8,False,3.5,0.0,45.2
+505,8844ce7823fffff,34.91558,-83.38777,"Rabun, Georgia",rural,macro,1.0,457.5,409,0.556,23.0,True,3.4,0.0,45.1
+506,8844468353fffff,29.59553,-90.72995,"Terrebonne, Louisiana",urban_cluster,macro,1.0,458.5,1835,0.124,54.1,True,3.4,0.0,45.0
+507,882a84c2edfffff,40.95265,-79.74737,"Butler, Pennsylvania",rural,macro,1.0,459.5,458,0.496,25.2,True,3.4,0.0,45.0
+508,882a157b1dfffff,40.79375,-72.83782,"Suffolk, New York",urban_cluster,macro,1.0,460.5,1415,0.161,45.9,True,3.4,0.0,45.0
+509,882ab2cb2bfffff,42.51228,-83.39437,"Oakland, Michigan",urban_cluster,macro,1.0,461.5,782,0.29,36.1,True,3.4,0.0,44.9
+510,8844f6906bfffff,29.00258,-81.32047,"Volusia, Florida",urban_cluster,macro,1.0,462.5,657,0.345,31.5,True,3.4,0.0,44.9
+511,882a10b091fffff,40.79915,-73.12038,"Suffolk, New York",urban_cluster,macro,1.0,463.5,707,0.321,34.1,True,3.4,0.0,44.9
+512,8826a9d8d9fffff,40.57964,-102.2993,"Phillips, Colorado",rural,macro,1.0,464.5,649,0.349,32.4,True,3.4,0.0,44.8
+513,8844ccd241fffff,33.8509,-84.83181,"Paulding, Georgia",urban_cluster,macro,1.0,465.5,921,0.246,38.1,True,3.4,0.0,44.8
+514,8828f0021dfffff,45.49482,-122.71055,"Multnomah, Oregon",urban_cluster,macro,1.0,466.5,963,0.234,35.5,True,3.4,0.0,44.7
+515,88274816e7fffff,42.78533,-85.14025,"Ionia, Michigan",rural,macro,1.0,467.5,673,0.335,32.5,True,3.4,0.0,44.6
+516,8844a13123fffff,26.12682,-80.23829,"Broward, Florida",urban_centre,small_cell,0.5,468.0,2312,0.097,47.9,True,3.4,0.0,44.6
+517,8828302121fffff,38.50752,-122.46207,"Sonoma, California",urban_cluster,macro,1.0,469.0,1369,0.165,42.3,True,3.4,0.0,44.6
+518,8848957a97fffff,27.98132,-97.39235,"San Patricio, Texas",rural,macro,1.0,470.0,1023,0.22,41.8,True,3.4,0.0,44.6
+519,8844ccd885fffff,34.00899,-84.64327,"Cobb, Georgia",urban_cluster,macro,1.0,471.0,558,0.403,28.6,True,3.4,0.0,44.5
+520,882a890ed1fffff,36.10127,-78.29894,"Franklin, North Carolina",rural,macro,1.0,472.0,731,0.307,35.0,True,3.4,0.0,44.5
+521,8826b33963fffff,41.51029,-109.45682,"Sweetwater, Wyoming",urban_cluster,macro,1.0,473.0,1485,0.151,49.8,True,3.4,0.0,44.3
+522,8844da4989fffff,35.21848,-79.45602,"Moore, North Carolina",urban_cluster,macro,1.0,474.0,677,0.331,33.5,True,3.4,0.0,44.3
+523,882a8151b3fffff,38.93682,-79.85982,"Randolph, West Virginia",urban_cluster,macro,1.0,475.0,791,0.283,36.7,True,3.4,0.0,44.3
+524,8848950927fffff,27.7556,-97.40396,"Nueces, Texas",urban_centre,small_cell,0.5,475.5,2754,0.081,50.4,True,3.4,0.0,44.3
+525,882748b409fffff,42.7258,-84.61615,"Eaton, Michigan",urban_cluster,macro,1.0,476.5,1237,0.181,40.5,True,3.4,0.0,44.3
+526,882a106b31fffff,40.61811,-74.43101,"Middlesex, New Jersey",urban_centre,small_cell,0.5,477.0,5041,0.044,71.0,True,3.4,0.0,44.2
+527,8828d1c5cbfffff,48.34229,-122.67296,"Island, Washington",rural,macro,1.0,478.0,1144,0.195,40.1,True,3.4,0.0,44.2
+528,8826b33965fffff,41.51559,-109.47552,"Sweetwater, Wyoming",urban_cluster,macro,1.0,479.0,992,0.225,41.7,False,3.4,0.0,44.2
+529,882a16b56dfffff,41.68268,-73.90491,"Dutchess, New York",urban_cluster,macro,1.0,480.0,1421,0.157,41.0,True,3.4,0.0,44.1
+530,8848b38515fffff,26.25033,-98.15186,"Hidalgo, Texas",urban_cluster,macro,1.0,481.0,906,0.246,38.4,True,3.4,0.0,44.1
+531,882a9d864dfffff,37.97368,-80.76118,"Fayette, West Virginia",rural,macro,1.0,482.0,539,0.413,31.0,False,3.4,0.0,44.0
+532,8826b2b747fffff,42.51404,-110.09931,"Sublette, Wyoming",rural,macro,1.0,483.0,315,0.706,15.5,False,3.4,0.0,44.0
+533,882a14062dfffff,41.70369,-72.92776,"Hartford, Connecticut",urban_cluster,macro,1.0,484.0,705,0.315,34.5,True,3.4,0.0,43.9
+534,8828a94541fffff,44.2953,-120.83657,"Crook, Oregon",urban_cluster,macro,1.0,485.0,834,0.266,38.0,True,3.4,0.0,43.8
+535,8828f66e41fffff,45.59519,-121.19942,"Klickitat, Washington",urban_cluster,macro,1.0,486.0,990,0.224,37.7,True,3.3,0.0,43.8
+536,8826cbcaebfffff,32.56548,-97.34415,"Johnson, Texas",urban_cluster,macro,1.0,487.0,1861,0.119,49.5,True,3.3,0.0,43.7
+537,88275d7607fffff,43.10369,-88.01888,"Milwaukee, Wisconsin",urban_centre,small_cell,0.5,487.5,2447,0.09,51.3,True,3.3,0.0,43.7
+538,88444d2947fffff,33.422,-94.47763,"Bowie, Texas",rural,macro,1.0,488.5,2330,0.095,79.8,False,3.3,0.0,43.7
+539,882a149067fffff,42.20247,-72.55698,"Hampden, Massachusetts",urban_cluster,macro,1.0,489.5,767,0.287,36.4,True,3.3,0.0,43.6
+540,88485bb09dfffff,32.66103,-115.43924,"Imperial, California",urban_centre,small_cell,0.5,490.0,5260,0.042,65.4,True,3.3,0.0,43.6
+541,8848e87b2bfffff,32.52969,-110.87527,"Pinal, Arizona",urban_cluster,macro,1.0,491.0,1225,0.179,46.1,True,3.3,0.0,43.5
+542,8844a83aa7fffff,27.9684,-80.66428,"Brevard, Florida",urban_cluster,macro,1.0,492.0,774,0.284,35.7,True,3.3,0.0,43.5
+543,8848ca9119fffff,35.06137,-108.84086,"McKinley, New Mexico",rural,macro,1.0,493.0,324,0.678,19.0,True,3.3,0.0,43.5
+544,8848eba525fffff,33.43917,-111.82321,"Maricopa, Arizona",urban_centre,small_cell,0.5,493.5,3021,0.073,58.1,True,3.3,0.0,43.4
+545,88260b35e3fffff,39.56945,-95.12174,"Atchison, Kansas",urban_cluster,macro,1.0,494.5,1212,0.181,43.7,True,3.3,0.0,43.4
+546,882681a41dfffff,39.88468,-105.03231,"Adams, Colorado",urban_centre,small_cell,0.5,495.0,1689,0.13,45.4,True,3.3,0.0,43.4
+547,882bab1349fffff,44.81179,-72.20306,"Orleans, Vermont",rural,macro,1.0,496.0,531,0.412,29.0,False,3.3,0.0,43.3
+548,882b9931c1fffff,43.18833,-77.56752,"Monroe, New York",urban_centre,small_cell,0.5,496.5,2397,0.091,60.9,True,3.3,0.0,43.3
+549,882a34c037fffff,44.03087,-70.10422,"Androscoggin, Maine",rural,macro,1.0,497.5,961,0.228,43.5,False,3.3,0.0,43.3
+550,88299689bbfffff,36.57723,-111.08512,"Coconino, Arizona",rural,macro,1.0,498.5,497,0.44,27.7,False,3.3,0.0,43.3
+551,8844468303fffff,29.60271,-90.70579,"Terrebonne, Louisiana",urban_cluster,macro,1.0,499.5,1121,0.195,44.4,True,3.3,0.0,43.3
+552,8828326659fffff,39.21171,-121.08195,"Nevada, California",urban_cluster,macro,1.0,500.5,753,0.29,34.7,True,3.3,0.0,43.3
+553,88274628cdfffff,45.78768,-88.08133,"Dickinson, Michigan",rural,macro,1.0,501.5,310,0.705,17.5,True,3.3,0.0,43.2
+554,88275801abfffff,43.06917,-89.48429,"Dane, Wisconsin",urban_cluster,macro,1.0,502.5,673,0.324,33.2,True,3.3,0.0,43.2
+555,8844e2a195fffff,30.88567,-84.21041,"Grady, Georgia",urban_cluster,macro,1.0,503.5,407,0.536,23.5,True,3.3,0.0,43.2
+556,8844c12327fffff,33.98783,-84.22802,"Fulton, Georgia",urban_cluster,macro,1.0,504.5,1059,0.206,40.8,True,3.3,0.0,43.1
+557,8848cc7641fffff,34.18928,-110.01524,"Navajo, Arizona",rural,macro,1.0,505.5,456,0.477,25.9,True,3.3,0.0,43.0
+558,882664465bfffff,41.54513,-87.65202,"Cook, Illinois",urban_cluster,macro,1.0,506.5,1216,0.179,43.2,True,3.3,0.0,43.0
+559,882a16b539fffff,41.6429,-73.8925,"Dutchess, New York",urban_cluster,macro,1.0,507.5,859,0.253,41.0,False,3.3,0.0,43.0
+560,88489e3563fffff,30.27186,-97.6796,"Travis, Texas",urban_cluster,macro,1.0,508.5,1156,0.188,45.2,True,3.3,0.0,42.9
+561,8844595433fffff,34.02395,-90.43062,"Tallahatchie, Mississippi",rural,macro,1.0,509.5,1213,0.179,61.0,False,3.3,0.0,42.9
+562,88262c08dbfffff,44.28836,-93.2597,"Rice, Minnesota",urban_cluster,macro,1.0,510.5,1244,0.174,46.8,True,3.3,0.0,42.7
+563,8826e429b9fffff,39.0982,-96.80803,"Riley, Kansas",urban_cluster,macro,1.0,511.5,925,0.233,40.7,True,3.3,0.0,42.7
+564,8826956a69fffff,40.28522,-109.99072,"Duchesne, Utah",urban_cluster,macro,1.0,512.5,808,0.267,37.9,True,3.3,0.0,42.7
+565,88485934a3fffff,32.57682,-116.58983,"San Diego, California",urban_cluster,macro,1.0,513.5,1085,0.198,44.4,False,3.2,0.0,42.5
+566,8844f4c0b5fffff,28.94012,-81.96154,"Lake, Florida",urban_cluster,macro,1.0,514.5,946,0.227,41.2,True,3.2,0.0,42.5
+567,882a34ca5dfffff,44.10292,-70.20637,"Androscoggin, Maine",urban_cluster,macro,1.0,515.5,3641,0.059,56.7,True,3.2,0.0,42.5
+568,8848c37a3bfffff,34.11257,-107.2411,"Socorro, New Mexico",rural,macro,1.0,516.5,469,0.457,26.7,True,3.2,0.0,42.4
+569,8826962ae1fffff,40.34778,-111.9645,Utah,urban_cluster,macro,1.0,517.5,1479,0.145,40.7,True,3.2,0.0,42.4
+570,8827429549fffff,45.58306,-88.09639,"Marinette, Wisconsin",rural,macro,1.0,518.5,394,0.544,23.0,False,3.2,0.0,42.4
+571,8844508669fffff,30.3582,-88.52877,"Jackson, Mississippi",urban_cluster,macro,1.0,519.5,1313,0.163,51.7,False,3.2,0.0,42.4
+572,882a10b707fffff,40.79486,-73.06893,"Suffolk, New York",urban_cluster,macro,1.0,520.5,1129,0.19,45.3,False,3.2,0.0,42.4
+573,8826ea46a9fffff,35.48142,-96.6844,"Lincoln, Oklahoma",rural,macro,1.0,521.5,337,0.635,19.9,True,3.2,0.0,42.3
+574,8829a4c1d5fffff,32.55442,-116.88588,"San Diego, California",urban_cluster,macro,1.0,522.5,4350,0.049,76.5,False,3.2,0.0,42.3
+575,882a890d13fffff,36.10136,-78.44717,"Franklin, North Carolina",rural,macro,1.0,523.5,305,0.7,18.0,True,3.2,0.0,42.3
+576,8848eba9c9fffff,33.43573,-111.56621,"Maricopa, Arizona",urban_centre,small_cell,0.5,524.0,1404,0.152,45.3,True,3.2,0.0,42.2
+577,8829a9a303fffff,36.47801,-121.37569,"Monterey, California",urban_cluster,macro,1.0,525.0,2316,0.092,47.2,True,3.2,0.0,42.2
+578,88278594b9fffff,48.77366,-104.55509,"Sheridan, Montana",rural,macro,1.0,526.0,524,0.407,29.3,False,3.2,0.0,42.2
+579,8844ceccadfffff,34.51448,-83.53623,"Banks, Georgia",urban_cluster,macro,1.0,527.0,778,0.273,37.4,True,3.2,0.0,42.1
+580,882a813a01fffff,38.5722,-79.27077,"Pendleton, West Virginia",rural,macro,1.0,528.0,250,0.848,10.1,False,3.2,0.0,42.0
+581,8848cc1015fffff,33.79226,-110.02637,"Gila, Arizona",rural,macro,1.0,529.0,285,0.744,17.2,True,3.2,0.0,42.0
+582,884446d55dfffff,29.57463,-90.38226,"Lafourche, Louisiana",urban_cluster,macro,1.0,530.0,639,0.331,33.6,False,3.2,0.0,41.9
+583,882a16b045fffff,41.78938,-73.9177,"Dutchess, New York",urban_cluster,macro,1.0,531.0,702,0.301,35.6,False,3.2,0.0,41.9
+584,8828816e15fffff,45.35015,-117.22542,"Wallowa, Oregon",rural,macro,1.0,532.0,323,0.655,19.2,True,3.2,0.0,41.9
+585,88283208b7fffff,38.98462,-120.88841,"El Dorado, California",rural,macro,1.0,533.0,399,0.529,23.8,False,3.2,0.0,41.8
+586,882bab9923fffff,45.01174,-72.09551,"Orleans, Vermont",rural,macro,1.0,534.0,315,0.668,20.0,True,3.2,0.0,41.7
+587,88266299c3fffff,40.7407,-89.01258,"Woodford, Illinois",rural,macro,1.0,535.0,894,0.235,40.5,True,3.2,0.0,41.6
+588,8826eea00dfffff,36.69687,-95.65247,"Nowata, Oklahoma",rural,macro,1.0,536.0,221,0.949,10.0,True,3.2,0.0,41.5
+589,882aa819c3fffff,39.05124,-76.69979,"Anne Arundel, Maryland",urban_cluster,macro,1.0,537.0,1365,0.153,44.9,True,3.2,0.0,41.5
+590,8828c2043bfffff,47.9531,-124.3905,"Clallam, Washington",rural,macro,1.0,538.0,503,0.416,28.8,True,3.2,0.0,41.4
+591,884449b245fffff,33.88968,-94.81586,"McCurtain, Oklahoma",rural,macro,1.0,539.0,774,0.27,37.8,False,3.2,0.0,41.4
+592,88274e233bfffff,43.22548,-86.23563,"Muskegon, Michigan",urban_cluster,macro,1.0,540.0,1257,0.166,47.7,True,3.2,0.0,41.4
+593,882a807487fffff,39.28293,-80.35033,"Harrison, West Virginia",urban_cluster,macro,1.0,541.0,1445,0.145,50.7,True,3.2,0.0,41.4
+594,8826e3190bfffff,37.50988,-97.49647,"Sedgwick, Kansas",rural,macro,1.0,542.0,690,0.303,34.3,True,3.2,0.0,41.4
+595,8844d39a55fffff,33.07766,-80.00784,"Berkeley, South Carolina",rural,macro,1.0,543.0,533,0.392,29.5,True,3.2,0.0,41.3
+596,88263621b9fffff,46.08801,-100.66433,"Sioux, North Dakota",rural,macro,1.0,544.0,304,0.686,17.4,False,3.2,0.0,41.3
+597,884893496bfffff,29.29815,-95.54327,"Brazoria, Texas",urban_cluster,macro,1.0,545.0,1471,0.142,48.8,True,3.2,0.0,41.3
+598,8829ad1311fffff,35.31987,-120.8298,"San Luis Obispo, California",urban_cluster,macro,1.0,546.0,2343,0.089,54.5,True,3.2,0.0,41.2
+599,882695d4b5fffff,40.99184,-109.72325,"Sweetwater, Wyoming",rural,macro,1.0,547.0,219,0.951,9.7,True,3.2,0.0,41.2
+600,8844a12145fffff,26.23939,-80.21203,"Broward, Florida",urban_centre,small_cell,0.5,547.5,1293,0.161,40.7,True,3.2,0.0,41.2
+601,8827182ab7fffff,47.91012,-97.62875,"Grand Forks, North Dakota",rural,macro,1.0,548.5,747,0.279,37.2,False,3.1,0.0,41.2
+602,8828d16e51fffff,48.93634,-122.79109,"Whatcom, Washington",urban_cluster,macro,1.0,549.5,770,0.27,37.6,True,3.1,0.0,41.2
+603,8848ca9113fffff,35.07648,-108.84344,"McKinley, New Mexico",rural,macro,1.0,550.5,418,0.497,25.1,True,3.1,0.0,41.1
+604,882aa18a8dfffff,41.00946,-76.45905,"Columbia, Pennsylvania",urban_cluster,macro,1.0,551.5,1239,0.168,39.4,True,3.1,0.0,41.1
+605,88445d4367fffff,32.89352,-90.44052,"Humphreys, Mississippi",rural,macro,1.0,552.5,325,0.639,19.7,True,3.1,0.0,41.1
+606,882751a1a9fffff,44.84691,-89.60804,"Marathon, Wisconsin",rural,macro,1.0,553.5,687,0.301,35.5,False,3.1,0.0,41.0
+607,882a14a615fffff,41.55736,-72.3557,"New London, Connecticut",rural,macro,1.0,554.5,311,0.666,19.5,True,3.1,0.0,41.0
+608,882675d9cbfffff,41.54604,-90.595,"Scott, Iowa",urban_centre,small_cell,0.5,555.0,1099,0.188,41.3,True,3.1,0.0,41.0
+609,882bab64e3fffff,44.13766,-72.65974,"Washington, Vermont",rural,macro,1.0,556.0,1822,0.114,64.2,False,3.1,0.0,41.0
+610,882a8d9adbfffff,37.50977,-77.38955,"Richmond, Virginia",urban_cluster,macro,1.0,557.0,1731,0.12,42.3,True,3.1,0.0,41.0
+611,88268c5685fffff,39.33501,-104.86047,"Douglas, Colorado",urban_cluster,macro,1.0,558.0,597,0.347,30.7,True,3.1,0.0,41.0
+612,8828d3a221fffff,48.94447,-122.15236,"Whatcom, Washington",rural,macro,1.0,559.0,379,0.545,23.4,True,3.1,0.0,40.9
+613,8844e24f05fffff,30.85026,-83.26959,"Lowndes, Georgia",urban_cluster,macro,1.0,560.0,1712,0.12,42.6,True,3.1,0.0,40.8
+614,882751a1abfffff,44.83929,-89.60267,"Marathon, Wisconsin",rural,macro,1.0,561.0,521,0.395,29.9,True,3.1,0.0,40.8
+615,88446c84c1fffff,29.39927,-95.49266,"Brazoria, Texas",rural,macro,1.0,562.0,1922,0.107,62.8,False,3.1,0.0,40.7
+616,882a347ad1fffff,43.50382,-70.43532,"York, Maine",urban_cluster,macro,1.0,563.0,1147,0.179,40.6,True,3.1,0.0,40.7
+617,882a13175dfffff,40.00536,-74.25606,"Ocean, New Jersey",urban_cluster,macro,1.0,564.0,1266,0.163,42.6,True,3.1,0.0,40.7
+618,8844e32f07fffff,32.044,-84.78257,"Stewart, Georgia",rural,macro,1.0,565.0,1460,0.141,64.7,False,3.1,0.0,40.7
+619,88445ea669fffff,32.58387,-89.44913,"Leake, Mississippi",rural,macro,1.0,566.0,1334,0.154,61.6,False,3.1,0.0,40.7
+620,88276ba8ebfffff,43.80715,-82.99224,"Huron, Michigan",rural,macro,1.0,567.0,542,0.379,30.8,False,3.1,0.0,40.6
+621,8828d59b15fffff,47.08487,-122.74425,"Thurston, Washington",urban_cluster,macro,1.0,568.0,951,0.216,42.3,True,3.1,0.0,40.6
+622,882675d9d5fffff,41.53216,-90.59603,"Scott, Iowa",urban_centre,small_cell,0.5,568.5,1866,0.11,47.3,True,3.1,0.0,40.6
+623,882a124159fffff,40.94274,-75.82396,"Carbon, Pennsylvania",rural,macro,1.0,569.5,973,0.21,54.6,False,3.1,0.0,40.4
+624,882a84a4d3fffff,40.29111,-78.92079,"Cambria, Pennsylvania",urban_cluster,macro,1.0,570.5,1111,0.184,42.7,True,3.1,0.0,40.4
+625,88445a180dfffff,33.48688,-88.41611,"Lowndes, Mississippi",urban_cluster,macro,1.0,571.5,821,0.248,39.3,True,3.1,0.0,40.4
+626,88262c0ab7fffff,44.30308,-93.27141,"Rice, Minnesota",urban_cluster,macro,1.0,572.5,1284,0.159,46.1,True,3.1,0.0,40.4
+627,882986a119fffff,36.20835,-115.30089,"Clark, Nevada",urban_centre,small_cell,0.5,573.0,1560,0.131,47.9,True,3.1,0.0,40.3
+628,882b996349fffff,43.25269,-78.18516,"Orleans, New York",urban_cluster,macro,1.0,574.0,762,0.267,34.2,True,3.1,0.0,40.3
+629,882ad69345fffff,35.81486,-78.46232,"Wake, North Carolina",rural,macro,1.0,575.0,1521,0.134,47.2,True,3.1,0.0,40.3
+630,88485bb717fffff,32.66368,-115.51541,"Imperial, California",urban_centre,small_cell,0.5,575.5,2445,0.083,63.8,False,3.1,0.0,40.2
+631,8844ee8c69fffff,32.13155,-85.72076,"Bullock, Alabama",rural,macro,1.0,576.5,660,0.308,37.0,False,3.1,0.0,40.2
+632,8827424561fffff,45.13506,-89.14698,"Langlade, Wisconsin",urban_cluster,macro,1.0,577.5,826,0.246,39.6,True,3.1,0.0,40.2
+633,882681a409fffff,39.89847,-105.04582,"Adams, Colorado",urban_centre,small_cell,0.5,578.0,1304,0.156,49.2,True,3.1,0.0,40.2
+634,8829a1c729fffff,34.22257,-118.20249,"Los Angeles, California",urban_cluster,macro,1.0,579.0,687,0.295,35.8,True,3.1,0.0,40.2
+635,8828f36c99fffff,47.09226,-122.6789,"Pierce, Washington",urban_cluster,macro,1.0,580.0,1557,0.13,53.5,False,3.1,0.0,40.1
+636,882ab61803fffff,43.21199,-82.52569,"Sanilac, Michigan",rural,macro,1.0,581.0,292,0.694,17.8,True,3.1,0.0,40.1
+637,88264636b3fffff,38.71537,-90.24725,"St. Louis, Missouri",urban_centre,small_cell,0.5,581.5,2200,0.092,60.7,True,3.1,0.0,40.1
+638,8848c472bdfffff,31.77651,-107.62467,"Luna, New Mexico",rural,macro,1.0,582.5,531,0.381,30.6,True,3.1,0.0,40.1
+639,882a128925fffff,41.09619,-75.17521,"Monroe, Pennsylvania",rural,macro,1.0,583.5,307,0.659,19.0,True,3.1,0.0,40.0
+640,8829a56743fffff,33.7901,-118.39181,"Los Angeles, California",urban_cluster,macro,1.0,584.5,1051,0.192,42.6,True,3.1,0.0,40.0
+641,882babd487fffff,44.93614,-72.20555,"Orleans, Vermont",rural,macro,1.0,585.5,554,0.364,31.6,False,3.1,0.0,40.0
+642,882af655b7fffff,37.25795,-76.76556,"York, Virginia",urban_cluster,macro,1.0,586.5,543,0.372,30.0,True,3.1,0.0,39.9
+643,88445d5ab7fffff,32.87799,-90.42065,"Yazoo, Mississippi",rural,macro,1.0,587.5,836,0.241,42.1,False,3.1,0.0,39.9
+644,882a347113fffff,43.51441,-70.38515,"Cumberland, Maine",urban_cluster,macro,1.0,588.5,1638,0.123,45.2,True,3.0,0.0,39.9
+645,8826640131fffff,41.5444,-87.41643,"Lake, Indiana",urban_cluster,macro,1.0,589.5,1691,0.119,54.9,True,3.0,0.0,39.9
+646,882621129bfffff,45.24897,-94.14573,"Meeker, Minnesota",rural,macro,1.0,590.5,426,0.473,26.0,True,3.0,0.0,39.9
+647,8828d11985fffff,48.50496,-122.66198,"Skagit, Washington",urban_cluster,macro,1.0,591.5,284,0.709,17.7,True,3.0,0.0,39.8
+648,88275d2949fffff,42.98551,-87.97531,"Milwaukee, Wisconsin",urban_centre,small_cell,0.5,592.0,2036,0.099,55.1,True,3.0,0.0,39.8
+649,8848cc11e3fffff,33.8306,-109.96757,"Gila, Arizona",rural,macro,1.0,593.0,385,0.521,24.3,True,3.0,0.0,39.7
+650,8826669611fffff,41.71801,-88.16966,"Will, Illinois",urban_centre,small_cell,0.5,593.5,1703,0.118,46.9,True,3.0,0.0,39.7
+651,88446b3519fffff,32.22211,-95.06679,"Smith, Texas",rural,macro,1.0,594.5,228,0.879,12.0,True,3.0,0.0,39.7
+652,882690a18dfffff,40.17123,-110.40355,"Duchesne, Utah",rural,macro,1.0,595.5,527,0.38,32.7,False,3.0,0.0,39.7
+653,882ab2d98dfffff,42.56876,-83.32743,"Oakland, Michigan",urban_cluster,macro,1.0,596.5,531,0.377,30.1,True,3.0,0.0,39.6
+654,8826b2b29dfffff,42.53968,-110.12848,"Sublette, Wyoming",rural,macro,1.0,597.5,284,0.704,16.5,False,3.0,0.0,39.6
+655,8826290c0dfffff,42.46616,-92.36916,"Black Hawk, Iowa",urban_cluster,macro,1.0,598.5,1318,0.152,49.7,True,3.0,0.0,39.6
+656,882a12c0cbfffff,41.15914,-75.33927,"Monroe, Pennsylvania",urban_cluster,macro,1.0,599.5,676,0.295,35.8,True,3.0,0.0,39.5
+657,882bab5983fffff,44.80626,-73.07593,"Franklin, Vermont",urban_cluster,macro,1.0,600.5,1261,0.158,44.6,True,3.0,0.0,39.5
+658,882af6474bfffff,37.25994,-76.77572,"Surry, Virginia",urban_cluster,macro,1.0,601.5,425,0.469,26.2,True,3.0,0.0,39.5
+659,8829b59899fffff,33.56602,-114.93019,"Riverside, California",urban_cluster,macro,1.0,602.5,1039,0.192,54.0,False,3.0,0.0,39.4
+660,884448d081fffff,32.90166,-93.03111,"Claiborne, Louisiana",rural,macro,1.0,603.5,807,0.247,48.5,False,3.0,0.0,39.4
+661,88274c850dfffff,43.98162,-84.49085,"Gladwin, Michigan",rural,macro,1.0,604.5,757,0.263,33.4,True,3.0,0.0,39.3
+662,882a339523fffff,42.07917,-71.02278,"Plymouth, Massachusetts",urban_centre,small_cell,0.5,605.0,3665,0.054,73.0,True,3.0,0.0,39.3
+663,882834da2bfffff,36.69242,-121.60966,"Monterey, California",urban_centre,small_cell,0.5,605.5,6672,0.03,81.0,True,3.0,0.0,39.3
+664,8844a905d1fffff,28.61621,-81.44159,"Orange, Florida",urban_cluster,macro,1.0,606.5,824,0.241,40.0,True,3.0,0.0,39.3
+665,8844eb91a3fffff,33.74897,-86.38602,"St. Clair, Alabama",rural,macro,1.0,607.5,1386,0.143,51.4,False,3.0,0.0,39.3
+666,882a149a43fffff,42.23581,-72.66978,"Hampden, Massachusetts",urban_cluster,macro,1.0,608.5,718,0.276,37.2,True,3.0,0.0,39.3
+667,8848cc0343fffff,33.8775,-109.96498,"Gila, Arizona",rural,macro,1.0,609.5,322,0.615,19.3,False,3.0,0.0,39.2
+668,882636219bfffff,46.08915,-100.62816,"Sioux, North Dakota",rural,macro,1.0,610.5,269,0.736,16.3,False,3.0,0.0,39.2
+669,882a32c4cbfffff,42.94516,-72.27695,"Cheshire, New Hampshire",urban_cluster,macro,1.0,611.5,1118,0.177,46.4,True,3.0,0.0,39.2
+670,882aa5a88bfffff,41.51815,-75.69953,"Lackawanna, Pennsylvania",urban_cluster,macro,1.0,612.5,334,0.592,22.2,True,3.0,0.0,39.2
+671,8844f6060bfffff,29.56103,-81.20231,"Flagler, Florida",urban_cluster,macro,1.0,613.5,987,0.2,40.7,True,3.0,0.0,39.2
+672,882a33611dfffff,41.54734,-72.05802,"New London, Connecticut",urban_cluster,macro,1.0,614.5,574,0.344,32.7,True,3.0,0.0,39.1
+673,882662cf15fffff,40.60314,-89.45848,"Tazewell, Illinois",urban_cluster,macro,1.0,615.5,1181,0.167,47.6,True,3.0,0.0,39.1
+674,882a10ca9bfffff,41.20264,-74.01008,"Orange, New York",urban_cluster,macro,1.0,616.5,982,0.201,41.8,True,3.0,0.0,39.1
+675,8826a9dab3fffff,40.58715,-102.29449,"Phillips, Colorado",rural,macro,1.0,617.5,455,0.434,27.6,True,3.0,0.0,39.1
+676,882af64663fffff,37.23908,-76.73982,"Surry, Virginia",urban_cluster,macro,1.0,618.5,654,0.302,35.4,True,3.0,0.0,39.0
+677,882a896521fffff,35.869,-78.64991,"Wake, North Carolina",urban_centre,small_cell,0.5,619.0,2069,0.095,56.6,True,3.0,0.0,39.0
+678,88261b90b3fffff,40.33518,-99.04594,"Kearney, Nebraska",rural,macro,1.0,620.0,298,0.661,20.0,True,3.0,0.0,39.0
+679,8828d119e3fffff,48.50005,-122.65371,"Skagit, Washington",urban_cluster,macro,1.0,621.0,662,0.297,35.7,True,3.0,0.0,38.9
+680,88262e724dfffff,43.95816,-94.79673,"Watonwan, Minnesota",rural,macro,1.0,622.0,331,0.594,21.7,True,3.0,0.0,38.9
+681,88485bb723fffff,32.66236,-115.47733,"Imperial, California",urban_centre,small_cell,0.5,622.5,1643,0.12,37.7,True,3.0,0.0,38.9
+682,8844ae955dfffff,26.54227,-80.14847,"Palm Beach, Florida",urban_cluster,macro,1.0,623.5,829,0.237,40.3,True,3.0,0.0,38.9
+683,8826f5b559fffff,38.89879,-98.84993,"Russell, Kansas",rural,macro,1.0,624.5,200,0.983,7.1,True,3.0,0.0,38.9
+684,8829a40899fffff,32.96031,-117.14384,"San Diego, California",urban_centre,small_cell,0.5,625.0,4091,0.048,67.3,True,3.0,0.0,38.9
+685,88291345b1fffff,34.6517,-120.46422,"Santa Barbara, California",urban_cluster,macro,1.0,626.0,2944,0.067,51.1,True,3.0,0.0,38.9
+686,8826622dc9fffff,39.83579,-88.99322,"Macon, Illinois",urban_cluster,macro,1.0,627.0,616,0.318,34.3,True,3.0,0.0,38.8
+687,88265928cbfffff,34.68849,-90.38016,"Tunica, Mississippi",rural,macro,1.0,628.0,505,0.387,29.6,True,3.0,0.0,38.7
+688,882a139195fffff,40.28227,-74.02474,"Monmouth, New Jersey",urban_cluster,macro,1.0,629.0,686,0.285,36.5,True,3.0,0.0,38.7
+689,8848cc1189fffff,33.82795,-109.98898,"Gila, Arizona",rural,macro,1.0,630.0,251,0.778,14.9,False,3.0,0.0,38.7
+690,882a138ce3fffff,40.02901,-74.16435,"Ocean, New Jersey",urban_cluster,macro,1.0,631.0,1279,0.153,46.0,True,3.0,0.0,38.6
+691,882aac06cdfffff,39.76939,-75.7145,"Chester, Pennsylvania",urban_cluster,macro,1.0,632.0,642,0.304,34.5,True,2.9,0.0,38.6
+692,8828d09413fffff,47.69715,-121.907,"King, Washington",rural,macro,1.0,633.0,259,0.751,17.3,True,2.9,0.0,38.5
+693,882af62ee3fffff,36.71581,-76.28989,"Chesapeake, Virginia",urban_cluster,macro,1.0,634.0,1012,0.192,40.6,True,2.9,0.0,38.5
+694,88445d5aa3fffff,32.86276,-90.41072,"Yazoo, Mississippi",urban_cluster,macro,1.0,635.0,1341,0.145,51.2,False,2.9,0.0,38.5
+695,8844f60623fffff,29.57298,-81.1752,"Flagler, Florida",urban_cluster,macro,1.0,636.0,524,0.37,29.8,True,2.9,0.0,38.4
+696,8844ab9633fffff,28.3368,-80.68912,"Brevard, Florida",urban_cluster,macro,1.0,637.0,748,0.259,38.5,True,2.9,0.0,38.4
+697,882631d493fffff,45.4768,-98.48518,"Brown, South Dakota",urban_cluster,macro,1.0,638.0,1531,0.127,53.6,True,2.9,0.0,38.4
+698,882a321661fffff,42.77957,-72.05338,"Cheshire, New Hampshire",rural,macro,1.0,639.0,647,0.3,37.7,False,2.9,0.0,38.4
+699,884449b26bfffff,33.89722,-94.81098,"McCurtain, Oklahoma",rural,macro,1.0,640.0,356,0.544,23.5,True,2.9,0.0,38.3
+700,8844ca514dfffff,35.48319,-83.00469,"Haywood, North Carolina",urban_cluster,macro,1.0,641.0,536,0.361,31.7,True,2.9,0.0,38.3
+701,8826e21627fffff,38.21031,-98.20363,"Rice, Kansas",rural,macro,1.0,642.0,677,0.286,34.3,True,2.9,0.0,38.3
+702,8844ae9531fffff,26.57617,-80.12468,"Palm Beach, Florida",urban_centre,small_cell,0.5,642.5,2301,0.084,56.8,True,2.9,0.0,38.3
+703,882a930251fffff,39.23473,-84.35181,"Hamilton, Ohio",urban_cluster,macro,1.0,643.5,757,0.255,36.4,True,2.9,0.0,38.2
+704,8829a1b74dfffff,34.23818,-119.06595,"Ventura, California",urban_cluster,macro,1.0,644.5,694,0.278,37.0,True,2.9,0.0,38.2
+705,882659b647fffff,35.22423,-89.793,"Shelby, Tennessee",urban_cluster,macro,1.0,645.5,759,0.254,37.8,True,2.9,0.0,38.2
+706,8829ae5b65fffff,35.6003,-117.69622,"Kern, California",urban_cluster,macro,1.0,646.5,872,0.221,41.8,True,2.9,0.0,38.1
+707,8826640ea5fffff,41.40449,-87.35047,"Lake, Indiana",urban_cluster,macro,1.0,647.5,1151,0.167,45.2,True,2.9,0.0,38.1
+708,8826843b0dfffff,41.45498,-106.80619,"Carbon, Wyoming",rural,macro,1.0,648.5,394,0.488,25.3,True,2.9,0.0,38.1
+709,8829b119abfffff,35.13575,-114.62157,"Clark, Nevada",urban_cluster,macro,1.0,649.5,3474,0.055,67.7,True,2.9,0.0,38.1
+710,8848e33487fffff,31.33197,-109.5084,"Cochise, Arizona",urban_cluster,macro,1.0,650.5,2928,0.066,69.4,False,2.9,0.0,38.0
+711,8828d161d3fffff,48.90718,-122.74118,"Whatcom, Washington",urban_cluster,macro,1.0,651.5,699,0.274,37.5,False,2.9,0.0,38.0
+712,882a16b0bbfffff,41.69064,-73.9074,"Dutchess, New York",urban_cluster,macro,1.0,652.5,1777,0.108,53.4,True,2.9,0.0,37.9
+713,882a897b05fffff,36.13902,-78.8054,"Granville, North Carolina",urban_cluster,macro,1.0,653.5,551,0.347,30.7,True,2.9,0.0,37.8
+714,8844a9655bfffff,28.89739,-81.18571,"Volusia, Florida",urban_cluster,macro,1.0,654.5,1241,0.154,46.7,True,2.9,0.0,37.8
+715,8848cc11a1fffff,33.84711,-109.95957,"Gila, Arizona",rural,macro,1.0,655.5,261,0.731,16.5,False,2.9,0.0,37.8
+716,882a9c796dfffff,38.4026,-82.70486,"Boyd, Kentucky",rural,macro,1.0,656.5,339,0.562,22.5,True,2.9,0.0,37.7
+717,8844cbd0d9fffff,36.02393,-84.26819,"Anderson, Tennessee",urban_cluster,macro,1.0,657.5,733,0.26,37.4,True,2.9,0.0,37.7
+718,8828c20423fffff,47.95356,-124.35948,"Clallam, Washington",rural,macro,1.0,658.5,684,0.278,37.2,False,2.9,0.0,37.7
+719,882a107b15fffff,40.75382,-74.31342,"Essex, New Jersey",urban_cluster,macro,1.0,659.5,871,0.218,42.0,True,2.9,0.0,37.7
+720,882834cc63fffff,36.96113,-121.76675,"Santa Cruz, California",urban_cluster,macro,1.0,660.5,989,0.192,45.0,False,2.9,0.0,37.6
+721,882a1495a1fffff,42.02052,-72.51585,"Hampden, Massachusetts",rural,macro,1.0,661.5,1697,0.112,56.9,False,2.9,0.0,37.6
+722,88444204ddfffff,31.26213,-90.45011,"Pike, Mississippi",urban_cluster,macro,1.0,662.5,588,0.323,32.8,True,2.9,0.0,37.6
+723,882ab256bbfffff,42.1704,-83.20202,"Wayne, Michigan",urban_cluster,macro,1.0,663.5,802,0.237,40.3,True,2.9,0.0,37.6
+724,882a134161fffff,40.07995,-75.08504,"Philadelphia, Pennsylvania",urban_centre,small_cell,0.5,664.0,2827,0.067,67.9,True,2.9,0.0,37.6
+725,88446c9543fffff,29.19305,-95.41868,"Brazoria, Texas",urban_cluster,macro,1.0,665.0,1869,0.102,53.3,True,2.9,0.0,37.6
+726,8827424565fffff,45.13593,-89.15925,"Langlade, Wisconsin",urban_cluster,macro,1.0,666.0,1009,0.188,45.2,True,2.9,0.0,37.5
+727,8844de65ebfffff,34.7735,-80.40178,"Chesterfield, South Carolina",rural,macro,1.0,667.0,388,0.488,25.5,True,2.9,0.0,37.5
+728,8844c100c3fffff,33.69658,-84.1175,"Rockdale, Georgia",urban_cluster,macro,1.0,668.0,330,0.573,22.1,True,2.9,0.0,37.4
+729,8844c174adfffff,34.00336,-83.99609,"Gwinnett, Georgia",urban_cluster,macro,1.0,669.0,908,0.208,40.0,True,2.9,0.0,37.4
+730,8844de5867fffff,34.17195,-80.05605,"Darlington, South Carolina",rural,macro,1.0,670.0,217,0.869,11.8,True,2.9,0.0,37.3
+731,8828320d65fffff,38.98822,-120.9065,"Placer, California",rural,macro,1.0,671.0,277,0.681,18.3,True,2.9,0.0,37.3
+732,882a9249d1fffff,39.97395,-86.12077,"Hamilton, Indiana",urban_cluster,macro,1.0,672.0,1474,0.128,53.4,True,2.8,0.0,37.2
+733,882a140119fffff,41.79118,-73.11723,"Litchfield, Connecticut",urban_cluster,macro,1.0,673.0,1380,0.136,52.0,True,2.8,0.0,37.2
+734,882a964c57fffff,40.87511,-85.49216,"Huntington, Indiana",urban_cluster,macro,1.0,674.0,1859,0.101,43.6,True,2.8,0.0,37.2
+735,8848eba8b9fffff,33.4725,-111.63872,"Maricopa, Arizona",urban_cluster,macro,1.0,675.0,299,0.628,21.0,True,2.8,0.0,37.2
+736,882a992713fffff,36.38111,-81.50773,"Ashe, North Carolina",rural,macro,1.0,676.0,219,0.857,11.3,False,2.8,0.0,37.1
+737,8848c472bbfffff,31.78251,-107.64167,"Luna, New Mexico",rural,macro,1.0,677.0,898,0.209,42.9,True,2.8,0.0,37.1
+738,8844c1459dfffff,33.78409,-83.72279,"Walton, Georgia",urban_cluster,macro,1.0,678.0,418,0.449,26.8,True,2.8,0.0,37.1
+739,884880ca47fffff,27.56995,-99.496,"Webb, Texas",urban_centre,small_cell,0.5,678.5,1662,0.113,49.1,True,2.8,0.0,37.1
+740,8848c94ebdfffff,35.9268,-110.66838,"Navajo, Arizona",rural,macro,1.0,679.5,350,0.535,23.8,True,2.8,0.0,37.1
+741,8844513b1dfffff,31.66397,-89.1459,"Jones, Mississippi",urban_cluster,macro,1.0,680.5,862,0.217,42.5,False,2.8,0.0,37.0
+742,882832725dfffff,38.99279,-120.8852,"Placer, California",rural,macro,1.0,681.5,340,0.548,23.0,False,2.8,0.0,36.9
+743,8848ccac67fffff,34.03645,-110.49216,"Navajo, Arizona",rural,macro,1.0,682.5,605,0.308,40.6,False,2.8,0.0,36.9
+744,8844a19091fffff,25.48769,-80.41264,"Miami-Dade, Florida",urban_cluster,macro,1.0,683.5,952,0.196,42.3,True,2.8,0.0,36.8
+745,88275e3419fffff,43.55561,-90.01306,"Sauk, Wisconsin",urban_cluster,macro,1.0,684.5,677,0.275,38.9,False,2.8,0.0,36.8
+746,8844ddce8bfffff,34.70448,-82.44602,"Greenville, South Carolina",rural,macro,1.0,685.5,281,0.661,20.3,True,2.8,0.0,36.8
+747,8844a81945fffff,27.55808,-80.39321,"Indian River, Florida",urban_cluster,macro,1.0,686.5,1174,0.158,48.8,True,2.8,0.0,36.8
+748,882a128b13fffff,41.10849,-75.05724,"Monroe, Pennsylvania",urban_cluster,macro,1.0,687.5,350,0.531,24.0,True,2.8,0.0,36.8
+749,88274d2691fffff,42.41232,-83.45936,"Oakland, Michigan",urban_cluster,macro,1.0,688.5,888,0.209,38.4,True,2.8,0.0,36.8
+750,882babd6c9fffff,45.00613,-72.10489,"Orleans, Vermont",rural,macro,1.0,689.5,529,0.351,32.4,False,2.8,0.0,36.8
+751,882a36a649fffff,43.45357,-70.792,"York, Maine",rural,macro,1.0,690.5,217,0.855,12.3,True,2.8,0.0,36.7
+752,882810a18bfffff,40.91919,-121.63207,"Shasta, California",rural,macro,1.0,691.5,324,0.573,21.3,False,2.8,0.0,36.7
+753,8844cac1adfffff,35.38388,-83.21484,"Jackson, North Carolina",rural,macro,1.0,692.5,393,0.472,26.2,True,2.8,0.0,36.7
+754,88275d7ad3fffff,43.13489,-88.30559,"Waukesha, Wisconsin",urban_cluster,macro,1.0,693.5,248,0.747,16.5,True,2.8,0.0,36.7
+755,8848ebb59dfffff,33.31515,-111.92997,"Maricopa, Arizona",urban_centre,small_cell,0.5,694.0,2856,0.065,61.6,True,2.8,0.0,36.7
+756,8844de5863fffff,34.17306,-80.06493,"Darlington, South Carolina",rural,macro,1.0,695.0,306,0.605,20.9,False,2.8,0.0,36.6
+757,88275d4a2bfffff,43.41015,-88.70014,"Dodge, Wisconsin",rural,macro,1.0,696.0,886,0.209,38.6,True,2.8,0.0,36.6
+758,88279880c1fffff,45.72535,-107.61998,"Big Horn, Montana",rural,macro,1.0,697.0,924,0.2,46.6,False,2.8,0.0,36.6
+759,8848c94865fffff,35.82334,-110.3924,"Navajo, Arizona",rural,macro,1.0,698.0,305,0.606,19.7,False,2.8,0.0,36.6
+760,882a12c0c3fffff,41.1535,-75.34753,"Monroe, Pennsylvania",urban_cluster,macro,1.0,699.0,974,0.19,45.0,True,2.8,0.0,36.6
+761,882a329607fffff,43.02356,-71.60672,"Hillsborough, New Hampshire",rural,macro,1.0,700.0,588,0.314,34.5,True,2.8,0.0,36.6
+762,88444a4ea7fffff,33.88549,-91.49283,"Desha, Arkansas",rural,macro,1.0,701.0,434,0.425,28.3,True,2.8,0.0,36.6
+763,8827592221fffff,42.0155,-88.10261,"DuPage, Illinois",urban_centre,small_cell,0.5,701.5,1419,0.13,48.0,True,2.8,0.0,36.5
+764,88260508a9fffff,43.65919,-96.20497,"Rock, Minnesota",rural,macro,1.0,702.5,1021,0.18,38.0,True,2.8,0.0,36.5
+765,882b8d9747fffff,43.98951,-72.44493,"Orange, Vermont",rural,macro,1.0,703.5,195,0.944,10.0,True,2.8,0.0,36.4
+766,8848ca9027fffff,35.0671,-108.85841,"McKinley, New Mexico",rural,macro,1.0,704.5,519,0.354,32.2,False,2.8,0.0,36.4
+767,8848caa8e3fffff,35.66725,-109.05641,"McKinley, New Mexico",rural,macro,1.0,705.5,305,0.602,21.9,True,2.8,0.0,36.4
+768,882a1624e1fffff,41.19643,-74.32319,"Orange, New York",rural,macro,1.0,706.5,385,0.477,25.8,True,2.8,0.0,36.4
+769,88441a6e59fffff,28.61904,-82.20773,"Sumter, Florida",rural,macro,1.0,707.5,3287,0.056,81.3,False,2.8,0.0,36.4
+770,882a8b09b9fffff,36.07829,-79.88548,"Guilford, North Carolina",urban_cluster,macro,1.0,708.5,1173,0.157,49.0,True,2.8,0.0,36.3
+771,8844dca163fffff,34.16538,-82.13878,"Greenwood, South Carolina",urban_cluster,macro,1.0,709.5,898,0.204,43.7,False,2.8,0.0,36.3
+772,8829890d5bfffff,39.59912,-119.76639,"Washoe, Nevada",urban_cluster,macro,1.0,710.5,1456,0.126,48.5,True,2.8,0.0,36.3
+773,882a108067fffff,41.14059,-73.39274,"Fairfield, Connecticut",urban_cluster,macro,1.0,711.5,837,0.219,40.6,True,2.8,0.0,36.3
+774,8844c17629fffff,33.90378,-84.01137,"Gwinnett, Georgia",urban_centre,small_cell,0.5,712.0,1090,0.168,45.6,True,2.8,0.0,36.2
+775,88268990c9fffff,38.06554,-103.20185,"Bent, Colorado",rural,macro,1.0,713.0,1017,0.18,56.2,False,2.8,0.0,36.2
+776,88264511a3fffff,38.6729,-88.48484,"Clay, Illinois",rural,macro,1.0,714.0,845,0.216,42.2,True,2.8,0.0,36.2
+777,882a8b0935fffff,36.12507,-79.92422,"Guilford, North Carolina",urban_cluster,macro,1.0,715.0,599,0.305,35.1,True,2.8,0.0,36.2
+778,882a157b53fffff,40.79672,-72.81861,"Suffolk, New York",urban_cluster,macro,1.0,716.0,558,0.327,32.3,True,2.8,0.0,36.1
+779,8844a1389bfffff,26.22516,-80.21324,"Broward, Florida",urban_centre,small_cell,0.5,716.5,1921,0.095,60.0,True,2.8,0.0,36.0
+780,8844ee8d01fffff,32.15003,-85.66813,"Bullock, Alabama",rural,macro,1.0,717.5,650,0.28,41.8,False,2.8,0.0,36.0
+781,8826622c05fffff,39.8548,-88.97463,"Macon, Illinois",urban_cluster,macro,1.0,718.5,1070,0.17,40.4,True,2.8,0.0,36.0
+782,884468944bfffff,30.31707,-95.29627,"Montgomery, Texas",urban_cluster,macro,1.0,719.5,1161,0.157,55.0,False,2.7,0.0,36.0
+783,88444a4c1bfffff,33.88522,-91.48271,"Desha, Arkansas",rural,macro,1.0,720.5,537,0.338,31.8,True,2.7,0.0,36.0
+784,8844c10735fffff,33.73619,-84.15756,"DeKalb, Georgia",urban_cluster,macro,1.0,721.5,977,0.186,45.4,True,2.7,0.0,36.0
+785,8848ebaa07fffff,33.35939,-111.61157,"Maricopa, Arizona",urban_centre,small_cell,0.5,722.0,1827,0.099,53.7,True,2.7,0.0,36.0
+786,88274e2251fffff,43.24311,-86.12472,"Muskegon, Michigan",rural,macro,1.0,723.0,683,0.266,34.8,True,2.7,0.0,35.9
+787,882a1484d5fffff,41.87346,-72.49499,"Hartford, Connecticut",urban_cluster,macro,1.0,724.0,1174,0.154,49.3,True,2.7,0.0,35.9
+788,8848d3404dfffff,34.17168,-103.35618,"Roosevelt, New Mexico",urban_cluster,macro,1.0,725.0,549,0.33,32.7,True,2.7,0.0,35.9
+789,882ad6c84bfffff,35.70791,-79.17403,"Chatham, North Carolina",rural,macro,1.0,726.0,692,0.262,35.7,True,2.7,0.0,35.9
+790,882a1495abfffff,42.01798,-72.50485,"Hampden, Massachusetts",rural,macro,1.0,727.0,1753,0.103,58.8,False,2.7,0.0,35.8
+791,882a32a0b1fffff,42.51722,-71.77448,"Worcester, Massachusetts",urban_cluster,macro,1.0,728.0,652,0.278,35.1,True,2.7,0.0,35.8
+792,88444cda31fffff,31.76166,-93.06988,"Natchitoches, Louisiana",urban_cluster,macro,1.0,729.0,560,0.323,32.9,True,2.7,0.0,35.8
+793,8826b2aeedfffff,42.25735,-110.19988,"Lincoln, Wyoming",rural,macro,1.0,730.0,287,0.63,19.3,False,2.7,0.0,35.8
+794,882a140143fffff,41.81513,-73.1243,"Litchfield, Connecticut",urban_cluster,macro,1.0,731.0,1567,0.115,56.2,False,2.7,0.0,35.8
+795,882a990d69fffff,36.72231,-81.94249,"Washington, Virginia",rural,macro,1.0,732.0,434,0.416,28.8,True,2.7,0.0,35.8
+796,882a33cee7fffff,42.06061,-71.72546,"Worcester, Massachusetts",rural,macro,1.0,733.0,203,0.89,13.4,True,2.7,0.0,35.8
+797,8844a81947fffff,27.56556,-80.3968,"Indian River, Florida",urban_cluster,macro,1.0,734.0,565,0.32,31.9,True,2.7,0.0,35.8
+798,882a32b4e7fffff,42.55077,-71.56566,"Middlesex, Massachusetts",urban_cluster,macro,1.0,735.0,1091,0.166,42.9,True,2.7,0.0,35.8
+799,88441e5963fffff,26.99478,-82.10076,"Charlotte, Florida",urban_cluster,macro,1.0,736.0,1656,0.109,47.4,True,2.7,0.0,35.7
+800,882a9935bbfffff,36.42379,-81.48062,"Ashe, North Carolina",rural,macro,1.0,737.0,227,0.792,13.7,False,2.7,0.0,35.6
+801,88275d2889fffff,42.90475,-87.86784,"Milwaukee, Wisconsin",urban_cluster,macro,1.0,738.0,1745,0.103,52.0,True,2.7,0.0,35.6
+802,88278570a3fffff,48.11386,-105.20492,"Roosevelt, Montana",rural,macro,1.0,739.0,354,0.508,24.7,False,2.7,0.0,35.6
+803,882a347a95fffff,43.48764,-70.46306,"York, Maine",urban_cluster,macro,1.0,740.0,2490,0.072,66.2,True,2.7,0.0,35.6
+804,882aaab505fffff,38.81032,-77.32386,"Fairfax, Virginia",urban_cluster,macro,1.0,741.0,1029,0.175,43.6,True,2.7,0.0,35.6
+805,8844dd2495fffff,35.47366,-82.98173,"Haywood, North Carolina",urban_cluster,macro,1.0,742.0,591,0.304,34.2,True,2.7,0.0,35.5
+806,882a154f49fffff,40.95607,-72.93468,"Suffolk, New York",urban_cluster,macro,1.0,743.0,1895,0.095,60.7,False,2.7,0.0,35.5
+807,8844f40007fffff,29.2433,-82.13265,"Marion, Florida",urban_cluster,macro,1.0,744.0,561,0.32,33.0,True,2.7,0.0,35.5
+808,882b8e1999fffff,44.59294,-75.67104,"St. Lawrence, New York",rural,macro,1.0,745.0,642,0.279,35.1,True,2.7,0.0,35.5
+809,88445549b3fffff,30.46675,-88.64167,"Jackson, Mississippi",rural,macro,1.0,746.0,588,0.305,35.1,True,2.7,0.0,35.5
+810,8826640331fffff,41.58933,-87.36967,"Lake, Indiana",urban_cluster,macro,1.0,747.0,1207,0.149,45.5,True,2.7,0.0,35.5
+811,884446d559fffff,29.5748,-90.3919,"Lafourche, Louisiana",urban_cluster,macro,1.0,748.0,569,0.315,34.6,False,2.7,0.0,35.5
+812,882a34d8b3fffff,44.10549,-70.18564,"Androscoggin, Maine",urban_cluster,macro,1.0,749.0,794,0.226,38.7,True,2.7,0.0,35.5
+813,882a924a35fffff,40.03849,-86.07621,"Hamilton, Indiana",urban_cluster,macro,1.0,750.0,610,0.294,32.4,True,2.7,0.0,35.5
+814,8829ae25d7fffff,36.06224,-118.99449,"Tulare, California",urban_cluster,macro,1.0,751.0,1062,0.169,42.2,True,2.7,0.0,35.5
+815,882759a143fffff,42.31295,-87.85977,"Lake, Illinois",urban_cluster,macro,1.0,752.0,1045,0.171,45.2,True,2.7,0.0,35.4
+816,8826622c35fffff,39.83487,-88.9823,"Macon, Illinois",urban_cluster,macro,1.0,753.0,1025,0.174,46.7,True,2.7,0.0,35.4
+817,882a33825dfffff,42.11401,-71.0417,"Bristol, Massachusetts",urban_cluster,macro,1.0,754.0,611,0.293,33.5,True,2.7,0.0,35.4
+818,8826aa7b25fffff,40.14975,-104.92781,"Weld, Colorado",urban_cluster,macro,1.0,755.0,2189,0.082,64.2,False,2.7,0.0,35.4
+819,882758c42bfffff,43.37262,-89.53695,"Columbia, Wisconsin",rural,macro,1.0,756.0,359,0.498,25.1,True,2.7,0.0,35.4
+820,8828327353fffff,39.02052,-120.82548,"Placer, California",rural,macro,1.0,757.0,383,0.466,26.5,False,2.7,0.0,35.4
+821,8848e9453bfffff,33.03996,-112.05602,"Pinal, Arizona",urban_centre,small_cell,0.5,757.5,2696,0.066,49.6,True,2.7,0.0,35.3
+822,8826e428d7fffff,39.11302,-96.70993,"Riley, Kansas",rural,macro,1.0,758.5,1055,0.169,47.8,False,2.7,0.0,35.2
+823,8826cc240dfffff,34.01751,-96.14421,"Bryan, Oklahoma",rural,macro,1.0,759.5,419,0.425,28.4,False,2.7,0.0,35.2
+824,8848cc1185fffff,33.83753,-109.97428,"Gila, Arizona",rural,macro,1.0,760.5,234,0.76,15.5,False,2.7,0.0,35.2
+825,882b1a8311fffff,44.87959,-68.67041,"Penobscot, Maine",urban_cluster,macro,1.0,761.5,794,0.223,41.5,True,2.7,0.0,35.1
+826,8848cd36c7fffff,34.78002,-111.7779,"Coconino, Arizona",urban_cluster,macro,1.0,762.5,584,0.304,35.4,False,2.7,0.0,35.1
+827,8844dbc583fffff,35.84126,-80.87704,"Iredell, North Carolina",rural,macro,1.0,763.5,530,0.335,32.0,True,2.7,0.0,35.1
+828,882a108b17fffff,41.15476,-73.58945,"Fairfield, Connecticut",urban_cluster,macro,1.0,764.5,319,0.556,22.8,True,2.7,0.0,35.1
+829,88446e1459fffff,29.96467,-94.07057,"Jefferson, Texas",rural,macro,1.0,765.5,1460,0.121,45.9,True,2.7,0.0,35.1
+830,8844447655fffff,29.9175,-91.67063,"Iberia, Louisiana",urban_cluster,macro,1.0,766.5,934,0.19,44.9,True,2.7,0.0,35.1
+831,88274802c1fffff,42.76876,-85.31609,"Barry, Michigan",rural,macro,1.0,767.5,244,0.727,19.0,True,2.7,0.0,35.1
+832,88445105dbfffff,31.5988,-89.20004,"Jones, Mississippi",rural,macro,1.0,768.5,322,0.55,23.4,True,2.7,0.0,35.1
+833,88262c9867fffff,44.83147,-93.02678,"Washington, Minnesota",urban_cluster,macro,1.0,769.5,1427,0.124,42.0,True,2.7,0.0,35.1
+834,8829b2994dfffff,34.63361,-112.32794,"Yavapai, Arizona",urban_cluster,macro,1.0,770.5,1500,0.118,41.8,True,2.7,0.0,35.0
+835,882b89a51bfffff,42.43881,-73.23732,"Berkshire, Massachusetts",urban_cluster,macro,1.0,771.5,1479,0.12,52.1,True,2.7,0.0,35.0
+836,882a32042bfffff,42.5861,-72.22928,"Worcester, Massachusetts",urban_cluster,macro,1.0,772.5,865,0.204,43.4,True,2.7,0.0,35.0
+837,8848950699fffff,27.78081,-97.91613,"Nueces, Texas",rural,macro,1.0,773.5,328,0.539,23.6,True,2.7,0.0,35.0
+838,882a328dd1fffff,42.81771,-72.02205,"Cheshire, New Hampshire",rural,macro,1.0,774.5,859,0.206,43.3,True,2.7,0.0,35.0
+839,882ad698c7fffff,35.69367,-78.60706,"Wake, North Carolina",urban_cluster,macro,1.0,775.5,1155,0.153,43.9,True,2.7,0.0,34.9
+840,8826ecc8ddfffff,37.32514,-95.28147,"Labette, Kansas",urban_cluster,macro,1.0,776.5,582,0.303,34.0,True,2.7,0.0,34.9
+841,88276ba8e7fffff,43.80233,-83.01183,"Huron, Michigan",rural,macro,1.0,777.5,470,0.375,30.9,True,2.7,0.0,34.9
+842,8844ae8749fffff,26.62692,-80.13281,"Palm Beach, Florida",urban_centre,small_cell,0.5,778.0,2887,0.061,64.5,True,2.7,0.0,34.8
+843,88263330bbfffff,44.5185,-99.44092,"Hyde, South Dakota",rural,macro,1.0,779.0,351,0.501,24.9,True,2.7,0.0,34.8
+844,882a34ca11fffff,44.07566,-70.22128,"Androscoggin, Maine",urban_cluster,macro,1.0,780.0,488,0.36,30.9,True,2.7,0.0,34.8
+845,882751a185fffff,44.84609,-89.59586,"Marathon, Wisconsin",rural,macro,1.0,781.0,279,0.629,20.6,True,2.7,0.0,34.7
+846,882a142f25fffff,41.32173,-73.11183,"New Haven, Connecticut",urban_cluster,macro,1.0,782.0,847,0.207,43.1,True,2.7,0.0,34.7
+847,882a3210cdfffff,42.82434,-72.18057,"Cheshire, New Hampshire",rural,macro,1.0,783.0,560,0.313,38.4,False,2.7,0.0,34.7
+848,882a16361bfffff,41.38543,-74.13889,"Orange, New York",rural,macro,1.0,784.0,376,0.467,26.3,True,2.7,0.0,34.7
+849,88261c9b63fffff,42.53369,-98.98102,"Holt, Nebraska",rural,macro,1.0,785.0,371,0.473,26.0,True,2.7,0.0,34.7
+850,882aaa86c9fffff,39.04579,-77.37442,"Loudoun, Virginia",urban_centre,small_cell,0.5,785.5,3398,0.052,74.2,True,2.6,0.0,34.7
+851,88288e9b2dfffff,45.42387,-117.28475,"Wallowa, Oregon",rural,macro,1.0,786.5,537,0.326,33.9,False,2.6,0.0,34.7
+852,882ab2cb07fffff,42.51081,-83.3828,"Oakland, Michigan",urban_cluster,macro,1.0,787.5,768,0.228,39.0,True,2.6,0.0,34.7
+853,882a142c25fffff,41.26619,-73.09555,"New Haven, Connecticut",urban_cluster,macro,1.0,788.5,628,0.279,34.7,True,2.6,0.0,34.6
+854,8828843897fffff,43.63293,-116.30229,"Ada, Idaho",urban_centre,small_cell,0.5,789.0,1804,0.097,46.4,True,2.6,0.0,34.6
+855,88276ba8e1fffff,43.80867,-83.00413,"Huron, Michigan",rural,macro,1.0,790.0,494,0.354,31.5,True,2.6,0.0,34.6
+856,884452d493fffff,30.64896,-86.96666,"Santa Rosa, Florida",rural,macro,1.0,791.0,2788,0.063,70.5,False,2.6,0.0,34.6
+857,882a1416c9fffff,41.79751,-72.7501,"Hartford, Connecticut",urban_cluster,macro,1.0,792.0,695,0.251,35.0,True,2.6,0.0,34.5
+858,882a8a66bbfffff,36.51958,-80.60261,"Surry, North Carolina",urban_cluster,macro,1.0,793.0,511,0.341,32.8,True,2.6,0.0,34.5
+859,88267160b9fffff,39.70735,-90.72799,"Pike, Illinois",rural,macro,1.0,794.0,571,0.305,35.1,True,2.6,0.0,34.5
+860,8828f01acdfffff,45.44729,-122.54729,"Multnomah, Oregon",urban_cluster,macro,1.0,795.0,880,0.198,40.9,True,2.6,0.0,34.5
+861,8826927a31fffff,39.34488,-112.57785,"Millard, Utah",rural,macro,1.0,796.0,406,0.429,27.9,True,2.6,0.0,34.5
+862,882751a887fffff,44.79659,-89.72325,"Marathon, Wisconsin",rural,macro,1.0,797.0,632,0.276,37.4,False,2.6,0.0,34.5
+863,882a89541bfffff,36.32339,-78.59179,"Granville, North Carolina",rural,macro,1.0,798.0,201,0.866,12.7,True,2.6,0.0,34.5
+864,8828d119a9fffff,48.50744,-122.65034,"Skagit, Washington",urban_cluster,macro,1.0,799.0,713,0.244,39.7,True,2.6,0.0,34.5
+865,8829a93555fffff,36.8357,-121.37548,"San Benito, California",urban_cluster,macro,1.0,800.0,2732,0.064,57.5,True,2.6,0.0,34.5
+866,882aad88a9fffff,39.23152,-74.95192,"Cumberland, New Jersey",rural,macro,1.0,801.0,2265,0.077,99.6,False,2.6,0.0,34.4
+867,882a10b669fffff,40.80687,-72.99211,"Suffolk, New York",urban_cluster,macro,1.0,802.0,516,0.336,33.2,True,2.6,0.0,34.3
+868,8826689517fffff,38.37294,-85.79186,"Clark, Indiana",urban_cluster,macro,1.0,803.0,548,0.316,32.5,True,2.6,0.0,34.3
+869,8844c135cdfffff,34.01174,-84.42045,"Cobb, Georgia",urban_cluster,macro,1.0,804.0,638,0.271,36.3,True,2.6,0.0,34.3
+870,882750b4cbfffff,45.68292,-90.39746,"Price, Wisconsin",rural,macro,1.0,805.0,277,0.625,20.8,True,2.6,0.0,34.3
+871,882aab500dfffff,38.27707,-77.58637,"Spotsylvania, Virginia",urban_cluster,macro,1.0,806.0,1398,0.124,58.9,False,2.6,0.0,34.2
+872,8829a1c72dfffff,34.22458,-118.1921,"Los Angeles, California",urban_cluster,macro,1.0,807.0,281,0.615,20.6,True,2.6,0.0,34.2
+873,882681ae95fffff,39.81736,-105.14854,"Jefferson, Colorado",urban_centre,small_cell,0.5,807.5,1848,0.093,57.0,True,2.6,0.0,34.2
+874,882aa13599fffff,40.32385,-76.40074,"Lebanon, Pennsylvania",urban_cluster,macro,1.0,808.5,360,0.479,25.7,True,2.6,0.0,34.2
+875,8829a186c1fffff,34.12604,-118.85213,"Los Angeles, California",urban_cluster,macro,1.0,809.5,369,0.467,26.4,True,2.6,0.0,34.1
+876,882a99266dfffff,36.41657,-81.47725,"Ashe, North Carolina",rural,macro,1.0,810.5,214,0.805,14.0,False,2.6,0.0,34.1
+877,882a34c089fffff,44.00306,-70.05518,"Androscoggin, Maine",rural,macro,1.0,811.5,843,0.204,43.4,True,2.6,0.0,34.1
+878,8844465457fffff,29.95575,-90.21294,"Jefferson, Louisiana",urban_cluster,macro,1.0,812.5,1162,0.148,44.7,True,2.6,0.0,34.1
+879,8827583b29fffff,42.9193,-89.38162,"Dane, Wisconsin",urban_cluster,macro,1.0,813.5,1188,0.145,47.9,True,2.6,0.0,34.0
+880,8844c5b23bfffff,32.4757,-84.90119,"Muscogee, Georgia",urban_cluster,macro,1.0,814.5,1077,0.159,43.6,True,2.6,0.0,34.0
+881,8826ec810dfffff,37.4164,-94.71254,"Crawford, Kansas",urban_cluster,macro,1.0,815.5,786,0.218,42.0,True,2.6,0.0,34.0
+882,882a992939fffff,36.44569,-81.88636,"Johnson, Tennessee",rural,macro,1.0,816.5,1484,0.116,56.2,False,2.6,0.0,34.0
+883,8828f37ac1fffff,46.82456,-122.46544,"Pierce, Washington",rural,macro,1.0,817.5,764,0.225,52.0,False,2.6,0.0,34.0
+884,8826cbcaa7fffff,32.53441,-97.36302,"Johnson, Texas",urban_cluster,macro,1.0,818.5,1286,0.133,52.5,True,2.6,0.0,34.0
+885,8826cdac67fffff,33.60228,-95.05258,"Red River, Texas",rural,macro,1.0,819.5,673,0.255,37.0,True,2.6,0.0,33.9
+886,882a981145fffff,37.77195,-82.64507,"Martin, Kentucky",rural,macro,1.0,820.5,243,0.705,18.6,True,2.6,0.0,33.9
+887,8848e8426bfffff,32.24341,-110.79072,"Pima, Arizona",urban_cluster,macro,1.0,821.5,386,0.444,27.3,True,2.6,0.0,33.9
+888,882a33c499fffff,41.99746,-71.52435,"Worcester, Massachusetts",urban_cluster,macro,1.0,822.5,2635,0.065,53.3,True,2.6,0.0,33.9
+889,8828327411fffff,39.14401,-121.05003,"Nevada, California",urban_cluster,macro,1.0,823.5,766,0.223,38.7,True,2.6,0.0,33.9
+890,8827090037fffff,47.51676,-92.1334,"St. Louis, Minnesota",rural,macro,1.0,824.5,752,0.227,51.6,False,2.6,0.0,33.8
+891,8844de5861fffff,34.16553,-80.06116,"Darlington, South Carolina",rural,macro,1.0,825.5,298,0.573,22.1,False,2.6,0.0,33.8
+892,882a81c8c3fffff,39.09635,-79.68215,"Tucker, West Virginia",rural,macro,1.0,826.5,483,0.354,32.2,False,2.6,0.0,33.8
+893,882a32b5dbfffff,42.55341,-71.57672,"Middlesex, Massachusetts",urban_cluster,macro,1.0,827.5,563,0.303,35.4,False,2.6,0.0,33.8
+894,8828060941fffff,39.80195,-123.26699,"Mendocino, California",rural,macro,1.0,828.5,230,0.742,18.0,True,2.6,0.0,33.8
+895,88441ad295fffff,27.69346,-82.34628,"Hillsborough, Florida",urban_cluster,macro,1.0,829.5,453,0.377,29.9,True,2.6,0.0,33.8
+896,882af655abfffff,37.27828,-76.76352,"York, Virginia",urban_cluster,macro,1.0,830.5,352,0.484,25.4,True,2.6,0.0,33.7
+897,882a10bad7fffff,40.84648,-73.26493,"Suffolk, New York",urban_cluster,macro,1.0,831.5,1229,0.139,47.7,True,2.6,0.0,33.7
+898,8828885a61fffff,46.31295,-117.96427,"Columbia, Washington",rural,macro,1.0,832.5,365,0.466,26.5,True,2.6,0.0,33.7
+899,8812db0809fffff,47.82743,-117.59993,"Stevens, Washington",rural,macro,1.0,833.5,281,0.606,21.2,True,2.6,0.0,33.7
+900,882a301a81fffff,42.84071,-70.81893,"Essex, Massachusetts",rural,macro,1.0,834.5,604,0.281,35.9,True,2.6,0.0,33.6
+901,8828f540a5fffff,45.09708,-123.39267,"Polk, Oregon",urban_cluster,macro,1.0,835.5,1244,0.136,43.3,True,2.6,0.0,33.6
+902,8828341ad1fffff,37.00206,-122.05557,"Santa Cruz, California",urban_cluster,macro,1.0,836.5,2494,0.068,67.7,True,2.6,0.0,33.6
+903,8826ca0e27fffff,32.83706,-98.04029,"Parker, Texas",rural,macro,1.0,837.5,2559,0.066,76.2,False,2.6,0.0,33.5
+904,8828990415fffff,47.53138,-116.24369,"Shoshone, Idaho",rural,macro,1.0,838.5,502,0.338,32.5,True,2.6,0.0,33.5
+905,882b8824d7fffff,43.01478,-74.37212,"Fulton, New York",urban_cluster,macro,1.0,839.5,1435,0.118,52.4,True,2.6,0.0,33.5
+906,8827507a31fffff,45.50638,-91.73656,"Barron, Wisconsin",urban_cluster,macro,1.0,840.5,1358,0.125,53.9,True,2.6,0.0,33.5
+907,8826b04de5fffff,42.56401,-110.10385,"Sublette, Wyoming",rural,macro,1.0,841.5,229,0.738,16.2,False,2.6,0.0,33.5
+908,8826702d67fffff,40.36214,-91.43252,"Hancock, Illinois",rural,macro,1.0,842.5,234,0.722,18.0,True,2.6,0.0,33.4
+909,8844c115dbfffff,33.66397,-84.24167,"Henry, Georgia",urban_cluster,macro,1.0,843.5,840,0.201,40.5,True,2.6,0.0,33.4
+910,88283208b1fffff,38.97646,-120.89162,"El Dorado, California",rural,macro,1.0,844.5,346,0.487,25.5,True,2.6,0.0,33.4
+911,8848c94addfffff,35.80706,-110.52305,"Navajo, Arizona",rural,macro,1.0,845.5,250,0.674,18.4,False,2.6,0.0,33.4
+912,8829a065edfffff,34.49792,-117.19557,"San Bernardino, California",urban_cluster,macro,1.0,846.5,1523,0.111,50.8,True,2.5,0.0,33.3
+913,88444e4b65fffff,32.59911,-91.48044,"West Carroll, Louisiana",rural,macro,1.0,847.5,485,0.347,36.6,False,2.5,0.0,33.3
+914,8828342949fffff,37.4635,-122.2564,"San Mateo, California",urban_centre,small_cell,0.5,848.0,1363,0.123,54.2,True,2.5,0.0,33.3
+915,8844e62d03fffff,30.26238,-84.176,"Wakulla, Florida",rural,macro,1.0,849.0,2902,0.058,85.4,False,2.5,0.0,33.3
+916,882ad5c0b3fffff,34.91784,-76.93711,"Craven, North Carolina",urban_cluster,macro,1.0,850.0,1026,0.164,51.6,False,2.5,0.0,33.3
+917,88275ca8c1fffff,44.03542,-88.60157,"Winnebago, Wisconsin",urban_cluster,macro,1.0,851.0,635,0.265,35.5,True,2.5,0.0,33.3
+918,882a809a51fffff,40.06107,-79.88419,"Washington, Pennsylvania",urban_cluster,macro,1.0,852.0,1909,0.088,82.7,False,2.5,0.0,33.3
+919,88445d5aabfffff,32.85546,-90.41569,"Yazoo, Mississippi",urban_cluster,macro,1.0,853.0,1194,0.141,51.8,False,2.5,0.0,33.2
+920,882a107891fffff,40.64154,-74.26766,"Essex, New Jersey",urban_centre,small_cell,0.5,853.5,1998,0.084,62.8,True,2.5,0.0,33.2
+921,882a13d6e7fffff,40.32057,-74.33597,"Middlesex, New Jersey",urban_cluster,macro,1.0,854.5,824,0.204,43.5,True,2.5,0.0,33.2
+922,8844f4274bfffff,29.6439,-82.43107,"Alachua, Florida",urban_cluster,macro,1.0,855.5,1051,0.159,48.6,True,2.5,0.0,33.2
+923,8844e020b3fffff,30.96603,-85.16476,"Jackson, Florida",rural,macro,1.0,856.5,926,0.181,46.0,True,2.5,0.0,33.1
+924,882aab5067fffff,38.28097,-77.6072,"Spotsylvania, Virginia",urban_cluster,macro,1.0,857.5,902,0.185,48.6,False,2.5,0.0,33.0
+925,882af62e83fffff,36.69902,-76.27465,"Chesapeake, Virginia",urban_cluster,macro,1.0,858.5,886,0.188,41.5,True,2.5,0.0,33.0
+926,88441a8d11fffff,28.01459,-82.57731,"Hillsborough, Florida",urban_centre,small_cell,0.5,859.0,1240,0.135,52.3,True,2.5,0.0,33.0
+927,88262c9847fffff,44.83751,-92.99637,"Washington, Minnesota",urban_cluster,macro,1.0,860.0,942,0.177,40.2,True,2.5,0.0,33.0
+928,882751a1adfffff,44.84774,-89.62023,"Marathon, Wisconsin",rural,macro,1.0,861.0,731,0.228,41.4,False,2.5,0.0,33.0
+929,88274816a9fffff,42.77763,-85.13581,"Ionia, Michigan",rural,macro,1.0,862.0,534,0.312,32.0,True,2.5,0.0,33.0
+930,88275e34e9fffff,43.53468,-90.02087,"Sauk, Wisconsin",urban_cluster,macro,1.0,863.0,641,0.259,38.7,False,2.5,0.0,32.9
+931,8844ecc417fffff,31.8199,-86.62171,"Butler, Alabama",rural,macro,1.0,864.0,692,0.24,40.3,False,2.5,0.0,32.9
+932,882b1e56a7fffff,45.6275,-68.57147,"Penobscot, Maine",rural,macro,1.0,865.0,1215,0.137,51.9,True,2.5,0.0,32.9
+933,882806549bfffff,39.7907,-123.25194,"Mendocino, California",rural,macro,1.0,866.0,208,0.799,16.3,True,2.5,0.0,32.9
+934,882a32b5d1fffff,42.55605,-71.58778,"Middlesex, Massachusetts",urban_cluster,macro,1.0,867.0,494,0.336,33.3,False,2.5,0.0,32.9
+935,8827859487fffff,48.78039,-104.56317,"Sheridan, Montana",rural,macro,1.0,868.0,405,0.41,29.2,False,2.5,0.0,32.9
+936,8827581549fffff,43.18948,-89.27701,"Dane, Wisconsin",urban_cluster,macro,1.0,869.0,897,0.185,43.7,True,2.5,0.0,32.8
+937,882a10b111fffff,40.87138,-73.21192,"Suffolk, New York",urban_cluster,macro,1.0,870.0,850,0.195,44.4,True,2.5,0.0,32.8
+938,8826b272a7fffff,42.08357,-110.95709,"Lincoln, Wyoming",rural,macro,1.0,871.0,377,0.44,27.5,True,2.5,0.0,32.8
+939,882a3382ddfffff,42.05773,-71.02769,"Bristol, Massachusetts",urban_centre,small_cell,0.5,871.5,1159,0.143,46.1,True,2.5,0.0,32.8
+940,882ad5c569fffff,34.91402,-76.91773,"Craven, North Carolina",urban_cluster,macro,1.0,872.5,870,0.19,47.9,False,2.5,0.0,32.8
+941,884445d8b5fffff,30.00556,-92.29451,"Vermilion, Louisiana",rural,macro,1.0,873.5,1173,0.141,51.3,True,2.5,0.0,32.8
+942,882a1042b9fffff,40.94391,-74.24268,"Morris, New Jersey",urban_cluster,macro,1.0,874.5,715,0.231,40.8,True,2.5,0.0,32.7
+943,882986a85bfffff,36.26211,-115.2074,"Clark, Nevada",urban_centre,small_cell,0.5,875.0,3053,0.054,54.9,True,2.5,0.0,32.7
+944,88274d8d0dfffff,43.1229,-83.70233,"Genesee, Michigan",urban_cluster,macro,1.0,876.0,914,0.181,46.0,True,2.5,0.0,32.7
+945,8828347ab5fffff,37.4448,-121.87294,"Santa Clara, California",urban_cluster,macro,1.0,877.0,534,0.309,31.5,True,2.5,0.0,32.7
+946,8844c1114dfffff,33.47441,-84.05524,"Henry, Georgia",urban_cluster,macro,1.0,878.0,664,0.249,38.2,True,2.5,0.0,32.7
+947,88485bb465fffff,32.68053,-115.50839,"Imperial, California",urban_centre,small_cell,0.5,878.5,2282,0.072,47.9,True,2.5,0.0,32.7
+948,882675d9ddfffff,41.53873,-90.58986,"Scott, Iowa",urban_centre,small_cell,0.5,879.0,1841,0.09,61.3,True,2.5,0.0,32.6
+949,8848cc11c1fffff,33.81276,-109.98627,"Gila, Arizona",rural,macro,1.0,880.0,201,0.82,13.5,False,2.5,0.0,32.6
+950,8844c1c4a3fffff,33.46277,-84.00437,"Henry, Georgia",rural,macro,1.0,881.0,374,0.44,27.6,True,2.5,0.0,32.6
+951,88441a38e3fffff,28.4968,-82.51416,"Hernando, Florida",urban_cluster,macro,1.0,882.0,349,0.472,26.0,True,2.5,0.0,32.6
+952,882a891253fffff,36.39977,-78.15656,"Warren, North Carolina",rural,macro,1.0,883.0,316,0.52,24.3,True,2.5,0.0,32.6
+953,88268cd5e3fffff,39.66063,-104.75323,"Arapahoe, Colorado",urban_centre,small_cell,0.5,883.5,2062,0.08,63.9,True,2.5,0.0,32.6
+954,8826e42981fffff,39.11282,-96.80897,"Riley, Kansas",urban_cluster,macro,1.0,884.5,1400,0.117,55.8,False,2.5,0.0,32.5
+955,882666961bfffff,41.71702,-88.15827,"Will, Illinois",urban_centre,small_cell,0.5,885.0,1990,0.083,59.4,True,2.5,0.0,32.5
+956,8848cc11a3fffff,33.85405,-109.96627,"Gila, Arizona",rural,macro,1.0,886.0,234,0.702,16.9,False,2.5,0.0,32.5
+957,8828b1d5e5fffff,42.52447,-114.48328,"Twin Falls, Idaho",urban_cluster,macro,1.0,887.0,1643,0.1,50.0,True,2.5,0.0,32.5
+958,8828c20415fffff,47.94564,-124.39365,"Clallam, Washington",rural,macro,1.0,888.0,354,0.464,26.3,True,2.5,0.0,32.5
+959,88266186a9fffff,39.98074,-86.24815,"Boone, Indiana",urban_cluster,macro,1.0,889.0,558,0.294,35.9,True,2.5,0.0,32.5
+960,8828313897fffff,38.9114,-123.69637,"Mendocino, California",rural,macro,1.0,890.0,244,0.672,19.5,True,2.5,0.0,32.5
+961,88485bd4d5fffff,32.48544,-114.75836,"Yuma, Arizona",urban_cluster,macro,1.0,891.0,3702,0.044,79.1,False,2.5,0.0,32.5
+962,8848cc498bfffff,34.13799,-109.28213,"Apache, Arizona",rural,macro,1.0,892.0,260,0.63,20.3,True,2.5,0.0,32.4
+963,8826e80741fffff,35.92906,-94.9739,"Cherokee, Oklahoma",urban_cluster,macro,1.0,893.0,1115,0.147,46.7,True,2.5,0.0,32.4
+964,882a84d46dfffff,40.98139,-79.6158,"Armstrong, Pennsylvania",rural,macro,1.0,894.0,460,0.356,32.1,False,2.5,0.0,32.4
+965,88265a2ec9fffff,35.06991,-92.45891,"Faulkner, Arkansas",urban_cluster,macro,1.0,895.0,1174,0.139,44.3,True,2.5,0.0,32.4
+966,8826aa436bfffff,40.41965,-105.06004,"Larimer, Colorado",urban_cluster,macro,1.0,896.0,1129,0.145,44.6,True,2.5,0.0,32.4
+967,8848b1745bfffff,26.39981,-99.02246,"Starr, Texas",urban_cluster,macro,1.0,897.0,3611,0.045,53.1,True,2.5,0.0,32.3
+968,882758b2a3fffff,43.20489,-88.73016,"Dodge, Wisconsin",urban_cluster,macro,1.0,898.0,750,0.218,38.6,True,2.5,0.0,32.3
+969,882986a067fffff,36.19004,-115.31892,"Clark, Nevada",urban_centre,small_cell,0.5,898.5,2591,0.063,69.5,True,2.5,0.0,32.2
+970,88446cc511fffff,29.39479,-94.91281,"Galveston, Texas",urban_cluster,macro,1.0,899.5,1784,0.091,57.4,True,2.5,0.0,32.2
+971,8829a84329fffff,36.20108,-119.10378,"Tulare, California",urban_cluster,macro,1.0,900.5,800,0.203,42.0,True,2.5,0.0,32.2
+972,8844cecec9fffff,34.4427,-83.61141,"Banks, Georgia",rural,macro,1.0,901.5,309,0.525,24.0,True,2.5,0.0,32.1
+973,882830213dfffff,38.51089,-122.47995,"Sonoma, California",urban_cluster,macro,1.0,902.5,432,0.376,30.5,True,2.5,0.0,32.1
+974,88268cc635fffff,39.58288,-104.70201,"Douglas, Colorado",urban_cluster,macro,1.0,903.5,887,0.183,44.0,True,2.5,0.0,32.1
+975,88446b34b9fffff,32.28225,-95.15119,"Smith, Texas",rural,macro,1.0,904.5,228,0.711,18.2,True,2.5,0.0,32.1
+976,8827594297fffff,42.35877,-88.82765,"Boone, Illinois",urban_cluster,macro,1.0,905.5,680,0.238,40.2,True,2.5,0.0,32.1
+977,8827434f1dfffff,44.32665,-88.17048,"Brown, Wisconsin",rural,macro,1.0,906.5,325,0.499,25.1,True,2.5,0.0,32.1
+978,8844f489bbfffff,29.00883,-82.18892,"Sumter, Florida",urban_cluster,macro,1.0,907.5,1272,0.127,54.1,False,2.4,0.0,32.0
+979,882af2a821fffff,36.21253,-76.71336,"Chowan, North Carolina",rural,macro,1.0,908.5,234,0.69,17.9,True,2.4,0.0,32.0
+980,88281a7747fffff,43.75047,-122.48671,"Lane, Oregon",rural,macro,1.0,909.5,505,0.319,32.5,True,2.4,0.0,31.9
+981,882a16b55bfffff,41.6548,-73.84495,"Dutchess, New York",urban_cluster,macro,1.0,910.5,337,0.478,25.8,True,2.4,0.0,31.9
+982,882a95d899fffff,40.73056,-82.79081,"Crawford, Ohio",urban_cluster,macro,1.0,911.5,1066,0.151,47.6,True,2.4,0.0,31.9
+983,8844a9a001fffff,28.49769,-81.76298,"Lake, Florida",urban_cluster,macro,1.0,912.5,1017,0.158,48.8,True,2.4,0.0,31.9
+984,88264511a7fffff,38.67361,-88.49514,"Clay, Illinois",rural,macro,1.0,913.5,799,0.202,43.7,True,2.4,0.0,31.9
+985,8826949299fffff,41.78387,-110.53815,"Lincoln, Wyoming",rural,macro,1.0,914.5,234,0.687,18.0,False,2.4,0.0,31.8
+986,8848cc1003fffff,33.78533,-110.01967,"Gila, Arizona",rural,macro,1.0,915.5,204,0.788,14.6,False,2.4,0.0,31.8
+987,882ad5c0c5fffff,34.9623,-76.92627,"Craven, North Carolina",rural,macro,1.0,916.5,573,0.28,37.1,False,2.4,0.0,31.8
+988,882a360881fffff,43.59914,-71.74969,"Grafton, New Hampshire",rural,macro,1.0,917.5,222,0.723,17.3,True,2.4,0.0,31.8
+989,882a10b705fffff,40.80274,-73.07123,"Suffolk, New York",urban_cluster,macro,1.0,918.5,890,0.18,42.5,True,2.4,0.0,31.7
+990,882a839ab1fffff,39.04156,-80.46024,"Lewis, West Virginia",rural,macro,1.0,919.5,781,0.205,43.3,True,2.4,0.0,31.7
+991,8829a1c73bfffff,34.23971,-118.23406,"Los Angeles, California",urban_cluster,macro,1.0,920.5,1137,0.141,41.7,True,2.4,0.0,31.7
+992,8848c67439fffff,32.38555,-106.48532,"Doña Ana, New Mexico",rural,macro,1.0,921.5,359,0.446,27.4,True,2.4,0.0,31.7
+993,8844447657fffff,29.92513,-91.6756,"Iberia, Louisiana",urban_cluster,macro,1.0,922.5,719,0.222,38.3,True,2.4,0.0,31.7
+994,8848b2a4adfffff,25.94007,-97.47029,"Cameron, Texas",urban_centre,small_cell,0.5,923.0,2465,0.065,68.8,True,2.4,0.0,31.6
+995,88446d3163fffff,30.58119,-96.30579,"Brazos, Texas",urban_centre,small_cell,0.5,923.5,1371,0.116,51.9,True,2.4,0.0,31.6
+996,882832168dfffff,38.71241,-121.24755,"Placer, California",urban_centre,small_cell,0.5,924.0,1596,0.1,46.8,True,2.4,0.0,31.5
+997,8826b661d3fffff,42.95727,-110.95194,"Lincoln, Wyoming",rural,macro,1.0,925.0,173,0.92,9.8,True,2.4,0.0,31.5
+998,882a160f37fffff,41.64595,-74.70445,"Sullivan, New York",urban_cluster,macro,1.0,926.0,749,0.213,42.6,True,2.4,0.0,31.5
+999,88274359e5fffff,44.51353,-88.32943,"Outagamie, Wisconsin",rural,macro,1.0,927.0,774,0.206,40.8,True,2.4,0.0,31.5
+1000,882a890d17fffff,36.10318,-78.45716,"Franklin, North Carolina",rural,macro,1.0,928.0,489,0.325,31.0,True,2.4,0.0,31.5
+1001,882babd4a3fffff,44.93318,-72.2266,"Orleans, Vermont",rural,macro,1.0,929.0,413,0.385,31.0,False,2.4,0.0,31.5
+1002,882a10b9c1fffff,40.84875,-73.40643,"Suffolk, New York",urban_centre,small_cell,0.5,929.5,3765,0.042,79.3,True,2.4,0.0,31.3
+1003,882a1420d5fffff,41.34394,-72.91527,"New Haven, Connecticut",urban_centre,small_cell,0.5,930.0,1922,0.082,63.3,True,2.4,0.0,31.2
+1004,8844ae82e9fffff,26.58031,-80.08678,"Palm Beach, Florida",urban_centre,small_cell,0.5,930.5,1535,0.102,55.3,True,2.4,0.0,30.9
+1005,882a138d13fffff,40.06393,-74.22492,"Ocean, New Jersey",urban_centre,small_cell,0.5,931.0,2803,0.055,67.8,True,2.3,0.0,30.5
+1006,88446ca1e7fffff,29.6835,-95.51019,"Fort Bend, Texas",urban_centre,small_cell,0.5,931.5,5879,0.026,61.2,True,2.3,0.0,30.4
+1007,8829868c6dfffff,36.01816,-114.96662,"Clark, Nevada",urban_centre,small_cell,0.5,932.0,2284,0.066,57.1,True,2.3,0.0,30.1
+1008,882a339527fffff,42.08185,-71.03369,"Plymouth, Massachusetts",urban_centre,small_cell,0.5,932.5,3657,0.041,80.8,False,2.3,0.0,30.0
+1009,8848e85033fffff,32.18081,-110.79016,"Pima, Arizona",urban_centre,small_cell,0.5,933.0,1327,0.113,53.2,True,2.3,0.0,29.8
+1010,88298908d3fffff,39.56576,-119.71082,"Washoe, Nevada",urban_centre,small_cell,0.5,933.5,1182,0.127,50.3,True,2.3,0.0,29.7
+1011,882a339521fffff,42.08721,-71.02478,"Plymouth, Massachusetts",urban_centre,small_cell,0.5,934.0,3397,0.044,79.5,False,2.2,0.0,29.4
+1012,882681b219fffff,40.18588,-105.14607,"Boulder, Colorado",urban_centre,small_cell,0.5,934.5,1736,0.084,62.7,True,2.2,0.0,29.0
+1013,8844a1232bfffff,26.21963,-80.23454,"Broward, Florida",urban_centre,small_cell,0.5,935.0,3189,0.046,77.1,True,2.2,0.0,28.9
+1014,882a10a20dfffff,40.78705,-73.19717,"Suffolk, New York",urban_centre,small_cell,0.5,935.5,1873,0.077,57.0,True,2.2,0.0,28.7
+1015,88485bb09bfffff,32.66591,-115.45653,"Imperial, California",urban_centre,small_cell,0.5,936.0,1564,0.093,46.7,True,2.2,0.0,28.7
+1016,882a104495fffff,40.77626,-74.17951,"Essex, New Jersey",urban_centre,small_cell,0.5,936.5,5271,0.027,81.3,True,2.2,0.0,28.3
+1017,882986a807fffff,36.28395,-115.16782,"Clark, Nevada",urban_centre,small_cell,0.5,937.0,2085,0.068,54.1,True,2.1,0.0,28.0
+1018,88446cacd7fffff,29.85087,-95.59804,"Harris, Texas",urban_centre,small_cell,0.5,937.5,1493,0.094,60.3,True,2.1,0.0,27.7
+1019,882a10af0dfffff,40.6724,-73.37395,"Suffolk, New York",urban_centre,small_cell,0.5,938.0,2492,0.056,72.2,True,2.1,0.0,27.7
+1020,882a142da3fffff,41.21746,-73.14208,"New Haven, Connecticut",urban_centre,small_cell,0.5,938.5,1339,0.104,46.7,True,2.1,0.0,27.4
+1021,8826c83b61fffff,33.167,-96.69803,"Collin, Texas",urban_centre,small_cell,0.5,939.0,2677,0.052,74.2,True,2.1,0.0,27.4
+1022,8848b3da4bfffff,25.97069,-97.48196,"Cameron, Texas",urban_centre,small_cell,0.5,939.5,3939,0.034,84.3,True,2.0,0.0,26.7
+1023,8844a12039fffff,26.27971,-80.27109,"Broward, Florida",urban_centre,small_cell,0.5,940.0,2137,0.063,56.1,True,2.0,0.0,26.6
+1024,88485bb0a1fffff,32.66811,-115.39763,"Imperial, California",urban_centre,small_cell,0.5,940.5,1695,0.079,51.5,True,2.0,0.0,26.5
+1025,8829a56b03fffff,33.82461,-118.05338,"Los Angeles, California",urban_centre,small_cell,0.5,941.0,2968,0.044,63.0,True,2.0,0.0,25.8
+1026,8829a1b297fffff,34.24233,-119.0453,"Ventura, California",urban_centre,small_cell,0.5,941.5,1349,0.097,59.6,True,2.0,0.0,25.8
+1027,8848eb8e9bfffff,33.15938,-111.53526,"Pinal, Arizona",urban_centre,small_cell,0.5,942.0,2424,0.053,61.6,True,1.9,0.0,25.5
+1028,882a10a8b7fffff,40.65707,-73.4696,"Nassau, New York",urban_centre,small_cell,0.5,942.5,1541,0.083,56.9,True,1.9,0.0,25.4
+1029,8848b38729fffff,26.18009,-98.15226,"Hidalgo, Texas",urban_centre,small_cell,0.5,943.0,1840,0.07,58.0,True,1.9,0.0,25.3
+1030,88446c072bfffff,29.70526,-95.17015,"Harris, Texas",urban_centre,small_cell,0.5,943.5,3110,0.041,79.8,True,1.9,0.0,25.3
+1031,88441a8823fffff,27.90668,-82.48849,"Hillsborough, Florida",urban_centre,small_cell,0.5,944.0,1072,0.119,54.9,True,1.9,0.0,25.3
+1032,88275d7601fffff,43.11027,-88.01207,"Milwaukee, Wisconsin",urban_centre,small_cell,0.5,944.5,2834,0.045,77.6,True,1.9,0.0,25.2
+1033,8826747111fffff,41.66699,-91.53586,"Johnson, Iowa",urban_centre,small_cell,0.5,945.0,4432,0.029,81.8,True,1.9,0.0,25.2
+1034,88268cd503fffff,39.69603,-104.77551,"Arapahoe, Colorado",urban_centre,small_cell,0.5,945.5,2894,0.044,55.3,True,1.9,0.0,25.1
+1035,8848ebba29fffff,33.18937,-111.60083,"Maricopa, Arizona",urban_centre,small_cell,0.5,946.0,2696,0.047,58.8,True,1.9,0.0,25.1
+1036,882a33952dfffff,42.09525,-71.02678,"Plymouth, Massachusetts",urban_centre,small_cell,0.5,946.5,3520,0.036,84.5,False,1.9,0.0,25.0
+1037,882ab2d501fffff,42.5191,-82.9993,"Macomb, Michigan",urban_centre,small_cell,0.5,947.0,1680,0.074,61.5,True,1.9,0.0,24.8
+1038,8829a4545bfffff,32.81956,-116.93236,"San Diego, California",urban_centre,small_cell,0.5,947.5,2652,0.047,59.8,True,1.9,0.0,24.7
+1039,88485bb737fffff,32.67566,-115.4911,"Imperial, California",urban_centre,small_cell,0.5,948.0,2522,0.049,76.3,False,1.9,0.0,24.7
+1040,8828d5cac3fffff,47.33941,-122.31998,"King, Washington",urban_centre,small_cell,0.5,948.5,1089,0.112,53.3,True,1.8,0.0,24.2
+1041,882986a153fffff,36.20009,-115.30454,"Clark, Nevada",urban_centre,small_cell,0.5,949.0,3253,0.037,74.5,True,1.8,0.0,24.0
+1042,8829b6c347fffff,33.6026,-112.04608,"Maricopa, Arizona",urban_centre,small_cell,0.5,949.5,1774,0.068,63.5,True,1.8,0.0,23.8
+1043,8848b3da59fffff,25.97777,-97.49716,"Cameron, Texas",urban_centre,small_cell,0.5,950.0,2521,0.047,62.0,True,1.8,0.0,23.4
+1044,882664cc41fffff,41.80212,-87.6105,"Cook, Illinois",urban_centre,small_cell,0.5,950.5,3384,0.035,83.9,True,1.8,0.0,23.4
+1045,882696a833fffff,40.6848,-111.81097,"Salt Lake, Utah",urban_centre,small_cell,0.5,951.0,2013,0.059,66.5,True,1.8,0.0,23.3
+1046,882986a851fffff,36.26389,-115.19665,"Clark, Nevada",urban_centre,small_cell,0.5,951.5,3865,0.03,87.4,True,1.8,0.0,23.3
+1047,8829a10209fffff,34.43303,-118.47407,"Los Angeles, California",urban_centre,small_cell,0.5,952.0,1528,0.077,64.8,True,1.8,0.0,23.2
+1048,882a95618dfffff,39.97411,-82.92793,"Franklin, Ohio",urban_centre,small_cell,0.5,952.5,1805,0.065,57.1,True,1.8,0.0,23.2
+1049,88485bb73bfffff,32.66546,-115.50501,"Imperial, California",urban_centre,small_cell,0.5,953.0,1322,0.088,47.8,True,1.8,0.0,23.1
+1050,882986a063fffff,36.18825,-115.32966,"Clark, Nevada",urban_centre,small_cell,0.5,953.5,2702,0.043,78.5,True,1.8,0.0,23.1
+1051,882ab2ca95fffff,42.437,-83.25734,"Oakland, Michigan",urban_centre,small_cell,0.5,954.0,1970,0.058,71.3,True,1.7,0.0,22.7
+1052,8826668639fffff,41.57733,-88.25066,"Kendall, Illinois",urban_centre,small_cell,0.5,954.5,2000,0.057,67.0,True,1.7,0.0,22.6
+1053,8826cbca6bfffff,32.61801,-97.38386,"Johnson, Texas",urban_centre,small_cell,0.5,955.0,2047,0.056,59.3,True,1.7,0.0,22.5
+1054,882664cb37fffff,41.91942,-87.81415,"Cook, Illinois",urban_centre,small_cell,0.5,955.5,3973,0.029,73.8,True,1.7,0.0,22.5
+1055,8829a1d557fffff,34.11108,-118.21782,"Los Angeles, California",urban_centre,small_cell,0.5,956.0,1606,0.071,60.0,True,1.7,0.0,22.5
+1056,882a14b91bfffff,41.79046,-72.68664,"Hartford, Connecticut",urban_centre,small_cell,0.5,956.5,2514,0.044,78.1,True,1.7,0.0,21.9
+1057,88446c06cdfffff,29.71846,-95.29097,"Harris, Texas",urban_centre,small_cell,0.5,957.0,2600,0.042,71.9,True,1.7,0.0,21.8
+1058,882a10b83bfffff,40.84699,-73.36566,"Suffolk, New York",urban_centre,small_cell,0.5,957.5,1501,0.073,66.7,False,1.7,0.0,21.8
+1059,882a33a2ddfffff,41.66484,-70.93056,"Bristol, Massachusetts",urban_centre,small_cell,0.5,958.0,6080,0.018,80.2,True,1.7,0.0,21.7
+1060,88268cd587fffff,39.64679,-104.73979,"Arapahoe, Colorado",urban_centre,small_cell,0.5,958.5,2387,0.045,70.4,True,1.6,0.0,21.5
+1061,882a10b8edfffff,40.83911,-73.36331,"Suffolk, New York",urban_centre,small_cell,0.5,959.0,1587,0.068,68.4,False,1.6,0.0,21.4
+1062,8829a46ca3fffff,33.46682,-117.1031,"San Diego, California",urban_centre,small_cell,0.5,959.5,3190,0.034,67.4,True,1.6,0.0,21.2
+1063,8826969051fffff,41.26865,-111.95192,"Weber, Utah",urban_centre,small_cell,0.5,960.0,1513,0.071,66.7,True,1.6,0.0,21.2
+1064,8829a1b2bbfffff,34.24441,-119.03497,"Ventura, California",urban_centre,small_cell,0.5,960.5,1588,0.067,68.9,False,1.6,0.0,21.1
+1065,882986a80dfffff,36.26921,-115.16438,"Clark, Nevada",urban_centre,small_cell,0.5,961.0,4285,0.025,78.1,True,1.6,0.0,20.8
+1066,882a10b831fffff,40.8494,-73.37644,"Suffolk, New York",urban_centre,small_cell,0.5,961.5,1279,0.082,64.2,False,1.6,0.0,20.7
+1067,8844a138d3fffff,26.21093,-80.21446,"Broward, Florida",urban_centre,small_cell,0.5,962.0,3095,0.034,56.9,True,1.6,0.0,20.6
+1068,8848c61ae3fffff,31.93288,-106.40455,"El Paso, Texas",urban_centre,small_cell,0.5,962.5,2292,0.045,77.5,True,1.6,0.0,20.5
+1069,8848eb85a7fffff,33.15792,-111.54587,"Pinal, Arizona",urban_centre,small_cell,0.5,963.0,2698,0.038,75.5,True,1.6,0.0,20.4
+1070,882834cf13fffff,36.93863,-121.76557,"Santa Cruz, California",urban_centre,small_cell,0.5,963.5,1731,0.059,70.8,True,1.6,0.0,20.4
+1071,882ab2d599fffff,42.45397,-82.94364,"Macomb, Michigan",urban_centre,small_cell,0.5,964.0,1967,0.052,68.9,True,1.5,0.0,20.3
+1072,882681a411fffff,39.87778,-105.02555,"Adams, Colorado",urban_centre,small_cell,0.5,964.5,2304,0.044,56.8,True,1.5,0.0,20.2
+1073,882675d9c1fffff,41.54679,-90.60631,"Scott, Iowa",urban_centre,small_cell,0.5,965.0,1508,0.067,68.9,False,1.5,0.0,20.0
+1074,882a10b833fffff,40.84152,-73.37409,"Suffolk, New York",urban_centre,small_cell,0.5,965.5,1682,0.06,70.7,True,1.5,0.0,19.9
+1075,88446ca6d5fffff,29.73126,-95.79879,"Harris, Texas",urban_centre,small_cell,0.5,966.0,1302,0.077,59.8,True,1.5,0.0,19.9
+1076,8826960623fffff,40.67562,-111.99589,"Salt Lake, Utah",urban_centre,small_cell,0.5,966.5,2126,0.047,69.6,True,1.5,0.0,19.9
+1077,8848ebba67fffff,33.1825,-111.59408,"Maricopa, Arizona",urban_centre,small_cell,0.5,967.0,4565,0.022,86.1,True,1.5,0.0,19.7
+1078,88275d3921fffff,43.09868,-87.96019,"Milwaukee, Wisconsin",urban_centre,small_cell,0.5,967.5,2336,0.042,79.0,True,1.5,0.0,19.6
+1079,8829a1b29bfffff,34.23186,-119.05886,"Ventura, California",urban_centre,small_cell,0.5,968.0,2038,0.049,70.4,True,1.5,0.0,19.6
+1080,882aaa86b9fffff,39.00804,-77.39925,"Loudoun, Virginia",urban_centre,small_cell,0.5,968.5,2926,0.034,65.8,True,1.5,0.0,19.6
+1081,88485bb549fffff,32.67078,-115.47381,"Imperial, California",urban_centre,small_cell,0.5,969.0,2243,0.044,59.1,True,1.5,0.0,19.6
+1082,882a10b9c7fffff,40.84327,-73.41485,"Suffolk, New York",urban_centre,small_cell,0.5,969.5,3054,0.032,87.3,False,1.5,0.0,19.5
+1083,8829ae24a7fffff,36.07258,-119.0194,"Tulare, California",urban_centre,small_cell,0.5,970.0,1893,0.052,51.2,True,1.5,0.0,19.5
+1084,8826e3c643fffff,37.73378,-97.35923,"Sedgwick, Kansas",urban_centre,small_cell,0.5,970.5,1356,0.072,50.1,True,1.5,0.0,19.3
+1085,8829a1bb41fffff,34.25797,-118.73402,"Ventura, California",urban_centre,small_cell,0.5,971.0,1766,0.055,63.0,True,1.5,0.0,19.3
+1086,882664db47fffff,42.10349,-87.73683,"Cook, Illinois",urban_centre,small_cell,0.5,971.5,1562,0.062,56.3,True,1.5,0.0,19.1
+1087,8829a1d593fffff,34.17694,-118.27802,"Los Angeles, California",urban_centre,small_cell,0.5,972.0,1788,0.054,73.2,True,1.5,0.0,19.1
+1088,8827599409fffff,42.7001,-87.81308,"Racine, Wisconsin",urban_centre,small_cell,0.5,972.5,2306,0.041,73.9,True,1.4,0.0,18.9
+1089,88446ca6ddfffff,29.72346,-95.80346,"Harris, Texas",urban_centre,small_cell,0.5,973.0,3270,0.029,71.8,True,1.4,0.0,18.7
+1090,8828346c93fffff,37.71573,-122.07755,"Alameda, California",urban_centre,small_cell,0.5,973.5,1851,0.051,74.7,True,1.4,0.0,18.5
+1091,8848eb8585fffff,33.13981,-111.56418,"Pinal, Arizona",urban_centre,small_cell,0.5,974.0,4284,0.022,96.3,True,1.4,0.0,18.4
+1092,88485bb46dfffff,32.67211,-115.5119,"Imperial, California",urban_centre,small_cell,0.5,974.5,1363,0.068,68.6,False,1.4,0.0,18.3
+1093,882aa8c311fffff,39.36886,-76.68866,"Baltimore, Maryland",urban_centre,small_cell,0.5,975.0,3417,0.027,83.2,True,1.4,0.0,18.3
+1094,88268cd5e1fffff,39.66756,-104.75995,"Arapahoe, Colorado",urban_centre,small_cell,0.5,975.5,3499,0.026,92.7,False,1.4,0.0,18.2
+1095,882986161dfffff,36.14408,-115.04035,"Clark, Nevada",urban_centre,small_cell,0.5,976.0,6074,0.015,106.3,True,1.4,0.0,18.1
+1096,8844ae95a1fffff,26.6127,-80.13404,"Palm Beach, Florida",urban_centre,small_cell,0.5,976.5,2423,0.037,70.1,True,1.4,0.0,17.9
+1097,8844ae874dfffff,26.62626,-80.12451,"Palm Beach, Florida",urban_centre,small_cell,0.5,977.0,2065,0.044,78.3,True,1.4,0.0,17.9
+1098,8829a1c01bfffff,34.19666,-118.13603,"Los Angeles, California",urban_centre,small_cell,0.5,977.5,1941,0.046,76.9,True,1.4,0.0,17.7
+1099,8829a41b1dfffff,32.70696,-117.03496,"San Diego, California",urban_centre,small_cell,0.5,978.0,3207,0.028,80.7,True,1.4,0.0,17.7
+1100,8829a4c405fffff,32.58604,-117.05469,"San Diego, California",urban_centre,small_cell,0.5,978.5,2999,0.03,89.6,False,1.3,0.0,17.5
+1101,88446d316dfffff,30.56607,-96.29484,"Brazos, Texas",urban_centre,small_cell,0.5,979.0,1928,0.046,66.4,True,1.3,0.0,17.5
+1102,8844a115edfffff,25.88745,-80.1964,"Miami-Dade, Florida",urban_centre,small_cell,0.5,979.5,2733,0.032,87.3,False,1.3,0.0,17.4
+1103,882a106b5bfffff,40.63564,-74.37632,"Middlesex, New Jersey",urban_centre,small_cell,0.5,980.0,1306,0.067,57.4,True,1.3,0.0,17.4
+1104,8844dab0d9fffff,35.24897,-80.77664,"Mecklenburg, North Carolina",urban_centre,small_cell,0.5,980.5,1905,0.046,76.9,True,1.3,0.0,17.4
+1105,8826463743fffff,38.814,-90.34677,"St. Louis, Missouri",urban_centre,small_cell,0.5,981.0,1152,0.076,65.0,True,1.3,0.0,17.4
+1106,882a103247fffff,40.65639,-73.49947,"Nassau, New York",urban_centre,small_cell,0.5,981.5,1212,0.072,62.2,True,1.3,0.0,17.3
+1107,882a10b9d7fffff,40.8251,-73.39937,"Suffolk, New York",urban_centre,small_cell,0.5,982.0,1614,0.054,73.1,True,1.3,0.0,17.3
+1108,882a10a235fffff,40.7628,-73.22015,"Suffolk, New York",urban_centre,small_cell,0.5,982.5,2563,0.034,84.6,True,1.3,0.0,17.2
+1109,882681a417fffff,39.87008,-105.03015,"Adams, Colorado",urban_centre,small_cell,0.5,983.0,2647,0.033,85.5,True,1.3,0.0,17.2
+1110,882a302d27fffff,42.21327,-70.9227,"Plymouth, Massachusetts",urban_centre,small_cell,0.5,983.5,1401,0.062,69.9,True,1.3,0.0,17.2
+1111,882a3382cbfffff,42.06577,-71.02969,"Bristol, Massachusetts",urban_centre,small_cell,0.5,984.0,2530,0.034,85.7,False,1.3,0.0,17.2
+1112,8826c188c3fffff,35.48357,-97.54807,Oklahoma,urban_centre,small_cell,0.5,984.5,2269,0.038,74.0,True,1.3,0.0,17.2
+1113,882759ba89fffff,42.40469,-87.85322,"Lake, Illinois",urban_centre,small_cell,0.5,985.0,1664,0.052,69.0,True,1.3,0.0,17.1
+1114,88283611b3fffff,37.65866,-120.93877,"Stanislaus, California",urban_centre,small_cell,0.5,985.5,1799,0.048,76.1,True,1.3,0.0,17.0
+1115,882ad69b4dfffff,35.80748,-78.64359,"Wake, North Carolina",urban_centre,small_cell,0.5,986.0,1567,0.055,60.3,True,1.3,0.0,17.0
+1116,8812db0dabfffff,47.69704,-117.44985,"Spokane, Washington",urban_centre,small_cell,0.5,986.5,1368,0.063,64.0,True,1.3,0.0,16.9
+1117,882a33a2d7fffff,41.65151,-70.93743,"Bristol, Massachusetts",urban_centre,small_cell,0.5,987.0,4372,0.019,101.1,False,1.3,0.0,16.8
+1118,88268ccf17fffff,39.51465,-104.93793,"Douglas, Colorado",urban_centre,small_cell,0.5,987.5,2081,0.041,81.3,False,1.3,0.0,16.7
+1119,8844ae82b1fffff,26.62361,-80.09136,"Palm Beach, Florida",urban_centre,small_cell,0.5,988.0,1802,0.046,66.2,True,1.3,0.0,16.5
+1120,88268cd9d9fffff,39.69763,-105.06775,"Jefferson, Colorado",urban_centre,small_cell,0.5,988.5,1747,0.048,76.1,True,1.3,0.0,16.5
+1121,88446c3293fffff,29.87657,-95.46343,"Harris, Texas",urban_centre,small_cell,0.5,989.0,1949,0.043,73.1,True,1.3,0.0,16.5
+1122,88485bb733fffff,32.67388,-115.5015,"Imperial, California",urban_centre,small_cell,0.5,989.5,2161,0.038,60.8,True,1.2,0.0,16.3
+1123,88446c028dfffff,29.63663,-95.14229,"Harris, Texas",urban_centre,small_cell,0.5,990.0,1791,0.046,66.3,True,1.2,0.0,16.3
+1124,882a33aa13fffff,41.68594,-71.16936,"Bristol, Rhode Island",urban_centre,small_cell,0.5,990.5,3966,0.021,81.4,True,1.2,0.0,16.2
+1125,882a138d11fffff,40.07172,-74.22737,"Ocean, New Jersey",urban_centre,small_cell,0.5,991.0,2182,0.038,70.0,True,1.2,0.0,16.2
+1126,8829a46ca7fffff,33.46873,-117.09272,"San Diego, California",urban_centre,small_cell,0.5,991.5,1987,0.041,62.5,True,1.2,0.0,16.2
+1127,8827599595fffff,42.63273,-87.85754,"Racine, Wisconsin",urban_centre,small_cell,0.5,992.0,1185,0.069,52.9,True,1.2,0.0,16.2
+1128,882a339219fffff,42.22401,-70.93562,"Norfolk, Massachusetts",urban_centre,small_cell,0.5,992.5,1229,0.067,59.6,True,1.2,0.0,16.2
+1129,88485bb461fffff,32.67875,-115.51879,"Imperial, California",urban_centre,small_cell,0.5,993.0,3282,0.025,92.7,True,1.2,0.0,16.1
+1130,8848eba835fffff,33.43428,-111.57684,"Maricopa, Arizona",urban_centre,small_cell,0.5,993.5,1654,0.049,75.4,True,1.2,0.0,16.1
+1131,882a10b91bfffff,40.86452,-73.41114,"Suffolk, New York",urban_centre,small_cell,0.5,994.0,1389,0.059,71.2,True,1.2,0.0,16.1
+1132,88441a8595fffff,28.02662,-82.75158,"Pinellas, Florida",urban_centre,small_cell,0.5,994.5,1271,0.064,60.4,True,1.2,0.0,16.1
+1133,8844a18431fffff,25.69691,-80.43256,"Miami-Dade, Florida",urban_centre,small_cell,0.5,995.0,3087,0.026,64.1,True,1.2,0.0,16.0
+1134,8828f42e19fffff,44.8815,-123.04778,"Marion, Oregon",urban_centre,small_cell,0.5,995.5,1587,0.051,74.5,True,1.2,0.0,16.0
+1135,8829a85a49fffff,36.0788,-119.0266,"Tulare, California",urban_centre,small_cell,0.5,996.0,2002,0.04,60.0,True,1.2,0.0,16.0
+1136,8828347aa9fffff,37.42473,-121.86133,"Santa Clara, California",urban_centre,small_cell,0.5,996.5,1800,0.045,72.1,True,1.2,0.0,16.0
+1137,88267471d5fffff,41.63727,-91.50341,"Johnson, Iowa",urban_centre,small_cell,0.5,997.0,1840,0.044,78.2,True,1.2,0.0,16.0
+1138,88489ab5b9fffff,31.10167,-97.78416,"Bell, Texas",urban_centre,small_cell,0.5,997.5,2140,0.038,70.0,True,1.2,0.0,15.9
+1139,8848b2a435fffff,25.90992,-97.44881,"Cameron, Texas",urban_centre,small_cell,0.5,998.0,2017,0.04,62.0,True,1.2,0.0,15.9
+1140,882a33a2d5fffff,41.65951,-70.9394,"Bristol, Massachusetts",urban_centre,small_cell,0.5,998.5,1886,0.043,78.9,True,1.2,0.0,15.9
+1141,882832a92dfffff,38.8235,-121.25298,"Placer, California",urban_centre,small_cell,0.5,999.0,2423,0.033,85.4,True,1.2,0.0,15.8
+1142,8844a19099fffff,25.48086,-80.41736,"Miami-Dade, Florida",urban_centre,small_cell,0.5,999.5,2161,0.037,82.6,True,1.2,0.0,15.7
+1143,882986b9a5fffff,36.18603,-115.11149,"Clark, Nevada",urban_centre,small_cell,0.5,1000.0,4731,0.017,105.3,False,1.2,0.0,15.7

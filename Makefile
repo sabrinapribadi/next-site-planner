@@ -37,4 +37,7 @@ pipeline:
 	$(PY) scripts/noise_validation.py
 	$(PY) scripts/new_site_effect.py
 	$(PY) scripts/new_site_diagnostics.py
+	$(PY) scripts/new_site_crossing_checks.py
+	$(PY) scripts/new_site_crossing_checks.py --estimand capacity
+	$(PY) scripts/site_plan.py
 	$(PY) scripts/export_page_data.py

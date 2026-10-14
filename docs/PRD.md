@@ -1,9 +1,9 @@
 PRODUCT REQUIREMENT DOCUMENT (PRD)
 Project: Next Site Planner — Where Would One More Mobile Site Help the Most People?
-Version: 0.4 (P3 done: new-site effect in all seven countries, ADR-007; ADR-006 fresh-quarter test pre-registered)
+Version: 0.5 (P4 done: costed site plans per country, ADR-008; exports for planners)
 Author: Sabrina Pribadi
 Date: October 14, 2026
-Status: Active — P0, P1 passed; P2 gate failed (kriging deployed; ADR-006 retest pending 2026 Q4); P3 done; P4 next
+Status: Active — P0, P1 passed; P2 gate failed (kriging deployed; ADR-006 retest pending 2026 Q4); P3 done; P4 done (gate passed); P5 next
 
 
 1. EXECUTIVE SUMMARY
@@ -32,7 +32,7 @@ Success Metrics (pre-registered — see ADR-002):
 - P1: population share below 10 and 25 Mbps per country, raw and density-adjusted, with 95% intervals; every populated hexagon typed by morphology and gap (coverage / capacity) — **passed** after two logged deviations
 - P2: the spatial model beats ordinary kriging by ≥ 10% (RMSE of log speed) under spatial block cross-validation — **failed: 7% (ratio 0.929); kriging deployed**
 - P3: new-site effect with a 95% interval and a passing pre-trend (placebo) test — **passed in Germany, France, US, Philippines; failed in Indonesia and the UAE**
-- P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same cost budget (new-tower equivalents)
+- P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same cost budget (new-tower equivalents) — **passed in 6 of 7 countries (+56% to +776%)**
 - P5: API contracts and the LLM evaluation set pass in CI; cost and latency within budget (R13)
 - P6: the Databricks job reproduces the local P1 numbers exactly
 - P7: two live pages (results and technical walkthrough), browser-tested
@@ -92,7 +92,7 @@ Module A: Data foundation on H3 resolution 8; snapshot manifest; data contracts 
 Module B: Experience-gap map, fair benchmark, morphology and gap typing, regulatory benchmarks — ADR-003 (P1)
 Module C: Speed where nobody tested (kriging deployed; LightGBM compared), measurement noise and shrinkage — ADR-004, ADR-005 (P2)
 Module D: New-site effect, all seven countries — ADR-007 (P3)
-Module E: Budgeted site optimiser — co-location-first, costed, planner exports, post-launch tracking — P4 (ADR to be written; ADR-003)
+Module E: Budgeted site plan — new sites and added capacity, costed, exact, planner exports — ADR-008 (P4)
 Module F: API, MCP tools, grounded rationales — P5 (ADR to be written)
 Module G: Databricks quarterly job, registry, drift — P6 (ADR to be written; R15 justification in ADR-001)
 
@@ -121,7 +121,7 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | P1 | Experience-gap map; fair cross-country benchmark; hotspots; gap types and morphology | Shares below 10 / 25 Mbps with 95% intervals, raw and density-adjusted; Gi* hotspots at FDR 5%; every populated hexagon typed — **passed** |
 | P2 | Speed where nobody tested | LightGBM ≤ 0.9 × best kriging RMSE (log speed) under resolution-6 block CV; transfer to an unseen country reported — **failed (0.929); kriging deployed** |
 | P3 | Effect of new sites (all seven countries, same rule) | Parallel pre-trends; effect with 95% interval — **done**: slow places lifted above 25 Mbps +12–13 pts (Germany, France); average speed ≈ 0 except the US |
-| P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal cost; exports pass format checks |
+| P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal cost; exports pass format checks — **done**: 6 of 7 countries; CSV / GeoJSON / KML per country |
 | P5 | API + MCP + grounded rationales | Contract tests and LLM evaluation pass in CI; R13 budgets met |
 | P6 | Databricks quarterly job + registry + drift | Databricks reproduces local P1 numbers exactly |
 | P7 | Results page + technical walkthrough + web map | Both pages live and browser-tested (R10, R12, R14, R17) — pages live and updated each phase |

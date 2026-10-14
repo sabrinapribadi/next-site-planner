@@ -156,6 +156,8 @@ def main() -> None:
     p3b = json.loads(p3bf.read_text()) if p3bf.exists() else None
     p3cf = ROOT / "data/outputs/p3c_crossing_checks.json"
     p3c = json.loads(p3cf.read_text()) if p3cf.exists() else {}
+    p4f = ROOT / "data/outputs/p4_site_plan.json"
+    p4 = json.loads(p4f.read_text())["countries"] if p4f.exists() else {}
     DDIR.mkdir(parents=True, exist_ok=True)
     for f in DDIR.glob("*.js"):
         f.unlink()
@@ -200,6 +202,19 @@ def main() -> None:
                     c["p3"]["crossing_cautious"] = {"att": round(cc["p4_value"]["att"], 4), "ci": [round(x, 4) for x in cc["p4_value"]["ci95"]]}
                 if isinstance(cc, dict):
                     c["p3"]["crossing_checks_pass"] = bool(cc.get("pass_for_p4"))
+            if k in p4:
+                v = p4[k]; hb = v["budgets"][str(v["headline_budget"])] if str(v["headline_budget"]) in v["budgets"] else v["budgets"][f"{v['headline_budget']}"]
+                plan = pd.read_csv(ROOT / "docs/data/plans" / f"{k}.csv")
+                c["p4"] = {"budget": v["headline_budget"], "lifted": round(hb["people_lifted"]), "lifted_low": round(hb["people_lifted_low"]),
+                           "lifted_high": round(hb["people_lifted_high"]), "kpi": round(hb["kpi_ranking"]), "slowest": round(hb["slowest_first"]),
+                           "gain": hb["gain_vs_kpi"], "gain_cap_new": v["sensitivity"]["capacity_equals_new"].get("gain_vs_kpi"),
+                           "mix": hb["mix"], "sites": hb["sites"], "per_1000": round(1000 * hb["cost_used"] / hb["people_lifted"], 1) if hb["people_lifted"] else None,
+                           "curve": {B: round(x["people_lifted"]) for B, x in v["budgets"].items()},
+                           "stability": {"theta_high": round(v["sensitivity"]["theta_high"]["jaccard"], 2), "capacity_equals_new": round(v["sensitivity"]["capacity_equals_new"]["jaccard"], 2),
+                                         "colocation_cost": round(min(v["sensitivity"]["colocation_0.20"]["jaccard"], v["sensitivity"]["colocation_0.50"]["jaccard"]), 2),
+                                         "service_areas": round(v["sensitivity"]["3gpp_service_areas"]["jaccard"], 2)},
+                           "theta_new": round(v["theta"]["new"][0], 3), "theta_cap": round(v["theta"]["capacity"][0], 3), "own_theta": v["theta"]["own_new_estimate"],
+                           "pts": [[round(a, 4), round(o, 4), t[0]] for a, o, t in zip(plan.lat, plan.lon, plan.intervention)]}
             c["untested"] = {"people_m": round(tot["untested_people"] / 1e6, 2),
                              "expected_below_m": {str(b): round(tot[f"expected_untested_below_{b}"] / 1e6, 2) for b in BARS},
                              "all_people_share_below": {str(b): round(tot[f"all_people_share_below_{b}"], 4) for b in BARS}}

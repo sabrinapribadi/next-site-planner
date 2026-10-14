@@ -11,12 +11,13 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 
 **Live:** [results page](https://sabrinapribadi.github.io/next-site-planner/) · [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html)
 
-Status: **phases 0–3 of 7 done**. Data foundation and experience gap passed their gates. For speed where nobody tested (P2), machine learning was only 7% more accurate than kriging, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. The measured effect of new sites (P3) is done; the site optimiser (P4) is next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
+Status: **phases 0–4 of 7 done**. Data foundation and experience gap passed their gates. For speed where nobody tested (P2), machine learning was only 7% more accurate than kriging, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. The measured effect of new sites (P3) and costed site plans per country (P4) are done; API and AI tools (P5) are next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
 
 - 61.7M people in tested areas get under 25 Mbps on mobile; 349M people live where nobody tested.
 - At equal population density the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
 - About 68M people nobody tested are likely below 25 Mbps (typical speed), including 23M in the Philippines and 30M in Indonesia.
 - New sites lift slow places more than averages: a new site lifted up to about 1 in 8 slow places (below 25 Mbps) over the bar; France holds up under every check, while Germany (about 1 in 20) and the US (near 0) shrink under the strictest test. Average speed rose only in the US (+7–12%).
+- Site plans: at the same budget, choosing places by expected people lifted per cost beats an equal-weight KPI ranking by +56% (Germany) to +776% (Indonesia); site lists as CSV / GeoJSON / KML in `docs/data/plans/`.
 - Single speed tests are mostly luck: two tests at the same place differ 3–5×. Each hexagon is blended with its neighbourhood (checked against the next quarter: 28–44% closer).
 
 ## Reproduce
@@ -38,6 +39,7 @@ make test build-test hover-test  # unit tests; browser checks of both pages
 | Test noise, deployment | `noise_followup.py`, `noise_validation.py` | `p2b_noise_followup.json`, `p2c_noise_validation.json` | ADR-005 |
 | P3 new-site effect | `new_site_effect.py`, `new_site_diagnostics.py` | `p3_new_site_effect.json`, `p3b_diagnostics.json` | ADR-007 |
 | P2 version 2 freeze | `freeze_p2v2.py` | `p2v2_frozen.json` | ADR-006 |
+| P4 site plan | `new_site_crossing_checks.py --estimand capacity`, `site_plan.py` | `p4_capacity_crossing.json`, `p4_site_plan.json`, `docs/data/plans/` | ADR-008 |
 | Pages | `export_page_data.py` | `docs/data/` | — |
 
 ## Data

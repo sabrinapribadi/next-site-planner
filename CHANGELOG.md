@@ -2,6 +2,26 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.7.0] — 2026-10-14 — P4: costed site plans for seven countries
+**Files:** docs/adr/ADR-008-budgeted-site-plan.md, docs/adr/ADR-002-validation-and-gates.md, docs/adr/README.md, docs/references.yaml, docs/PRD.md, src/plan.py, tests/test_plan.py, scripts/site_plan.py, scripts/new_site_crossing_checks.py, data/outputs/p4_capacity_crossing.json, data/outputs/p4_site_plan.json, docs/data/plans/*, scripts/export_page_data.py, docs/index.html, docs/build.html, README.md, Makefile
+- **Situation:** Planners rank places by agreed KPI scores; P3 showed new sites and added capacity lift some slow places above 25 Mbps.
+- **Task:** For a fixed budget, choose the set of interventions that lifts the most people, and beat KPI ranking by the pre-set 10% or say so.
+- **Action:**
+  - **Design first:** ADR-008 pushed before any plan.
+  - **Capacity lift rate:** estimated with P3's crossing checks before planning. It passes in Germany, France, the Philippines and Malaysia (+3.8 to +16.3 pts).
+  - **The 10% margins:** labelled as our own pre-set thresholds, with the practice cited (Lakens).
+  - **Solver:** exact knapsack by enumerating the three cost classes, tested against brute force.
+  - **Baselines:** KPI ranking and slowest-first.
+  - **Sensitivities:** θ, costs, capacity = new site, 3GPP service areas with greedy vs exact covering.
+  - **Exports:** CSV / GeoJSON / KML per country, format-checked.
+  - **Pages:** a plan chart, plan points on the map, download links, a details table, the walkthrough's P4 phase.
+- **Result:**
+  - **Gate passed:** +56% to +776% more people lifted than KPI ranking in 6 of 7 countries; the UAE's KPI plan lifts nobody.
+  - **Robust:** still +45% to +741% if capacity worked like a new site. Greedy reaches 98–100% of exact.
+  - **Cost per 1,000 people lifted:** 2.6 (Philippines) to 206 (US) new-tower equivalents.
+  - **Tests:** 26 unit tests; browser checks 9 of 9 in three modes.
+- **Talking point:** "Counting the people a site would lift, instead of scoring places, lifted 1.6 to 9 times more people for the same money."
+
 ## [0.6.1] — 2026-10-14 — P3 crossing measure checked for regression to the mean; environments outside OneDrive
 **Files:** docs/adr/ADR-007-new-site-effect.md, docs/adr/ADR-002-validation-and-gates.md, src/did.py, tests/test_did.py, scripts/new_site_crossing_checks.py, data/outputs/p3c_crossing_checks.json, scripts/export_page_data.py, docs/index.html, docs/build.html, docs/data/page_data.js, README.md, Makefile
 - **Situation:**

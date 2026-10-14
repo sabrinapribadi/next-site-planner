@@ -1,6 +1,6 @@
 # ADR-008: Budgeted Site Plan — Where the Next Sites Should Go (P4)
 
-**Status:** Proposed — written and pushed before any P4 plan is computed
+**Status:** Accepted — written and pushed before any P4 plan; gate passed (results below)
 **Date:** 2026-10-14
 **Deciders:** Sabrina Pribadi
 
@@ -143,6 +143,44 @@ Percentage points of slow hexagons lifted above 25 Mbps after added capacity, us
 | Plan changes a lot across θ or costs | Choice is sensitive to unmeasured inputs | Report the stable core (hexagons chosen in every scenario) |
 | Greedy far below exact | Overlaps matter | Use exact solutions where feasible |
 | θ_cap clearly > 0 | Capacity lifts slow places too | Capacity enters the central plan at its cost |
+
+## Results (2026-10-14; `data/outputs/p4_site_plan.json`, exports in `docs/data/plans/`)
+
+**Headline budget, 1,000 new-tower equivalents** (UAE: all 29 likely-slow candidates, budget 29.3):
+
+| Country | Plan: people lifted (range over θ) | KPI ranking | Gain | Gain if capacity = new site | Per 1,000 lifted | Mix |
+|---|---|---|---|---|---|---|
+| Philippines | 388,941 (0–775,156) | 127,114 | +206% | +142% | 2.6 | 2,020 capacity, 410 small cells, 189 macro |
+| Indonesia | 197,111 (0–407,924) | 22,509 | +776% | +741% | 5.1 | 1,142 small cells, 429 macro |
+| Germany | 110,687 (6,173–216,327) | 71,105 | +56% | +45% | 9.0 | 3,305 capacity, 12 new sites |
+| France | 41,912 (1,305–107,517) | 23,407 | +79% | +89% | 23.9 | 2,805 capacity, 164 new sites |
+| Malaysia | 15,942 (0–37,956) | 3,367 | +374% | +375% | 62.7 | 956 macro, 145 capacity |
+| United States | 4,861 (0–63,607) | 1,715 | +183% | +90% | 205.7 | 857 macro, 286 small cells |
+| UAE | 539 (0–1,115) | 0 | n/a (KPI lifts nobody) | — | 53.8 | 29 macro |
+
+**Gate.** At least +10% in 6 of 7 countries (needed 5). All exports valid: CSV schema, GeoJSON closed rings in lon/lat, KML one Placemark per site. **Passed.**
+
+**Solver checks:**
+
+- Greedy reaches 99.99–100% of the exact knapsack.
+- On district subproblems with 3GPP service areas, greedy covering reaches 97.9–100% of the exact covering.
+
+**Stability** (Jaccard overlap with the central plan):
+
+| Change | Overlap |
+|---|---|
+| High θ | 0.57–0.96 |
+| Co-location cost 0.20 or 0.50 | 0.55–1.00 |
+| 3GPP service areas | 0.55–0.99 |
+| Capacity = new site | 0.07 (US) to 0.97 (Germany) |
+
+- At low θ (= 0) every plan lifts nobody, so overlap at that end is not meaningful.
+
+**Reading:**
+
+- Ranking by an equal-weight KPI score favours busy commercial hexagons, which are mostly fast. Counting expected people lifted per cost wins everywhere, by +56% to +776%.
+- The same budget lifts about 80× more people in the Philippines than in the US.
+- The plans are most sensitive to whether added capacity really lifts slow places, in the US and the Philippines.
 
 ## Consequences
 

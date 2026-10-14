@@ -211,7 +211,7 @@ footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line);
 <script>
 const REPO = "https://github.com/sabrinapribadi/next-site-planner/blob/main/";
 const ADR = {
-  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md", "003": "docs/adr/ADR-003-industry-alignment.md", "004": "docs/adr/ADR-004-speed-model-for-untested-areas.md", "005": "docs/adr/ADR-005-measurement-noise.md", "006": "docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md", "007": "docs/adr/ADR-007-new-site-effect.md"
+  "001": "docs/adr/ADR-001-framing-and-analysis-unit.md", "002": "docs/adr/ADR-002-validation-and-gates.md", "003": "docs/adr/ADR-003-industry-alignment.md", "004": "docs/adr/ADR-004-speed-model-for-untested-areas.md", "005": "docs/adr/ADR-005-measurement-noise.md", "006": "docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md", "007": "docs/adr/ADR-007-new-site-effect.md", "008": "docs/adr/ADR-008-budgeted-site-plan.md"
 };
 const LANES = ["Data", "Compute (DuckDB · Spark)", "Spatial statistics", "Model", "Evaluation", "Serving & AI", "Platform", "Decision"];
 
@@ -341,12 +341,33 @@ const PHASES = [
   lessons: ["One rule for every country.", "A failed check is information: Indonesia's sites follow falling speeds.", "Measure what decisions need: crossing the bar, not the average."],
   star: "I measured what 15,000 real new sites did in seven countries, and found they lift some slow places over 25 Mbps (up to about 1 in 8, less under the strictest test in Germany and France) rather than raising average speeds."
 },
-{ agg: [["Hexagons served → people lifted", "Σ people × share of the hexagon a site serves (3GPP spacing per morphology) × expected uplift from P3 (planned)", "An urban site serves part of a hexagon; a rural one several"], ["Sites → plan cost", "Σ intervention costs in new-tower equivalents (planned)", "Budget in money-like units, not site counts"], ["Hexagons → district", "Σ people and people-weighted shares per kecamatan, county or district (planned)", "Planners and regulators work by district"]], id: "p4", tag: "P4", name: "Budgeted site optimiser", dates: "planned", verdict: ["plan", "Planned"],
-  scqa: ["Sites are usually picked one by one from a ranked list.", "Neighbouring top-ranked sites cover the same people.", "Does optimising the set lift more people than ranking?", "Planned."],
-  steps: [["Data", "Candidate locations", "Hexagons with people below the bar and no nearby cell, from P1 and P2.", "Only places a site could help.", "planned", "plan"],
-          ["Model", "Maximal covering", "Exact integer programme; greedy and KPI ranking as baselines.", "Gate: ≥ 10% more people lifted at equal budget.", "planned", "plan"],
-          ["Evaluation", "Budget and effect range", "Results across budgets K and the P3 effect interval.", "A plan should survive its own uncertainty.", "planned", "plan"]],
-  decisions: [["Covering optimiser vs ranking", "002"]], results: [["People lifted vs ranking", "≥ +10%", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
+{ agg: [["Hexagon → benefit", "people × P(typical speed < 25 Mbps) × lift rate θ for its intervention (new site or added capacity)", "Expected people lifted, from measured effects"], ["Candidates → plan", "Exact 0/1 knapsack over three cost classes (enumerate counts per class; take the best benefits within each)", "Provably optimal and instant"], ["Plan → country totals", "Σ benefits of chosen hexagons; ranges from θ low/high", "Totals carry the uncertainty of θ"], ["Plan → planner files", "One row per search area: rank, h3, lat/lon, district, area type, intervention, cost, people, chance slow, expected lifted", "CSV, GeoJSON polygons, KML points"]], id: "p4", tag: "P4", name: "Where the next sites should go", dates: "14 Oct 2026", verdict: ["pass", "Gate passed"],
+  scqa: ["Site lists are usually built by ranking places on an agreed KPI score.",
+         "A score does not say how many people a site would lift, and phase 3 showed sites help some slow places, not all.",
+         "For a fixed budget, does choosing places by expected people lifted per cost beat KPI ranking by at least 10%?",
+         "Yes, in 6 of 7 countries: +56% (Germany) to +776% (Indonesia) more people at the same budget; the same money lifts about 80× more people in the Philippines than in the US."],
+  steps: [
+    ["Decision", "Design before plans", "ADR-008 pushed first: benefit, costs, optimiser, KPI baseline, gate, sensitivities, exports.", "The rule must not bend to the result.", "docs/adr/ADR-008-budgeted-site-plan.md"],
+    ["Evaluation", "Capacity lift measured first", "Same crossing checks as P3 for added capacity: +7.7 to +16 pts where they pass; 0 where they fail.", "Co-location is cheap; it needs evidence too.", "scripts/new_site_crossing_checks.py"],
+    ["Decision", "Is 10% a standard?", "No: our own pre-set threshold; the practice is cited, the actual gain always reported.", "Label judgements as judgements.", "docs/adr/ADR-002-validation-and-gates.md", "fix"],
+    ["Model", "Exact solver too slow", "HiGHS spent minutes per solve in post-processing on 20,000 candidates.", "A tiny optimality gap is expensive.", "src/plan.py", "fail"],
+    ["Model", "Exact by cost class", "Only three costs: the best k items per class are the top benefits, so enumerate counts. Provably optimal, about a second.", "Use the problem's structure.", "src/plan.py", "fix"],
+    ["Evaluation", "Plan vs KPI ranking", "+56% to +776% more people lifted in 6 of 7 countries; UAE: KPI ranking lifts nobody.", "Count people, not scores.", "data/outputs/p4_site_plan.json"],
+    ["Evaluation", "Is the gain an artefact?", "Re-scored with capacity assumed as effective as a new site: still +45% to +741%.", "Check the gain does not rest on one zero.", "data/outputs/p4_site_plan.json"],
+    ["Evaluation", "Stability", "Overlap with the central plan 0.55–0.99 under cost, lift-rate and service-area changes; greedy 98–100% of exact.", "Planners need a stable core.", "data/outputs/p4_site_plan.json"],
+    ["Serving & AI", "Planner exports", "Per country: CSV, GeoJSON hexagon search areas, KML for Google Earth; format-checked.", "Deliverables in planners' tools.", "docs/data/plans/"]
+  ],
+  decisions: [["Budgeted site plan: benefit, costs, exact solver, KPI baseline", "008"]],
+  results: [["Gain over KPI ranking", "≥ +10% in ≥ 5 of 7", "6 of 7 (+56% to +776%)", "ok"], ["Exports valid", "CSV, GeoJSON, KML", "all 7 countries", "ok"],
+            ["Greedy vs exact", "report", "99.99–100%", "info"], ["Cost per 1,000 people lifted", "report", "2.6 (Philippines) to 206 (US) new-tower equivalents", "info"]],
+  obstacles: [
+    ["Exact solver ran for minutes per country", "HiGHS post-processing on a 20,000-variable knapsack with a near-zero gap", "Exact enumeration over the three cost classes, tested against brute force", "Look for structure before reaching for a general solver"],
+    ["Run crashed on the last country", "KPI ranking lifted nobody in the UAE, so the gain was undefined", "Reported as 'KPI lifts nobody'; counted as not passing", "Handle zero baselines explicitly"],
+    ["Killing the run also killed the status monitor", "The kill pattern matched the monitor's own command", "Split the pattern string", "Never match a pattern your watcher contains"]
+  ],
+  lessons: ["Measure the benefit of every intervention before costing it.", "A problem's structure can make exact solutions trivial.", "Show the gain under the assumption most likely to break it."],
+  star: "At the same budget, choosing sites by expected people lifted per cost lifted 1.6× to 9× more people than KPI ranking, and I shipped the plans as CSV, GeoJSON and KML."
+},
 { agg: [["Tool calls → cost", "Σ tokens × dated price → cost per 1,000 calls; p50/p95 latency (planned)", "Rule R13 budgets"]], id: "p5", tag: "P5", name: "API, MCP tools, grounded rationales", dates: "planned", verdict: ["plan", "Planned"],
   scqa: ["Planners and AI assistants need answers on demand.", "LLM rationales can invent numbers.", "Can agents query gaps and sites with grounded answers at a known cost?", "Planned."],
   steps: [["Serving & AI", "Tools", "gap_at, top_sites, explain_site, compare_countries over MCP.", "One registry for apps and agents.", "planned", "plan"],

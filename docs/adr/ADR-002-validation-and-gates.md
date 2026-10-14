@@ -47,7 +47,8 @@ Checks reported but not gated (ADR-003): urban-centre population share vs publis
 | P1 | Intervals; clusters at FDR 5%; every populated hexagon typed | **Passed**, after two logged deviations (block bootstrap, exact p-values). Every interval contains its estimate (14 of 14) | `data/outputs/p1_experience_gap.json` |
 | P2 | LightGBM ≤ 0.90 × best kriging RMSE (resolution-6 blocks) | **Failed.** 0.929 (7% better). Kriging is deployed. Same on the other designs (0.92–0.94) | `data/outputs/p2_speed_model.json`, ADR-004 |
 | P3 | Parallel pre-trends per country (new sites, ring 0); effect with interval | **Passed:** Germany, France, US, Philippines. **Failed:** Indonesia, UAE. Malaysia has too few sites. Effects: slow places lifted above 25 Mbps +12.1 pts (France), +12.6 (Germany) as pre-set; after regression-to-the-mean checks the cautious values are +12.1, +5.2 and +1.5 (US). Average speed ≈ 0 except the US (+7–12%) | `data/outputs/p3_new_site_effect.json`, ADR-007 |
-| P4–P7 | — | Not yet run | — |
+| P4 | ≥ +10% people lifted vs KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid | **Passed:** 6 of 7 (+56% to +776%); UAE: KPI ranking lifts nobody. Exports valid | `data/outputs/p4_site_plan.json`, ADR-008 |
+| P5–P7 | — | Not yet run | — |
 
 ## Deviations from the pre-registered plan (logged when found, with evidence)
 

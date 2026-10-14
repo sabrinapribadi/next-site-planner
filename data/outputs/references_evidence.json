@@ -12,7 +12,8 @@
    "citations_per_year": 51.2,
    "role": "covering optimiser (P4)",
    "used_in": [
-    "ADR-002"
+    "ADR-002",
+    "ADR-008"
    ],
    "openalex_id": "https://openalex.org/W2050000782"
   },
@@ -381,6 +382,64 @@
     "ADR-007"
    ],
    "openalex_id": "https://openalex.org/W2952814763"
+  },
+  {
+   "key": "khuller_1999",
+   "title": "The budgeted maximum coverage problem",
+   "venue": "Information Processing Letters",
+   "peer_reviewed": true,
+   "year": 1999,
+   "citations": 982,
+   "citations_per_year": 35.1,
+   "role": "greedy guarantee for budgeted maximum coverage (P4)",
+   "used_in": [
+    "ADR-008"
+   ],
+   "openalex_id": "https://openalex.org/W2080379754"
+  },
+  {
+   "key": "huangfu_hall_2018",
+   "title": "Parallelizing the dual revised simplex method",
+   "venue": "Mathematical Programming Computation",
+   "peer_reviewed": true,
+   "year": 2017,
+   "citations": 427,
+   "citations_per_year": 42.7,
+   "role": "HiGHS exact solver (P4)",
+   "used_in": [
+    "ADR-008"
+   ],
+   "openalex_id": "https://openalex.org/W2963956318"
+  },
+  {
+   "key": "lakens_2017",
+   "title": "Equivalence Tests",
+   "venue": "Social Psychological and Personality Science",
+   "peer_reviewed": true,
+   "year": 2017,
+   "citations": 2158,
+   "citations_per_year": 215.8,
+   "role": "practice of a pre-set smallest effect size of interest (the 10% margins are our own choice)",
+   "used_in": [
+    "ADR-002",
+    "ADR-008"
+   ],
+   "openalex_id": "https://openalex.org/W2610765860"
+  },
+  {
+   "key": "lakens_2018",
+   "title": "Equivalence Testing for Psychological Research: A Tutorial",
+   "venue": "Advances in Methods and Practices in Psychological Science",
+   "peer_reviewed": true,
+   "year": 2018,
+   "citations": 1535,
+   "citations_per_year": 170.6,
+   "role": "equivalence testing tutorial (pre-set practical thresholds)",
+   "used_in": [
+    "ADR-002",
+    "ADR-008"
+   ],
+   "openalex_id": "https://openalex.org/W2788930055"
   }
  ]
 }
