@@ -76,6 +76,20 @@ PSI > 0.2 between consecutive quarters flags a shift. 0.2 is a common convention
 | Upload Ookla extracts instead of reading S3 | Not needed | The probe showed direct S3 reads work |
 | Re-fit kriging on Databricks | Out of scope | Heavy; the pipeline's speed step stays local and versioned (ADR-005, ADR-006) |
 
+## SOTA comparison
+
+| Family | Method | Tested | Cited, not tested (why) |
+|---|---|---|---|
+| Distribution drift | Population stability index (PSI) over fixed speed bands | Yes | — |
+| Distribution drift | Two-sample Kolmogorov–Smirnov test | No | With ~170,000 tested hexagons, any shift is "significant"; PSI measures size, not significance |
+| Distribution drift | Jensen–Shannon divergence | No | Same information as PSI for fixed bands; less familiar to network teams |
+| Orchestration | Databricks Asset Bundle job (serverless) | Yes | — |
+| Orchestration | Airflow or Dagster on a server | No | Needs a running server; the Free Edition job scheduler is enough for a quarterly run |
+
+## Evidence
+
+No peer-reviewed source fixes PSI's 0.2 threshold; it is a monitoring convention, stated here as our own threshold. Vendor documentation: Databricks Asset Bundles, Unity Catalog model registry, H3 and spatial SQL functions; MLflow.
+
 ## Falsification
 
 | Result | Diagnosis | Next action |

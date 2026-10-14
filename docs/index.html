@@ -148,7 +148,7 @@ details.faq { border-bottom: 1px solid var(--line); padding-block: 8px; }
 details.faq summary { cursor: pointer; font-weight: 600; }
 details.faq p { margin-top: 6px; max-width: 75ch; }
 details.more { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
-details.more > summary { cursor: pointer; padding: 14px 16px; list-style: none; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+details.more > summary { cursor: pointer; padding: 10px 16px; list-style: none; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 details.more > summary::-webkit-details-marker { display: none; }
 details.more > summary::after { content: "+"; font: 600 18px var(--font-mono); color: var(--accent); }
 details.more[open] > summary::after { content: "−"; }
@@ -761,12 +761,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 		}
 	}
 
-#nmap { height: 440px; border: 1px solid var(--line); border-radius: 10px; background: var(--map-bg); }
+#nmap { height: 380px; border: 1px solid var(--line); border-radius: 10px; background: var(--map-bg); }
 .leaflet-popup-content { font: 13px/1.45 var(--font-body); color: #17212b; }
 .leaflet-popup-content b { font-weight: 600; }
 .leaflet-control-layers { font: 12px var(--font-body); }
 .nom-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
 .nom-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; border: 1.5px solid #fff; }
+
+#data .table-wrap td, #data .table-wrap th, #approach .table-wrap td, #approach .table-wrap th { padding-top: 5px; padding-bottom: 5px; line-height: 1.35; }
 </style>
 
 <div class="wrap">
@@ -783,7 +785,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <div class="card"><span class="eyebrow">Data</span><b class="big" id="g-data">899M people</b><span class="muted small">7 countries · 15 quarters of speed tests · eight public sources on one 0.74 km² hexagon grid</span></div>
   <div class="card"><span class="eyebrow">Problem</span><b class="big">Rank sites, or count people?</b><span class="muted small">Site lists are ranked on weighted KPIs; countries are compared on national medians that mix cities with islands.</span></div>
   <div class="card"><span class="eyebrow">Approach</span><b class="big">People below a bar</b><span class="muted small">Count people on slow mobile, measure what new sites did, then choose the costed set of sites that lifts the most people.</span></div>
-  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">1 in 9 to 1 in 11 people</b><span class="muted small" id="g-result-sub">typically get under 25 Mbps on mobile, and about 3 in 5 to 2 in 3 of them were never tested. The range comes from two population maps (US: one map until its second arrives).</span></div>
+  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">1 in 9 to 1 in 11 people</b><span class="muted small" id="g-result-sub">typically get under 25 Mbps on mobile, and about 3 in 5 to 2 in 3 of them were never tested. The range comes from two population maps.</span></div>
 </div>
 
 <section class="block" id="problem">
@@ -809,7 +811,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <tbody>
       <tr><td>Ookla open speed tiles</td><td>Mobile and fixed, 2023 Q1 – 2026 Q3</td><td class="num">48.5M tile rows</td><td>CC BY-NC-SA 4.0</td><td>Measured download speed</td></tr>
       <tr><td>Kontur population 2023</td><td>People per H3 hexagon</td><td class="num">6.4M hexagons</td><td>CC BY 4.0</td><td>Where people live</td></tr>
-      <tr><td>Overture Maps places</td><td>Shops, offices, services (2026-09)</td><td class="num">29.8M places</td><td>CDLA-Permissive 2.0</td><td>Speed-model input and KPI baseline; shown per nominal. Not counted as demand: plans count residents only</td></tr>
+      <tr><td>Overture Maps places</td><td>Shops, offices, services (2026-09)</td><td class="num">29.8M places</td><td>CDLA-Permissive 2.0</td><td>Model input and KPI baseline; not counted as demand</td></tr>
       <tr><td>OpenCelliD</td><td>Crowdsourced cell locations (2026-10-13)</td><td class="num">1.6M cells</td><td>CC BY-SA 4.0</td><td>Cells nearby, gap types</td></tr>
       <tr><td>WorldPop 2020 (constrained)</td><td>A second population map, 100 m</td><td class="num">7 countries, 664 MB</td><td>CC BY 4.0</td><td>Check where people live</td></tr>
       <tr><td>ESA WorldCover 2021</td><td>Satellite land cover, 10 m</td><td class="num">read around each nominal</td><td>CC BY 4.0</td><td>Buildings at each nominal</td></tr>
@@ -841,18 +843,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <div class="table-wrap"><table>
     <thead><tr><th>Choice</th><th>Tried</th><th>Chose</th><th>Deciding number</th></tr></thead>
     <tbody>
-      <tr><td>Unit</td><td>Ookla's square tiles</td><td>H3 hexagons</td><td>Tiles are ~610 m wide at the equator, ~380 m in Germany</td></tr>
-      <tr><td>Comparison</td><td>Raw shares</td><td>Raw and density-adjusted</td><td id="t-adj">Philippines: 16.3% raw → 33.9% at equal density</td></tr>
-      <tr><td>Uncertainty</td><td>Resample speed tiles (pre-registered)</td><td>Resample ~250 km² blocks</td><td>Germany: tile interval 5.57–5.92% missed its own 5.21%</td></tr>
-      <tr><td>Slow clusters</td><td>Normal-approximation p-values</td><td>Exact p-values</td><td>False clusters on shuffled data: up to 318 → 0</td></tr>
-      <tr><td>Gap types</td><td>Type every slow hexagon</td><td>Type only where cell data is complete</td><td>Cell records near only 2% of fast rural Indonesian hexagons</td></tr>
-      <tr><td>Speed where nobody tested</td><td>LightGBM (machine learning)</td><td>Kriging (standard spatial averaging)</td><td>LightGBM only 7% more accurate — below the 10% set in advance to justify its 16 extra inputs, so the simpler kriging is used</td></tr>
-      <tr><td>Effect of a new site</td><td>Before vs after at new sites</td><td>Compared with similar places that had not got one yet (staggered difference-in-differences)</td><td>Indonesia: speeds were already falling a year before new sites (−12%)</td></tr>
-      <tr><td>Choosing sites</td><td>Rank places by an equal-weight KPI score</td><td>Pick the set that lifts the most people per cost (exact)</td><td>+50% (Germany) to +281% (UAE) more people at the same budget, after the ground checks</td></tr>
-      <tr><td>Where exactly</td><td>Hexagon centre, one population map</td><td>Two population maps must agree; ≥ 1,000 m² of buildings; pin on built land; terrain flagged</td><td>Indonesia: 23% of the original nominals had nobody on the second map</td></tr>
-      <tr><td>Test noise</td><td>Take each hexagon's few tests at face value</td><td>Blend with the neighbourhood by how many tests it has</td><td>Blended speeds 28–44% closer to the next quarter's tests</td></tr>
-      <tr><td>Site notes</td><td>A language model writes freely</td><td>Every number checked against the data; template fallback</td><td>80 of 80 notes grounded; $0.06 per 1,000 notes</td></tr>
-      <tr><td>Cloud refresh</td><td>Laptop pipeline only</td><td>Databricks job reading Ookla at the source (Indonesia)</td><td>Shares identical to the laptop's (difference 0.0)</td></tr>
+      <tr><td>Unit</td><td>Square tiles</td><td>H3 hexagons</td><td>Tiles shrink from 610 m to 380 m wide by latitude</td></tr>
+      <tr><td>Comparison</td><td>Raw shares</td><td>Raw and density-adjusted</td><td>Philippines 16.3% raw → 33.9% at equal density</td></tr>
+      <tr><td>Uncertainty</td><td>Resample tiles (pre-set)</td><td>Resample ~250 km² blocks</td><td>Tile interval missed its own estimate</td></tr>
+      <tr><td>Slow clusters</td><td>Normal-approximation p-values</td><td>Exact p-values</td><td>False clusters on shuffled data: 318 → 0</td></tr>
+      <tr><td>Gap types</td><td>Type every slow hexagon</td><td>Type where cell data is complete</td><td>Cells recorded near 2% of rural Indonesia</td></tr>
+      <tr><td>Speed where nobody tested</td><td>LightGBM</td><td>Kriging</td><td>LightGBM 7% better; 10% was needed</td></tr>
+      <tr><td>Effect of a new site</td><td>Before vs after</td><td>Staggered difference-in-differences</td><td>Indonesia's speeds fell 12% before new sites</td></tr>
+      <tr><td>Choosing sites</td><td>Equal-weight KPI ranking</td><td>Most people lifted per cost (exact)</td><td>+50% to +281% more people, same budget</td></tr>
+      <tr><td>Where exactly</td><td>Hexagon centre, one population map</td><td>Two maps, buildings, pin on built land</td><td>23% of Indonesian nominals had nobody on the second map</td></tr>
+      <tr><td>Test noise</td><td>Tests at face value</td><td>Blend with the neighbourhood</td><td>28–44% closer to next quarter's tests</td></tr>
+      <tr><td>Site notes</td><td>A model writes freely</td><td>Every number checked; template fallback</td><td>80 of 80 grounded; $0.06 per 1,000</td></tr>
+      <tr><td>Cloud refresh</td><td>Laptop pipeline only</td><td>Databricks job (Indonesia)</td><td>Shares identical (difference 0.0)</td></tr>
     </tbody></table></div>
   <p class="muted small">Every change after a gate was set is logged, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
 </section>
@@ -886,11 +888,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Red dot:</b> share of tested people below the bar; the pale line is its 95% interval.</li><li><b>Hollow circle:</b> the same share if every country had the same density mix.</li><li><b>Amber square:</b> everyone, using typical speeds, including people nobody tested.</li><li><b>Example:</b> the Philippines at 25 Mbps: 16% tested, 34% at equal density, 31% of everyone.</li><li><b>So what:</b> rankings on tested people alone flatter dense, well-tested countries.</li></ul></details>
 
-  <div class="chart"><div class="chart-head"><b class="chart-title">Did new sites lift slow places above 25 Mbps?</b><span class="chart-sub" id="sub-c-p3"></span></div><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span><i style="border:2px solid var(--muted);background:transparent"></i>Measure fixed in advance</span><span class="mono">filled: cautious estimate after checks · extra share of slow places lifted above 25 Mbps</span></div>
-    <svg class="plot" id="c-p3" role="img" aria-label="Effect of a new site on slow places"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> extra share of slow places (below 25 Mbps) that crossed 25 Mbps after a new site.</li><li><b>Compared with:</b> similar slow places that had no new site yet.</li><li><b>Hollow circle:</b> the pre-set measure. <b>Filled dot:</b> the most cautious estimate passing later checks.</li><li><b>Example:</b> France +12 points, about 1 in 8 slow places lifted; Germany falls from +13 to +5.</li><li><b>So what:</b> new sites lift some slow places; average speeds barely move.</li></ul></details>
+  
 
-  <div class="chart"><div class="chart-head"><b class="chart-title">Does counting people beat a KPI ranking, at the same budget?</b><span class="chart-sub" id="sub-c-p4"></span></div><div class="key"><span><i style="background:var(--accent)"></i>The plan (people lifted per cost)</span><span><i style="background:var(--muted)"></i>KPI ranking, same budget</span><span><i style="background:var(--surface); box-shadow:0 0 0 2px var(--accent)"></i>* not yet checked on the ground</span><span class="mono">expected people lifted above 25 Mbps · budget 1,000 new-tower equivalents</span></div>
+  <div class="chart"><div class="chart-head"><b class="chart-title">Does counting people beat a KPI ranking, at the same budget?</b><span class="chart-sub" id="sub-c-p4"></span></div><div class="key"><span><i style="background:var(--accent)"></i>The plan (people lifted per cost)</span><span><i style="background:var(--muted)"></i>KPI ranking, same budget</span><span class="mono">expected people lifted above 25 Mbps · budget 1,000 new-tower equivalents</span></div>
     <svg class="plot" id="c-p4" role="img" aria-label="People lifted by the plan vs KPI ranking"></svg><div class="tip" hidden></div></div>
   <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> the same budget, 1,000 new-tower equivalents, spent two ways in each country.</li><li><b>Teal dot:</b> the plan, choosing places with the most people lifted per cost.</li><li><b>Grey square:</b> ranking places by an equal-weight score of slowness, people and points of interest.</li><li><b>People lifted</b> = people × chance below 25 Mbps × the lift rate measured in phase 3.</li><li><b>Example:</b> Indonesia: about 122,500 people with the plan vs 42,900 with ranking (log scale).</li><li><b>So what:</b> counting people beats scoring places in every checked country.</li></ul></details>
   <p class="small" id="plan-dl"></p>
@@ -912,7 +912,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <li><b>Tests are not a random sample:</b> people test when it is slow or new; shares count people, not tests.</li>
         <li><b>Untested speeds are predictions:</b> machine learning predicts them 30–45% slower than kriging; a pre-set 2026 Q4 test decides (<a href="#d-p2">accuracy</a>).</li>
         <li><b>Not a licence check:</b> regulators test obligations with their own measurements, not crowdsourced averages.</li>
-        <li><b>Population maps disagree where data is thin:</b> by 27–37% in Southeast Asia and the UAE; counts there are ranges (<a href="#d-p4">details</a>).</li>
+        <li><b>Population maps disagree where data is thin:</b> 17% in the US, 27–37% in Southeast Asia and the UAE (<a href="#d-p4">details</a>).</li>
         <li><b>"New site" means no tower on record:</b> OpenCelliD misses most Southeast Asian towers; check against an operator's site list.</li>
         <li><b>Gap types only where cell data allows:</b> mainly city areas in Germany, France, the US and the UAE (<a href="#d-findings">details</a>).</li>
       </ul></div>
@@ -935,9 +935,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <li><b>Untested places hold most of the gap:</b> 13–23M Filipinos and 22–30M Indonesians nobody tested are likely below 25 Mbps.</li>
     <li><b>Single tests mislead:</b> removing test noise shrinks slow places in the US, France and the UAE, not in Southeast Asia.</li>
     <li><b>New sites lift some slow places:</b> up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.</li>
-    <li><b>Count people, not scores:</b> the checked plan lifts 1.5–3.8× as many people as KPI ranking, at the same budget.</li>
-    <li><b>Check nominals on the ground:</b> unchecked, the plan looked up to 9× better; part was people only one map saw.</li>
-    <li><b>Local, not regional:</b> real slow clusters exist only in Indonesia and the Philippines; target places, not regions.</li>
+    <li><b>Count people, not scores:</b> checked plans lift 1.5–3.8× as many people as KPI ranking; unchecked, it looked up to 9×.</li>
     <li><b>What would change our view:</b> the pre-set 2026 Q4 test, local cost data, or a third population map.</li>
   </ul>
 </section>
@@ -955,7 +953,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <svg class="plot" id="c-gap" role="img" aria-label="Gap types at 25 Mbps by country"></svg><div class="tip" hidden></div></div>
     <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Coverage gap:</b> no LTE/5G cell recorded within about 1.3 km; needs a new site.</li><li><b>Capacity gap:</b> cells nearby but still slow; needs capacity on existing sites.</li><li><b>Type unknown:</b> the public cell database is too incomplete to tell.</li><li><b>Example:</b> Germany: 5.5% of people in capacity gaps, 1.1% in coverage gaps.</li><li><b>So what:</b> where the type is known, slow areas mostly need capacity, not new coverage.</li></ul></details>
     <div class="two">
-      <div class="prose"><span class="eyebrow">Slow clusters (FDR 5%)</span><div class="table-wrap"><table id="t-hot"></table></div>
+      <div class="prose"><span class="eyebrow">Slow clusters (FDR 5%)</span><div class="table-wrap"><table id="t-hot"></table></div><p class="muted small"><b>Local, not regional:</b> real slow clusters exist only in Indonesia and the Philippines; target places, not regions.</p>
         <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Clusters:</b> 0.74 km² hexagons in a group of slow neighbours beyond what chance explains.</li><li><b>False on shuffled:</b> the test re-run on randomly shuffled speeds; any cluster found is a false alarm.</li><li><b>In brackets:</b> the old method's false alarms.</li><li><b>So what:</b> zero false alarms means the clusters are real; elsewhere slow places are scattered.</li></ul></details></div>
       <div class="prose"><span class="eyebrow">OpenCelliD finds a cell near fast hexagons</span><div class="table-wrap"><table id="t-det"></table></div>
         <p class="muted small">Below 80% detection (shaded), coverage vs capacity is not reported. 5G records reach 0.03–28.5% of people: completeness, not coverage.</p></div>
@@ -978,6 +976,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </div></details>
 
   <details class="more" id="d-p3"><summary><span class="eyebrow">What new sites did · every method and check, per country</span></summary><div class="body">
+    <div class="chart"><div class="chart-head"><b class="chart-title">Did new sites lift slow places above 25 Mbps?</b><span class="chart-sub" id="sub-c-p3"></span></div><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span><i style="border:2px solid var(--muted);background:transparent"></i>Measure fixed in advance</span><span class="mono">filled: cautious estimate after checks · extra share of slow places lifted above 25 Mbps</span></div>
+    <svg class="plot" id="c-p3" role="img" aria-label="Effect of a new site on slow places"></svg><div class="tip" hidden></div></div>
+  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> extra share of slow places (below 25 Mbps) that crossed 25 Mbps after a new site.</li><li><b>Compared with:</b> similar slow places that had no new site yet.</li><li><b>Hollow circle:</b> the pre-set measure. <b>Filled dot:</b> the most cautious estimate passing later checks.</li><li><b>Example:</b> France +12 points, about 1 in 8 slow places lifted; Germany falls from +13 to +5.</li><li><b>So what:</b> new sites lift some slow places; average speeds barely move.</li></ul></details>
     <div class="table-wrap"><table id="t-p3"></table></div>
     <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Average speed:</b> change in mean download after a new site, vs similar places without one yet.</li><li><b>Three methods:</b> the chosen estimator, imputation, and mobile minus home broadband.</li><li><b>Pre-trends:</b> did places move in step before the site? Home broadband should not change.</li><li><b>Example:</b> US +7% / +10% / +13%: all three agree on a real gain.</li><li><b>So what:</b> only the US gains on average; test counts did not rise, so new users do not explain it.</li></ul></details>
   </div></details>
@@ -1061,7 +1062,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <tr><td>P1</td><td>Shares with 95% intervals containing their estimate; clusters at FDR 5%; every populated hexagon typed</td><td id="a-p1">Passed</td></tr>
         <tr><td>P2</td><td>Machine learning ≤ 0.90 × kriging error (spatial blocks)</td><td><span class="badge warn">Failed</span> 0.93 → kriging used</td></tr>
         <tr><td>P3</td><td>Pre-trends parallel (per country); effect with interval</td><td><span class="badge ok">Passed</span> Germany, France, US, Philippines · <span class="badge warn">Failed</span> Indonesia, UAE · Malaysia too few sites</td></tr>
-        <tr><td>P4</td><td>≥ 10% more people lifted than KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid (10% is our own pre-set threshold)</td><td><span class="badge ok">Passed</span> original plan 6 of 7 (+56% to +776%). Checked plans: 6 of 6 checked countries (+50% to +281%); US pending its second population map</td></tr>
+        <tr><td>P4</td><td>≥ 10% more people lifted than KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid (10% is our own pre-set threshold)</td><td><span class="badge ok">Passed</span> original plan 6 of 7 (+56% to +776%); checked plans 7 of 7 (+50% to +281%)</td></tr>
         <tr><td>P5</td><td>API and MCP contracts pass in CI; site-note evaluation passes; cost and latency within budget</td><td><span class="badge warn">Failed</span> on live latency only (p95 4.2 s vs 3.0 s); notes served from a cache</td></tr>
         <tr><td>P6</td><td>The Databricks job reproduces the local shares exactly (Indonesia)</td><td><span class="badge ok">Passed</span> identical shares; scorer within 0.002%</td></tr>
         <tr><td>P7</td><td>Both pages live; browser tests pass in three display modes</td><td><span class="badge ok">Passed</span> every check, desktop light, dark and phone</td></tr>
@@ -1478,7 +1479,7 @@ function renderNominalMap() {
   nmap.fitBounds(b.pad(0.05));
   $("#nmap-h").textContent = `${C[k].name}: ${rows.length.toLocaleString("en")} nominals on the ground`;
   $("#nmap-sub").textContent = `budget ${p.budget.toLocaleString("en")} new-tower equivalents · click a dot for details and satellite imagery`
-    + (p.validated ? "" : " · NOT YET CHECKED on the ground (second population map still downloading): dots are hexagon centres");
+    + (p.validated ? "" : " · NOT YET CHECKED on the ground: dots are hexagon centres");
   setTimeout(() => nmap.invalidateSize(), 50);
   ncells.clearLayers(); loadCells(k, drawCells);
 }

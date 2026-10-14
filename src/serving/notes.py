@@ -155,9 +155,21 @@ class OpenAIWriter:
 class NoteService:
     """Cache → model → grader → template. `writer=None` (no key) serves templates only."""
 
-    def __init__(self, writer: OpenAIWriter | None, cache_path: Path | None = None):
-        self.writer, self.cache_path = writer, cache_path
+    def __init__(self, writer: OpenAIWriter | None, cache_path: Path | None = None, save_every: int = 50):
+        import threading
+        self.writer, self.cache_path, self.save_every = writer, cache_path, save_every
         self.cache = json.loads(cache_path.read_text()) if cache_path and cache_path.exists() else {}
+        self._lock, self._unsaved = threading.Lock(), 0
+
+    def save(self) -> None:
+        """Atomic, thread-safe write of the cache (temporary file, then rename)."""
+        if not self.cache_path:
+            return
+        with self._lock:
+            snapshot = json.dumps(self.cache)
+            self._unsaved = 0
+        tmp = self.cache_path.with_suffix(".tmp")
+        tmp.write_text(snapshot); os.replace(tmp, self.cache_path)
 
     def key(self, facts: dict) -> str:
         model = self.writer.model if self.writer else "template"
@@ -179,7 +191,10 @@ class NoteService:
         g = grade(raw, facts) if raw else {"ok": False, "unknown_numbers": [], "names": [], "promise": False, "words": 0}
         note, source = (raw, "model") if raw and g["ok"] else (template_note(facts), "template")
         served = grade(note, facts)
-        self.cache[k] = {"note": note, "source": source, "grader": g, "model": meter.model, "raw": raw}
-        if self.cache_path:
-            self.cache_path.write_text(json.dumps(self.cache))
+        with self._lock:
+            self.cache[k] = {"note": note, "source": source, "grader": g, "model": meter.model, "raw": raw}
+            self._unsaved += 1
+            due = self._unsaved >= self.save_every
+        if due:
+            self.save()
         return note, source, {**g, "served_ok": served["ok"]}, meter, raw

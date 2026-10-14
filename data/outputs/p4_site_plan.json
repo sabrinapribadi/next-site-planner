@@ -862,6 +862,175 @@
    "gate_gain_10pct": true,
    "validated": true
   },
+  "USA": {
+   "theta": {
+    "new": [
+     0.015129101009945566,
+     0.0,
+     0.19796144734557267
+    ],
+    "capacity": [
+     0.0,
+     0.0,
+     0.015129101009945566
+    ],
+    "own_new_estimate": true
+   },
+   "candidates": 1480339,
+   "likely_slow_hexagons": 3463,
+   "headline_budget": 1000,
+   "budgets": {
+    "100": {
+     "people_lifted": 1284.2576198867418,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 16804.269931850657,
+     "greedy": 1284.2576198867418,
+     "kpi_ranking": 593.307750104926,
+     "slowest_first": 188.5888694336847,
+     "gain_vs_kpi": 1.1645724662447474,
+     "cost_used": 100.0,
+     "sites": 134,
+     "mix": {
+      "small_cell": 68,
+      "macro": 66
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 1013569
+     }
+    },
+    "500": {
+     "people_lifted": 3138.8428426515893,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 41071.16951054291,
+     "greedy": 3138.8428426515893,
+     "kpi_ranking": 1418.6481037806327,
+     "slowest_first": 551.7029873961872,
+     "gain_vs_kpi": 1.2125591500011286,
+     "cost_used": 500.0,
+     "sites": 594,
+     "mix": {
+      "macro": 406,
+      "small_cell": 188
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 1013569
+     }
+    },
+    "1000": {
+     "people_lifted": 4447.435076629174,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 58193.85330074855,
+     "greedy": 4447.435076629174,
+     "kpi_ranking": 2202.7789753421625,
+     "slowest_first": 993.9335771305405,
+     "gain_vs_kpi": 1.019011043056802,
+     "cost_used": 1000.0,
+     "sites": 1146,
+     "mix": {
+      "macro": 854,
+      "small_cell": 292
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 1013569
+     }
+    },
+    "5000": {
+     "people_lifted": 9106.791883262818,
+     "people_lifted_low": 0.0,
+     "people_lifted_high": 119160.66266597735,
+     "greedy": 9106.791883262818,
+     "kpi_ranking": 5086.25814259003,
+     "slowest_first": 2948.495013213682,
+     "gain_vs_kpi": 0.7904698558271461,
+     "cost_used": 5000.0,
+     "sites": 5360,
+     "mix": {
+      "macro": 4640,
+      "small_cell": 720
+     },
+     "solver": {
+      "method": "exact enumeration over cost classes",
+      "mip_gap": 0.0,
+      "candidates": 1013569
+     }
+    }
+   },
+   "validation": {
+    "solve_rounds": {
+     "plan": 1,
+     "kpi": 1
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 0,
+    "checked_in_country": 3004
+   },
+   "sensitivity": {
+    "crowding_cap": {
+     "jaccard": 0.998256320836966,
+     "rounds": 1,
+     "capped_plan_people_lifted": 4438.844604294058,
+     "headline_plan_under_cap": 4437.620847266435,
+     "headline_people_lifted": 4447.435076629174,
+     "headline_top10_crowded": 0,
+     "headline_crowded_benefit_share": 0.0024207605139931563
+    },
+    "capacity_equals_new": {
+     "jaccard": 0.06769876672789295,
+     "mix": {
+      "capacity": 2665,
+      "macro": 143,
+      "small_cell": 115
+     },
+     "people_lifted": 13029.268036359364,
+     "kpi_ranking": 8551.153404227582,
+     "gain_vs_kpi": 0.524
+    },
+    "colocation_0.20": {
+     "jaccard": 1.0,
+     "people_lifted": 4447.435076629174
+    },
+    "colocation_0.50": {
+     "jaccard": 1.0,
+     "people_lifted": 4447.435076629174
+    },
+    "small_cell_0.25": {
+     "jaccard": 0.81218993621545,
+     "people_lifted": 4662.167272336013
+    },
+    "theta_low": {
+     "jaccard": 0.0
+    },
+    "theta_high": {
+     "jaccard": 0.789860396767083
+    },
+    "3gpp_service_areas": {
+     "jaccard": 0.7525057825751735,
+     "people_lifted": 4760.699972235315
+    },
+    "covering_exact_vs_greedy": {
+     "district": "Clallam, Washington",
+     "candidates": 178,
+     "greedy": 91.46537573317028,
+     "exact": 92.6470651301881
+    }
+   },
+   "exports": {
+    "sites": 1146,
+    "geojson_valid": true,
+    "kml_placemarks": 1146,
+    "kml_ok": true,
+    "csv_schema_ok": true,
+    "site_points_inside": true
+   },
+   "gate_gain_10pct": true,
+   "validated": true
+  },
   "ARE": {
    "theta": {
     "new": [
@@ -1047,163 +1216,9 @@
    },
    "gate_gain_10pct": true,
    "validated": true
-  },
-  "USA": {
-   "theta": {
-    "new": [
-     0.015129101009945566,
-     0.0,
-     0.19796144734557267
-    ],
-    "capacity": [
-     0.0,
-     0.0,
-     0.015129101009945566
-    ],
-    "own_new_estimate": true
-   },
-   "candidates": 4169791,
-   "likely_slow_hexagons": 18825,
-   "headline_budget": 1000,
-   "budgets": {
-    "100": {
-     "people_lifted": 1427.341557034649,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 18676.496396006216,
-     "greedy": 1427.341557034649,
-     "kpi_ranking": 516.9833893007797,
-     "slowest_first": 118.01723973368028,
-     "gain_vs_kpi": 1.760904095903602,
-     "cost_used": 100.0,
-     "sites": 135,
-     "mix": {
-      "small_cell": 70,
-      "macro": 65
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 3494631
-     }
-    },
-    "500": {
-     "people_lifted": 3434.1790700550077,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 44935.588618586946,
-     "greedy": 3434.1790700550077,
-     "kpi_ranking": 1214.9019719815792,
-     "slowest_first": 219.2531236014226,
-     "gain_vs_kpi": 1.8267128947479212,
-     "cost_used": 500.0,
-     "sites": 597,
-     "mix": {
-      "macro": 403,
-      "small_cell": 194
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 3494631
-     }
-    },
-    "1000": {
-     "people_lifted": 4861.105998119525,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 63606.659672334885,
-     "greedy": 4861.105998119525,
-     "kpi_ranking": 1715.3493083761734,
-     "slowest_first": 344.50878552750726,
-     "gain_vs_kpi": 1.8338869374199156,
-     "cost_used": 1000.0,
-     "sites": 1143,
-     "mix": {
-      "macro": 857,
-      "small_cell": 286
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 3494631
-     }
-    },
-    "5000": {
-     "people_lifted": 10068.763917837048,
-     "people_lifted_low": 0.0,
-     "people_lifted_high": 131747.8861992919,
-     "greedy": 10068.763917837048,
-     "kpi_ranking": 4131.96806959652,
-     "slowest_first": 1443.5282137100062,
-     "gain_vs_kpi": 1.4367961582094817,
-     "cost_used": 5000.0,
-     "sites": 5341,
-     "mix": {
-      "macro": 4659,
-      "small_cell": 682
-     },
-     "solver": {
-      "method": "exact enumeration over cost classes",
-      "mip_gap": 0.0,
-      "candidates": 3494631
-     }
-    }
-   },
-   "sensitivity": {
-    "capacity_equals_new": {
-     "jaccard": 0.0698655417875033,
-     "mix": {
-      "capacity": 2650,
-      "macro": 145,
-      "small_cell": 120
-     },
-     "people_lifted": 13701.557496825217,
-     "kpi_ranking": 7203.030911397038,
-     "gain_vs_kpi": 0.902
-    },
-    "colocation_0.20": {
-     "jaccard": 1.0,
-     "people_lifted": 4861.105998119525
-    },
-    "colocation_0.50": {
-     "jaccard": 1.0,
-     "people_lifted": 4861.105998119525
-    },
-    "small_cell_0.25": {
-     "jaccard": 0.8152639087018545,
-     "people_lifted": 5092.933875556135
-    },
-    "theta_low": {
-     "jaccard": 0.0
-    },
-    "theta_high": {
-     "jaccard": 0.8109939759036144
-    },
-    "3gpp_service_areas": {
-     "jaccard": 0.7002253944402704,
-     "people_lifted": 5285.839423935162
-    },
-    "covering_exact_vs_greedy": {
-     "district": "Ashe, North Carolina",
-     "candidates": 205,
-     "greedy": 118.08347527373888,
-     "exact": 120.60727315707933
-    }
-   },
-   "exports": {
-    "sites": 1143,
-    "geojson_valid": true,
-    "kml_placemarks": 1143,
-    "kml_ok": true,
-    "csv_schema_ok": true
-   },
-   "gate_gain_10pct": true,
-   "validated": false,
-   "pending": "WorldPop file still downloading; original (unchecked) plan shown"
   }
  },
- "gate_countries_passed": 6,
- "gate_passed": null,
- "seconds": 62,
- "pending_countries": [
-  "USA"
- ]
+ "gate_countries_passed": 7,
+ "gate_passed": true,
+ "seconds": 423
 }

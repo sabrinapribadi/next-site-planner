@@ -159,6 +159,37 @@
    "adr001_poorly_served_difference": -0.08480810088591784,
    "adr001_row3_triggered": false
   },
+  "USA": {
+   "total": {
+    "kontur": 332225065.0,
+    "worldpop": 307684186.79376477,
+    "smaller": 284234993.403384
+   },
+   "tested_below_25_p1": {
+    "kontur": 15424799.0,
+    "worldpop": 14882705.696784068,
+    "smaller": 14255961.702445345
+   },
+   "expected_below_25_all": {
+    "kontur": 7030521.28911708,
+    "worldpop": 5371933.008703514,
+    "smaller": 4501442.301090315
+   },
+   "expected_below_25_untested": {
+    "kontur": 4714371.212958809,
+    "worldpop": 3177319.010226473,
+    "smaller": 2420979.6152918427
+   },
+   "people_in_poorly_served_hexagons": {
+    "kontur": 669902.0,
+    "worldpop": 554045.3363398821
+   },
+   "kontur_share_in_disagreeing_hexagons": 0.0031764159636781166,
+   "kontur_share_in_disagreeing_poorly_served": 0.011733059462428834,
+   "worldpop_people_outside_kontur_hexagons": 2630179.6962377485,
+   "adr001_poorly_served_difference": -0.17294569005633342,
+   "adr001_row3_triggered": true
+  },
   "ARE": {
    "total": {
     "kontur": 9038504.0,
@@ -193,28 +224,26 @@
  },
  "all_countries": {
   "total": {
-   "kontur": 567118505.0,
-   "worldpop": 559827090.5199654,
-   "smaller": 394245522.8740561
+   "kontur": 899343570.0,
+   "worldpop": 867511277.3137302,
+   "smaller": 678480516.2774401
   },
   "tested_below_25_p1": {
-   "kontur": 46272771.0,
-   "worldpop": 43043419.233436055,
-   "smaller": 31424927.742891565
+   "kontur": 61697570.0,
+   "worldpop": 57926124.93022012,
+   "smaller": 45680889.44533691
   },
   "expected_below_25_all": {
-   "kontur": 97422125.49714379,
-   "worldpop": 75503429.23801835,
-   "smaller": 46793329.11397726
+   "kontur": 104452646.78626087,
+   "worldpop": 80875362.24672186,
+   "smaller": 51294771.415067576
   },
   "expected_below_25_untested": {
-   "kontur": 63392977.06646867,
-   "worldpop": 43541590.87159239,
-   "smaller": 24099393.81455744
+   "kontur": 68107348.27942748,
+   "worldpop": 46718909.88181886,
+   "smaller": 26520373.429849286
   }
  },
- "seconds": 32,
- "pending_countries": [
-  "USA"
- ]
+ "seconds": 31,
+ "pending_countries": []
 }

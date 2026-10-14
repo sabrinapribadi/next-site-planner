@@ -119,7 +119,7 @@ Q3's own noise is independent of Q2's, so it adds the same amount to both errors
 **Deployed predictions (kriging):**
 
 - 5.76M untested populated hexagons.
-- ≈ 68M people expected below 25 Mbps (typical speed): Philippines 23.4M, Indonesia 30.3M, Germany 5.5M, United States 4.7M, France 3.4M, Malaysia 0.8M, UAE 0.03M.
+- ≈ 68M people expected below 25 Mbps (typical speed): Philippines 23.4M, Indonesia 30.3M, Germany 5.5M, United States 4.7M, France 3.4M, Malaysia 0.8M, UAE 0.03M. These use Kontur population; with WorldPop the total is 47M (ADR-001, 2026-10-14), so the headline is shown as 47–68M.
 
 ## SOTA comparison
 

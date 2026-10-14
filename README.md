@@ -30,8 +30,8 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 
 - 61.7M people in tested areas get under 25 Mbps on mobile; 349M live where nobody tested.
 - At equal density, the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
-- 48–68M untested people are likely below 25 Mbps; the range comes from two population maps.
-- The two maps agree in Germany and France; in Southeast Asia and the UAE they differ by 27–37%.
+- 47–68M untested people are likely below 25 Mbps; the range comes from two population maps.
+- The two maps agree in Germany and France; in the US they differ by 17%, in Southeast Asia and the UAE by 27–37%.
 - New sites lift some slow places: up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.
 - Checked site plans lift 1.5–3.8× as many people as KPI ranking at the same budget (+50% to +281%).
 - Every nominal has people on both maps, at least 1,000 m² of buildings, and a pin on built land.

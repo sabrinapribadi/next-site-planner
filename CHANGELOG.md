@@ -38,6 +38,11 @@ Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can b
     - registered scorer within 0.002%;
     - drift flagged (PSI 0.223, Q2 → Q3).
   - **P7 passed:** results page 13 of 13 browser checks in three modes; walkthrough all checks.
+  - **US checked last** (its WorldPop file took hours):
+    - checked plan +102% vs KPI ranking (unchecked: +183%);
+    - the population maps differ by 17% in poorly served US places;
+    - the checked-plan gate now passes in 7 of 7 countries;
+    - untested people likely below 25 Mbps: 47–68M.
   - **Tests:** 42 unit, contract and replay tests in CI.
 - **Talking point:** "Every number in an AI-written site note is traced to the data by code, not by prompt; and the cloud job reproduces the laptop's numbers to the last digit."
 

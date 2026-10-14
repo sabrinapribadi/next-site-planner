@@ -283,7 +283,7 @@ const PHASES = [
   scqa: ["349M people (39%) live where nobody ran a speed test; P1 could not count them.",
          "Most tested hexagons rest on 1–2 tests, and two tests at the same place often differ 3–5×.",
          "Can a model predict typical speed where nobody tested, and beat standard kriging by 10%?",
-         "Not by enough: machine learning was only 7% more accurate, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. Removing test noise showed ≈ 68M untested people likely below 25 Mbps, most in Indonesia and the Philippines."],
+         "Not by enough: machine learning was only 7% more accurate, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. Removing test noise showed 47–68M untested people likely below 25 Mbps, most in Indonesia and the Philippines."],
   steps: [
     ["Decision", "Design before training", "ADR-004 pushed first: kriging baseline, LightGBM, features, gate.", "A gate set after results proves nothing.", "docs/adr/ADR-004-speed-model-for-untested-areas.md"],
     ["Evaluation", "Test blocks sized to reality", "Measured how far untested people live from a test; ~36 km² blocks matched best (kNNDM idea).", "Random splits flatter; huge blocks punish.", "docs/adr/ADR-004-speed-model-for-untested-areas.md"],
@@ -345,7 +345,7 @@ const PHASES = [
   scqa: ["Site lists are usually built by ranking places on an agreed KPI score.",
          "A score does not say how many people a site would lift, and phase 3 showed sites help some slow places, not all.",
          "For a fixed budget, does choosing places by expected people lifted per cost beat KPI ranking by at least 10%?",
-         "Yes. Once every nominal is checked on the ground: +50% (Germany) to +281% (UAE) more people in 6 of 6 checked countries (US pending). Before the checks it looked like +56% to +776%."],
+         "Yes, in all seven countries once every nominal is checked on the ground: +50% (Germany) to +281% (UAE). Unchecked, it looked like +56% to +776%."],
   steps: [
     ["Decision", "Design before plans", "ADR-008 pushed first: benefit, costs, optimiser, KPI baseline, gate, sensitivities, exports.", "The rule must not bend to the result.", "docs/adr/ADR-008-budgeted-site-plan.md"],
     ["Evaluation", "Capacity lift measured first", "Same crossing checks as P3 for added capacity: +3.8 to +16.3 pts where they pass (wide intervals; only Germany excludes 0); 0 where they fail.", "Co-location is cheap; it needs evidence too.", "scripts/new_site_crossing_checks.py"],
@@ -363,13 +363,13 @@ const PHASES = [
     ["Serving & AI", "Existing cells on the map", "Recorded LTE/5G cells shown under the nominals, so the gaps they fill are visible; OpenCelliD's gaps in Southeast Asia stated.", "Context makes a plan checkable.", "docs/data/cells/"]
   ],
   decisions: [["Budgeted site plan: benefit, costs, exact solver, KPI baseline", "008"]],
-  results: [["Gain over KPI ranking (original)", "≥ +10% in ≥ 5 of 7", "6 of 7 (+56% to +776%)", "ok"], ["Gain over KPI ranking (checked nominals)", "≥ +10% per country", "6 of 6 checked (+50% to +281%); US pending", "ok"], ["Exports valid", "CSV, GeoJSON, KML; pins inside their hexagon", "all countries", "ok"],
+  results: [["Gain over KPI ranking (original)", "≥ +10% in ≥ 5 of 7", "6 of 7 (+56% to +776%)", "ok"], ["Gain over KPI ranking (checked nominals)", "≥ +10% in ≥ 5 of 7", "7 of 7 (+50% to +281%)", "ok"], ["Exports valid", "CSV, GeoJSON, KML; pins inside their hexagon", "all countries", "ok"],
             ["Greedy vs exact", "report", "99.99–100%", "info"], ["Cost per 1,000 people lifted (checked)", "report", "3.6 (Philippines) to 95 (Malaysia) new-tower equivalents", "info"]],
   obstacles: [
     ["Exact solver ran for minutes per country", "HiGHS post-processing on a 20,000-variable knapsack with a near-zero gap", "Exact enumeration over the three cost classes, tested against brute force", "Look for structure before reaching for a general solver"],
     ["Run crashed on the last country", "KPI ranking lifted nobody in the UAE, so the gain was undefined", "Reported as 'KPI lifts nobody'; counted as not passing", "Handle zero baselines explicitly"],
     ["Killing the run also killed the status monitor", "The kill pattern matched the monitor's own command", "Split the pattern string", "Never match a pattern your watcher contains"],
-    ["WorldPop's server: one slow stream per file, no resume", "Range requests ignored; 25–40 KB/s per connection", "Whole-file downloads with size checks and stall detection; the US file still downloading", "Test a server's behaviour before planning around it"],
+    ["WorldPop's server: one slow stream per file, no resume", "Range requests ignored; 25–40 KB/s per connection", "Whole-file downloads with size checks and stall detection; the US file took hours", "Test a server's behaviour before planning around it"],
     ["Blank land-cover reads during laptop sleep", "Network reads returned no-data pixels instead of failing", "Audit pixel counts against hexagon area; require ≥ 97%; re-check the 12", "Validate what a remote read returns, not only that it returned"]
   ],
   lessons: ["Measure the benefit of every intervention before costing it.", "A problem's structure can make exact solutions trivial.", "Show the gain under the assumption most likely to break it.", "Check every answer on the ground with an independent source."],
@@ -399,7 +399,7 @@ const PHASES = [
           ["Compute (DuckDB · Spark)", "Read at the source", "53.7M global mobile tile rows in 28 s; 2.4M kept in Indonesia.", "R15: operations, not Indonesia's size, justify the cloud.", "scripts/databricks_p6.py"],
           ["Evaluation", "Parity", "Every Indonesian share equals the local value exactly.", "Same numbers on both platforms.", "data/outputs/p6_databricks_idn.json"],
           ["Platform", "Registry", "Site-plan scorer v1 in Unity Catalog, alias champion.", "Version the rule that turns estimates into a plan.", "scripts/databricks_p6.py", "fix"],
-          ["Evaluation", "Drift", "PSI 0.223 between 2026 Q2 and Q3: share above 100 Mbps 8.5% → 25.5%.", "Flag shifts; do not explain them away.", "data/outputs/p6_databricks_idn.json"]],
+          ["Evaluation", "Drift", "PSI 0.223 (a shift-size score; above 0.2 = a real change) between 2026 Q2 and Q3: above 100 Mbps 8.5% → 25.5%.", "Flag shifts; do not explain them away.", "data/outputs/p6_databricks_idn.json"]],
   decisions: [["Databricks quarterly job for Indonesia", "010"]],
   results: [["P1 shares reproduced", "exact at 0.1 point", "difference 0.0", "ok"], ["Scorer reproduces the plan", "within 0.1%", "0.002%", "ok"], ["Job, registry, drift", "deployed", "all six tables", "ok"]],
   obstacles: [["Scorer task failed twice", "MLflow on Databricks needs an experiment path", "Experiment under the running user's folder", "Set tracking, registry and experiment together"],

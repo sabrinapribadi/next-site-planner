@@ -60,6 +60,7 @@ def main() -> None:
                      "coverage": cov, "meter": meter.model_dump()})
         if i % 10 == 0:
             log(f"{i}/{len(cases)} written")
+    t.notes.save()
     cached_ms = []
     for k, r, _ in cases:                                    # same facts again: served from the cache
         t0 = time.perf_counter(); t.explain_site(k, int(r["rank"])); cached_ms.append((time.perf_counter() - t0) * 1000)

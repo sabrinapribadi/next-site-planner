@@ -80,7 +80,7 @@ Data sources without papers (vendor or agency documentation): Ookla open data, K
 - **Implemented as decided:** H3 resolution 8, people-weighted shares below 10/25 Mbps (sensitivity 5/50/100), density-adjusted comparison, untested people reported.
 - **Unmeasured above 20%:** true in six of seven countries (14–47% of people). As planned, P2 now predicts their speed (ADR-004, ADR-005).
 - **Density adjustment changes ranks:** yes. The Philippines and Indonesia fall further behind at equal density.
-- **WorldPop cross-check (falsification row 3), run for all seven countries.** It was meant to run before P4 used population totals; it did not, and was caught by inspecting the nominal map. This is disclosed in ADR-008 amendment 1, which ran it before re-planning. Interim results: six countries; the US is pending its WorldPop file.
+- **WorldPop cross-check (falsification row 3), run for all seven countries.** It was meant to run before P4 used population totals; it did not, and was caught by inspecting the nominal map. This is disclosed in ADR-008 amendment 1, which ran it before re-planning. Results for all seven countries:
 
 | Country | Total: Kontur / WorldPop | People in poorly served hexagons: difference | People where the maps differ > 3× | Expected below 25 Mbps: Kontur / WorldPop / smaller | Untested, likely below 25 Mbps: Kontur / WorldPop | Row 3 (> 10%) |
 |---|---|---|---|---|---|---|
@@ -89,11 +89,12 @@ Data sources without papers (vendor or agency documentation): Ookla open data, K
 | Philippines | 107.9M / 95.0M | -36.7% | 23.5% | 33.4M / 22.3M / 13.9M | 23.4M / 13.3M | triggered |
 | Germany | 83.3M / 83.8M | -6.9% | 1.0% | 9.5M / 8.9M / 7.2M | 5.5M / 4.8M | no |
 | France | 63.9M / 65.2M | -8.5% | 0.7% | 4.1M / 3.9M / 2.8M | 3.4M / 3.1M | no |
+| United States | 332.2M / 307.7M | -17.3% | 0.3% | 7.0M / 5.4M / 4.5M | 4.7M / 3.2M | triggered |
 | UAE | 9.0M / 9.9M | -31.6% | 24.2% | 39k / 21k / 11k | 34k / 13k | triggered |
 
   - **Germany and France:** the maps agree; Kontur stays the population for P1–P3.
-  - **Indonesia, Malaysia, the Philippines and the UAE:** row 3 is triggered. As pre-set, both are reported and the range is carried forward. Headline counts become Kontur–WorldPop ranges, and plans count the smaller of the two per hexagon (ADR-008 amendment 1).
-  - **Pattern:** compared with WorldPop, Kontur places 27–37% more people in poorly served hexagons in these countries. Neither map is ground truth: Kontur spreads people over rural land surfaces, while WorldPop drops people where no settlement was detected (its Philippines total is 12% below the UN figure).
+  - **Indonesia, Malaysia, the Philippines, the UAE and the US:** row 3 is triggered (the US at −17%, with only 0.3% of people where the maps differ more than 3×). As pre-set, both are reported and the range is carried forward. Headline counts become Kontur–WorldPop ranges, and plans count the smaller of the two per hexagon (ADR-008 amendment 1).
+  - **Pattern:** compared with WorldPop, Kontur places 17–37% more people in poorly served hexagons in these countries. Neither map is ground truth: Kontur spreads people over rural land surfaces, while WorldPop drops people where no settlement was detected (its Philippines total is 12% below the UN figure).
 
 ## Consequences
 

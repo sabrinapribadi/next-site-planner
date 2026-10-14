@@ -33,7 +33,7 @@ Success Metrics (pre-registered — see ADR-002):
 - P1: population share below 10 and 25 Mbps per country, raw and density-adjusted, with 95% intervals; every populated hexagon typed by morphology and gap (coverage / capacity) — **passed** after two logged deviations
 - P2: the spatial model beats ordinary kriging by ≥ 10% (RMSE of log speed) under spatial block cross-validation — **failed: 7% (ratio 0.929); kriging deployed**
 - P3: new-site effect with a 95% interval and a passing pre-trend (placebo) test — **passed in Germany, France, US, Philippines; failed in Indonesia and the UAE; Malaysia has too few new sites**
-- P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same cost budget (new-tower equivalents) — **original plan passed in 6 of 7 (+56% to +776%); checked plans pass in 6 of 6 checked countries (+50% to +281%); US pending**
+- P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same cost budget (new-tower equivalents) — **original plan passed in 6 of 7 (+56% to +776%); checked plans pass in 7 of 7 (+50% to +281%)**
 - P5: API contracts and the LLM evaluation set pass in CI; cost and latency within budget (R13) — **failed on live p95 latency only (4.2 s vs 3.0 s); notes 100% grounded at $0.064 per 1,000; served from a cache**
 - P6: the Databricks job reproduces the local P1 numbers exactly — **narrowed to Indonesia before code (ADR-010); passed: identical shares**
 - P7: two live pages (results and technical walkthrough), browser-tested — **passed**
@@ -143,7 +143,7 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | P1 | Experience-gap map; fair cross-country benchmark; hotspots; gap types and morphology | Shares below 10 / 25 Mbps with 95% intervals, raw and density-adjusted; Gi* hotspots at FDR 5%; every populated hexagon typed — **passed** |
 | P2 | Speed where nobody tested | LightGBM ≤ 0.9 × best kriging RMSE (log speed) under resolution-6 block CV; transfer to an unseen country reported — **failed (0.929); kriging deployed** |
 | P3 | Effect of new sites (all seven countries, same rule) | Parallel pre-trends; effect with 95% interval — **done**: slow places lifted above 25 Mbps +12.1 pts (France) and +12.6 (Germany) as pre-set; cautious values after regression-to-the-mean checks +12.1 (France), +5.2 (Germany), +1.5 (US); average speed ≈ 0 except the US |
-| P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal cost; exports pass format checks — **done**: original 6 of 7; checked nominals (two population maps, ≥ 1,000 m² of buildings, terrain) 6 of 6 checked countries, US pending; CSV / GeoJSON / KML per country with site points |
+| P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal cost; exports pass format checks — **done**: original 6 of 7; checked nominals (two population maps, ≥ 1,000 m² of buildings, terrain) 7 of 7 countries; CSV / GeoJSON / KML per country with site points |
 | P5 | API + MCP + grounded site notes | Contract tests and LLM evaluation pass in CI; R13 budgets met — **failed on live latency only**; 100% grounded notes, cached (ADR-009) |
 | P6 | Databricks quarterly job + registry + drift | Databricks reproduces local P1 numbers exactly — **passed for Indonesia** (scope set before code, ADR-010) |
 | P7 | Results page + technical walkthrough + web map | Both pages live and browser-tested (R10, R12, R14, R17) — **passed** |
@@ -170,7 +170,7 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | Measurement noise: most hexagons rest on 1–2 tests; one test varies 3–5× | ADR-005: noise model, shrinkage toward the neighbourhood, checked on the next quarter (28–44% closer); corrected shares marked credible or provisional |
 | OpenCelliD first-seen dates are noisy | Use only cells first seen ≤ 2024 and observed ≥ 180 days; placebo test |
 | Effect estimated abroad may not hold in Indonesia | State it as an assumption; sensitivity range in P4 |
-| Population maps disagree where data is thin (27–37% in poorly served places in Southeast Asia and the UAE) | Two maps; plans count the smaller; headline counts shown as ranges (ADR-001, ADR-008 amendment 1) |
+| Population maps disagree where data is thin (17–37% in poorly served places in the US, Southeast Asia and the UAE) | Two maps; plans count the smaller; headline counts shown as ranges (ADR-001, ADR-008 amendment 1) |
 | A nominal falls in forest, water or empty land | Built-up check (≥ 1,000 m², WorldCover) and a site point on built land; terrain flags (ADR-008 amendment 1) |
 | "New site" relies on OpenCelliD, which misses most towers in Southeast Asia | Recorded cells shown on the nominal map; planners check new-site nominals against an operator's site list |
 | Free Edition cannot read Ookla's S3 | Test first; else upload country extracts (as in CHN-1) |
@@ -191,7 +191,7 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 13. KEY INSIGHTS
 
 - Rural people are about 3–6× as likely as city-centre people to be below 25 Mbps
-- Most people on slow mobile were never tested: 48–68M of them likely below 25 Mbps
+- Most people on slow mobile were never tested: 47–68M of them likely below 25 Mbps
 - Single speed tests are mostly luck; blending with the neighbourhood is 28–44% closer to the next quarter
 - New sites lift some slow places above 25 Mbps; average speeds barely move
 - Counting people lifted per cost beats KPI ranking by +50% to +281%, once every nominal is checked on the ground

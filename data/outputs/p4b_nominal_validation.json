@@ -255,6 +255,56 @@
    },
    "original_fails_built_over_20pct": false
   },
+  "USA": {
+   "original_nominals": 1143,
+   "share_population_disagrees_3x": 0.04111986001749781,
+   "share_worldpop_zero": 0.031496062992125984,
+   "share_fail_built_up": 0.0,
+   "share_mostly_water_or_wetland": 0.0026246719160104987,
+   "share_mostly_tree_cover": 0.37182852143482065,
+   "share_steep": 0.0017497812773403325,
+   "share_high": 0.0,
+   "original_people_lifted": 4861.105998119525,
+   "original_rescored_people_lifted": 4324.320604965571,
+   "original_gain_vs_kpi": 1.8338869374199156,
+   "validated_people_lifted": 4447.435076629174,
+   "validated_range": [
+    0.0,
+    58193.85330074855
+   ],
+   "validated_kpi": 2202.7789753421625,
+   "validated_gain_vs_kpi": 1.019011043056802,
+   "validated_gate_10pct": true,
+   "validated_sites": 1146,
+   "validated_share_steep": 0.0017452006980802793,
+   "validated_share_high": 0.0,
+   "validated_median_built_m2": 222936.0,
+   "validated_median_places": 13.5,
+   "validated_share_zero_places": 0.01832460732984293,
+   "posthoc_crowded_share": 0.0008726003490401396,
+   "posthoc_crowded_benefit_share": 0.0024284943335132216,
+   "validated_median_built_m2_per_person": 214.7,
+   "jaccard_original_vs_validated": 0.8341346153846154,
+   "validation": {
+    "solve_rounds": {
+     "plan": 1,
+     "kpi": 1
+    },
+    "all_picks_passed": true,
+    "excluded_no_built_up": 0,
+    "checked_in_country": 3004
+   },
+   "crowding_cap_sensitivity": {
+    "jaccard": 0.998256320836966,
+    "rounds": 1,
+    "capped_plan_people_lifted": 4438.844604294058,
+    "headline_plan_under_cap": 4437.620847266435,
+    "headline_people_lifted": 4447.435076629174,
+    "headline_top10_crowded": 0,
+    "headline_crowded_benefit_share": 0.0024207605139931563
+   },
+   "original_fails_built_over_20pct": false
+  },
   "ARE": {
    "original_nominals": 29,
    "share_population_disagrees_3x": 0.5517241379310345,
@@ -306,10 +356,8 @@
    "original_fails_built_over_20pct": true
   }
  },
- "validated_gate_countries_passed": 6,
- "validated_gate_passed": null,
+ "validated_gate_countries_passed": 7,
+ "validated_gate_passed": true,
  "seconds": 1,
- "pending_countries": [
-  "USA"
- ]
+ "pending_countries": []
 }

@@ -50,7 +50,7 @@ The question: **"Predicting places nobody had tested, does LightGBM beat kriging
 | UAE | 182.9 Mbps | 130.2 Mbps |
 
 - **Why they differ:** kriging borrows from nearby *tested* places. LightGBM also uses what the place is (population, places, cells, history), and untested places are sparser.
-- **Stakes:** if LightGBM is right, the deployed estimate of untested people below 25 Mbps (≈ 68M, from kriging) is too low. The fresh-quarter test therefore also settles the size of the hidden gap.
+- **Stakes:** if LightGBM is right, the deployed estimate of untested people below 25 Mbps (≈ 68M with Kontur population, 47M with WorldPop; from kriging; ADR-001) is too low. The fresh-quarter test therefore also settles the size of the hidden gap.
 - **Also reported at test time:** the people-weighted share below 25 Mbps in newly tested hexagons, measured vs each model's prediction.
 
 ### Test set (defined now)
