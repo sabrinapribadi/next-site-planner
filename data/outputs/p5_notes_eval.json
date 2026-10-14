@@ -1,0 +1,51 @@
+{
+ "design": "ADR-009",
+ "model": "gpt-6-luna",
+ "prompt": "src/serving/notes.py SYSTEM (v1)",
+ "cases": 80,
+ "live_calls": 80,
+ "live_grounded_pass_rate": 1.0,
+ "served_grounded_rate": 1.0,
+ "required_fact_coverage": 1.0,
+ "coverage_by_fact": {
+  "intervention": 1.0,
+  "people": 1.0,
+  "chance_below": 1.0,
+  "ground_check": 1.0
+ },
+ "served_by_template": 0,
+ "failures": [],
+ "cost_per_1000_usd": 0.06366375,
+ "latency_ms_live": {
+  "p50": 2329.1000000000004,
+  "p95": 4165.714999999999
+ },
+ "latency_ms_cached": {
+  "p50": 1.366458000120474,
+  "p95": 1.786868101771688
+ },
+ "tokens_mean": {
+  "input": 306.2,
+  "output": 66.0875
+ },
+ "budgets": {
+  "cost_per_1000_usd": 0.2,
+  "p95_ms_live": 3000,
+  "p95_ms_cached": 50
+ },
+ "prices_per_m_usd": {
+  "input": 0.1,
+  "cached_input": 0.01,
+  "output": 0.5,
+  "source": "developers.openai.com/api/docs/pricing, retrieved 2026-10-14"
+ },
+ "gate": {
+  "live_grounded_ge_90": true,
+  "served_grounded_100": true,
+  "coverage_ge_90": true,
+  "cost_within_budget": true,
+  "p95_live_within_budget": false,
+  "p95_cached_within_budget": true
+ },
+ "gate_passed": false
+}
