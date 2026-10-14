@@ -1,0 +1,70 @@
+# Databricks Asset Bundle for P6 (ADR-010): one country end to end on serverless compute, reading Ookla's S3 directly.
+#   python scripts/databricks_prepare_inputs.py IDN
+#   databricks fs cp -r --overwrite build/p6/IDN dbfs:/Volumes/workspace/geo1/inputs/IDN -p portfolio
+#   databricks bundle deploy -p portfolio && databricks bundle run geo1_p6 -p portfolio
+# The workspace comes from the CLI profile; no workspace URL is stored in the repository.
+bundle:
+  name: next-site-planner
+
+sync:
+  include:
+    - scripts/databricks_p6.py
+  exclude:
+    - docs/**
+    - tests/**
+    - data/**
+    - build/**
+    - src/**
+
+variables:
+  country:
+    description: ISO3 country code (the job is the same for every country)
+    default: IDN
+
+targets:
+  dev:
+    mode: development
+    default: true
+
+resources:
+  jobs:
+    geo1_p6:
+      name: geo1-p6-${var.country}
+      description: Ookla tiles from S3 → H3 hexagons → P1 shares (parity with local) → site-plan scorer in Unity Catalog → drift → published tables.
+      max_concurrent_runs: 1
+      schedule:                       # quarterly, after Ookla's release (ADR-010)
+        quartz_cron_expression: "0 0 6 15 1,4,7,10 ?"
+        timezone_id: UTC
+        pause_status: PAUSED          # Free Edition quota: run on demand
+      tasks:
+        - task_key: ingest_tiles
+          environment_key: spark
+          spark_python_task: {python_file: scripts/databricks_p6.py, parameters: ["--task", "ingest_tiles", "--country", "${var.country}"]}
+        - task_key: build_hexagons
+          depends_on: [{task_key: ingest_tiles}]
+          environment_key: spark
+          spark_python_task: {python_file: scripts/databricks_p6.py, parameters: ["--task", "build_hexagons", "--country", "${var.country}"]}
+        - task_key: p1_shares
+          depends_on: [{task_key: build_hexagons}]
+          environment_key: spark
+          spark_python_task: {python_file: scripts/databricks_p6.py, parameters: ["--task", "p1_shares", "--country", "${var.country}"]}
+        - task_key: register_scorer
+          depends_on: [{task_key: p1_shares}]
+          environment_key: ml
+          spark_python_task: {python_file: scripts/databricks_p6.py, parameters: ["--task", "register_scorer", "--country", "${var.country}"]}
+        - task_key: monitor_drift
+          depends_on: [{task_key: p1_shares}]
+          environment_key: spark
+          spark_python_task: {python_file: scripts/databricks_p6.py, parameters: ["--task", "monitor_drift", "--country", "${var.country}"]}
+        - task_key: publish
+          depends_on: [{task_key: register_scorer}, {task_key: monitor_drift}]
+          run_if: ALL_DONE            # publish whatever exists, even if a gate failed
+          environment_key: spark
+          spark_python_task: {python_file: scripts/databricks_p6.py, parameters: ["--task", "publish", "--country", "${var.country}"]}
+      environments:
+        - environment_key: spark
+          spec: {environment_version: "6"}
+        - environment_key: ml
+          spec:
+            environment_version: "6"
+            dependencies: [mlflow==3.17.0, pandas]

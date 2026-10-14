@@ -1,0 +1,96 @@
+{
+ "p1_parity": {
+  "country": "IDN",
+  "quarter": "2026Q3",
+  "databricks": {
+   "population": 269734124.0,
+   "measured_share": 0.6497979247149315,
+   "below_5": 0.01902964063867708,
+   "below_10": 0.040889768133508364,
+   "below_25": 0.13296971780096195,
+   "below_50": 0.3566848189923776,
+   "below_100": 0.7453147602460838
+  },
+  "local": {
+   "population": 269734124.0,
+   "measured_share": 0.6497979247149315,
+   "below_5": 0.01902964063867708,
+   "below_10": 0.040889768133508364,
+   "below_25": 0.13296971780096195,
+   "below_50": 0.3566848189923776,
+   "below_100": 0.7453147602460838
+  },
+  "max_abs_difference": 0.0,
+  "population_difference": 0.0,
+  "equal_at_reported_decimal": {
+   "measured_share": true,
+   "below_5": true,
+   "below_10": true,
+   "below_25": true,
+   "below_50": true,
+   "below_100": true
+  },
+  "gate_p1_parity": true
+ },
+ "scorer_parity": {
+  "model": "workspace.geo1.idn_site_scorer",
+  "version": 1,
+  "alias": "champion",
+  "people_lifted": 122503.86831580746,
+  "local_people_lifted": 122505.92962982846,
+  "relative_difference": 1.6826238756221504e-05,
+  "gate_scorer_parity": true,
+  "run_id": "74035f7489054516b713c0466a01800b"
+ },
+ "drift": {
+  "country": "IDN",
+  "compare": "2026Q3 vs 2026Q2",
+  "bins_mbps": [
+   5,
+   10,
+   25,
+   50,
+   100
+  ],
+  "share_by_bin_current": [
+   0.01902964063867708,
+   0.021860127494831284,
+   0.09207994966745359,
+   0.2237151011914156,
+   0.3886299412537062,
+   0.2546852397539162
+  ],
+  "share_by_bin_previous": [
+   0.023490190659661504,
+   0.027814379745515195,
+   0.11643269894848393,
+   0.289139895509272,
+   0.45840028228368374,
+   0.0847225528533836
+  ],
+  "psi": 0.2234610560113038,
+  "drift_flag_psi_gt_0_2": true,
+  "share_below_25_change_pts": -3.476755155269867
+ },
+ "tables": [
+  "workspace.geo1.idn_tiles",
+  "workspace.geo1.idn_hex_panel",
+  "workspace.geo1.idn_hex_latest",
+  "workspace.geo1.idn_p1_shares",
+  "workspace.geo1.idn_plan",
+  "workspace.geo1.idn_drift"
+ ],
+ "gate_passed": true,
+ "run": {
+  "job": "geo1-p6-IDN (bundle databricks.yml)",
+  "run_id": 690306713800731,
+  "note": "register_scorer failed twice on a missing MLflow experiment path; fixed and repaired (re-ran register_scorer and publish only)",
+  "date": "2026-10-14"
+ },
+ "volume": {
+  "global_mobile_tile_rows_read_15_quarters": 53740731,
+  "idn_bbox_rows": 3306760,
+  "idn_tiles_kept": 2403501,
+  "read_seconds": 28
+ }
+}

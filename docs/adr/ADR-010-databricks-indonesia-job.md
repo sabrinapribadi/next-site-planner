@@ -1,6 +1,6 @@
 # ADR-010: Databricks Quarterly Job for Indonesia (P6)
 
-**Status:** Proposed — written and pushed before any P6 job code
+**Status:** Accepted — written and pushed before any P6 job code (commit `acb9849`, 17:18); gate **passed** (results below)
 **Date:** 2026-10-14
 **Deciders:** Sabrina Pribadi
 
@@ -82,6 +82,30 @@ PSI > 0.2 between consecutive quarters flags a shift. 0.2 is a common convention
 |---|---|---|
 | Shares differ at the reported decimal | Assignment or aggregation differs (polygon, rounding, H3 version) | Find the first differing tile or cell; fix and log |
 | Scorer differs > 0.1% | Different inputs or θ | Compare row by row |
+
+## Results (2026-10-14; `data/outputs/p6_databricks_idn.json`; job run 690306713800731)
+
+| Gate item | Result | Pass |
+|---|---|---|
+| P1 parity, Indonesia | Databricks shares equal the local ones exactly: maximum absolute difference 0.0 on the tested share and every bar (5–100 Mbps); same total population (269,734,124) | Yes |
+| Scorer parity | `workspace.geo1.idn_site_scorer` v1 (`@champion`) gives 122,504 expected people lifted vs 122,506 locally (0.002%; the plan file rounds its inputs) | Yes |
+| Operations | Deployed from `databricks.yml`; quarterly schedule (paused); drift table written; six tables published (`workspace.geo1.idn_tiles`, `_hex_panel`, `_hex_latest`, `_p1_shares`, `_plan`, `_drift`) | Yes |
+
+**Volume (R15):**
+
+- 53.7M global mobile tile rows read for 15 quarters, in 28 s.
+- 2,403,501 kept inside Indonesia's polygon.
+
+**Drift (reported):** PSI 0.223 between 2026 Q2 and Q3, above the 0.2 flag.
+
+- People on tested hexagons above 100 Mbps: 8.5% → 25.5%.
+- Below 25 Mbps: −3.5 points.
+- A real shift in the data, from network upgrades or a change in Ookla's data; flagged, not explained.
+
+**Problems found while running:**
+
+- **MLflow experiment:** `register_scorer` failed twice ("Could not find experiment with ID None"); MLflow on Databricks needs an experiment path. The task now sets it under the running user's folder.
+- **Repair run:** only the scorer and publish tasks were re-run; ingestion and parity results were kept.
 
 ## Consequences
 

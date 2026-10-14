@@ -132,3 +132,11 @@
   doi: 10.1109/PROC.1981.11918
   used_in: [ADR-008]
   role: slope from a 3 × 3 elevation window (nominal terrain flags)
+- key: ji_2023_hallucination
+  doi: 10.1145/3571730
+  used_in: [ADR-009]
+  role: language models state unsupported facts (why notes are graded)
+- key: min_2023_factscore
+  doi: 10.18653/v1/2023.emnlp-main.741
+  used_in: [ADR-009]
+  role: fact-level precision scoring (compared, not used)

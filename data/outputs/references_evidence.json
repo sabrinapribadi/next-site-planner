@@ -455,6 +455,34 @@
     "ADR-008"
    ],
    "openalex_id": "https://openalex.org/W2032075694"
+  },
+  {
+   "key": "ji_2023_hallucination",
+   "title": "Survey of Hallucination in Natural Language Generation",
+   "venue": "ACM Computing Surveys",
+   "peer_reviewed": true,
+   "year": 2022,
+   "citations": 4716,
+   "citations_per_year": 943.2,
+   "role": "language models state unsupported facts (why notes are graded)",
+   "used_in": [
+    "ADR-009"
+   ],
+   "openalex_id": "https://openalex.org/W4309674289"
+  },
+  {
+   "key": "min_2023_factscore",
+   "title": "FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation",
+   "venue": "Conference on Empirical Methods in Natural Language Processing (EMNLP)",
+   "peer_reviewed": true,
+   "year": 2023,
+   "citations": 374,
+   "citations_per_year": 93.5,
+   "role": "fact-level precision scoring (compared, not used)",
+   "used_in": [
+    "ADR-009"
+   ],
+   "openalex_id": "https://openalex.org/W4389519598"
   }
  ]
 }
