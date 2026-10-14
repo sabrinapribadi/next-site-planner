@@ -13,6 +13,7 @@ Key design decisions for the next-site planner. Each ADR records the context, th
 | [ADR-005](ADR-005-measurement-noise.md) | Measurement noise: small-area shrinkage and noise-aware scoring | Accepted (post-hoc) | Tile-pair noise model; Fay–Herriot shrinkage with a leave-one-out kriging prior; noise-corrected P1 shares beside the raw ones; noise-aware P2 scoring; kriging deployed because the P2 gate failed. |
 | [ADR-006](ADR-006-p2-version-2-fresh-quarter-test.md) | P2 version 2: LightGBM vs kriging on a fresh quarter | Proposed (pre-registered 2026-10-14) | Predictions frozen and fingerprinted before 2026 Q4 exists; scored on hexagons untested in Q3 and tested in Q4 with ≥ 10 tests; same 0.90 gate. |
 | [ADR-007](ADR-007-new-site-effect.md) | Did new sites raise speeds nearby? (P3) | Accepted | Staggered difference-in-differences (Callaway–Sant'Anna) vs imputation; new site vs added capacity; ring 0 and ring 1; pre-trend gate; fixed-broadband negative control; placebo timing. |
+| [ADR-008](ADR-008-budgeted-site-plan.md) | Budgeted site plan (P4) | Proposed | Expected people lifted = people × chance below 25 Mbps × measured lift rate; exact knapsack / budgeted covering vs KPI ranking; θ ranges; capacity lift estimated first; CSV / GeoJSON / KML exports. |
 
 ## Decision Dependencies
 
@@ -23,5 +24,6 @@ ADR-001 (framing, unit, metrics)
   ├── ADR-004 (P2 speed model) ── details the P2 gate
   ├── ADR-005 (measurement noise, post-hoc) ── follow-up to ADR-004's failed gate
   ├── ADR-006 (P2 version 2, pre-registered) ── fresh-quarter test of LightGBM vs kriging
-  └── ADR-007 (P3 new-site effect) ── details the P3 gate
+  ├── ADR-007 (P3 new-site effect) ── details the P3 gate
+  └── ADR-008 (P4 site plan) ── details the P4 gate
 ```

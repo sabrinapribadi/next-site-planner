@@ -2,7 +2,7 @@
 # from OpenAlex and writes data/outputs/references_evidence.json plus a table per ADR.
 - key: church_revelle_1974
   doi: 10.1111/j.1435-5597.1974.tb00902.x
-  used_in: [ADR-002]
+  used_in: [ADR-002, ADR-008]
   role: covering optimiser (P4)
 - key: ord_getis_1995
   doi: 10.1111/j.1538-4632.1995.tb00912.x
@@ -112,3 +112,11 @@
   doi: 10.1257/aer.20190159
   used_in: [ADR-007]
   role: cited alternative, synthetic DiD (P3)
+- key: khuller_1999
+  doi: 10.1016/S0020-0190(99)00031-9
+  used_in: [ADR-008]
+  role: greedy guarantee for budgeted maximum coverage (P4)
+- key: huangfu_hall_2018
+  doi: 10.1007/s12532-017-0130-5
+  used_in: [ADR-008]
+  role: HiGHS exact solver (P4)
