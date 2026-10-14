@@ -65,6 +65,13 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     const head = await page.$eval("#maphead", (e) => e.textContent.replace(/\s+/g, " ").trim().slice(0, 80));
     await page.evaluate(() => document.getElementById("map-back").click()); await wait(150);
     const back = await page.evaluate(() => state.detail === null);
+    // nominal map: markers, a popup with satellite link, terrain tiles loaded (network)
+    const nm = await page.$("#nmap"); await nm.scrollIntoView(); await wait(2500);
+    const nmr = await page.evaluate(() => { const ls = nlayer ? nlayer.getLayers() : []; if (ls.length) ls[0].openPopup();
+      const pop = document.querySelector("#nmap .leaflet-popup-content"); return { markers: ls.length, popup: pop ? pop.textContent.replace(/\s+/g, " ").slice(0, 70) : "",
+        sat: !!(pop && pop.querySelector('a[href*="google.com/maps"]')), tiles: document.querySelectorAll("#nmap img.leaflet-tile-loaded").length }; });
+    if (nmr.markers) await nm.screenshot({ path: `${outDir}/${mode}_nominals.png` });
+    rows.push({ id: "nominals", ok: nmr.markers > 0 && /people/.test(nmr.popup) && nmr.sat && nmr.tiles > 0, w: nmr.markers, h: nmr.tiles, inside: true, gone: true, text: nmr.popup });
     rows.push({ id: "district", ok: !!dt && dt.inside && /0\.74 km/.test(dt.text) && back, ...(dt || {}), gone: back, text: (dt ? dt.text : "") + " | " + head });
     summary.push({ mode, onLoad, closedOnLoad, hScroll, errs: errs.length, pass: rows.filter((r) => r.ok).length, total: rows.length });
     console.log(`\n== ${mode}: tooltips visible on load=${onLoad} · page scrolls sideways=${hScroll} · JS errors=${errs.length}`);

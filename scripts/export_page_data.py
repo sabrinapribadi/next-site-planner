@@ -215,6 +215,10 @@ def main() -> None:
                                          "service_areas": round(v["sensitivity"]["3gpp_service_areas"]["jaccard"], 2)},
                            "theta_new": round(v["theta"]["new"][0], 3), "theta_cap": round(v["theta"]["capacity"][0], 3), "own_theta": v["theta"]["own_new_estimate"],
                            "pts": [[round(a, 4), round(o, 4), t[0]] for a, o, t in zip(plan.lat, plan.lon, plan.intervention)]}
+                dnames = sorted(set(plan.district.fillna("")))
+                dpos = {n: i for i, n in enumerate(dnames)}
+                c["p4"]["nominals"] = {"districts": dnames, "rows": [[r.rank, r.h3[:-5], round(r.lat, 5), round(r.lon, 5), r.intervention[0], int(r.people), round(float(r.p_below_25), 2),
+                                                                       round(float(r.expected_lifted), 1), dpos[r.district if isinstance(r.district, str) else ""]] for r in plan.itertuples()]}
             c["untested"] = {"people_m": round(tot["untested_people"] / 1e6, 2),
                              "expected_below_m": {str(b): round(tot[f"expected_untested_below_{b}"] / 1e6, 2) for b in BARS},
                              "all_people_share_below": {str(b): round(tot[f"all_people_share_below_{b}"], 4) for b in BARS}}
