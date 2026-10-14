@@ -85,3 +85,14 @@ def test_grader_rejects_invented_numbers_names_and_promises():
     assert not grade("2,161 people near the Digi tower.", f)["ok"]                    # operator name
     assert not grade("This site will lift 66 people.", f)["ok"]                       # promise
     assert grade("2,161 people in Orange, Vermont.", {**f, "district": "Orange, Vermont"})["ok"]   # a place name from the facts is not an operator
+    assert grade("Buildings at -1 m elevation.", {**f, "elevation_m": -1})["ok"]          # below sea level (Jefferson, Louisiana)
+    assert not grade("Buildings at -1 m elevation.", {**f, "elevation_m": 1})["ok"]       # the sign matters
+    assert grade("Between 5-10 people.", {**f, "a": 5, "b": 10})["ok"]                    # a hyphen between numbers is a range
+
+
+def test_cached_note_keeps_grounding_flag(tmp_path, tools):
+    from src.serving.notes import NoteService
+    svc = NoteService(None, tmp_path / "cache.json", save_every=1)
+    t2 = Tools(tools.store, svc)
+    first, again = t2.explain_site("DEU", 1), t2.explain_site("DEU", 1)
+    assert first.grader["served_ok"] and again.grader["served_ok"] and again.meter.cached

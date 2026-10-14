@@ -34,7 +34,7 @@ NAMES = ("telkomsel", "smartfren", "xl axiata", "globe", "smart communications",
          "at&t", "t-mobile", "etisalat", "du", "ericsson", "nokia", "huawei", "zte", "samsung")
 NAME_RE = re.compile(r"(?<![\w&-])(" + "|".join(re.escape(n) for n in NAMES) + r")(?![\w&-])", re.I)
 PROMISE = re.compile(r"\b(will|guarantee[ds]?|certainly|definitely)\b", re.I)
-NUM = re.compile(r"(?<![\w.#])#?(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d+))?\s*(%|[kK]\b|M\b)?")
+NUM = re.compile(r"(?<![\w.#])([-−])?#?(\d{1,3}(?:,\d{3})+|\d+)(?:\.(\d+))?\s*(%|[kK]\b|M\b)?")   # a minus only after a space: "5-10" is a range
 INTERVENTION = {"macro": "a new macro site", "small_cell": "a new small cell", "capacity": "extra capacity on an existing site"}
 
 
@@ -84,8 +84,9 @@ def _numbers(x, out: list[float]) -> None:
 
 
 def _val(m: re.Match) -> float:
-    v = float(m.group(1).replace(",", "") + (f".{m.group(2)}" if m.group(2) else ""))
-    return v * 1e3 if (m.group(3) or "").lower() == "k" else v * 1e6 if m.group(3) == "M" else v
+    v = float(m.group(2).replace(",", "") + (f".{m.group(3)}" if m.group(3) else ""))
+    v = -v if m.group(1) else v                                  # e.g. elevation -1 m (below sea level)
+    return v * 1e3 if (m.group(4) or "").lower() == "k" else v * 1e6 if m.group(4) == "M" else v
 
 
 def _matches(n: float, facts: list[float]) -> bool:
@@ -180,7 +181,8 @@ class NoteService:
         k = self.key(facts); t0 = time.perf_counter()
         if use_cache and k in self.cache:
             c = self.cache[k]
-            return c["note"], c["source"], c["grader"], Meter(provider="cache", model=c["model"], latency_ms=round((time.perf_counter() - t0) * 1000, 3), cached=True), c.get("raw")
+            g = c["grader"] if "served_ok" in c["grader"] else {**c["grader"], "served_ok": grade(c["note"], facts)["ok"]}   # older entries
+            return c["note"], c["source"], g, Meter(provider="cache", model=c["model"], latency_ms=round((time.perf_counter() - t0) * 1000, 3), cached=True), c.get("raw")
         raw, meter = None, Meter(provider="template", model="template-v1")
         if self.writer is not None and os.environ.get("OPENAI_API_KEY"):
             try:
@@ -192,7 +194,8 @@ class NoteService:
         note, source = (raw, "model") if raw and g["ok"] else (template_note(facts), "template")
         served = grade(note, facts)
         with self._lock:
-            self.cache[k] = {"note": note, "source": source, "grader": g, "model": meter.model, "raw": raw}
+            self.cache[k] = {"note": note, "source": source, "grader": {**g, "served_ok": served["ok"]}, "model": meter.model, "raw": raw,
+                             "cost_usd": meter.cost_usd, "latency_ms": meter.latency_ms}
             self._unsaved += 1
             due = self._unsaved >= self.save_every
         if due:

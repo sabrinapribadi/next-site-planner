@@ -43,6 +43,9 @@ Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can b
     - the population maps differ by 17% in poorly served US places;
     - the checked-plan gate now passes in 7 of 7 countries;
     - untested people likely below 25 Mbps: 47–68M.
+  - **Notes for every nominal:**
+    - 12,716 cached, all grounded and complete after re-checking, ≈ $0.8;
+    - three grader and cache bugs found on the way and fixed with tests (unsafe writes, a lost flag, negative elevations).
   - **Tests:** 42 unit, contract and replay tests in CI.
 - **Talking point:** "Every number in an AI-written site note is traced to the data by code, not by prompt; and the cloud job reproduces the laptop's numbers to the last digit."
 

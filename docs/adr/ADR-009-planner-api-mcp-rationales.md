@@ -136,7 +136,16 @@ Vendor and standards documents: OpenAI API pricing (developers.openai.com/api/do
 
 - Every nominal's note is written once (batch) and served from the cache: p95 1.8 ms.
 - Live writing happens only on a cache miss.
-- Notes are precomputed after the US plan is final (≈ $0.8 for all nominals).
+- **Done (2026-10-14):** every nominal's note is cached (`scripts/precompute_notes.py`, `data/outputs/p5_notes_precompute.json`).
+  - 12,716 notes, all written by the model.
+  - All re-checked with the final grader: 0 ungrounded, 100% with every required fact.
+  - Cost ≈ $0.8, estimated at the measured $0.064 per 1,000; the first run's per-call meters were not saved (fixed).
+
+**Problems found during precomputation (fixed, with tests):**
+
+- **Unsafe cache writes:** eight threads rewrote the cache file at once. Writes are now locked, atomic and periodic.
+- **Missing flag:** cached notes lost their "grounded" flag; it is now stored, and older entries are re-checked.
+- **Negative numbers:** the grader read "-1 m" (a site in Jefferson, Louisiana, below sea level) as "1". Signs are now kept; a hyphen between numbers is still a range.
 
 ## Consequences
 

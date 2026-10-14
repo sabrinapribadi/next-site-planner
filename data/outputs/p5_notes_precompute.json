@@ -1,0 +1,15 @@
+{
+ "design": "ADR-009 cost lever",
+ "nominals": 12716,
+ "served_grounded": 12716,
+ "from_model": 12716,
+ "from_template": 0,
+ "already_cached": 12715,
+ "live_calls": 1,
+ "cost_usd": 0.0001,
+ "live_latency_ms": {
+  "p50": 2358.4,
+  "p95": 2358.4
+ },
+ "seconds": 6
+}
