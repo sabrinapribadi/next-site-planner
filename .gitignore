@@ -9,3 +9,4 @@ __pycache__/
 data/raw/
 .DS_Store
 node_modules/
+!tests/fixtures/**/*.parquet
