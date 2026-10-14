@@ -32,3 +32,13 @@ def test_cover_counts_overlap_once():
     assert cover_value(w, cover, ch) == 30.0
     ex, val = exact_cover(w, cover, c, 1.0)
     assert abs(val - 20.0) < 1e-6
+
+
+def test_cost_class_enumeration_is_exact():
+    from src.plan import exact_by_cost_class
+    rng = np.random.default_rng(3)
+    for _ in range(5):
+        b = rng.random(13) * 10; c = rng.choice([0.3, 0.5, 1.0], 13); B = float(rng.choice([1.0, 2.2, 3.5]))
+        best = max(sum(b[list(s)]) for r in range(14) for s in itertools.combinations(range(13), r) if sum(c[list(s)]) <= B + 1e-9)
+        ch = exact_by_cost_class(b, c, B)
+        assert abs(b[ch].sum() - best) < 1e-9 and c[ch].sum() <= B + 1e-9

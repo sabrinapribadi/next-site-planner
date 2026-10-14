@@ -25,10 +25,41 @@ def greedy_knapsack(b: np.ndarray, c: np.ndarray, budget: float) -> np.ndarray:
     return chosen
 
 
+def exact_by_cost_class(b: np.ndarray, c: np.ndarray, budget: float) -> np.ndarray | None:
+    """Exact 0/1 knapsack when costs take at most three distinct values: within a cost class the best k items are
+    the k largest benefits, so the optimum is the best combination of counts per class (enumerated exactly)."""
+    classes = np.unique(c)
+    if len(classes) > 3:
+        return None
+    idx = [np.flatnonzero((c == v) & (b > 0)) for v in classes]
+    idx = [i[np.argsort(-b[i], kind="stable")] for i in idx]
+    pref = [np.r_[0.0, np.cumsum(b[i])] for i in idx]
+    while len(classes) < 3:                                   # pad to three classes
+        classes = np.r_[classes, 1e18]; idx.append(np.array([], int)); pref.append(np.array([0.0]))
+    best, arg = -1.0, (0, 0, 0)
+    n0max = min(len(idx[0]), int(np.floor(budget / classes[0] + 1e-9)))
+    for n0 in range(n0max + 1):
+        rem0 = budget - n0 * classes[0]
+        n1 = np.arange(0, min(len(idx[1]), int(np.floor(rem0 / classes[1] + 1e-9))) + 1)
+        rem1 = rem0 - n1 * classes[1]
+        n2 = np.minimum(len(idx[2]), np.floor(rem1 / classes[2] + 1e-9).astype(int))
+        v = pref[0][n0] + pref[1][n1] + pref[2][n2]
+        j = int(np.argmax(v))
+        if v[j] > best:
+            best, arg = float(v[j]), (n0, int(n1[j]), int(n2[j]))
+    chosen = np.zeros(len(b), bool)
+    for k, n in enumerate(arg):
+        chosen[idx[k][:n]] = True
+    return chosen
+
+
 def exact_knapsack(b: np.ndarray, c: np.ndarray, budget: float, top: int = 20000, time_limit: float = 30, gap: float = 1e-4) -> tuple[np.ndarray, dict]:
     """0/1 knapsack (HiGHS) on the `top` candidates by benefit ÷ cost, solved to a proven relative gap of `gap`
     (0.01% by default; the achieved gap is reported). The rest cannot enter an optimal plan unless the top set is
     exhausted (checked)."""
+    ch = exact_by_cost_class(b, c, budget)
+    if ch is not None:                                         # three cost levels: exact enumeration, no gap
+        return ch, {"method": "exact enumeration over cost classes", "mip_gap": 0.0, "candidates": int((b > 0).sum())}
     order = np.argsort(-(b / c), kind="stable")[:top]
     order = order[b[order] > 0]
     res = milp(c=-b[order], constraints=LinearConstraint(c[order][None, :], -np.inf, budget),
