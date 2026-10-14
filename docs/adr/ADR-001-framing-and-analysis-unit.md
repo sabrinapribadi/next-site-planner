@@ -56,7 +56,7 @@ The question this project must answer is: **"Where do the most people live with 
 - **Headline metric:** share of a country's population living in hexagons whose measured median mobile download is below **10 Mbps** and below **25 Mbps** (sensitivity at 5 and 50). Reported alongside the share of population in hexagons **with no measurement**, never silently dropped.
 - **Fair comparison:** shares are also reported **density-adjusted** — computed within population-density deciles and re-weighted to a common density distribution — so archipelagos and dense cities are compared like for like.
 - **Period:** latest quarter (2026 Q3) for maps; 2023 Q1–2026 Q3 for trends and for the new-site study.
-- **Spark / Databricks (R15), measured:** ~49M speed-tile rows kept from ~300M read per quarterly refresh, plus millions of population hexagons and ~25M places, joined spatially. Spark is justified for the full refresh; Databricks for the quarterly job, registry and drift checks (P6). Exploration runs locally on DuckDB.
+- **Spark / Databricks (R15), measured:** ~49M speed-tile rows kept (13.8M mobile + 34.7M fixed) from 152M read for 15 quarters (53.7M mobile + 98.5M fixed; counted from the files' metadata on 2026-10-14, correcting an earlier "~300M"), plus 6.4M population hexagons and 29.8M places, joined spatially. Spark is justified for the full refresh; Databricks for the quarterly job, registry and drift checks (P6). **Outcome (ADR-010):** P6 runs Indonesia only. It reads the global files at the source (53.7M mobile rows) and keeps 2.4M; Indonesia alone fits DuckDB, so there operations justify Databricks, not size. Exploration runs locally on DuckDB.
 
 ## Evidence (OpenAlex, retrieved 2026-10-13)
 

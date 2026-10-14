@@ -1,9 +1,9 @@
 PRODUCT REQUIREMENT DOCUMENT (PRD)
 Project: Next Site Planner — Where Would One More Mobile Site Help the Most People?
-Version: 0.6 (P4 nominals checked against a second population map, land cover and terrain, ADR-008 amendments 1–2; US pending its WorldPop file)
+Version: 0.7 (P5 planner API, MCP tools and grounded site notes, ADR-009; P6 Databricks job for Indonesia, ADR-010; P7 pages)
 Author: Sabrina Pribadi
 Date: October 14, 2026
-Status: Active — P0, P1 passed; P2 gate failed (kriging deployed; ADR-006 retest pending 2026 Q4); P3 done; P4 done (original gate passed; checked plans pass in 6 of 6 checked countries, US pending); P5 next
+Status: Active — P0, P1 passed; P2 failed (kriging deployed; ADR-006 retest pending 2026 Q4); P3 done; P4 done (checked plans); P5 failed on live latency only (notes cached); P6 passed (Indonesia); P7 passed
 
 
 1. EXECUTIVE SUMMARY
@@ -34,9 +34,9 @@ Success Metrics (pre-registered — see ADR-002):
 - P2: the spatial model beats ordinary kriging by ≥ 10% (RMSE of log speed) under spatial block cross-validation — **failed: 7% (ratio 0.929); kriging deployed**
 - P3: new-site effect with a 95% interval and a passing pre-trend (placebo) test — **passed in Germany, France, US, Philippines; failed in Indonesia and the UAE; Malaysia has too few new sites**
 - P4: the optimiser lifts ≥ 10% more people above 25 Mbps than a KPI-style ranking at the same cost budget (new-tower equivalents) — **original plan passed in 6 of 7 (+56% to +776%); checked plans pass in 6 of 6 checked countries (+50% to +281%); US pending**
-- P5: API contracts and the LLM evaluation set pass in CI; cost and latency within budget (R13)
-- P6: the Databricks job reproduces the local P1 numbers exactly
-- P7: two live pages (results and technical walkthrough), browser-tested
+- P5: API contracts and the LLM evaluation set pass in CI; cost and latency within budget (R13) — **failed on live p95 latency only (4.2 s vs 3.0 s); notes 100% grounded at $0.064 per 1,000; served from a cache**
+- P6: the Databricks job reproduces the local P1 numbers exactly — **narrowed to Indonesia before code (ADR-010); passed: identical shares**
+- P7: two live pages (results and technical walkthrough), browser-tested — **passed**
 
 
 2. PROJECT CONTEXT AND BACKGROUND
@@ -94,8 +94,18 @@ Module B: Experience-gap map, fair benchmark, morphology and gap typing, regulat
 Module C: Speed where nobody tested (kriging deployed; LightGBM compared), measurement noise and shrinkage — ADR-004, ADR-005 (P2)
 Module D: New-site effect, all seven countries — ADR-007 (P3)
 Module E: Budgeted site plan — new sites and added capacity, costed, exact, planner exports — ADR-008 (P4)
-Module F: API, MCP tools, grounded rationales — P5 (ADR to be written)
-Module G: Databricks quarterly job, registry, drift — P6 (ADR to be written; R15 justification in ADR-001)
+Module F: Planner API, MCP tools, grounded site notes — ADR-009 (P5)
+Module G: Databricks quarterly job for Indonesia, registry, drift — ADR-010 (P6; R15 in ADR-001 and ADR-010)
+
+
+6. NON-FUNCTIONAL REQUIREMENTS
+
+- Reproducible: every input fingerprinted (SHA-256 manifest); one shared, pinned environment (`make env`)
+- Runs on an 8 GB laptop: DuckDB with memory caps and on-disk spill; heavy steps as separate processes
+- Public data only, licences checked at the source; derived Ookla maps shared under CC BY-NC-SA 4.0
+- No personal data: crowdsourced aggregates per tile and hexagon only
+- LLM features within stated cost and latency budgets (R13), metered on every call
+- Pages: page data ≈ 3 MB, district and cell layers loaded on demand; keyboard focus and dark mode supported
 
 
 7. DATA STRATEGY
@@ -116,6 +126,15 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 `scripts/acquire_public_data.py` rebuilds it; sources that change (OpenCelliD, Overture) are kept as dated snapshots.
 
 
+8. TECHNICAL ARCHITECTURE
+
+1. Sources (Ookla S3, Kontur, WorldPop, Overture, OpenCelliD, WorldCover, Copernicus DEM, boundaries) → `scripts/acquire_public_data.py`
+2. Local pipeline on DuckDB + H3 (P0–P4) → small JSON outputs and site lists in the repository
+3. Serving store → one tool registry → REST API (FastAPI) and MCP server; site notes graded, cached (P5)
+4. Databricks job (Indonesia): Ookla S3 → Spark + built-in H3 → Unity Catalog tables and model registry; drift (P6)
+5. `export_page_data.py` → two static pages on GitHub Pages, browser-tested (P7)
+
+
 9. IMPLEMENTATION PLAN
 
 | Phase | Goal | Gate / exit criterion (ADR-002) |
@@ -125,9 +144,21 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | P2 | Speed where nobody tested | LightGBM ≤ 0.9 × best kriging RMSE (log speed) under resolution-6 block CV; transfer to an unseen country reported — **failed (0.929); kriging deployed** |
 | P3 | Effect of new sites (all seven countries, same rule) | Parallel pre-trends; effect with 95% interval — **done**: slow places lifted above 25 Mbps +12.1 pts (France) and +12.6 (Germany) as pre-set; cautious values after regression-to-the-mean checks +12.1 (France), +5.2 (Germany), +1.5 (US); average speed ≈ 0 except the US |
 | P4 | Budgeted site optimiser | ≥ 10% more people lifted above 25 Mbps than KPI ranking at equal cost; exports pass format checks — **done**: original 6 of 7; checked nominals (two population maps, ≥ 1,000 m² of buildings, terrain) 6 of 6 checked countries, US pending; CSV / GeoJSON / KML per country with site points |
-| P5 | API + MCP + grounded rationales | Contract tests and LLM evaluation pass in CI; R13 budgets met |
-| P6 | Databricks quarterly job + registry + drift | Databricks reproduces local P1 numbers exactly |
-| P7 | Results page + technical walkthrough + web map | Both pages live and browser-tested (R10, R12, R14, R17) — pages live and updated each phase |
+| P5 | API + MCP + grounded site notes | Contract tests and LLM evaluation pass in CI; R13 budgets met — **failed on live latency only**; 100% grounded notes, cached (ADR-009) |
+| P6 | Databricks quarterly job + registry + drift | Databricks reproduces local P1 numbers exactly — **passed for Indonesia** (scope set before code, ADR-010) |
+| P7 | Results page + technical walkthrough + web map | Both pages live and browser-tested (R10, R12, R14, R17) — **passed** |
+
+
+10. TESTING
+
+| Layer | What | Where |
+|---|---|---|
+| Unit | Solvers, statistics, ground checks, grader | `tests/` (42 tests, CI on every push) |
+| Contracts | Four tools via Python, REST and MCP on a fixture store | `tests/test_serving.py` |
+| LLM evaluation | 80 recorded live notes re-graded without a key | `tests/test_notes_replay.py` |
+| Data | Assignment recount, contracts, input fingerprints | P0 gate (`build_hex_table.py`) |
+| Parity | Databricks vs local shares and scorer | P6 job (`p6_databricks_idn.json`) |
+| Browser | Real Chrome: desktop light and dark, phone 400 px | `tests/browser/` |
 
 
 11. RISKS AND MITIGATIONS
@@ -146,6 +177,25 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 | Cost ratios come from one regulator (US, 2017) | Relative units, not currency; P4 reports results across ranges; local cost data recommended before use |
 | OpenCelliD cells are not tower positions | Ring-1 search, ring-0 sensitivity; co-location counts are a proxy |
 | 8 GB development machine | DuckDB locally with out-of-core execution; Spark on Databricks for the full refresh |
+
+
+12. SUCCESS CRITERIA
+
+- Every phase judged against a gate fixed before its analysis (ADR-002); misses reported with the failing number
+- A planner can download a checked, costed site list per country (CSV / GeoJSON / KML)
+- A policy analyst can compare countries at equal population density, untested people included
+- An AI assistant can query gaps and sites through MCP tools, with every number in a note traced to the data
+- The same numbers come out of the laptop and the cloud job
+
+
+13. KEY INSIGHTS
+
+- Rural people are about 3–6× as likely as city-centre people to be below 25 Mbps
+- Most people on slow mobile were never tested: 48–68M of them likely below 25 Mbps
+- Single speed tests are mostly luck; blending with the neighbourhood is 28–44% closer to the next quarter
+- New sites lift some slow places above 25 Mbps; average speeds barely move
+- Counting people lifted per cost beats KPI ranking by +50% to +281%, once every nominal is checked on the ground
+- Two population maps disagree most exactly where the gaps are; plans must say which people they count
 
 
 14. APPENDIX — References

@@ -121,6 +121,7 @@ svg.plot .row:hover .band, svg.plot .row:focus .band { fill: var(--accent-soft);
 svg.plot .row { outline: none; }
 .tip { position: absolute; z-index: 5; max-width: 300px; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-size: 13px; line-height: 1.45; box-shadow: 0 6px 22px rgba(0,0,0,0.14); pointer-events: none; }
 .tip b { display: block; font-weight: 600; margin-bottom: 2px; }
+.howl { margin: 6px 0 2px; padding-left: 18px; display: grid; gap: 3px; }
 .chart-head { display: grid; gap: 2px; padding: 2px 8px 8px; }
 .chart-title { font-size: 15px; font-weight: 600; color: var(--fg); text-wrap: balance; }
 .chart-sub { font-size: 13px; color: var(--muted); max-width: 70ch; }
@@ -772,8 +773,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <header class="top">
   <span class="eyebrow">Portfolio · GIS + MLOps · public data only · seven countries</span>
   <h1>Where would one more mobile site help the most people?</h1>
-  <p class="lede">Measured mobile speed, where people live and where cells are, on one equal-area grid for Indonesia, Malaysia, the Philippines, Germany, France, the US and the UAE.</p>
-  <div class="status"><span class="chip">Phases 0–4 of 7 done</span><span class="muted">Experience gap, speed for untested areas, the measured effect of new sites and a costed site plan per country are live. API, cloud job and AI tools come next.</span></div>
+  <p class="lede">Mobile speed, people and cells on one grid: Indonesia, Malaysia, the Philippines, Germany, France, the US and the UAE.</p>
+  <div class="status"><span class="chip">Phases 0–7 of 7 done</span><span class="muted">Gap map, checked site plans, planner API and AI tools, and a Databricks job are live.</span></div>
   <div class="status"><a href="build.html">Technical walkthrough →</a><a href="https://github.com/sabrinapribadi/next-site-planner">GitHub repository</a></div>
   <nav class="toc" aria-label="Sections"><a href="#problem"><span class="n">1</span>Problem</a><a href="#data"><span class="n">2</span>Data</a><a href="#approach"><span class="n">3</span>Approach</a><a href="#solution"><span class="n">4</span>Solution</a><a href="#take"><span class="n">5</span>Our take</a></nav>
 </header>
@@ -810,6 +811,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <tr><td>Kontur population 2023</td><td>People per H3 hexagon</td><td class="num">6.4M hexagons</td><td>CC BY 4.0</td><td>Where people live</td></tr>
       <tr><td>Overture Maps places</td><td>Shops, offices, services (2026-09)</td><td class="num">29.8M places</td><td>CDLA-Permissive 2.0</td><td>Speed-model input and KPI baseline; shown per nominal. Not counted as demand: plans count residents only</td></tr>
       <tr><td>OpenCelliD</td><td>Crowdsourced cell locations (2026-10-13)</td><td class="num">1.6M cells</td><td>CC BY-SA 4.0</td><td>Cells nearby, gap types</td></tr>
+      <tr><td>WorldPop 2020 (constrained)</td><td>A second population map, 100 m</td><td class="num">7 countries, 664 MB</td><td>CC BY 4.0</td><td>Check where people live</td></tr>
+      <tr><td>ESA WorldCover 2021</td><td>Satellite land cover, 10 m</td><td class="num">read around each nominal</td><td>CC BY 4.0</td><td>Buildings at each nominal</td></tr>
+      <tr><td>Copernicus DEM GLO-30</td><td>Elevation, 30 m</td><td class="num">read around each nominal</td><td>Free licence</td><td>Slope and height at each site</td></tr>
       <tr><td>Natural Earth, geoBoundaries</td><td>Country borders, district names</td><td class="num">7 countries</td><td>Public domain, CC BY</td><td>Assignment, place names</td></tr>
     </tbody></table></div>
   <div class="two">
@@ -847,15 +851,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <tr><td>Choosing sites</td><td>Rank places by an equal-weight KPI score</td><td>Pick the set that lifts the most people per cost (exact)</td><td>+50% (Germany) to +281% (UAE) more people at the same budget, after the ground checks</td></tr>
       <tr><td>Where exactly</td><td>Hexagon centre, one population map</td><td>Two population maps must agree; ≥ 1,000 m² of buildings; pin on built land; terrain flagged</td><td>Indonesia: 23% of the original nominals had nobody on the second map</td></tr>
       <tr><td>Test noise</td><td>Take each hexagon's few tests at face value</td><td>Blend with the neighbourhood by how many tests it has</td><td>Blended speeds 28–44% closer to the next quarter's tests</td></tr>
+      <tr><td>Site notes</td><td>A language model writes freely</td><td>Every number checked against the data; template fallback</td><td>80 of 80 notes grounded; $0.06 per 1,000 notes</td></tr>
+      <tr><td>Cloud refresh</td><td>Laptop pipeline only</td><td>Databricks job reading Ookla at the source (Indonesia)</td><td>Shares identical to the laptop's (difference 0.0)</td></tr>
     </tbody></table></div>
-  <p class="muted small">Every change after a gate was set is logged as a deviation, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
+  <p class="muted small">Every change after a gate was set is logged, with the failing number, in the <a href="#d-decisions">decision log</a>.</p>
 </section>
 
 <section class="block" id="solution">
   <span class="eyebrow">4 · Solution</span>
   <h2 id="sol-h">Most people on slow mobile were never tested</h2>
   <div class="facts" id="facts"></div>
-  <details class="how"><summary>How to read this</summary><p>"Typically get" uses each hexagon's typical speed (see the FAQ "What is typical speed?") or, where nobody tested, a prediction; a hexagon with a 60% chance of being below the bar counts 0.6 of its people. The last tile is the measure fixed before the analysis: the raw average of whatever tests were run, which single unlucky tests inflate. <b>So what:</b> the first tile is the best estimate of how many people a site plan should reach; most of them are invisible in test statistics.</p></details>
+  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> people whose typical speed is below the bar; untested places use a predicted speed.</li><li><b>Counting:</b> a hexagon 60% likely below the bar counts 0.6 of its people.</li><li><b>Last tile:</b> the pre-set measure, the raw test average, which single unlucky tests inflate.</li><li><b>So what:</b> the first tile is who a site plan must reach; most were never tested.</li></ul></details>
 
   <div class="controls" role="group" aria-label="What-if controls">
     <span class="ctl-label">Speed bar</span><div class="seg" id="bar-seg"></div>
@@ -867,26 +873,26 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="maphead" id="maphead"></div>
       <div class="mapwrap" id="mapwrap"><canvas id="map" aria-label="Map of people below the speed bar" role="img"></canvas><div class="tip" hidden></div></div>
       <div class="legend" id="legend"></div>
-      <details class="how"><summary>How to read this map</summary><p id="how-map"></p></details>
+      <details class="how"><summary>How to read this map</summary><div id="how-map"></div></details>
     </div>
     <div style="display:grid; gap:8px; min-width:0">
       <span class="eyebrow" id="top-h">Districts with the most people below the bar</span>
       <ol class="toplist" id="toplist"></ol>
-      <p class="muted small">Click a district to zoom to its 0.74 km² analysis hexagons. This shows where people below the bar live. The costed site plan, with checked nominals, is further down.</p>
+      <p class="muted small">Click a district to see its 0.74 km² hexagons. The costed site plan is further down.</p>
     </div>
   </div>
 
   <div class="chart"><div class="chart-head"><b class="chart-title">Which countries leave the most people below the bar?</b><span class="chart-sub" id="sub-c-country"></span></div><div class="key"><span><i style="background:var(--slow)"></i>Tested people, measured (with 95% interval)</span><span><i style="border:2px solid var(--accent);background:transparent"></i>Tested, at equal density</span><span><i class="sq" style="background:var(--amber)"></i>Everyone, typical speed</span><span class="mono">right: people below (everyone)</span></div>
     <svg class="plot" id="c-country" role="img" aria-label="Share of tested people below the speed bar by country"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><p>Red dot: share of tested people whose measured average is below the bar; the pale line is its 95% interval (the true share very likely lies inside). Hollow circle: the same share if every country had the same mix of dense and sparse areas (10 and 25 Mbps). Amber square: everyone, using typical speeds and including people nobody tested. Example at 25 Mbps: the Philippines is 16% for tested people, 34% at equal density, about 31% for everyone. <b>So what:</b> rankings built on tested people alone flatter dense, well-tested countries.</p></details>
+  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Red dot:</b> share of tested people below the bar; the pale line is its 95% interval.</li><li><b>Hollow circle:</b> the same share if every country had the same density mix.</li><li><b>Amber square:</b> everyone, using typical speeds, including people nobody tested.</li><li><b>Example:</b> the Philippines at 25 Mbps: 16% tested, 34% at equal density, 31% of everyone.</li><li><b>So what:</b> rankings on tested people alone flatter dense, well-tested countries.</li></ul></details>
 
   <div class="chart"><div class="chart-head"><b class="chart-title">Did new sites lift slow places above 25 Mbps?</b><span class="chart-sub" id="sub-c-p3"></span></div><div class="key"><span><i style="background:var(--ok)"></i>Fair comparison</span><span><i style="background:var(--amber)"></i>Fair, but a check failed</span><span><i style="background:var(--untested)"></i>Association only</span><span><i style="border:2px solid var(--muted);background:transparent"></i>Measure fixed in advance</span><span class="mono">filled: cautious estimate after checks · extra share of slow places lifted above 25 Mbps</span></div>
     <svg class="plot" id="c-p3" role="img" aria-label="Effect of a new site on slow places"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><p>Each row compares hexagons that were below 25 Mbps when a new site appeared nearby with similar slow hexagons that had not got one yet. The dot is how many more of them rose above 25 Mbps over the next year, in percentage points; the line is the 95% interval. The hollow circle is the measure fixed in advance (slow = below 25 Mbps in one quarter). The filled dot is the most cautious estimate that passed later checks: slow defined over a whole year, so places that were just unlucky once do not count. Example: France +12 points under both means about 1 in 8 slow places crossed 25 Mbps because of the site; Germany drops from +13 to +5 (about 1 in 20). Colour shows how far the comparison can be trusted. <b>So what:</b> a new site lifts some slow places over the bar, average speeds barely move, and phase 4 plans across this range.</p></details>
+  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> extra share of slow places (below 25 Mbps) that crossed 25 Mbps after a new site.</li><li><b>Compared with:</b> similar slow places that had no new site yet.</li><li><b>Hollow circle:</b> the pre-set measure. <b>Filled dot:</b> the most cautious estimate passing later checks.</li><li><b>Example:</b> France +12 points, about 1 in 8 slow places lifted; Germany falls from +13 to +5.</li><li><b>So what:</b> new sites lift some slow places; average speeds barely move.</li></ul></details>
 
   <div class="chart"><div class="chart-head"><b class="chart-title">Does counting people beat a KPI ranking, at the same budget?</b><span class="chart-sub" id="sub-c-p4"></span></div><div class="key"><span><i style="background:var(--accent)"></i>The plan (people lifted per cost)</span><span><i style="background:var(--muted)"></i>KPI ranking, same budget</span><span><i style="background:var(--surface); box-shadow:0 0 0 2px var(--accent)"></i>* not yet checked on the ground</span><span class="mono">expected people lifted above 25 Mbps · budget 1,000 new-tower equivalents</span></div>
     <svg class="plot" id="c-p4" role="img" aria-label="People lifted by the plan vs KPI ranking"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><p>For each country, the same budget (1,000 new-tower equivalents; a new macro site = 1, a small cell 0.5, extra capacity on an existing site 0.3) is spent two ways. Teal: the plan, which picks the places where expected people lifted per cost is highest. Grey: the usual practice of ranking places by an equal-weight score of low speed, population and points of interest. "Expected people lifted" = people × chance their typical speed is below 25 Mbps × the lift rate measured in phase 3. Both use only checked places: people on both population maps (the smaller number counts) and at least 1,000 m² of buildings. Example: Indonesia — about 122,500 people with the plan vs 42,900 with KPI ranking. The US is shown before its checks; its second population map is still downloading. The scale is logarithmic. <b>So what:</b> counting the people you would lift beats scoring places in every country checked so far.</p></details>
+  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> the same budget, 1,000 new-tower equivalents, spent two ways in each country.</li><li><b>Teal dot:</b> the plan, choosing places with the most people lifted per cost.</li><li><b>Grey square:</b> ranking places by an equal-weight score of slowness, people and points of interest.</li><li><b>People lifted</b> = people × chance below 25 Mbps × the lift rate measured in phase 3.</li><li><b>Example:</b> Indonesia: about 122,500 people with the plan vs 42,900 with ranking (log scale).</li><li><b>So what:</b> counting people beats scoring places in every checked country.</li></ul></details>
   <p class="small" id="plan-dl"></p>
 
   <div style="display:grid; gap:8px; min-width:0">
@@ -896,7 +902,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="nom-legend"><span><i style="background:#0d6b7d"></i>new macro site</span><span><i style="background:#a86a12"></i>small cell</span><span><i style="background:#2d7d4f"></i>extra capacity on an existing site</span><span><i style="background:var(--surface); box-shadow:0 0 0 2.5px var(--fg)"></i>steep (&gt; 20°) or high (&gt; 2,500 m): check access</span><span><i style="background:#5b2a86; border-radius:2px; opacity:.7"></i>existing LTE/5G cells recorded in OpenCelliD (shaded per ~250 km²; zoom in for each 0.74 km² hexagon)</span><span>zoom in to see each 0.74 km² search hexagon</span></div>
     <p class="muted small" id="nmap-note"></p>
   </div>
-  <details class="how"><summary>How to read this map</summary><p>Each dot is a nominal: a site point inside a planned 0.74 km² search area, coloured by the kind of site. Every nominal passed three checks before it could enter the plan: two independent population maps (Kontur and WorldPop) must both place people there, and the plan counts the smaller number; satellite land cover (ESA WorldCover, 10 m) must show at least 1,000 m² of buildings, about seven village houses; and the dot sits on the built-up pixel nearest the centre of those buildings, so never in a lake or forest. Elevation and slope come from the Copernicus 30 m elevation model; a dark ring marks steep or high sites, where access will cost more. Purple shows existing LTE/5G cells recorded in OpenCelliD: shading per ~250 km² when zoomed out, and every 0.74 km² hexagon with a recorded cell when zoomed in. New sites go where no cell is recorded nearby, so they sit in the gaps between purple areas; extra capacity goes on top of purple. Caveat: OpenCelliD is crowdsourced and very incomplete in Indonesia, Malaysia, the Philippines and the UAE (it records a cell near only 2% of fast rural Indonesian hexagons), so a "new site" there means "no tower on record", not "no tower": check it against an operator's site list first. Click a dot for the numbers and links to satellite imagery. Example: a dot with 0 people in WorldPop never reaches the plan, however many people the other map shows. <b>So what:</b> every nominal is on inhabited, built ground; a planner still confirms a rooftop or tower inside the hexagon.</p></details>
+  <details class="how"><summary>How to read this map</summary><ul class="howl"><li><b>Dot:</b> a site point in a 0.74 km² search area, coloured by the kind of site.</li><li><b>Checks:</b> people on both population maps (the smaller counts) and at least 1,000 m² of buildings.</li><li><b>Placement:</b> the dot sits on the built-up pixel nearest the buildings' centre, never in a lake.</li><li><b>Dark ring:</b> steep (over 20°) or high (over 2,500 m); access costs more.</li><li><b>Purple:</b> existing LTE/5G cells in OpenCelliD. New sites fill the gaps; capacity sits on purple.</li><li><b>Caveat:</b> OpenCelliD misses most towers in Southeast Asia; check new sites against an operator's site list.</li><li><b>So what:</b> every nominal is on inhabited, built ground; a planner still picks the rooftop.</li></ul></details>
 
 
 
@@ -904,19 +910,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="prose"><span class="eyebrow">Caveats</span>
       <ul class="caveats">
         <li><b>Tests are not a random sample:</b> people test when it is slow or new; shares count people, not tests.</li>
-        <li><b>Untested speeds are predictions, and may be too optimistic:</b> the deployed method (kriging) borrows from nearby tested places; a machine-learning model predicts untested places 30–45% slower. A test on the next quarter's data, fixed in advance, will decide (<a href="#d-p2">accuracy</a>).</li>
+        <li><b>Untested speeds are predictions:</b> machine learning predicts them 30–45% slower than kriging; a pre-set 2026 Q4 test decides (<a href="#d-p2">accuracy</a>).</li>
         <li><b>Not a licence check:</b> regulators test obligations with their own measurements, not crowdsourced averages.</li>
-        <li><b>Population maps disagree where data is thin:</b> Kontur and WorldPop agree in Germany and France, but in poorly served places in Indonesia, Malaysia, the Philippines and the UAE they differ by 27–37%. Counts there are ranges, and plans count the smaller number (<a href="#d-p4">details</a>).</li>
-        <li><b>"New site" means no tower on record:</b> OpenCelliD misses most towers in Southeast Asia and the UAE, so check new-site nominals against an operator's site list.</li>
-        <li><b>Gap types only where cell data allows:</b> coverage vs capacity is known mainly for city areas in Germany, France, the US and the UAE (<a href="#d-findings">details</a>).</li>
+        <li><b>Population maps disagree where data is thin:</b> by 27–37% in Southeast Asia and the UAE; counts there are ranges (<a href="#d-p4">details</a>).</li>
+        <li><b>"New site" means no tower on record:</b> OpenCelliD misses most Southeast Asian towers; check against an operator's site list.</li>
+        <li><b>Gap types only where cell data allows:</b> mainly city areas in Germany, France, the US and the UAE (<a href="#d-findings">details</a>).</li>
       </ul></div>
     <div><span class="eyebrow">FAQ</span>
-      <details class="faq"><summary>Is Germany really behind Indonesia?</summary><p>No. As measured they look close (14.6% vs 13.3% below 25 Mbps), but Indonesia's tested people live mostly in cities. At equal density Indonesia is at 22.0% and Germany at 17.7%. Counting everyone, including people nobody tested, Indonesia is at about 18–20% and Germany at about 11–16%.</p></details>
-      <details class="faq"><summary>What is "typical speed"?</summary><p>The speed most people in a hexagon usually get. One test can be unlucky (a busy hour, a cheap plan, indoors). We blend each hexagon's tests with its neighbourhood: a hexagon with 1 test takes about 75–90% from its neighbours, one with 200 tests keeps its own. Checked against the next quarter's tests: 28–44% closer than the raw value.</p></details>
-      <details class="faq"><summary>Why 10 and 25 Mbps?</summary><p>Both were fixed before the analysis. 5, 50 and 100 Mbps are shown as sensitivity; 100 Mbps matches Germany's 2019 licence obligation and the IMT-2020 user-experienced rate.</p></details>
-      <details class="faq"><summary>Where should the next site go?</summary><p>In the search areas of each country's plan (dots on the map; site lists to download under the plan chart): 0.74 km² hexagons ranked by people lifted per cost, each tagged new macro, small cell or extra capacity. Every one has people on both population maps and at least 1,000 m² of buildings, and its pin sits on built land. A planner then picks the actual rooftop or tower inside the hexagon.</p></details>
-      <details class="faq"><summary>Why two population maps?</summary><p>Each map estimates where people live from satellite images and census totals, and each can be wrong in remote places. Kontur spreads people over rural land; WorldPop places them only where it detected settlements. Example: one of Indonesia's original top nominals had 28,665 people in Kontur and none in WorldPop. Satellite land cover showed few buildings there, so it was dropped. Counting the smaller of the two keeps plans where both maps agree people live.</p></details>
-      <details class="faq"><summary>How often can it refresh?</summary><p>Quarterly, after each Ookla release. Every refresh records a fingerprint of all 40 inputs.</p></details>
+      <details class="faq"><summary>Is Germany really behind Indonesia?</summary><ul class="howl"><li>No. As measured they look close: 14.6% vs 13.3% of tested people below 25 Mbps.</li><li>Indonesia's tested people live mostly in cities. At equal density: Indonesia 22.0%, Germany 17.7%.</li><li>Counting everyone, untested people included: Indonesia about 18%, Germany about 12%.</li></ul></details>
+      <details class="faq"><summary>What is "typical speed"?</summary><ul class="howl"><li>The speed most people in a hexagon usually get; one test can be unlucky (a busy hour, indoors).</li><li>Each hexagon's tests are blended with its neighbourhood: 1 test borrows 75–90%; 200 tests keep their own.</li><li>Checked on the next quarter: blended speeds are 28–44% closer than raw ones.</li></ul></details>
+      <details class="faq"><summary>Why 10 and 25 Mbps?</summary><ul class="howl"><li>Both were fixed before the analysis; 5, 50 and 100 Mbps are shown as sensitivity.</li><li>100 Mbps matches Germany's 2019 licence obligation and the IMT-2020 user-experienced rate.</li></ul></details>
+      <details class="faq"><summary>Where should the next site go?</summary><ul class="howl"><li>In each plan's 0.74 km² search areas: dots on the map; site lists under the plan chart.</li><li>Each is ranked by people lifted per cost and tagged macro, small cell or extra capacity.</li><li>All have people on both maps and buildings on the ground; a planner picks the rooftop or tower.</li></ul></details>
+      <details class="faq"><summary>Why two population maps?</summary><ul class="howl"><li>Each map can be wrong in remote places: Kontur spreads people over land; WorldPop only into detected settlements.</li><li>Example: an original Indonesian nominal had 28,665 people in Kontur and none in WorldPop.</li><li>Counting the smaller keeps plans where both maps agree people live.</li></ul></details>
+      <details class="faq"><summary>How often can it refresh?</summary><ul class="howl"><li>Quarterly, after each Ookla release; every refresh fingerprints all 40 inputs.</li><li>A scheduled Databricks job runs the pipeline for Indonesia straight from Ookla's source files.</li></ul></details>
     </div>
   </div>
 </section>
@@ -925,14 +931,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <span class="eyebrow">5 · Our take</span>
   <h2>The gap is rural, local, and partly unseen</h2>
   <ul class="points prose" id="take-list">
-    <li><b>Rural first:</b> in most countries rural people are 3 to 6 times more likely than city-centre people to be below 25 Mbps.</li>
-    <li><b>Untested places hold most of the gap:</b> about 23M Filipinos and 30M Indonesians nobody tested are likely below 25 Mbps — more than among those who did test.</li>
-    <li><b>Single tests mislead:</b> once test noise is removed, the US, France and the UAE have far fewer slow places than raw numbers suggest; Indonesia and the Philippines do not.</li>
-    <li><b>New sites lift some slow places, not averages:</b> up to about 1 in 8 slow places crossed 25 Mbps because of a new site — France under every check, Germany and the US less under the strictest one; average speeds barely moved, except in the US (+7% to +12%).</li>
-    <li><b>Count people, not scores:</b> at the same budget the checked plan lifts 1.5× (Germany) to 3.8× (UAE) more people than KPI ranking, and the same money lifts about 26× more people in the Philippines than in Malaysia.</li>
-    <li><b>Check every nominal on the ground:</b> before the checks, the plan looked up to 9× better than ranking; part of that was people only one population map could see. Two maps, satellite land cover and terrain put every nominal on built land.</li>
-    <li><b>Local, not regional:</b> real slow clusters exist only in Indonesia and the Philippines; elsewhere slow places are scattered, so plans must target places, not regions.</li>
-    <li><b>What would change our view:</b> the 2026 Q4 tests disagreeing with the predictions (a test fixed in advance), local cost data changing the cost ratios, or a third population map placing people differently from both maps used here.</li>
+    <li><b>Rural first:</b> rural people are about 3–6× as likely as city-centre people to be below 25 Mbps (Malaysia far more).</li>
+    <li><b>Untested places hold most of the gap:</b> 13–23M Filipinos and 22–30M Indonesians nobody tested are likely below 25 Mbps.</li>
+    <li><b>Single tests mislead:</b> removing test noise shrinks slow places in the US, France and the UAE, not in Southeast Asia.</li>
+    <li><b>New sites lift some slow places:</b> up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.</li>
+    <li><b>Count people, not scores:</b> the checked plan lifts 1.5–3.8× as many people as KPI ranking, at the same budget.</li>
+    <li><b>Check nominals on the ground:</b> unchecked, the plan looked up to 9× better; part was people only one map saw.</li>
+    <li><b>Local, not regional:</b> real slow clusters exist only in Indonesia and the Philippines; target places, not regions.</li>
+    <li><b>What would change our view:</b> the pre-set 2026 Q4 test, local cost data, or a third population map.</li>
   </ul>
 </section>
 
@@ -941,56 +947,84 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <details class="more" id="d-findings"><summary><span class="eyebrow">More findings · city vs rural, who is tested, gap types, slow clusters, cell data</span></summary><div class="body">
   <div class="chart"><div class="chart-head"><b class="chart-title">Is the gap in cities or in rural areas?</b><span class="chart-sub" id="sub-c-morph"></span></div><div class="key"><span><i style="background:var(--accent)"></i>Urban centre</span><span><i style="background:var(--amber)"></i>Town or suburb</span><span><i style="background:var(--slow)"></i>Rural</span><span class="mono">share of tested people below the bar</span></div>
     <svg class="plot" id="c-morph" role="img" aria-label="Share below the bar by area type"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><p>Each country has three dots: the share of tested people below the bar in city centres, towns and rural areas (the UN "Degree of Urbanisation" definition). Example: Philippines at 25 Mbps — city centres 8%, rural 49%. <b>So what:</b> site plans should start outside the cities.</p></details>
+  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> share of tested people below the bar in city centres, towns and rural areas.</li><li><b>Areas:</b> the UN Degree of Urbanisation definition.</li><li><b>Example:</b> the Philippines at 25 Mbps: city centres 8%, rural 49%.</li><li><b>So what:</b> site plans should start outside the cities.</li></ul></details>
     <div class="chart"><div class="chart-head"><b class="chart-title">How many people were never tested?</b><span class="chart-sub" id="sub-c-tested"></span></div><div class="key"><span><i class="sq" style="background:var(--ok)"></i>Tested, at or above the bar</span><span><i class="sq" style="background:var(--slow)"></i>Tested, below</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span></div>
       <svg class="plot" id="c-tested" role="img" aria-label="People tested and untested by country"></svg><div class="tip" hidden></div></div>
-    <details class="how"><summary>How to read this</summary><p>Each bar is 100% of a country's people, split into tested and at or above the bar, tested and below, and not tested. Example: France — 47% of people live where nobody tested this quarter. <b>So what:</b> where the grey part is large, measured shares alone miss many people; the predicted speeds fill that gap.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Each bar:</b> all of a country's people: tested and fine, tested and below the bar, not tested.</li><li><b>Example:</b> France: 47% of people live where nobody tested this quarter.</li><li><b>So what:</b> where grey is large, measured shares miss many people; predicted speeds fill the gap.</li></ul></details>
     <div class="chart"><div class="chart-head"><b class="chart-title">Coverage or capacity: what kind of gap is it?</b><span class="chart-sub" id="sub-c-gap"></span></div><div class="key"><span><i class="sq" style="background:var(--ok)"></i>No gap</span><span><i class="sq" style="background:var(--accent)"></i>Capacity gap</span><span><i class="sq" style="background:var(--amber)"></i>Coverage gap</span><span><i class="sq" style="background:var(--slow)"></i>Slow, type unknown</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span><span class="mono">at 25 Mbps</span></div>
       <svg class="plot" id="c-gap" role="img" aria-label="Gap types at 25 Mbps by country"></svg><div class="tip" hidden></div></div>
-    <details class="how"><summary>How to read this</summary><p>For people below 25 Mbps: a <i>coverage gap</i> has no LTE/5G cell recorded within about 1.3 km (needs a new site); a <i>capacity gap</i> has cells nearby but is still slow (needs more capacity on existing sites). "Type unknown" is used where the public cell database is too incomplete to tell. Example: Germany — 5.5% of people are in capacity gaps, 1.1% in coverage gaps. <b>So what:</b> where the type is known (mostly city areas in Germany, France, the US and the UAE), slow areas need capacity far more often than new coverage; in Southeast Asia the type cannot be told from public data.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Coverage gap:</b> no LTE/5G cell recorded within about 1.3 km; needs a new site.</li><li><b>Capacity gap:</b> cells nearby but still slow; needs capacity on existing sites.</li><li><b>Type unknown:</b> the public cell database is too incomplete to tell.</li><li><b>Example:</b> Germany: 5.5% of people in capacity gaps, 1.1% in coverage gaps.</li><li><b>So what:</b> where the type is known, slow areas mostly need capacity, not new coverage.</li></ul></details>
     <div class="two">
       <div class="prose"><span class="eyebrow">Slow clusters (FDR 5%)</span><div class="table-wrap"><table id="t-hot"></table></div>
-        <details class="how"><summary>How to read this</summary><p>"Clusters" counts 1 km hexagons that sit in a group of slow neighbours beyond what chance explains. "False on shuffled" re-runs the test after randomly shuffling speeds, so any cluster found is a false alarm; the old method's count is in brackets. <b>So what:</b> zero false alarms means the clusters shown are real; slow places elsewhere are scattered, not clustered.</p></details></div>
+        <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Clusters:</b> 0.74 km² hexagons in a group of slow neighbours beyond what chance explains.</li><li><b>False on shuffled:</b> the test re-run on randomly shuffled speeds; any cluster found is a false alarm.</li><li><b>In brackets:</b> the old method's false alarms.</li><li><b>So what:</b> zero false alarms means the clusters are real; elsewhere slow places are scattered.</li></ul></details></div>
       <div class="prose"><span class="eyebrow">OpenCelliD finds a cell near fast hexagons</span><div class="table-wrap"><table id="t-det"></table></div>
-        <p class="muted small">Below 80% (shaded) the coverage-vs-capacity split is not reported. Records of 5G cells cover 0.03% (Indonesia) to 28.5% (US) of people: a completeness figure, not 5G coverage.</p></div>
+        <p class="muted small">Below 80% detection (shaded), coverage vs capacity is not reported. 5G records reach 0.03–28.5% of people: completeness, not coverage.</p></div>
     </div>
   </div></details>
 
   <details class="more" id="d-p2"><summary><span class="eyebrow">Speed where nobody tested · test noise · how good the predictions are</span></summary><div class="body">
     <div class="table-wrap"><table id="t-p2"></table></div>
-    <details class="how"><summary>How to read this</summary><p>The error is measured on a log scale; the "typical miss" column turns it into everyday terms. Example: a typical miss of 3.5× means a prediction of 20 Mbps could really be about 6–70 Mbps. The ratio compares two errors: 0.93 = machine learning's error is 93% of kriging's, i.e. 7% smaller. <b>So what:</b> single-hexagon predictions are rough; use them as chances ("70% likely below 25 Mbps") and trust district and country totals more.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Error:</b> measured on a log scale; the typical-miss column turns it into everyday terms.</li><li><b>Example:</b> a 3.5× typical miss means a 20 Mbps prediction could be 6–70 Mbps.</li><li><b>Ratio:</b> one model's error divided by kriging's; 0.93 means 7% smaller.</li><li><b>So what:</b> treat single-hexagon predictions as chances; trust district and country totals more.</li></ul></details>
     <div class="table-wrap"><table id="t-noise"></table></div>
-    <details class="how"><summary>How to read this</summary><p>"One test varies by" = how much two tests at the same place differ. "Real spots differ by" = how much the typical speed truly differs between spots inside one 0.74 km² hexagon. <b>So what:</b> one test tells you far less than the neighbourhood does; a hexagon with 1–2 tests is mostly luck.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>One test varies by:</b> how much two tests at the same place differ.</li><li><b>Real spots differ by:</b> how much typical speed truly varies inside one 0.74 km² hexagon.</li><li><b>So what:</b> a hexagon with 1–2 tests is mostly luck; the neighbourhood tells you more.</li></ul></details>
     <div class="table-wrap"><table id="t-valid"></table></div>
-    <details class="how"><summary>How to read this</summary><p>We blended 2026 Q2 speeds with their neighbourhood, then compared with Q3's separate tests. "Closer by" = how much smaller the error became. The level check adds Q3's test noise back and asks whether the blended speeds reproduce the share below 25 Mbps actually seen. <b>So what:</b> blending works for every country; the corrected country shares are credible (✓) in four countries and provisional (⚠) in three.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Test:</b> Q2 speeds blended with their neighbourhood, then compared with Q3's separate tests.</li><li><b>Closer by:</b> how much smaller the error became.</li><li><b>Level check:</b> do blended speeds reproduce the share below 25 Mbps seen in Q3?</li><li><b>So what:</b> blending helps everywhere; corrected shares are credible (✓) in four countries, provisional (⚠) in three.</li></ul></details>
     <ul class="points small">
-      <li><b>80% ranges hold 84% of the time:</b> a stated range like "9–45 Mbps" contained the measured value in 84 of 100 cases — the uncertainty is honest, slightly cautious.</li>
-      <li><b>Ranking slow vs fast (AUC 0.76):</b> given one truly slow and one fast hexagon, the model ranks the slow one as more likely slow 76% of the time (50% = coin flip). Good for prioritising, not for verdicts.</li>
-      <li><b>Inside the model's comfort zone (95%):</b> 95% of untested people live where the inputs look like places the model learned from.</li>
-      <li><b>Coverage vs capacity from Ookla alone (AUC 0.51):</b> upload/download ratio and latency cannot tell the two gap types apart — a coin flip, so that idea was dropped.</li>
+      <li><b>80% ranges hold 84% of the time:</b> a range like 9–45 Mbps contained the measured value 84 times in 100.</li>
+      <li><b>Ranking slow vs fast (AUC 0.76):</b> picks the slower of two hexagons 76% of the time; a coin flip scores 50%.</li>
+      <li><b>Inside the model's comfort zone (95%):</b> 95% of untested people live where inputs resemble the training places.</li>
+      <li><b>Coverage vs capacity from Ookla alone (AUC 0.51):</b> speed patterns cannot tell the gap types apart, so the idea was dropped.</li>
     </ul>
   </div></details>
 
   <details class="more" id="d-p3"><summary><span class="eyebrow">What new sites did · every method and check, per country</span></summary><div class="body">
     <div class="table-wrap"><table id="t-p3"></table></div>
-    <details class="how"><summary>How to read this</summary><p>"Average speed" is the change in a hexagon's mean measured download after a new site, compared with similar places without one yet, by three methods: the chosen estimator (Callaway–Sant'Anna), imputation, and mobile minus home broadband (which removes changes that hit both). "Pre-trends" asks whether the places moved in step before the site; "home broadband" should not change at all. Example: US +7% / +10% / +13% — all three agree on a real gain. <b>So what:</b> only the US shows a clear average gain; everywhere, the clearer effect is slow places crossing 25 Mbps. Test counts did not rise anywhere, so "new users" do not explain the results.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Average speed:</b> change in mean download after a new site, vs similar places without one yet.</li><li><b>Three methods:</b> the chosen estimator, imputation, and mobile minus home broadband.</li><li><b>Pre-trends:</b> did places move in step before the site? Home broadband should not change.</li><li><b>Example:</b> US +7% / +10% / +13%: all three agree on a real gain.</li><li><b>So what:</b> only the US gains on average; test counts did not rise, so new users do not explain it.</li></ul></details>
   </div></details>
 
   <details class="more" id="d-p4"><summary><span class="eyebrow">The site plans · people lifted, cost per person, stability, per country</span></summary><div class="body">
     <div class="table-wrap"><table id="t-p4"></table></div>
-    <details class="how"><summary>How to read this</summary><p>"People lifted" is the expected number above 25 Mbps after the plan, with a range from the lowest to the highest plausible lift rate. "Per 1,000 lifted" is the budget needed, in new-tower equivalents, to lift 1,000 people. "Stays the same" is the share of chosen places that survive when the lift rate is high, extra capacity is assumed to work like a new site, co-location costs change, or service areas follow 3GPP spacing (1 = identical plan). Example: Germany — 3,315 capacity additions and 7 new sites; 96% of places stay the same if capacity works like a new site. <b>So what:</b> the cheapest wins are in the Philippines and Indonesia; plans are stable to costs and service areas, and most sensitive to whether extra capacity really lifts people.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>People lifted:</b> expected people above 25 Mbps after the plan; range from the lowest to highest lift rate.</li><li><b>Per 1,000 lifted:</b> budget, in new-tower equivalents, to lift 1,000 people.</li><li><b>Stays the same:</b> share of chosen places kept under other assumptions; 1 = identical plan.</li><li><b>Example:</b> Germany: 3,315 capacity additions and 7 new sites; 96% kept if capacity works like a new site.</li><li><b>So what:</b> cheapest wins in the Philippines and Indonesia; most sensitive to whether capacity lifts people.</li></ul></details>
+  </div></details>
+  <details class="more" id="d-p56"><summary><span class="eyebrow">Planner API, AI tools and the cloud job · phases 5 and 6</span></summary><div class="body">
+    <ul class="howl">
+      <li><b>Four tools:</b> gap at a place, top sites, a note on one site, and a country comparison.</li>
+      <li><b>Two doors:</b> a REST API and an MCP server for AI assistants share one tool registry.</li>
+      <li><b>Site notes:</b> written by a language model; a checker traces every number to the data.</li>
+      <li><b>Fallback:</b> a note that fails the checker is replaced by a template, so served notes are always grounded.</li>
+      <li><b>Cloud job:</b> Databricks reads Ookla's files directly and rebuilds Indonesia's numbers on a quarterly schedule.</li>
+      <li><b>Registry:</b> the site-plan scorer is versioned in Unity Catalog; a drift check compares quarters.</li>
+    </ul>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Check (set before the work)</th><th class="num">Target</th><th class="num">Result</th></tr></thead>
+      <tbody>
+        <tr><td>Site notes with every number traced to the data</td><td class="num">≥ 90%</td><td class="num">100%</td></tr>
+        <tr><td>Notes mentioning all required facts</td><td class="num">≥ 90%</td><td class="num">100%</td></tr>
+        <tr><td>Cost per 1,000 notes</td><td class="num">≤ $0.20</td><td class="num">$0.064</td></tr>
+        <tr><td>Slowest 5% of live notes (p95)</td><td class="num">≤ 3.0 s</td><td class="num">4.2 s ✕</td></tr>
+        <tr><td>Slowest 5% of cached notes (p95)</td><td class="num">≤ 50 ms</td><td class="num">1.8 ms</td></tr>
+        <tr><td>Indonesia's shares, Databricks vs laptop</td><td class="num">same at 0.1 point</td><td class="num">identical</td></tr>
+        <tr><td>Registered scorer vs the laptop plan</td><td class="num">within 0.1%</td><td class="num">0.002%</td></tr>
+      </tbody></table></div>
+    <details class="how"><summary>How to read this</summary><ul class="howl">
+      <li><b>p95:</b> 95 in 100 notes arrive faster than this.</li>
+      <li><b>Example:</b> live notes take 2.3 s typically, but the slowest 5% take over 4 s.</li>
+      <li><b>So what:</b> notes are written once and cached, so planners get them in about 2 ms.</li>
+    </ul></details>
   </div></details>
 
   <details class="more" id="d-decisions"><summary><span class="eyebrow">Decision log · every choice against a named alternative</span></summary><div class="body">
     <ul class="points">
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-001-framing-and-analysis-unit.md">ADR-001</a> — people below a bar on H3 resolution 8; raw and density-adjusted; untested people reported.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-002-validation-and-gates.md">ADR-002</a> — gates for every phase, set before analysis; three logged deviations (block bootstrap, exact p-values, the population cross-check run late).</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-002-validation-and-gates.md">ADR-002</a> — gates for every phase, set before analysis; three logged deviations.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-003-industry-alignment.md">ADR-003</a> — how planners work: gap types, Degree of Urbanisation, 3GPP site spacing, co-location costs, regulator benchmarks; OpenCelliD completeness finding.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-004-speed-model-for-untested-areas.md">ADR-004</a> — speed where nobody tested: kriging vs LightGBM, test blocks sized to real distances; the gate failed and kriging is used.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-004-speed-model-for-untested-areas.md">ADR-004</a> — speed where nobody tested: the gate failed, so kriging is used, not LightGBM.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-005-measurement-noise.md">ADR-005</a> — test noise (written after the gate failed, before running): noise model, blending with the neighbourhood, cross-quarter check.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-006-p2-version-2-fresh-quarter-test.md">ADR-006</a> — machine learning vs kriging, decided on 2026 Q4 data with predictions frozen and fingerprinted beforehand.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-007-new-site-effect.md">ADR-007</a> — what new sites did: staggered difference-in-differences in all seven countries, pre-trend gate, home-broadband control, two amendments logged before running.</li>
-      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-008-budgeted-site-plan.md">ADR-008</a> — the site plan: people lifted per cost, exact solution, KPI-ranking baseline, capacity lift estimated first, sensitivities, planner exports; amendment 1 checks every nominal against WorldPop, land cover and terrain.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-007-new-site-effect.md">ADR-007</a> — what new sites did: staggered difference-in-differences in all seven countries; checks logged before running.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-008-budgeted-site-plan.md">ADR-008</a> — the site plan: people lifted per cost, exact solver, KPI baseline; amendments check every nominal on the ground.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-009-planner-api-mcp-rationales.md">ADR-009</a> — planner API and MCP tools; site notes where every number is checked.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-010-databricks-indonesia-job.md">ADR-010</a> — Databricks job for Indonesia, reading Ookla at the source; matches local results exactly.</li>
     </ul>
     <p class="muted small">The method changes made after checks failed are in the method table above and ADR-002; the noise follow-up is ADR-005.</p>
   </div></details>
@@ -1002,22 +1036,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <dt>Share below the bar</dt><dd>People in tested hexagons whose average download is below e.g. 25 Mbps, divided by all people in tested hexagons.</dd>
       <dt>95% interval</dt><dd>A range that very likely contains the true value. Example: 12.9–21.0% means "somewhere in there, most likely near 16%".</dd>
       <dt>At equal density</dt><dd>Each country re-weighted to the same mix of dense and sparse areas, so archipelagos and dense cities compare fairly.</dd>
-      <dt>Slow cluster (FDR 5%)</dt><dd>A group of neighbouring slow hexagons unlikely to be chance; at most 5% of flagged clusters are expected to be false alarms.</dd>
+      <dt>Slow cluster (FDR 5%)</dt><dd>Neighbouring slow hexagons unlikely to be chance; at most 5% of flagged clusters are false alarms.</dd>
       <dt>Typical speed</dt><dd>What most people in a hexagon usually get, after blending its few tests with its neighbourhood (empirical Bayes).</dd>
-      <dt>Error (log scale) / typical miss</dt><dd>How far predictions are from measurements. An error of 1.24 means a typical miss of about 3.5× (e^1.24): 20 Mbps predicted, 6–70 Mbps possible.</dd>
+      <dt>Error (log scale) / typical miss</dt><dd>How far predictions are from measurements; 1.24 on the log scale means a typical miss of about 3.5×.</dd>
       <dt>Ratio vs kriging</dt><dd>One model's error divided by kriging's. 0.93 = 7% smaller error. The pre-set rule needed 0.90 or lower.</dd>
       <dt>Kriging</dt><dd>The standard way to estimate a value at a place from nearby measurements, weighting closer and more similar ones more.</dd>
       <dt>LightGBM</dt><dd>A machine-learning model (gradient-boosted trees) that also uses population, places, cells, home-broadband speed and history.</dd>
-      <dt>Spatial block test</dt><dd>Hold out whole areas (~36 km²) and predict them from the rest, mimicking how far untested people live from a test.</dd>
+      <dt>Spatial block test</dt><dd>Hide whole ~36 km² areas and predict them, like the real distance from untested people to a test.</dd>
       <dt>AUC</dt><dd>How well a score ranks slow above fast places: 0.5 = coin flip, 1.0 = perfect.</dd>
       <dt>80% range coverage</dt><dd>How often stated 80% ranges contain the measured value; 84% = honest, slightly cautious.</dd>
       <dt>Area of applicability</dt><dd>Where a prediction's inputs resemble the places the model learned from; outside it, predictions are flagged.</dd>
-      <dt>New-tower equivalent</dt><dd>The cost unit for plans: a new macro site = 1, a small cell = 0.5, extra capacity on an existing site = 0.3 (ratios from a US regulator report).</dd>
+      <dt>New-tower equivalent</dt><dd>The cost unit: new macro site 1, small cell 0.5, extra capacity 0.3 (ratios from a US regulator report).</dd>
       <dt>Expected people lifted</dt><dd>People × chance their typical speed is below 25 Mbps × the lift rate measured for that kind of site.</dd>
-      <dt>Two population maps</dt><dd>Kontur (2023) and WorldPop (2020) estimate where people live from satellite images and census totals, by different methods. Where they disagree, the plan counts the smaller number. Example: a hexagon with 28,665 people in Kontur and 0 in WorldPop counts 0, so it cannot be chosen.</dd>
-      <dt>Built-up check</dt><dd>At least 1,000 m² of buildings inside the hexagon in ESA WorldCover (10 m satellite land cover), about seven village houses. Below that, the hexagon is excluded.</dd>
-      <dt>Site point</dt><dd>The built-up 10 m pixel nearest the centre of the hexagon's buildings: where a planner starts looking for a rooftop or tower. It replaces the hexagon centre, which can fall in a field, forest or lake.</dd>
-      <dt>Steep / high</dt><dd>Slope above 20° or elevation above 2,500 m at the site point (Copernicus 30 m elevation model). Not a rejection: hilltop towers are normal, but access costs more.</dd>
+      <dt>Two population maps</dt><dd>Kontur and WorldPop estimate where people live by different methods; plans count the smaller number per hexagon.</dd>
+      <dt>Built-up check</dt><dd>At least 1,000 m² of buildings in the hexagon (ESA WorldCover, 10 m), about seven village houses.</dd>
+      <dt>Site point</dt><dd>The built-up pixel nearest the centre of the hexagon's buildings: where a planner starts looking.</dd>
+      <dt>Steep / high</dt><dd>Slope over 20° or elevation over 2,500 m at the site point; flagged, not rejected.</dd>
       <dt>✓ credible / ⚠ provisional</dt><dd>Whether the noise-corrected country share passed the cross-quarter level check (within 1.5 points).</dd>
     </dl>
     <div class="table-wrap"><table>
@@ -1028,11 +1062,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <tr><td>P2</td><td>Machine learning ≤ 0.90 × kriging error (spatial blocks)</td><td><span class="badge warn">Failed</span> 0.93 → kriging used</td></tr>
         <tr><td>P3</td><td>Pre-trends parallel (per country); effect with interval</td><td><span class="badge ok">Passed</span> Germany, France, US, Philippines · <span class="badge warn">Failed</span> Indonesia, UAE · Malaysia too few sites</td></tr>
         <tr><td>P4</td><td>≥ 10% more people lifted than KPI ranking at equal cost, in ≥ 5 of 7 countries; exports valid (10% is our own pre-set threshold)</td><td><span class="badge ok">Passed</span> original plan 6 of 7 (+56% to +776%). Checked plans: 6 of 6 checked countries (+50% to +281%); US pending its second population map</td></tr>
+        <tr><td>P5</td><td>API and MCP contracts pass in CI; site-note evaluation passes; cost and latency within budget</td><td><span class="badge warn">Failed</span> on live latency only (p95 4.2 s vs 3.0 s); notes served from a cache</td></tr>
+        <tr><td>P6</td><td>The Databricks job reproduces the local shares exactly (Indonesia)</td><td><span class="badge ok">Passed</span> identical shares; scorer within 0.002%</td></tr>
+        <tr><td>P7</td><td>Both pages live; browser tests pass in three display modes</td><td><span class="badge ok">Passed</span> every check, desktop light, dark and phone</td></tr>
       </tbody></table></div>
     <div class="table-wrap"><table id="t-ci"></table></div>
-    <details class="how"><summary>How to read this</summary><p>Two ways of computing the 95% interval for the share below 25 Mbps. The pre-registered one (resampling speed tiles) is biased: ✕ marks where its interval does not even contain the measured share. The one used resamples ~250 km² blocks. <b>So what:</b> intervals on this page come from the block method; the failed method is kept for transparency.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> two ways to compute the 95% interval for the share below 25 Mbps.</li><li><b>Pre-set method:</b> resampling speed tiles is biased; ✕ marks intervals that miss the measured share.</li><li><b>Method used:</b> resampling ~250 km² blocks.</li><li><b>So what:</b> page intervals use blocks; the failed method is kept for transparency.</li></ul></details>
     <div class="table-wrap"><table id="t-p0"></table></div>
-    <details class="how"><summary>How to read this</summary><p>"Assigned" compares people and tests placed on the grid with a recount against detailed borders; above 100% means a few coastal hexagons whose centre lies just offshore were counted (≤ 0.3% sit in a neighbouring country). "Kontur ÷ World Bank" compares the population layer with official totals; France and the US exclude overseas areas and Alaska/Hawaii, and Kontur under-counts the UAE's migrant workforce. <b>So what:</b> no country loses people or tests; population totals are close to official ones.</p></details>
+    <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Assigned:</b> people and tests on the grid vs a recount against detailed borders.</li><li><b>Above 100%:</b> a few coastal hexagons centred just offshore; at most 0.3% sit in a neighbouring country.</li><li><b>Kontur ÷ World Bank:</b> the population layer vs official totals; France and the US exclude overseas areas.</li><li><b>UAE:</b> Kontur under-counts its migrant workers.</li><li><b>So what:</b> no country loses people or tests; totals are close to official ones.</li></ul></details>
     <details class="more" id="sources"><summary><span class="eyebrow">Sources · datasets, standards, regulators and papers (evidence tables with citation counts in each ADR)</span></summary><div class="body">
       <ul class="sources">
         <li>Speedtest® by Ookla® Global Fixed and Mobile Network Performance Maps (AWS Open Data Registry), CC BY-NC-SA 4.0.</li>
@@ -1268,14 +1305,14 @@ function renderTop() {
 function renderLegend() {
   if (state.detail) {
     $("#legend").innerHTML = `<span class="mono">chance typical speed is below ${state.bar} Mbps:</span>` + [["--ok", "under 20%"], ["--r1", "20–50%"], ["--r2", "50–80%"], ["--r4", "80% or more"]].map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
-      + `<span><i class="untested"></i>striped = not tested (predicted)</span><span><i style="border:2px solid var(--fg);background:transparent"></i>slow 1 km cluster</span><span><i style="border:3px solid var(--accent);background:transparent"></i>planned search area</span>`;
-    $("#how-map").innerHTML = `Each hexagon's colour is the chance that the speed people <i>typically</i> get there is below ${state.bar} Mbps. Solid = tested (its few tests blended with the neighbourhood); striped = nobody tested (predicted from nearby tests by kriging). Example: "70% chance" means that in 10 hexagons like it, about 7 are really below the bar. Each hexagon is 0.74 km², the size of a phase-4 site search area. <b>So what:</b> dark clusters are the most reliable search areas for a new site; pale striped areas need a field test first.`;
+      + `<span><i class="untested"></i>striped = not tested (predicted)</span><span><i style="border:2px solid var(--fg);background:transparent"></i>slow cluster</span><span><i style="border:3px solid var(--accent);background:transparent"></i>planned search area</span>`;
+    $("#how-map").innerHTML = `<ul class="howl"><li><b>Colour:</b> chance the speed people typically get is below ${state.bar} Mbps.</li><li><b>Solid:</b> tested, its tests blended with the neighbourhood. <b>Striped:</b> nobody tested; predicted by kriging.</li><li><b>Example:</b> 70% chance means about 7 in 10 hexagons like it are really below the bar.</li><li><b>Size:</b> each hexagon is 0.74 km², the same as a site search area.</li><li><b>So what:</b> dark clusters are the surest search areas; pale striped ones need a field test first.</li></ul>`;
     return;
   }
   const bins = [["--r0", "under 10%"], ["--r1", "10–25%"], ["--r2", "25–50%"], ["--r3", "50–75%"], ["--r4", "75% or more"]];
   $("#legend").innerHTML = `<span class="mono">tested people below ${state.bar} Mbps:</span>` + bins.map(([v, l]) => `<span><i style="background:var(${v})"></i>${l}</span>`).join("")
-    + `<span><i class="untested"></i>not tested</span><span><i style="border-radius:50%;border:1.5px solid var(--fg);background:transparent"></i>slow 1 km cluster</span><span><i style="background:var(--accent);width:6px;height:6px;border-radius:0"></i>planned search area</span>`;
-  $("#how-map").innerHTML = `Colour = share of tested people in each ~250 km² area whose measured average is below ${state.bar} Mbps. Example: a dark area at 80% means about 8 in 10 tested people there are below the bar. Striped = nobody tested. Rings mark slow clusters. Display cells are ~250 km² to keep the page light; all numbers are computed on 0.74 km² hexagons. <b>So what:</b> click a district on the right to see those hexagons, including predictions where nobody tested.`;
+    + `<span><i class="untested"></i>not tested</span><span><i style="border-radius:50%;border:1.5px solid var(--fg);background:transparent"></i>slow cluster</span><span><i style="background:var(--accent);width:6px;height:6px;border-radius:0"></i>planned search area</span>`;
+  $("#how-map").innerHTML = `<ul class="howl"><li><b>Colour:</b> share of tested people in each ~250 km² area below ${state.bar} Mbps.</li><li><b>Example:</b> a dark area at 80% means about 8 in 10 tested people there are below the bar.</li><li><b>Striped:</b> nobody tested. <b>Rings:</b> slow clusters.</li><li><b>Detail:</b> numbers are computed on 0.74 km² hexagons; areas are ~250 km² to keep the page light.</li><li><b>So what:</b> click a district on the right to see its hexagons, including predictions.</li></ul>`;
 }
 
 // ---------- SVG charts (drawn at the container's width so text stays readable on phones)

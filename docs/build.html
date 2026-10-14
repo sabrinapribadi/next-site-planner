@@ -170,7 +170,7 @@ footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line);
 <header class="top">
   <span class="eyebrow">Technical walkthrough · GEO-1 · next site planner</span>
   <h1>How the site planner is being built, phase by phase</h1>
-  <p class="lede">Eight phases, each with a pass/fail gate committed to GitHub before the work. For every phase: the question, the build steps, what broke, and what it taught.</p>
+  <p class="lede">Eight phases, each with a gate committed before the work: the question, the build steps, what broke and what it taught.</p>
   <div class="links">
     <a href="./">← Hiring-team view (results)</a>
     <a href="https://github.com/sabrinapribadi/next-site-planner">Code and ADRs</a>
@@ -248,7 +248,7 @@ const PHASES = [
     ["'New sites' looked like 2025–26", "OpenCelliD's 'created' marks one-off sightings after a rebuild, not launch dates", "Use only cells first seen ≤ 2024 and observed for months", "Check what a date field means before building on it"]
   ],
   lessons: ["Fix gates before data, data before models.", "Atomic writes and memory caps are part of the pipeline, not extras.", "Benchmark tools on a sample: the right one was 50× faster here."],
-  star: "Seven countries' speed, people, places and cells landed on one grid with under 1% lost — after I benchmarked the border check and cut it from 13+ minutes to seconds."
+  star: "Put seven countries' speed, people, places and cells on one grid with under 1% lost; cut the border check from 13+ minutes to seconds."
 },
 {
   agg: [["Hexagons → country share", "Σ people in measured hexagons below the bar ÷ Σ people in measured hexagons; unmeasured people reported separately", "Counts people, not tiles or tests"], ["Hexagons → density-adjusted share", "Shares within 10 pooled, people-weighted density deciles, each weighted 10% (direct standardisation)", "Compares countries at the same density mix"], ["Hexagons → urban/rural class", "Connected clusters of dense hexagons (ring-1 contiguity); cluster population summed and checked against 50k / 5k", "Degree of Urbanisation rules, on H3"], ["Cells → gap type", "LTE/5G cells counted over a hexagon and its 6 neighbours (ring-1, ~1.3 km)", "Cell positions are estimates; one hexagon is too strict"], ["Hexagon + neighbours → hotspot score", "Gi*: sum of log speed over the 7 hexagons vs the country mean", "A hotspot is a cluster, not one slow hexagon"], ["Hexagons → interval", "Spatial blocks of ~343 hexagons (H3 resolution 5) resampled with Poisson weights", "Neighbouring hexagons are correlated; resample them together"]], id: "p1", tag: "P1", name: "Experience gap and fair benchmark", dates: "13 Oct 2026", verdict: ["pass", "Gate passed"],
@@ -277,7 +277,7 @@ const PHASES = [
     ["5G 'coverage' of 0.03% in Indonesia", "OpenCelliD records few 5G cells (phones report 5G as LTE)", "Relabelled as a completeness figure, kept off the headlines", "Test what a source can see before measuring with it"]
   ],
   lessons: ["A pre-written check is only useful if you act when it fails.", "Publish the failed method next to the fix.", "Know what your data cannot see."],
-  star: "My own checks caught three failing methods — biased intervals, a hotspot test that found noise, and a cell database too sparse to type gaps — and each fix is published next to the original."
+  star: "My checks caught three failing methods (biased intervals, a noisy hotspot test, a sparse cell database); each fix is published beside the original."
 },
 { agg: [["Tile pairs in one hexagon → noise level", "Squared difference of two tiles regressed on 1/tests (non-negative least squares), per country", "Separates test-to-test noise from real location differences"], ["Neighbours → kriging prediction", "Weighted average of the 64 nearest tested hexagons; weights from the fitted variogram", "Closer, more similar places count more"], ["Hexagon + neighbourhood → typical speed", "Blend weighted by noise: tests count more the more of them there are (Fay–Herriot)", "One test is mostly luck; 200 tests are not"], ["Held-out blocks → error", "RMSE of log speed per ~36 km² block fold, pooled; also per country, by distance, on well-tested hexagons", "Errors where the model has not seen data"], ["Untested hexagons → country totals", "Σ people × chance typical speed is below the bar", "Expected people, not a count of hexagons"]], id: "p2", tag: "P2", name: "Speed where nobody tested", dates: "13–14 Oct 2026", verdict: ["fail", "Gate failed → kriging"],
   scqa: ["349M people (39%) live where nobody ran a speed test; P1 could not count them.",
@@ -308,13 +308,13 @@ const PHASES = [
     ["OpenAlex listed LightGBM as a preprint", "Its primary copy is a repository mirror", "Stated venue in references.yaml", "Check the venue behind a citation count"]
   ],
   lessons: ["Size the test to how the model will be used.", "Know the noise floor before comparing models.", "A failed gate is a result; publish it next to the follow-up."],
-  star: "Machine learning failed my own 10% gate against kriging, so I shipped kriging, then showed the real limit was test noise — and that about 68 million untested people are likely on slow mobile."
+  star: "Machine learning failed my 10% gate against kriging, so I shipped kriging and showed test noise was the real limit."
 },
 { agg: [["Cells → events", "First reliable new LTE/5G cell per hexagon (first seen 2023 Q3–2024 Q4, seen ≥ 180 days); new site if no cell of any kind within ring 1 before", "A crowdsourced proxy for a built site"], ["Hexagon-quarters → group-time effects", "For each start quarter and quarter: mean change in treated hexagons minus mean change in comparison hexagons (base two quarters before)", "Compare like with like, never early-treated with late-treated"], ["Group-time effects → event time", "Weighted by the number of treated hexagons, within country × area type", "One curve per country"], ["Event time 0–4 → one number", "Average of the five post quarters; interval from a block bootstrap (~250 km² blocks)", "Nearby hexagons move together"]], id: "p3", tag: "P3", name: "What new sites did", dates: "14 Oct 2026", verdict: ["pass", "Done · mixed by country"],
   scqa: ["P4 needs to know what a new site actually does to people's speeds.",
          "Sites are built where demand already is, and crowdsourced data dates them only roughly.",
          "Compared with similar places that had not got one yet, do new sites raise speeds or lift slow places above 25 Mbps?",
-         "They lift some slow places: up to about 1 in 8 crossed 25 Mbps (France under every check; Germany about 1 in 20 and the US near 0 under the strictest). Average speeds barely moved, except in the US (+7–12%). Indonesia's sites went where speeds were already falling."],
+         "They lift some slow places: up to 1 in 8 crossed 25 Mbps. Average speed rose only in the US; Indonesia's sites followed falling speeds."],
   steps: [
     ["Decision", "Design before outcomes", "ADR-007 pushed before any speed was looked at: events, comparison places, pre-trend gate, home-broadband control.", "The test must be fixed before the answer.", "docs/adr/ADR-007-new-site-effect.md"],
     ["Data", "Events from cell records", "New LTE/5G cells first seen 2023 Q3–2024 Q4 and seen 180+ days; 'new site' if nothing within ~1.3 km before.", "Separate new coverage from added capacity.", "scripts/new_site_effect.py"],
@@ -339,7 +339,7 @@ const PHASES = [
     ["New sites seemed to lower speeds (Philippines, France)", "Averages mix everyone's tests; estimators disagreed", "Compared three methods and test volumes before concluding", "Do not explain a surprise before checking it"]
   ],
   lessons: ["One rule for every country.", "A failed check is information: Indonesia's sites follow falling speeds.", "Measure what decisions need: crossing the bar, not the average."],
-  star: "I measured what 15,000 real new sites did in seven countries, and found they lift some slow places over 25 Mbps (up to about 1 in 8, less under the strictest test in Germany and France) rather than raising average speeds."
+  star: "Measured what about 15,000 new sites did in seven countries: they lift some slow places over 25 Mbps, not average speeds."
 },
 { agg: [["Hexagon → benefit", "people × P(typical speed < 25 Mbps) × lift rate θ for its intervention (new site or added capacity)", "Expected people lifted, from measured effects"], ["Candidates → plan", "Exact 0/1 knapsack over three cost classes (enumerate counts per class; take the best benefits within each)", "Provably optimal and instant"], ["Plan → country totals", "Σ benefits of chosen hexagons; ranges from θ low/high", "Totals carry the uncertainty of θ"], ["Nominal → checks", "WorldPop summed into each hexagon; WorldCover 10 m land cover and Copernicus 30 m elevation read only around each hexagon (cloud-optimised files)", "Two population maps, built-up m², site point, slope"], ["Plan → planner files", "One row per search area: rank, h3, site point, district, area type, intervention, cost, people on both maps, built-up m², elevation, slope, expected lifted", "CSV, GeoJSON polygons, KML pins on built land"]], id: "p4", tag: "P4", name: "Where the next sites should go", dates: "14 Oct 2026", verdict: ["pass", "Gate passed"],
   scqa: ["Site lists are usually built by ranking places on an agreed KPI score.",
@@ -375,34 +375,60 @@ const PHASES = [
   lessons: ["Measure the benefit of every intervention before costing it.", "A problem's structure can make exact solutions trivial.", "Show the gain under the assumption most likely to break it.", "Check every answer on the ground with an independent source."],
   star: "At the same budget, choosing sites by expected people lifted per cost lifted 1.5× to 3.8× more people than KPI ranking, after checking every nominal against a second population map, satellite land cover and terrain, and I shipped the plans as CSV, GeoJSON and KML."
 },
-{ agg: [["Tool calls → cost", "Σ tokens × dated price → cost per 1,000 calls; p50/p95 latency (planned)", "Rule R13 budgets"]], id: "p5", tag: "P5", name: "API, MCP tools, grounded rationales", dates: "planned", verdict: ["plan", "Planned"],
-  scqa: ["Planners and AI assistants need answers on demand.", "LLM rationales can invent numbers.", "Can agents query gaps and sites with grounded answers at a known cost?", "Planned."],
-  steps: [["Serving & AI", "Tools", "gap_at, top_sites, explain_site, compare_countries over MCP.", "One registry for apps and agents.", "planned", "plan"],
-          ["Serving & AI", "Grounded rationale", "LLM explains a proposed site; every number checked against tool results.", "Same guard as CHN-1's planner.", "planned", "plan"],
-          ["Evaluation", "Cost and latency budgets", "Cost per 1,000 rationales and p95 latency measured (R13).", "Known before shipping.", "planned", "plan"]],
-  decisions: [], results: [["Contracts + LLM evaluation in CI", "pass", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
-{ agg: [["Same rules on Spark", "P0–P1 aggregations re-run as Spark SQL; shares must match exactly (planned)", "Parity proves the platform changes nothing"]], id: "p6", tag: "P6", name: "Databricks quarterly job", dates: "planned", verdict: ["plan", "Planned"],
-  scqa: ["Ookla publishes quarterly.", "The refresh reads ~300M rows each quarter.", "Can Spark on Databricks reproduce the local numbers exactly?", "Planned."],
-  steps: [["Platform", "Read Ookla on Databricks?", "Test whether Free Edition can reach Ookla's S3; else upload extracts.", "Free Edition limits internet access.", "planned", "plan"],
-          ["Compute (DuckDB · Spark)", "Spark refresh", "Quarterly tiles → H3 with Databricks' built-in H3 functions.", "R15: ~300M rows read per refresh.", "planned", "plan"],
-          ["Evaluation", "Parity + drift", "Reproduce local P1 shares exactly; drift per quarter.", "Same numbers on both platforms.", "planned", "plan"]],
-  decisions: [], results: [["Local P1 shares reproduced", "exact", "pending", "wait"]], obstacles: [], lessons: [], star: "" },
-{ agg: [], id: "p7", tag: "P7", name: "Pages and web map", dates: "planned", verdict: ["plan", "Planned"],
-  scqa: ["Results must be readable by hiring teams and auditable by engineers.", "Maps of millions of hexagons are heavy.", "Can two pages show it all, browser-tested?", "Planned."],
-  steps: [["Serving & AI", "Results page + map", "R12 page with a hoverable hexagon map.", "Show, don't narrate.", "docs/index.html", "plan"],
-          ["Serving & AI", "Technical walkthrough", "This page (R14), updated as each phase finishes.", "Engineers audit how it was built.", "docs/build.html"],
-          ["Evaluation", "Browser tests", "Real Chrome, three display modes, every chart and step hoverable.", "Rule R10.", "tests/browser/", "plan"]],
-  decisions: [], results: [["Browser tests", "pass", "pending", "wait"]], obstacles: [], lessons: [], star: "" }
+{ agg: [["Outputs → serving store", "6.39M hexagons, 12,713 nominals, 7 country summaries; read-only, outside the repository", "One source for apps and agents"], ["Facts → note", "gpt-6-luna writes ≤ 45 words; a grader traces every number to the facts", "Grounded by construction"], ["Calls → cost and latency", "Tokens × dated price per call; p50/p95 per run", "Rule R13 budgets"]], id: "p5", tag: "P5", name: "Planner API, MCP tools, grounded site notes", dates: "14 Oct 2026", verdict: ["fail", "Gate failed on live latency"],
+  scqa: ["Planners and AI assistants ask the same four questions of the results.", "A language model can invent numbers in a site note.", "Can tools answer on demand, with every number in a note traced to the data, within budget?", "Yes for grounding, coverage and cost; the live p95 latency missed its budget, so notes are precomputed and cached."],
+  steps: [["Decision", "Design first", "ADR-009 pushed before code: four tools, grader, budgets, evaluation set, gate.", "The rule must not bend to the result.", "docs/adr/ADR-009-planner-api-mcp-rationales.md"],
+          ["Serving & AI", "One registry, two doors", "gap_at, top_sites, explain_site, compare_countries via a REST API and an MCP server.", "Apps and agents get identical answers.", "src/serving/"],
+          ["Serving & AI", "Grounded notes", "Model note → deterministic grader → template fallback; cached by a hash of the facts.", "No invented number can be served.", "src/serving/notes.py"],
+          ["Evaluation", "Run 1", "80 cases: grounded 100%, required facts 78.8%, p95 3,217 ms.", "Measure before tuning.", "data/outputs/p5_notes_eval_run1.json", "fail"],
+          ["Evaluation", "Run 2: pre-set remedies only", "Checklist prompt, 45 words: facts 100%, $0.064 per 1,000; p95 4,166 ms.", "Fix only what was pre-registered.", "data/outputs/p5_notes_eval.json", "fail"],
+          ["Evaluation", "Stricter grader", "Two significant figures kept when rounding; place names from the facts allowed; all 80 notes still pass.", "Tests found what eyes missed.", "tests/test_serving.py", "fix"],
+          ["Platform", "CI without a key", "Recorded live notes replayed and re-graded in CI; 41 KB fixture store.", "Free, deterministic, every push.", "tests/test_notes_replay.py"]],
+  decisions: [["Planner API, MCP tools and grounded site notes", "009"]],
+  results: [["Contracts in CI", "pass", "12 tests pass", "ok"], ["Grounded, live", "≥ 90%", "100% (80 of 80)", "ok"], ["Required facts", "≥ 90%", "100%", "ok"], ["Cost per 1,000 notes", "≤ $0.20", "$0.064", "ok"], ["p95 latency, live", "≤ 3,000 ms", "4,166 ms", "no"], ["p95 latency, cached", "≤ 50 ms", "1.8 ms", "ok"]],
+  obstacles: [["Grader accepted 70 for a fact of 66", "Rounding allowed to any precision", "Keep at least two significant figures", "Test the checker with numbers that should fail"],
+              ["District 'Orange, Vermont' failed as an operator name", "Name filter ignored the facts", "Names that appear in the facts are allowed", "Use real places in tests"],
+              ["Fixture tables missing in CI", "A *.parquet ignore rule", "Narrow exception for test fixtures", "Check CI after every new data file"]],
+  lessons: ["Make grounding a rule the code enforces, not a prompt request.", "Pre-register remedies, then report the miss that remains.", "Record live calls once; replay them for free in CI."],
+  star: "Built a planner API and MCP tools whose site notes are 100% grounded at $0.06 per 1,000, recorded and replayed in CI; the live p95 missed its budget, so notes are served from a cache."
+},
+{ agg: [["S3 → tiles", "15 quarters read from Ookla's bucket; tile centres inside the exact local polygon", "No upload of the largest input"], ["Tiles → hexagons → shares", "Built-in H3 and spatial SQL; people-weighted shares", "Same logic as local"], ["Scorer → registry", "MLflow pyfunc in Unity Catalog, alias champion", "Versioned plan rule"]], id: "p6", tag: "P6", name: "Databricks quarterly job (Indonesia)", dates: "14 Oct 2026", verdict: ["pass", "Gate passed"],
+  scqa: ["Ookla publishes every quarter, and the plan should refresh with it.", "A laptop pipeline has no schedule, registry or monitoring.", "Can a cloud job read the source and reproduce the local numbers exactly?", "Yes for Indonesia: identical shares (difference 0.0) and the registered scorer within 0.002%."],
+  steps: [["Decision", "One country, said first", "ADR-010 narrows the P6 gate to Indonesia before any job code.", "Change scope in writing, not quietly.", "docs/adr/ADR-010-databricks-indonesia-job.md"],
+          ["Platform", "Probe the platform", "Free Edition reads Ookla's S3; built-in H3 and spatial SQL work; same H3 cell as local.", "Test the risk before designing around it.", "databricks.yml"],
+          ["Compute (DuckDB · Spark)", "Read at the source", "53.7M global mobile tile rows in 28 s; 2.4M kept in Indonesia.", "R15: operations, not Indonesia's size, justify the cloud.", "scripts/databricks_p6.py"],
+          ["Evaluation", "Parity", "Every Indonesian share equals the local value exactly.", "Same numbers on both platforms.", "data/outputs/p6_databricks_idn.json"],
+          ["Platform", "Registry", "Site-plan scorer v1 in Unity Catalog, alias champion.", "Version the rule that turns estimates into a plan.", "scripts/databricks_p6.py", "fix"],
+          ["Evaluation", "Drift", "PSI 0.223 between 2026 Q2 and Q3: share above 100 Mbps 8.5% → 25.5%.", "Flag shifts; do not explain them away.", "data/outputs/p6_databricks_idn.json"]],
+  decisions: [["Databricks quarterly job for Indonesia", "010"]],
+  results: [["P1 shares reproduced", "exact at 0.1 point", "difference 0.0", "ok"], ["Scorer reproduces the plan", "within 0.1%", "0.002%", "ok"], ["Job, registry, drift", "deployed", "all six tables", "ok"]],
+  obstacles: [["Scorer task failed twice", "MLflow on Databricks needs an experiment path", "Experiment under the running user's folder", "Set tracking, registry and experiment together"],
+              ["A retry would repeat the failure", "Automatic retries re-run the same code", "Fix, redeploy, repair-run only the failed tasks", "Repair, do not re-run what passed"]],
+  lessons: ["Probe the platform's limits before writing the design.", "Upload the exact inputs the local run used when exact parity is the gate.", "Register the rule that turns estimates into a plan, with its parameters."],
+  star: "Ran the Indonesia pipeline as a Databricks job reading Ookla at the source; it reproduced the local shares exactly and registered the site-plan scorer in Unity Catalog."
+},
+{ agg: [["Outputs → page data", "One generated file plus on-demand district and cell files", "Pages stay light"], ["Pages → tests", "Real Chrome in three modes; every chart and map checked", "Rule R10"]], id: "p7", tag: "P7", name: "Pages and web map", dates: "14 Oct 2026", verdict: ["pass", "Gate passed"],
+  scqa: ["Hiring teams read for two minutes; engineers audit how it was built.", "Millions of hexagons and many checks make pages heavy and wordy.", "Can two pages show everything, readably and browser-tested?", "Yes: both pages live on GitHub Pages and pass every browser check in three modes."],
+  steps: [["Serving & AI", "Results page", "R12 order: glance, problem, data, approach, solution, take; details collapsed.", "Show, don't narrate.", "docs/index.html"],
+          ["Serving & AI", "Nominal map", "Site points on built land, existing cells, terrain; a country switcher on the map.", "Planners check the ground themselves.", "docs/index.html"],
+          ["Serving & AI", "Readable charts", "Each chart titled by its question, with a one-line answer from the data; short tooltips.", "Readers get the answer first.", "docs/index.html", "fix"],
+          ["Evaluation", "R7 audit", "Every page paragraph cut to about 20 words or fewer; notes as Shows / Example / So what.", "Rules apply to our own pages.", "docs/index.html", "fix"],
+          ["Evaluation", "Browser tests", "Real Chrome, desktop light and dark and phone 400 px; walkthrough checks.", "Rule R10.", "tests/browser/"]],
+  decisions: [], results: [["Results page, browser checks", "all pass in 3 modes", "13 of 13 × 3", "ok"], ["Walkthrough checks", "all pass", "all pass", "ok"]],
+  obstacles: [["A replace edit broke every chart", "Identical code in four charts", "Edit one function's body only; the browser test caught it", "Run browser tests after every page edit"]],
+  lessons: ["Write for the two-minute reader; put depth one click away.", "Test pages in a real browser, in every display mode."],
+  star: "Shipped two browser-tested pages that answer each chart's question in one line and let planners check every nominal on the ground."
+}
 ];
 
 const MAP = {
   "Data": {p0: ["7 countries, 12 sources", "Official CLI for places"], p3: ["Cells first seen ≤ 2024"]},
-  "Compute (DuckDB · Spark)": {p0: ["Tiles → H3 r8", "Atomic writes, memory cap"], p6: ["Spark refresh"]},
+  "Compute (DuckDB · Spark)": {p0: ["Tiles → H3 r8", "Atomic writes, memory cap"], p6: ["Spark reads Ookla's S3"]},
   "Spatial statistics": {p1: ["Shares below 10/25 Mbps", "Density-adjusted", "Gi* + FDR"]},
   "Model": {p2: ["Kriging vs boosting"], p3: ["Event study"], p4: ["Exact budgeted optimiser"]},
-  "Evaluation": {p0: ["Assignment gate"], p1: ["Bootstrap intervals"], p2: ["Spatial block CV"], p3: ["Pre-trend placebo"], p4: ["vs ranking"]},
-  "Serving & AI": {p5: ["API + MCP tools"], p7: ["Hexagon web map"]},
-  "Platform": {p6: ["Databricks job, registry, drift"]}
+  "Evaluation": {p0: ["Assignment gate"], p1: ["Bootstrap intervals"], p2: ["Spatial block CV"], p3: ["Pre-trend placebo"], p4: ["vs ranking", "Ground checks"], p5: ["Grounded-note evaluation"], p6: ["Exact parity"], p7: ["Browser tests"]},
+  "Serving & AI": {p5: ["API + MCP tools", "Grounded notes"], p7: ["Results page", "Nominal map"]},
+  "Platform": {p5: ["CI replay"], p6: ["Databricks job, registry, drift"]}
 };
 
 const $ = (s, el = document) => el.querySelector(s);

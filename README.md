@@ -7,22 +7,38 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 - Measure the gap: people living where measured mobile download is below 10 or 25 Mbps (Ookla open speed tiles × Kontur population on an H3 grid)
 - Compare countries fairly: at equal population density, with the unmeasured population reported
 - Measure what new sites do: before/after speeds near newly seen cells (all seven countries, one rule)
-- Choose sites as a set: an exact budgeted optimiser, compared with KPI-style ranking, with every nominal checked against a second population source, land cover and terrain
+- Choose sites as a set: an exact budgeted optimiser vs KPI ranking; every nominal checked on the ground
+- Serve answers: a planner API and MCP tools, with site notes whose numbers are all traced to the data
+- Run as a cloud job: Databricks rebuilds Indonesia quarterly from Ookla's source files
 
 **Live:** [results page](https://sabrinapribadi.github.io/next-site-planner/) · [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html)
 
-Status: **phases 0–4 of 7 done**. Data foundation and experience gap passed their gates. For speed where nobody tested (P2), machine learning was only 7% more accurate than kriging, below the 10% set in advance to justify its extra inputs and upkeep, so the simpler kriging is used. The measured effect of new sites (P3) and costed site plans per country (P4) are done, with every nominal checked on the ground (the US check waits for its population file); API and AI tools (P5) are next. See [docs/PRD.md](docs/PRD.md), [docs/adr](docs/adr/README.md) and [CHANGELOG.md](CHANGELOG.md).
+**Status: phases 0–7 done.** Details: [docs/PRD.md](docs/PRD.md), [decision records](docs/adr/README.md), [CHANGELOG.md](CHANGELOG.md).
 
-- 61.7M people in tested areas get under 25 Mbps on mobile; 349M people live where nobody tested.
-- At equal population density the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
-- About 48–68M people nobody tested are likely below 25 Mbps (typical speed): the range is Kontur vs WorldPop population, with the US counted from Kontur until its WorldPop file arrives. That includes 13–23M in the Philippines and 22–30M in Indonesia.
-- Population maps agree in Germany and France, but in poorly served places in Southeast Asia and the UAE they differ by 27–37%. Some original nominals sat where one map shows nobody, so every nominal is now checked.
-- New sites lift slow places more than averages: a new site lifted up to about 1 in 8 slow places (below 25 Mbps) over the bar; France holds up under every check, while Germany (about 1 in 20) and the US (near 0) shrink under the strictest test. Average speed rose only in the US (+7–12%).
-- Site plans: at the same budget, choosing places by expected people lifted per cost beats an equal-weight KPI ranking by +50% (Germany) to +281% (UAE) in the six countries checked so far (US pending).
-  - Every nominal has people on both population maps, at least 1,000 m² of buildings (satellite land cover) and a site point on built land; terrain is flagged.
-  - Before these checks the gain looked like +56% to +776%.
-  - Site lists as CSV / GeoJSON / KML in `docs/data/plans/`.
-- Single speed tests are mostly luck: two tests at the same place differ 3–5×. Each hexagon is blended with its neighbourhood (checked against the next quarter: 28–44% closer).
+| Phase | Gate (set before the work) | Result |
+|---|---|---|
+| P0 Data foundation | ≥ 99% of people and tests on the grid | Passed |
+| P1 Experience gap | Intervals, clusters, gap types | Passed |
+| P2 Speed where nobody tested | Machine learning ≥ 10% better than kriging | Failed (7%); kriging used |
+| P3 Effect of new sites | Parallel pre-trends per country | Passed in 4 of 7 |
+| P4 Site plan | ≥ 10% more people lifted than KPI ranking | Passed, after checking every nominal on the ground |
+| P5 Planner API, MCP tools, site notes | Contracts, grounded notes, cost and latency budgets | Failed on live latency only; notes cached |
+| P6 Databricks job (Indonesia) | Same shares as the laptop | Passed: identical |
+| P7 Pages | Browser tests in three display modes | Passed |
+
+**Results:**
+
+- 61.7M people in tested areas get under 25 Mbps on mobile; 349M live where nobody tested.
+- At equal density, the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
+- 48–68M untested people are likely below 25 Mbps; the range comes from two population maps.
+- The two maps agree in Germany and France; in Southeast Asia and the UAE they differ by 27–37%.
+- New sites lift some slow places: up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.
+- Checked site plans lift 1.5–3.8× as many people as KPI ranking at the same budget (+50% to +281%).
+- Every nominal has people on both maps, at least 1,000 m² of buildings, and a pin on built land.
+- Site lists as CSV / GeoJSON / KML in `docs/data/plans/`.
+- Site notes: 100% of numbers traced to the data, $0.064 per 1,000 notes.
+- Databricks reproduces Indonesia's numbers exactly, reading Ookla at the source.
+- Single speed tests are mostly luck: two tests at one place differ 3–5×; neighbourhood blending fixes much of it.
 
 ## Reproduce
 
@@ -33,6 +49,11 @@ set -a; . ./.env; set +a
 make data                        # public sources into GEO_DATA_DIR (hours; resumable)
 make pipeline                    # P0 → P1 → P2 → noise → P3 → P4 → nominal checks → page data (several hours on an 8 GB laptop)
 make test build-test hover-test  # unit tests; browser checks of both pages
+python scripts/build_serving_store.py                 # P5 serving store (outside the repository)
+uvicorn src.serving.api:app --port 8000              # REST API: /gap, /sites/{country}, /sites/{country}/{rank}/note, /countries
+python -m src.serving.mcp_server                     # MCP server (stdio) for AI assistants
+python scripts/eval_notes.py                         # live site-note evaluation (needs OPENAI_API_KEY in .env)
+python scripts/databricks_prepare_inputs.py IDN      # P6 inputs, then: databricks bundle deploy && databricks bundle run geo1_p6
 ```
 
 | Step | Script | Output (`data/outputs/`) | Decision record |
@@ -44,6 +65,9 @@ make test build-test hover-test  # unit tests; browser checks of both pages
 | P3 new-site effect | `new_site_effect.py`, `new_site_diagnostics.py` | `p3_new_site_effect.json`, `p3b_diagnostics.json` | ADR-007 |
 | P2 version 2 freeze | `freeze_p2v2.py` | `p2v2_frozen.json` | ADR-006 |
 | P4 site plan | `new_site_crossing_checks.py --estimand capacity`, `site_plan.py` | `p4_capacity_crossing.json`, `p4_site_plan.json`, `docs/data/plans/` | ADR-008 |
+| P4 nominal checks | `worldpop_hex.py`, `population_crosscheck.py`, `site_plan.py --validated`, `nominal_validation_report.py` | `p1b_population_crosscheck.json`, `p4b_nominal_validation.json` | ADR-008 amendments 1–2 |
+| P5 API, MCP, site notes | `build_serving_store.py`, `eval_notes.py`, `src/serving/` | `p5_notes_eval.json` | ADR-009 |
+| P6 Databricks job | `databricks_prepare_inputs.py`, `databricks_p6.py`, `databricks.yml` | `p6_databricks_idn.json` | ADR-010 |
 | Pages | `export_page_data.py` | `docs/data/` | — |
 
 ## Data

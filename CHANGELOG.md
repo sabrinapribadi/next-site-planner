@@ -2,6 +2,45 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.9.0] — 2026-10-14 — P5 planner API and MCP tools, P6 Databricks job (Indonesia), P7 pages; full audit
+**Files:** docs/adr/ADR-009, ADR-010, ADR-001, ADR-002, docs/adr/README.md, docs/PRD.md, README.md, src/serving/*, scripts/build_serving_store.py, scripts/eval_notes.py, scripts/databricks_prepare_inputs.py, scripts/databricks_p6.py, databricks.yml, configs/default_config.yaml, requirements.txt, tests/test_serving.py, tests/test_notes_replay.py, tests/fixtures/*, data/outputs/p5_notes_eval*.json, data/outputs/p6_databricks_idn.json, docs/index.html, docs/build.html
+- **Situation:**
+  - Planners and AI assistants needed answers on demand.
+  - The pipeline only ran on a laptop.
+  - The pages broke the project's own rule of about 20 words per paragraph (63 of 106 text blocks).
+- **Task:** Serve the results with grounded notes within budget, run one country as a cloud job, and audit every document against the outputs and the rules.
+- **Action:**
+  - **P5 (ADR-009, pushed first):**
+    - four tools (gap, top sites, site note, country comparison) via REST and MCP;
+    - notes written by `gpt-6-luna`, graded so every number is traced to the facts, with a template fallback;
+    - evaluated live on 80 cases and replayed in CI without a key.
+  - **P6 (ADR-010, pushed first; scope narrowed to Indonesia before code):**
+    - probed Free Edition (S3, H3, spatial SQL);
+    - bundle job: Ookla S3 → hexagons → shares → parity → scorer in Unity Catalog → drift → six tables.
+  - **P7:** chart titles with one-line answers, short tooltips, every note rewritten as Shows / Example / So what, P5–P6 sections, walkthrough phases P5–P7.
+  - **Audit fixes:**
+    - "~300M rows read" corrected to 152M (counted from file metadata);
+    - "~25M places" corrected to 29.8M;
+    - P3 summary said France weakens under the strictest test (it is Germany and the US);
+    - stale "68M" and "23M / 30M" counts replaced by Kontur–WorldPop ranges;
+    - "1 km clusters" corrected to 0.74 km² hexagons;
+    - the data table now lists all eight sources;
+    - PRD sections 6, 8, 10, 12 and 13 added (the house template);
+    - P6 SCQA's row count measured.
+  - **A rule breach, fixed:** employer names reached the public repo inside an operator block list (commit `ce9e8c0`). They were removed and the history rewritten; the full-history scan now finds none.
+- **Result:**
+  - **P5 failed on live latency only:**
+    - notes 100% grounded and 100% complete, $0.064 per 1,000;
+    - live p95 4,166 ms vs a 3,000 ms budget;
+    - served from a cache at 1.8 ms.
+  - **P6 passed:**
+    - Indonesia's shares identical to the laptop's (difference 0.0);
+    - registered scorer within 0.002%;
+    - drift flagged (PSI 0.223, Q2 → Q3).
+  - **P7 passed:** results page 13 of 13 browser checks in three modes; walkthrough all checks.
+  - **Tests:** 42 unit, contract and replay tests in CI.
+- **Talking point:** "Every number in an AI-written site note is traced to the data by code, not by prompt; and the cloud job reproduces the laptop's numbers to the last digit."
+
 ## [0.8.0] — 2026-10-14 — Nominals checked on the ground; full document audit (interim: US pending its WorldPop file)
 **Files:** docs/adr/ADR-001, ADR-002, ADR-007, ADR-008 (amendments 1–2), docs/adr/README.md, docs/PRD.md, README.md, Makefile, src/groundcheck.py, tests/test_groundcheck.py, scripts/worldpop_hex.py, scripts/population_crosscheck.py, scripts/nominal_validation_report.py, scripts/validation_tables.py, scripts/site_plan.py, scripts/acquire_public_data.py, scripts/export_page_data.py, data/outputs/p1b_population_crosscheck.json, p4b_nominal_validation.json, p4_site_plan.json, p4_site_plan_original.json, p4_original_plans/*, docs/data/plans/*, docs/data/cells/*, docs/index.html, docs/build.html, tests/browser/hover_test.js
 - **Situation:**
