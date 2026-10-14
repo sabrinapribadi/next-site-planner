@@ -2,6 +2,20 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.9.1] — 2026-10-14 — Urban-centre check against official figures (ADR-003)
+**Files:** scripts/degurba_check.py, scripts/acquire_public_data.py, Makefile, requirements.txt, data/outputs/p1c_degurba_check.json, docs/adr/ADR-003, ADR-002, ADR-006, docs/adr/README.md, docs/PRD.md, README.md, docs/index.html, docs/build.html
+- **Situation:** ADR-003 pre-set a check of our urban-centre shares against published Degree of Urbanisation figures (a gap above 10 points is investigated); it was still open.
+- **Task:** Run it for all seven countries and explain any gap.
+- **Action:**
+  - Compared our H3 classes with JRC GHSL grid-class shares (R2024A, epoch 2025).
+  - Split each gap into rule vs population map: our rule and the official GHS-SMOD classes, each with Kontur and with WorldPop.
+- **Result:**
+  - Within 10 points in 6 of 7 countries; ours is lower because our H3 version skips the built-up and gap-filling rules.
+  - The UAE (−23 points) is the population map: with WorldPop, our rule gives 73.7% vs 73.1% published.
+  - The US gap is mostly our rule: the official classes give 37.9% vs 39.9% published.
+  - ADR-006 now states it stays open until Ookla publishes 2026 Q4 (expected January 2027).
+- **Talking point:** "When our urban-centre share missed the official figure by 23 points, swapping one input at a time showed the population map, not our method, was the cause."
+
 ## [0.9.0] — 2026-10-14 — P5 planner API and MCP tools, P6 Databricks job (Indonesia), P7 pages; full audit
 **Files:** docs/adr/ADR-009, ADR-010, ADR-001, ADR-002, docs/adr/README.md, docs/PRD.md, README.md, src/serving/*, scripts/build_serving_store.py, scripts/eval_notes.py, scripts/databricks_prepare_inputs.py, scripts/databricks_p6.py, databricks.yml, configs/default_config.yaml, requirements.txt, tests/test_serving.py, tests/test_notes_replay.py, tests/fixtures/*, data/outputs/p5_notes_eval*.json, data/outputs/p6_databricks_idn.json, docs/index.html, docs/build.html
 - **Situation:**

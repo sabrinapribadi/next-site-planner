@@ -265,12 +265,13 @@ const PHASES = [
     ["Spatial statistics", "Exact p-values", "Neighbour sums vs the convolved empirical distribution: 0 false hotspots on shuffled data.", "FDR needs exact tails.", "src/spatialstats.py", "fix"],
     ["Spatial statistics", "Urban / rural classes", "Degree of Urbanisation on H3: urban centres hold 31–50% of people.", "Planning differs by morphology.", "src/morphology.py"],
     ["Evaluation", "Cell data too sparse", "OpenCelliD finds a cell near only 2% of fast rural Indonesian hexagons.", "A 'coverage gap' would mean 'unknown cell'.", "docs/adr/ADR-003-industry-alignment.md", "fail"],
+    ["Evaluation", "Official urban-centre figures", "Within 10 points of EU JRC grid figures in 6 of 7; the UAE gap is the population map (WorldPop matches).", "Check a definition against its official source.", "data/outputs/p1c_degurba_check.json"],
     ["Decision", "Type gaps only where reliable", "Coverage vs capacity only where ≥ 80% of fast hexagons have a recorded cell; else 'slow, type unknown'.", "Say what the data cannot tell.", "scripts/experience_gap.py", "fix"]
   ],
   decisions: [["Raw and density-adjusted shares side by side", "001"], ["Spatial block bootstrap; exact Gi* p-values (logged deviations)", "002"], ["Gap types only where cell data is complete enough", "003"]],
   results: [["Indonesia below 25 Mbps", "95% interval", "13.3% [11.7%–14.7%]", "ok"], ["Philippines below 25 Mbps", "95% interval", "16.3% [12.9%–21.0%]", "ok"],
             ["Germany below 25 Mbps", "95% interval", "14.6% [13.5%–15.6%]", "ok"], ["Every interval contains its estimate", "all", "14 of 14", "ok"],
-            ["False hotspots on shuffled data (FDR)", "≈ 0", "0 in all 7 (was 0–318)", "ok"], ["Populated hexagons typed", "100%", "100%", "ok"]],
+            ["False hotspots on shuffled data (FDR)", "≈ 0", "0 in all 7 (was 0–318)", "ok"], ["Populated hexagons typed", "100%", "100%", "ok"], ["Urban-centre share vs official figures", "within 10 points", "6 of 7; UAE explained", "info"]],
   obstacles: [
     ["Intervals missed their own estimate", "64% of measured hexagons have one tile; resampling tiles flips hexagons below the bar more often than above", "Spatial block bootstrap (H3 resolution 5; 4 as a check)", "Check that an interval contains its estimate before reading it"],
     ["Hotspots found in shuffled data", "Normal approximation for Gi* with 1–6 neighbours and skewed speeds", "Exact conditional p-values by convolution", "Run every test on data with the pattern destroyed"],

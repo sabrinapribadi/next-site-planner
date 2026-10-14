@@ -10,7 +10,7 @@ env:
 
 # Raw data into GEO_DATA_DIR (see .env); resumable
 data:
-	$(PY) scripts/acquire_public_data.py opencellid boundaries overture population worldpop ookla
+	$(PY) scripts/acquire_public_data.py opencellid boundaries overture population worldpop ghsl ookla
 
 # Evidence table for every cited paper (rule R2)
 evidence:
@@ -42,6 +42,7 @@ pipeline:
 	$(PY) scripts/new_site_crossing_checks.py --estimand capacity
 	$(PY) scripts/worldpop_hex.py
 	$(PY) scripts/population_crosscheck.py
+	$(PY) scripts/degurba_check.py
 	$(PY) scripts/site_plan.py
 	cp data/outputs/p4_site_plan.json data/outputs/p4_site_plan_original.json
 	mkdir -p data/outputs/p4_original_plans && cp docs/data/plans/*.csv data/outputs/p4_original_plans/

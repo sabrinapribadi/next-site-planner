@@ -37,7 +37,7 @@ Each later phase ADR repeats this table in detail for its own method (rule R2).
 | P6 | The Databricks job reproduces the local P1 country shares exactly (to the reported decimal) | Any share differs |
 | P7 | Results page and technical walkthrough live; browser tests pass in three display modes | Any test fails |
 
-Checks reported but not gated (ADR-003): urban-centre population share vs published Degree of Urbanisation figures where available (> 10 points apart is investigated).
+Checks reported but not gated (ADR-003): urban-centre population share vs published Degree of Urbanisation figures where available (> 10 points apart is investigated). **Run 2026-10-14:** within 10 points in 6 of 7 countries; the UAE gap (−23 points) comes from the Kontur population map, since with WorldPop our rule matches the published figure within 0.6 points (ADR-003).
 
 ## Gate results (updated as phases finish)
 

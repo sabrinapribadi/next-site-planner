@@ -910,7 +910,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div class="prose"><span class="eyebrow">Caveats</span>
       <ul class="caveats">
         <li><b>Tests are not a random sample:</b> people test when it is slow or new; shares count people, not tests.</li>
-        <li><b>Untested speeds are predictions:</b> machine learning predicts them 30–45% slower than kriging; a pre-set 2026 Q4 test decides (<a href="#d-p2">accuracy</a>).</li>
+        <li><b>Untested speeds are predictions:</b> machine learning predicts them 30–45% slower than kriging; a pre-set test on 2026 Q4 data decides in January 2027 (<a href="#d-p2">accuracy</a>).</li>
         <li><b>Not a licence check:</b> regulators test obligations with their own measurements, not crowdsourced averages.</li>
         <li><b>Population maps disagree where data is thin:</b> 17% in the US, 27–37% in Southeast Asia and the UAE (<a href="#d-p4">details</a>).</li>
         <li><b>"New site" means no tower on record:</b> OpenCelliD misses most Southeast Asian towers; check against an operator's site list.</li>
@@ -936,7 +936,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <li><b>Single tests mislead:</b> removing test noise shrinks slow places in the US, France and the UAE, not in Southeast Asia.</li>
     <li><b>New sites lift some slow places:</b> up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.</li>
     <li><b>Count people, not scores:</b> checked plans lift 1.5–3.8× as many people as KPI ranking; unchecked, it looked up to 9×.</li>
-    <li><b>What would change our view:</b> the pre-set 2026 Q4 test, local cost data, or a third population map.</li>
+    <li><b>What would change our view:</b> the pre-set January 2027 test, local cost data, or a third population map.</li>
   </ul>
 </section>
 
@@ -945,7 +945,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <details class="more" id="d-findings"><summary><span class="eyebrow">More findings · city vs rural, who is tested, gap types, slow clusters, cell data</span></summary><div class="body">
   <div class="chart"><div class="chart-head"><b class="chart-title">Is the gap in cities or in rural areas?</b><span class="chart-sub" id="sub-c-morph"></span></div><div class="key"><span><i style="background:var(--accent)"></i>Urban centre</span><span><i style="background:var(--amber)"></i>Town or suburb</span><span><i style="background:var(--slow)"></i>Rural</span><span class="mono">share of tested people below the bar</span></div>
     <svg class="plot" id="c-morph" role="img" aria-label="Share below the bar by area type"></svg><div class="tip" hidden></div></div>
-  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> share of tested people below the bar in city centres, towns and rural areas.</li><li><b>Areas:</b> the UN Degree of Urbanisation definition.</li><li><b>Example:</b> the Philippines at 25 Mbps: city centres 8%, rural 49%.</li><li><b>So what:</b> site plans should start outside the cities.</li></ul></details>
+  <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Shows:</b> share of tested people below the bar in city centres, towns and rural areas.</li><li><b>Areas:</b> the UN Degree of Urbanisation definition.</li><li><b>Example:</b> the Philippines at 25 Mbps: city centres 8%, rural 49%.</li><li><b>Checked:</b> within 10 points of official EU figures in 6 of 7 countries; the UAE gap comes from its population map.</li><li><b>So what:</b> site plans should start outside the cities.</li></ul></details>
     <div class="chart"><div class="chart-head"><b class="chart-title">How many people were never tested?</b><span class="chart-sub" id="sub-c-tested"></span></div><div class="key"><span><i class="sq" style="background:var(--ok)"></i>Tested, at or above the bar</span><span><i class="sq" style="background:var(--slow)"></i>Tested, below</span><span><i class="sq" style="background:var(--untested)"></i>Not tested</span></div>
       <svg class="plot" id="c-tested" role="img" aria-label="People tested and untested by country"></svg><div class="tip" hidden></div></div>
     <details class="how"><summary>How to read this</summary><ul class="howl"><li><b>Each bar:</b> all of a country's people: tested and fine, tested and below the bar, not tested.</li><li><b>Example:</b> France: 47% of people live where nobody tested this quarter.</li><li><b>So what:</b> where grey is large, measured shares miss many people; predicted speeds fill the gap.</li></ul></details>
@@ -1078,6 +1078,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <li>WorldPop (2020) constrained, UN-adjusted 100 m population, CC BY 4.0; Stevens et al. (2015), PLoS ONE 10. · ESA WorldCover 10 m 2021 v200 (Zanaga et al. 2022), CC BY 4.0. · Copernicus DEM GLO-30 (ESA 2021). · Horn (1981), Proceedings of the IEEE 69 (slope).</li>
         <li>Natural Earth admin-0; geoBoundaries (Runfola et al., PLoS ONE 2020); World Bank population indicator SP.POP.TOTL.</li>
         <li>Eurostat, FAO, ILO, OECD, UN-Habitat, World Bank (2021). Applying the Degree of Urbanisation. · Dijkstra et al. (2021), Journal of Urban Economics 125.</li>
+        <li>European Commission JRC: GHS-COUNTRY-STATS R2024A (Carioli 2024) and GHS-SMOD R2023A (Schiavina, Melchiorri, Pesaresi 2023), urban-centre check.</li>
         <li>3GPP TR 38.901 §7.2 (evaluation scenarios). · ITU-R M.2410-0 (2017). · FCC 17-126 (2017), para. 46. · Bundesnetzagentur press release, 4 Sep 2019. · Decision (EU) 2022/2481.</li>
         <li>Ord & Getis (1995), Geographical Analysis 27(4). · Caldas de Castro & Singer (2006), Geographical Analysis 38. · Benjamini & Hochberg (1995), JRSS B 57.</li>
         <li>Roberts et al. (2017), Ecography 40. · Ploton et al. (2020), Nature Communications 11. · Wadoux et al. (2021), Ecological Modelling 457. · Meyer & Pebesma (2021), Methods in Ecology and Evolution 12.</li>

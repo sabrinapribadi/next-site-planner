@@ -216,7 +216,24 @@ def worldpop() -> None:
             raise SystemExit(f"worldpop {k} failed 6 times")
 
 
-STEPS = {"ookla": ookla, "opencellid": opencellid, "population": population, "worldpop": worldpop, "overture": overture, "overture_us": overture_us, "overture_are": overture_are, "boundaries": boundaries}
+def ghsl() -> None:
+    """JRC GHSL files for the ADR-003 urban-centre check: country statistics by Degree of Urbanisation (R2024A) and the
+    GHS-SMOD 2025 grid (R2023A, WGS84, 30 arc-seconds). EU reuse policy (attribution)."""
+    import zipfile
+    d = DATA / "ghsl"; d.mkdir(parents=True, exist_ok=True)
+    base = "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/"
+    for name, url, sub in (("country_stats", base + "GHS_COUNTRY_STATS_MT_GLOBE_R2024A/V1-0/GHS_COUNTRY_STATS_MT_GLOBE_R2024A.zip", "country_stats"),
+                           ("smod2025", base + "GHS_SMOD_GLOBE_R2023A/GHS_SMOD_E2025_GLOBE_R2023A_4326_30ss/V2-0/GHS_SMOD_E2025_GLOBE_R2023A_4326_30ss_V2_0.zip", "smod2025")):
+        if (d / sub).exists():
+            continue
+        z = d / f"{name}.zip"
+        subprocess.run(["curl", "-sS", "--retry", "5", "-o", str(z), url], check=True)
+        with zipfile.ZipFile(z) as f:
+            f.extractall(d / sub)
+        print(f"ghsl {name}: {z.stat().st_size / 1e6:.1f} MB", flush=True)
+
+
+STEPS = {"ookla": ookla, "opencellid": opencellid, "population": population, "worldpop": worldpop, "ghsl": ghsl, "overture": overture, "overture_us": overture_us, "overture_are": overture_are, "boundaries": boundaries}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("steps", nargs="+", choices=list(STEPS)); a = ap.parse_args()

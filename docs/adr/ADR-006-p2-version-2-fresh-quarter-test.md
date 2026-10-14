@@ -1,6 +1,6 @@
 # ADR-006: P2 Version 2 — Test LightGBM Against Kriging on a Fresh Quarter
 
-**Status:** Proposed — **pre-registered on 2026-10-14**, before Ookla's 2026 Q4 data exists. Predictions are frozen and fingerprinted (below) before any Q4 data is read.
+**Status:** Proposed — **pre-registered on 2026-10-14**, before Ookla's 2026 Q4 data exists. **Open until that data is published, expected January 2027.** Predictions are frozen and fingerprinted (below) before any Q4 data is read.
 **Date:** 2026-10-14
 **Deciders:** Sabrina Pribadi
 

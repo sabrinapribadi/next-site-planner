@@ -30,6 +30,7 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 
 - 61.7M people in tested areas get under 25 Mbps on mobile; 349M live where nobody tested.
 - At equal density, the Philippines (34% below 25 Mbps) and Indonesia (22%) fall further behind.
+- Area types match official EU figures within 10 points in 6 of 7 countries; the UAE gap comes from its population map.
 - 47–68M untested people are likely below 25 Mbps; the range comes from two population maps.
 - The two maps agree in Germany and France; in the US they differ by 17%, in Southeast Asia and the UAE by 27–37%.
 - New sites lift some slow places: up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.
@@ -81,6 +82,7 @@ Raw data lives outside the repository (`GEO_DATA_DIR`). `make data` rebuilds it;
 | WorldPop 2020 constrained, UN-adjusted (second population source) | CC BY 4.0 |
 | ESA WorldCover 2021 v200 (built-up check) | CC BY 4.0 |
 | Copernicus DEM GLO-30 (elevation, slope) | Free licence (Copernicus DEM licence) |
+| JRC GHSL country statistics and GHS-SMOD (urban-centre check) | EU reuse policy (attribution) |
 | Overture Maps places | CDLA-Permissive 2.0 |
 | OpenCelliD | CC BY-SA 4.0 |
 | OCHA COD-AB Indonesia; geoBoundaries | CC BY-IGO; CC BY 4.0 / ODbL |

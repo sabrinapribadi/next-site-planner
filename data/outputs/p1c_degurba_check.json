@@ -1,0 +1,422 @@
+{
+ "design": "ADR-003 P1 check (reported, not gated)",
+ "source": "JRC GHSL GHS-COUNTRY-STATS_MT_GLOBE_R2024A, sheet POP_L1 (grid classes)",
+ "epochs_available": [
+  1975,
+  1980,
+  1985,
+  1990,
+  1995,
+  2000,
+  2005,
+  2010,
+  2015,
+  2020,
+  2025,
+  2030
+ ],
+ "compared_epoch_rule": "published epoch nearest to 2023",
+ "gap_rule_pts": 10.0,
+ "scope_note": "GHSL totals are whole countries (France with overseas departments, the US with Alaska, Hawaii and territories); ours are metropolitan France and the lower 48",
+ "countries": {
+  "IDN": {
+   "ours_kontur_2023": {
+    "urban_centre": 0.4391070741942907,
+    "urban_cluster": 0.39555614772715963,
+    "rural": 0.16533677807854968
+   },
+   "published": {
+    "2025": {
+     "urban_centre": 0.528421171745172,
+     "urban_cluster": 0.3327584086819554,
+     "rural": 0.13882041957287264,
+     "population": 281991982.2676324
+    },
+    "2020": {
+     "urban_centre": 0.5288053208194747,
+     "urban_cluster": 0.32876786663532964,
+     "rural": 0.1424268125451955,
+     "population": 271847374.1841862
+    }
+   },
+   "compared_epoch": 2025,
+   "gap_pts": {
+    "urban_centre": -8.931409755088133,
+    "urban_cluster": 6.279773904520425,
+    "rural": 2.6516358505677045
+   },
+   "decomposition_urban_centre": {
+    "ours_rule_kontur": 0.4391070741942907,
+    "smod_kontur": 0.3886435592405802,
+    "ours_rule_worldpop": 0.5377998247122885,
+    "smod_worldpop": 0.42745320360231415
+   },
+   "decomposition": {
+    "ours_rule_kontur": {
+     "urban_centre": 0.4391070741942907,
+     "urban_cluster": 0.39555614772715963,
+     "rural": 0.16533677807854968
+    },
+    "smod_kontur": {
+     "urban_centre": 0.3886435592405802,
+     "urban_cluster": 0.34945135825676993,
+     "rural": 0.26190508250264993
+    },
+    "ours_rule_worldpop": {
+     "urban_centre": 0.5377998247122885,
+     "urban_cluster": 0.3286293206333686,
+     "rural": 0.13357085465434293
+    },
+    "smod_worldpop": {
+     "urban_centre": 0.42745320360231415,
+     "urban_cluster": 0.32755131177643176,
+     "rural": 0.24499548462125406
+    }
+   },
+   "urban_centre_gap_over_10_pts": false,
+   "any_class_gap_over_10_pts": false
+  },
+  "MYS": {
+   "ours_kontur_2023": {
+    "urban_centre": 0.493155216154394,
+    "urban_cluster": 0.2923700678405144,
+    "rural": 0.21447471600509163
+   },
+   "published": {
+    "2025": {
+     "urban_centre": 0.559543034945127,
+     "urban_cluster": 0.2677144740723449,
+     "rural": 0.17274249098252817,
+     "population": 35042803.85838255
+    },
+    "2020": {
+     "urban_centre": 0.5463196499517041,
+     "urban_cluster": 0.274114213794102,
+     "rural": 0.1795661362541939,
+     "population": 33213667.22180277
+    }
+   },
+   "compared_epoch": 2025,
+   "gap_pts": {
+    "urban_centre": -6.638781879073302,
+    "urban_cluster": 2.4655593768169504,
+    "rural": 4.173222502256346
+   },
+   "decomposition_urban_centre": {
+    "ours_rule_kontur": 0.493155216154394,
+    "smod_kontur": 0.476293727070215,
+    "ours_rule_worldpop": 0.5246965239963506,
+    "smod_worldpop": 0.5036014612523548
+   },
+   "decomposition": {
+    "ours_rule_kontur": {
+     "urban_centre": 0.493155216154394,
+     "urban_cluster": 0.2923700678405144,
+     "rural": 0.21447471600509163
+    },
+    "smod_kontur": {
+     "urban_centre": 0.476293727070215,
+     "urban_cluster": 0.23198596830791832,
+     "rural": 0.2917203046218667
+    },
+    "ours_rule_worldpop": {
+     "urban_centre": 0.5246965239963506,
+     "urban_cluster": 0.29889693677850404,
+     "rural": 0.17640653922514538
+    },
+    "smod_worldpop": {
+     "urban_centre": 0.5036014612523548,
+     "urban_cluster": 0.2564657845714913,
+     "rural": 0.2399327541761539
+    }
+   },
+   "urban_centre_gap_over_10_pts": false,
+   "any_class_gap_over_10_pts": false
+  },
+  "PHL": {
+   "ours_kontur_2023": {
+    "urban_centre": 0.4302800657534214,
+    "urban_cluster": 0.3898175282408046,
+    "rural": 0.179902406005774
+   },
+   "published": {
+    "2025": {
+     "urban_centre": 0.4256171804668089,
+     "urban_cluster": 0.4341384204260466,
+     "rural": 0.1402443991071446,
+     "population": 120864357.99762562
+    },
+    "2020": {
+     "urban_centre": 0.4136075740085135,
+     "urban_cluster": 0.4321358043867909,
+     "rural": 0.15425662160469564,
+     "population": 112190976.99856043
+    }
+   },
+   "compared_epoch": 2025,
+   "gap_pts": {
+    "urban_centre": 0.4662885286612517,
+    "urban_cluster": -4.432089218524199,
+    "rural": 3.9658006898629417
+   },
+   "decomposition_urban_centre": {
+    "ours_rule_kontur": 0.4302800657534214,
+    "smod_kontur": 0.42071676330320645,
+    "ours_rule_worldpop": 0.4780499569765972,
+    "smod_worldpop": 0.47754261520660385
+   },
+   "decomposition": {
+    "ours_rule_kontur": {
+     "urban_centre": 0.4302800657534214,
+     "urban_cluster": 0.3898175282408046,
+     "rural": 0.179902406005774
+    },
+    "smod_kontur": {
+     "urban_centre": 0.42071676330320645,
+     "urban_cluster": 0.3594179655762557,
+     "rural": 0.2198652711205378
+    },
+    "ours_rule_worldpop": {
+     "urban_centre": 0.4780499569765972,
+     "urban_cluster": 0.3569396946407808,
+     "rural": 0.1650103483826219
+    },
+    "smod_worldpop": {
+     "urban_centre": 0.47754261520660385,
+     "urban_cluster": 0.36562090642625467,
+     "rural": 0.15683647836714137
+    }
+   },
+   "urban_centre_gap_over_10_pts": false,
+   "any_class_gap_over_10_pts": false
+  },
+  "DEU": {
+   "ours_kontur_2023": {
+    "urban_centre": 0.3155796641400963,
+    "urban_cluster": 0.37074146409419084,
+    "rural": 0.31367887176571285
+   },
+   "published": {
+    "2025": {
+     "urban_centre": 0.3476775544379451,
+     "urban_cluster": 0.38132779091158836,
+     "rural": 0.2709946546504665,
+     "population": 83277416.69429526
+    },
+    "2020": {
+     "urban_centre": 0.34450666067723373,
+     "urban_cluster": 0.38529257276061196,
+     "rural": 0.2702007665621544,
+     "population": 83405698.028034
+    }
+   },
+   "compared_epoch": 2025,
+   "gap_pts": {
+    "urban_centre": -3.209789029784882,
+    "urban_cluster": -1.0586326817397518,
+    "rural": 4.268421711524634
+   },
+   "decomposition_urban_centre": {
+    "ours_rule_kontur": 0.3155796641400963,
+    "smod_kontur": 0.30007243762052094,
+    "ours_rule_worldpop": 0.33543388844237476,
+    "smod_worldpop": 0.3170646004502959
+   },
+   "decomposition": {
+    "ours_rule_kontur": {
+     "urban_centre": 0.3155796641400963,
+     "urban_cluster": 0.37074146409419084,
+     "rural": 0.31367887176571285
+    },
+    "smod_kontur": {
+     "urban_centre": 0.30007243762052094,
+     "urban_cluster": 0.3381431535398048,
+     "rural": 0.3617844088396743
+    },
+    "ours_rule_worldpop": {
+     "urban_centre": 0.33543388844237476,
+     "urban_cluster": 0.3861843163336197,
+     "rural": 0.27838179522400536
+    },
+    "smod_worldpop": {
+     "urban_centre": 0.3170646004502959,
+     "urban_cluster": 0.34921109435640707,
+     "rural": 0.33372430519329693
+    }
+   },
+   "urban_centre_gap_over_10_pts": false,
+   "any_class_gap_over_10_pts": false
+  },
+  "FRA": {
+   "ours_kontur_2023": {
+    "urban_centre": 0.32942232349511036,
+    "urban_cluster": 0.2645659396239937,
+    "rural": 0.4060117368808959
+   },
+   "published": {
+    "2025": {
+     "urban_centre": 0.35723654704747354,
+     "urban_cluster": 0.2603988652270998,
+     "rural": 0.38236458772542653,
+     "population": 65015713.9720075
+    },
+    "2020": {
+     "urban_centre": 0.35555216540033774,
+     "urban_cluster": 0.26262656473809665,
+     "rural": 0.38182126986156556,
+     "population": 64492268.687101096
+    }
+   },
+   "compared_epoch": 2025,
+   "gap_pts": {
+    "urban_centre": -2.781422355236318,
+    "urban_cluster": 0.41670743968938995,
+    "rural": 2.3647149155469394
+   },
+   "decomposition_urban_centre": {
+    "ours_rule_kontur": 0.32942232349511036,
+    "smod_kontur": 0.33677353007650096,
+    "ours_rule_worldpop": 0.3319614258143798,
+    "smod_worldpop": 0.34307168260936416
+   },
+   "decomposition": {
+    "ours_rule_kontur": {
+     "urban_centre": 0.32942232349511036,
+     "urban_cluster": 0.2645659396239937,
+     "rural": 0.4060117368808959
+    },
+    "smod_kontur": {
+     "urban_centre": 0.33677353007650096,
+     "urban_cluster": 0.2292443270562916,
+     "rural": 0.43398214286720743
+    },
+    "ours_rule_worldpop": {
+     "urban_centre": 0.3319614258143798,
+     "urban_cluster": 0.29264045254410964,
+     "rural": 0.3753981216415105
+    },
+    "smod_worldpop": {
+     "urban_centre": 0.34307168260936416,
+     "urban_cluster": 0.2352617993529707,
+     "rural": 0.42166651803766514
+    }
+   },
+   "urban_centre_gap_over_10_pts": false,
+   "any_class_gap_over_10_pts": false
+  },
+  "USA": {
+   "ours_kontur_2023": {
+    "urban_centre": 0.31101131698175755,
+    "urban_cluster": 0.4118770328180988,
+    "rural": 0.27711165020014367
+   },
+   "published": {
+    "2025": {
+     "urban_centre": 0.3987364177114459,
+     "urban_cluster": 0.34351241543087485,
+     "rural": 0.2577511668576791,
+     "population": 343647990.0013909
+    },
+    "2020": {
+     "urban_centre": 0.39008280056780265,
+     "urban_cluster": 0.3495583052995273,
+     "rural": 0.26035889413267005,
+     "population": 335984972.7549675
+    }
+   },
+   "compared_epoch": 2025,
+   "gap_pts": {
+    "urban_centre": -8.772510072968837,
+    "urban_cluster": 6.836461738722393,
+    "rural": 1.936048334246454
+   },
+   "decomposition_urban_centre": {
+    "ours_rule_kontur": 0.31101131698175755,
+    "smod_kontur": 0.3786997377816752,
+    "ours_rule_worldpop": 0.32574401856236046,
+    "smod_worldpop": 0.40532574843259955
+   },
+   "decomposition": {
+    "ours_rule_kontur": {
+     "urban_centre": 0.31101131698175755,
+     "urban_cluster": 0.4118770328180988,
+     "rural": 0.27711165020014367
+    },
+    "smod_kontur": {
+     "urban_centre": 0.3786997377816752,
+     "urban_cluster": 0.3279461108691483,
+     "rural": 0.2933541513491765
+    },
+    "ours_rule_worldpop": {
+     "urban_centre": 0.32574401856236046,
+     "urban_cluster": 0.4384331991703981,
+     "rural": 0.2358227822672415
+    },
+    "smod_worldpop": {
+     "urban_centre": 0.40532574843259955,
+     "urban_cluster": 0.34723778163882346,
+     "rural": 0.24743646992857696
+    }
+   },
+   "urban_centre_gap_over_10_pts": false,
+   "any_class_gap_over_10_pts": false
+  },
+  "ARE": {
+   "ours_kontur_2023": {
+    "urban_centre": 0.4989603367990986,
+    "urban_cluster": 0.3550115151799457,
+    "rural": 0.14602814802095568
+   },
+   "published": {
+    "2025": {
+     "urban_centre": 0.7305466279122261,
+     "urban_cluster": 0.16566678887536088,
+     "rural": 0.10378658321241312,
+     "population": 9613523.273664301
+    },
+    "2020": {
+     "urban_centre": 0.7301812303503986,
+     "urban_cluster": 0.17032010430241662,
+     "rural": 0.0994986653471849,
+     "population": 9237606.285881374
+    }
+   },
+   "compared_epoch": 2025,
+   "gap_pts": {
+    "urban_centre": -23.158629111312752,
+    "urban_cluster": 18.934472630458483,
+    "rural": 4.224156480854256
+   },
+   "decomposition_urban_centre": {
+    "ours_rule_kontur": 0.4989603367990986,
+    "smod_kontur": 0.4698267545160128,
+    "ours_rule_worldpop": 0.736980334923574,
+    "smod_worldpop": 0.6849701861528499
+   },
+   "decomposition": {
+    "ours_rule_kontur": {
+     "urban_centre": 0.4989603367990986,
+     "urban_cluster": 0.3550115151799457,
+     "rural": 0.14602814802095568
+    },
+    "smod_kontur": {
+     "urban_centre": 0.4698267545160128,
+     "urban_cluster": 0.2040589902930839,
+     "rural": 0.32611425519090326
+    },
+    "ours_rule_worldpop": {
+     "urban_centre": 0.736980334923574,
+     "urban_cluster": 0.18858275472314803,
+     "rural": 0.07443691035327801
+    },
+    "smod_worldpop": {
+     "urban_centre": 0.6849701861528499,
+     "urban_cluster": 0.18117967986216216,
+     "rural": 0.13385013398498796
+    }
+   },
+   "urban_centre_gap_over_10_pts": true,
+   "any_class_gap_over_10_pts": true
+  }
+ }
+}

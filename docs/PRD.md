@@ -3,7 +3,7 @@ Project: Next Site Planner — Where Would One More Mobile Site Help the Most Pe
 Version: 0.7 (P5 planner API, MCP tools and grounded site notes, ADR-009; P6 Databricks job for Indonesia, ADR-010; P7 pages)
 Author: Sabrina Pribadi
 Date: October 14, 2026
-Status: Active — P0, P1 passed; P2 failed (kriging deployed; ADR-006 retest pending 2026 Q4); P3 done; P4 done (checked plans); P5 failed on live latency only (notes cached); P6 passed (Indonesia); P7 passed
+Status: Active — P0, P1 passed; P2 failed (kriging deployed; ADR-006 retest open until Ookla publishes 2026 Q4, expected January 2027); P3 done; P4 done (checked plans); P5 failed on live latency only (notes cached); P6 passed (Indonesia); P7 passed
 
 
 1. EXECUTIVE SUMMARY
@@ -121,6 +121,7 @@ Module G: Databricks quarterly job for Indonesia, registry, drift — ADR-010 (P
 | WorldPop 2020 constrained, UN-adjusted, 100 m, all seven countries | CC BY 4.0 | Second population source: cross-check of Kontur; plans count the smaller of the two per hexagon (ADR-008 amendment 1) |
 | ESA WorldCover 2021 v200, 10 m | CC BY 4.0 | Built-up land per nominal (≥ 1,000 m²); site point on built land |
 | Copernicus DEM GLO-30 | Free licence | Elevation and slope at each site point (flags) |
+| JRC GHSL: GHS-COUNTRY-STATS R2024A, GHS-SMOD R2023A | EU reuse policy (attribution) | Published urban-centre shares and official classes for the ADR-003 check |
 
 Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in the repository.
 `scripts/acquire_public_data.py` rebuilds it; sources that change (OpenCelliD, Overture) are kept as dated snapshots.
@@ -208,6 +209,8 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 - Zanaga, D. et al. (2022). ESA WorldCover 10 m 2021 v200. Zenodo, doi:10.5281/zenodo.7254221
 - European Space Agency (2021). Copernicus DEM GLO-30, doi:10.5270/ESA-c5d3d65
 - Horn, B. K. P. (1981). Hill shading and the reflectance map. Proceedings of the IEEE 69(1)
+- Carioli, A. (2024). GHS-COUNTRY-STATS R2024A, GHSL country statistics by Degree of Urbanisation. European Commission, JRC
+- Schiavina, M., Melchiorri, M., Pesaresi, M. (2023). GHS-SMOD R2023A. European Commission, JRC, doi:10.2905/A0DF7A6F-49DE-46EA-9BDE-563437A6E2BA
 - Ord, J. K. & Getis, A. (1995). Local spatial autocorrelation statistics. Geographical Analysis 27(4)
 - Meyer, H. & Pebesma, E. (2021). Predicting into unknown space? Estimating the area of applicability of spatial prediction models. Methods in Ecology and Evolution (arXiv 2005.07939)
 - Callaway, B. & Sant'Anna, P. (2021). Difference-in-differences with multiple time periods. Journal of Econometrics 225(2)
