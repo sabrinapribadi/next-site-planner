@@ -1,4 +1,4 @@
-.PHONY: data evidence test build-test hover-test page-data pipeline
+.PHONY: data evidence test build-test hover-test page-data pipeline preview
 
 # Environments live outside OneDrive (shared by all portfolio projects; rebuild with `make env`)
 PY ?= $(HOME)/.venvs/portfolio/bin/python
@@ -49,3 +49,7 @@ pipeline:
 	$(PY) scripts/site_plan.py --validated
 	$(PY) scripts/nominal_validation_report.py
 	$(PY) scripts/export_page_data.py
+
+# Share-preview images for LinkedIn and other link cards (portfolio rule R18)
+preview:
+	mkdir -p docs/assets && cd tests/browser && NODE_PATH=$(NODE_DIR)/node_modules node preview.js $(CURDIR)/docs/index.html $(CURDIR)/docs/assets/preview.png && NODE_PATH=$(NODE_DIR)/node_modules node preview.js $(CURDIR)/docs/build.html $(CURDIR)/docs/assets/preview-build.png
