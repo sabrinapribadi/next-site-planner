@@ -156,7 +156,9 @@ class OpenAIWriter:
 class NoteService:
     """Cache → model → grader → template. `writer=None` (no key) serves templates only."""
 
-    def __init__(self, writer: OpenAIWriter | None, cache_path: Path | None = None, save_every: int = 50):
+    def __init__(self, writer: OpenAIWriter | None, cache_path: Path | None = None, save_every: int = 50, cache_model: str | None = None):
+        """`cache_model` lets a read-only service (no writer, no key) serve notes cached for that model; misses get templates."""
+        self.cache_model = cache_model
         import threading
         self.writer, self.cache_path, self.save_every = writer, cache_path, save_every
         self.cache = json.loads(cache_path.read_text()) if cache_path and cache_path.exists() else {}
@@ -173,7 +175,7 @@ class NoteService:
         tmp.write_text(snapshot); os.replace(tmp, self.cache_path)
 
     def key(self, facts: dict) -> str:
-        model = self.writer.model if self.writer else "template"
+        model = self.writer.model if self.writer else (self.cache_model or "template")
         return hashlib.sha256(json.dumps([PROMPT_VERSION, model, facts], sort_keys=True, default=str).encode()).hexdigest()[:24]
 
     def note(self, facts: dict, use_cache: bool = True) -> tuple[str, str, dict, Meter, str | None]:

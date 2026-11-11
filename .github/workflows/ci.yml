@@ -1,5 +1,7 @@
 name: ci
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -7,5 +9,50 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.12", cache: pip}
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt ruff
+      - name: Lint (errors only)
+        run: ruff check --select E9,F63,F7,F82 src scripts tests
       - run: python -m pytest -q tests
+
+  # CD (R19, ADR-011): fetch the checksummed serving store (release asset), build the bundle, sign its provenance,
+  # deploy to Vercel Hobby, smoke-test the live URL. Skips the deploy (job stays green) until the token and asset exist.
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write       # signs the build provenance
+      attestations: write
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Fetch the serving store (release asset)
+        id: data
+        run: |
+          if gh release download serving-data-v1 -p serving_data.tar.gz -D build; then echo "ok=true" >> "$GITHUB_OUTPUT"
+          else echo "::notice::Release asset serving-data-v1 not found; deploy skipped."; fi
+      - name: Build the bundle (checks the store's SHA-256)
+        if: steps.data.outputs.ok == 'true'
+        run: |
+          python scripts/build_deploy.py --data build/serving_data.tar.gz --out build/next-site-planner
+          tar -czf build/next-site-planner.tar.gz -C build next-site-planner
+      - name: Sign build provenance
+        if: steps.data.outputs.ok == 'true'
+        uses: actions/attest-build-provenance@v4
+        with: {subject-path: build/next-site-planner.tar.gz}
+      - name: Deploy to Vercel (production)
+        if: steps.data.outputs.ok == 'true' && env.VERCEL_TOKEN != ''
+        id: vercel
+        working-directory: build/next-site-planner
+        run: echo "url=$(npx -y vercel@65.4.0 deploy --prod --yes --token "$VERCEL_TOKEN")" >> "$GITHUB_OUTPUT"
+      - name: Smoke test the live URL
+        if: steps.data.outputs.ok == 'true' && env.VERCEL_TOKEN != ''
+        run: python scripts/smoke_test.py "${{ vars.PUBLIC_URL || steps.vercel.outputs.url }}"
+      - name: No token yet
+        if: env.VERCEL_TOKEN == ''
+        run: echo "::notice::VERCEL_TOKEN not set; deploy skipped."

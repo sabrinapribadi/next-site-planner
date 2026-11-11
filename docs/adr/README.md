@@ -16,6 +16,7 @@ Key design decisions for the next-site planner. Each ADR records the context, th
 | [ADR-008](ADR-008-budgeted-site-plan.md) | Budgeted site plan (P4) | Accepted | Expected people lifted = people × chance below 25 Mbps × measured lift rate; exact knapsack (budgeted covering as sensitivity) vs KPI ranking; θ ranges; capacity lift estimated first; CSV / GeoJSON / KML exports. Amendment 1: every nominal checked against WorldPop, built-up land (WorldCover) and terrain (Copernicus DEM); checked plans replace the original. Amendment 2: crowding sensitivity. |
 | [ADR-009](ADR-009-planner-api-mcp-rationales.md) | Planner API, MCP tools and grounded site notes (P5) | Accepted | Four tools over one registry (REST and MCP); notes graded so every number is traced to the data; template fallback; R13 budgets; live p95 latency missed, notes cached. |
 | [ADR-010](ADR-010-databricks-indonesia-job.md) | Databricks quarterly job for Indonesia (P6) | Accepted | P6 gate narrowed to Indonesia before code; Ookla read at the source; shares identical to local; scorer registered in Unity Catalog; drift check. |
+| [ADR-011](ADR-011-public-api-and-technology-assessment.md) | Public API, remote MCP, technology assessment | Accepted | Four tools on Vercel Hobby with stateless MCP; store as a checksummed release asset read by DuckDB; cached notes, no key; CD with build provenance. |
 
 ## Decision Dependencies
 
@@ -29,5 +30,6 @@ ADR-001 (framing, unit, metrics)
   ├── ADR-007 (P3 new-site effect) ── details the P3 gate
   ├── ADR-008 (P4 site plan) ── details the P4 gate
   ├── ADR-009 (P5 planner API, MCP, site notes) ── details the P5 gate
-  └── ADR-010 (P6 Databricks job, Indonesia) ── narrows the P6 gate
+  ├── ADR-010 (P6 Databricks job, Indonesia) ── narrows the P6 gate
+  └── ADR-011 (public API and MCP on a free host)
 ```

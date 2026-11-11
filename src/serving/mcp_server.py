@@ -26,7 +26,9 @@ def build_server(tools: Tools | None = None) -> MCPServer:
         def make(f):
             def call(**kw):
                 return f(**kw).model_dump()
-            call.__name__, call.__doc__, call.__signature__ = f.__name__, inspect.getdoc(f), inspect.signature(f)
+            # the wrapper returns a plain dict; declaring it keeps MCP's output schema simple across pydantic versions
+            call.__name__, call.__doc__ = f.__name__, inspect.getdoc(f)
+            call.__signature__ = inspect.signature(f).replace(return_annotation=dict)
             return call
         srv.tool(name=name, description=inspect.getdoc(fn))(make(fn))
     return srv

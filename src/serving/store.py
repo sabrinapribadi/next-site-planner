@@ -32,7 +32,11 @@ class Store:
 
     @cached_property
     def plans(self) -> pd.DataFrame:
-        return pd.read_parquet(self.path / "plans.parquet")
+        df = self.con.execute(f"SELECT * FROM '{self.path / 'plans.parquet'}'").fetchdf()     # DuckDB: no pyarrow needed on the host
+        for c in df.columns:                      # nullable booleans as objects with None, exactly as pandas reads them
+            if str(df[c].dtype) == "boolean":
+                df[c] = df[c].astype(object).where(df[c].notna(), None)
+        return df
 
     def hexagon(self, lat: float, lon: float) -> dict | None:
         cell = h3.latlng_to_cell(lat, lon, RES)

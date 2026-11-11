@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.10.0] — 2026-11-11 — Public API and remote MCP, free host, CD with provenance (ADR-011)
+**Files:** docs/adr/ADR-011-public-api-and-technology-assessment.md (new), src/serving/public.py (new), src/serving/store.py, src/serving/notes.py, src/serving/mcp_server.py, scripts/build_deploy.py (new), scripts/smoke_test.py (new), deploy/serving_data.sha256 (new), tests/test_public.py (new), .github/workflows/ci.yml, docs/adr/README.md
+- **Situation:** The planner tools ran only on a laptop; the store (6.4 million hexagons) is too large for git.
+- **Task:** Serve the same four tools publicly for $0, with no key and the data licences respected.
+- **Action:** Stateless MCP beside REST; notes from the cache only; DuckDB reads the H3-sorted store and the plans (no pyarrow); the store travels as a checksummed release asset; injection tests, host allow-list, error-level lint, and a CD job that signs provenance, deploys and smoke-tests.
+- **Result:** All 12,716 planned sites get a cached, grounded model note; `gap_at` p95 38 ms; cold import 2.6 s; bundle 102 MB + 143 MB of dependencies.
+- **Talking point:** "A 6.4-million-row lookup runs on a free serverless host because the table is sorted by H3 cell: each query reads one 50,000-row group."
+
 ## [0.9.1] — 2026-10-14 — Urban-centre check against official figures (ADR-003)
 **Files:** scripts/degurba_check.py, scripts/acquire_public_data.py, Makefile, requirements.txt, data/outputs/p1c_degurba_check.json, docs/adr/ADR-003, ADR-002, ADR-006, docs/adr/README.md, docs/PRD.md, README.md, docs/index.html, docs/build.html
 - **Situation:** ADR-003 pre-set a check of our urban-centre shares against published Degree of Urbanisation figures (a gap above 10 points is investigated); it was still open.
