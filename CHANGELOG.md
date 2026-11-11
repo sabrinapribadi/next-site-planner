@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.11.1] — 2026-11-11 — PSI evidence and Databricks deploy from CI
+**Files:** docs/references.yaml, docs/adr/ADR-010, data/outputs/references_evidence.json, .github/workflows/ci.yml
+- **Situation:** ADR-010 cited no paper for its drift measure, and the bundle was deployed only by hand.
+- **Task:** Close the R2 and R19 gaps.
+- **Action:** Added Yurdakul & Naranjo (2020) to the generated evidence table; CI deploys the bundle once Databricks secrets exist.
+- **Result:** Every ADR's papers carry OpenAlex evidence; bundle validated locally.
+- **Talking point:** "Even a monitoring threshold states whether a paper backs it or it is our own convention."
+
 ## [0.11.0] — 2026-11-11 — Hiring-team brief (R22), rules audit fixes
 **Files:** docs/brief.yaml, scripts/brief.py, README.md, docs/index.html, docs/build.html, docs/PRD.md, .github/workflows/ci.yml, tests/browser/*.js
 - **Situation:** The audit found browser tests outside CI, Pages publishing without a gate, missing free-tier notes and an unbumped PRD; hiring teams had no one-glance summary.
