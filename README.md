@@ -1,17 +1,32 @@
 # Next Site Planner
 
-**Where would one more mobile site improve measured speeds for the most people — per unit of budget?**
+<!-- brief:start -->
 
-Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, France, United States, United Arab Emirates):
+## For hiring teams: the project in 5W1H
 
-- Measure the gap: people living where measured mobile download is below 10 or 25 Mbps (Ookla open speed tiles × Kontur population on an H3 grid)
-- Compare countries fairly: at equal population density, with the unmeasured population reported
-- Measure what new sites do: before/after speeds near newly seen cells (all seven countries, one rule)
-- Choose sites as a set: an exact budgeted optimiser vs KPI ranking; every nominal checked on the ground
-- Serve answers: a planner API and MCP tools, with site notes whose numbers are all traced to the data
-- Run as a cloud job: Databricks rebuilds Indonesia quarterly from Ookla's source files
+1. **What:** A planner that picks where one more mobile site lifts the most people above a speed bar, per unit of budget, in 7 countries.
+2. **Why:** Site lists are ranked on weighted KPIs and national medians, which hide where the people on slow mobile live.
+3. **Who:** Users: radio network planners. Countries: Indonesia, Malaysia, the Philippines, Germany, France, the United States, the UAE.
+   - Data: Ookla open speed tiles, two population maps, places, land cover and elevation, on 6.4M populated hexagons (0.74 km² each).
+4. **Where:** [Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks.
+5. **When it fails:** 8 phases with gates set before analysis; 2 failed and are reported (machine learning beat kriging by 7%, bar 10%; live note latency).
+   - No live A/B test: no operator traffic. New sites' effect is measured with difference-in-differences; models face spatial block CV.
+6. **How:** Kriging fills untested areas; an exact budgeted optimiser chooses sites; every nominal is checked on the ground.
+   - Result: checked plans lift 1.5–3.8× as many people as KPI ranking at the same budget.
 
-**Live:** [results page](https://sabrinapribadi.github.io/next-site-planner/) · [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html)
+**Skills applied** (each linked to the file or decision that shows it):
+
+- **Spatial data engineering:** DuckDB and H3 over eight public sources and 6.4M hexagons — [acquire_public_data.py](scripts/acquire_public_data.py), [ADR-001](docs/adr/ADR-001-framing-and-analysis-unit.md)
+- **Spatial statistics and ML:** hotspot tests, kriging, measurement-noise model; LightGBM with spatial block CV — [ADR-004](docs/adr/ADR-004-speed-model-for-untested-areas.md), [ADR-005](docs/adr/ADR-005-measurement-noise.md)
+- **Causal inference:** staggered difference-in-differences with pre-trend checks — [ADR-007](docs/adr/ADR-007-new-site-effect.md)
+- **Operations research:** exact 0/1 knapsack over three cost classes vs KPI ranking — [ADR-008](docs/adr/ADR-008-budgeted-site-plan.md)
+- **MLOps, cloud and CI/CD:** Databricks job with Spark H3, Unity Catalog registry, drift; gated CI/CD to Vercel with provenance — [ADR-010](docs/adr/ADR-010-databricks-indonesia-job.md), [ADR-011](docs/adr/ADR-011-public-api-and-technology-assessment.md)
+- **GenAI:** grounded site notes with a grader, MCP tools, cost and latency budgets — [ADR-009](docs/adr/ADR-009-planner-api-mcp-rationales.md)
+- **Domain:** radio planning (coverage vs capacity gap, morphology, co-location, site spacing) — [ADR-003](docs/adr/ADR-003-industry-alignment.md)
+
+<!-- brief:end -->
+
+[![ci](https://github.com/sabrinapribadi/next-site-planner/actions/workflows/ci.yml/badge.svg)](https://github.com/sabrinapribadi/next-site-planner/actions/workflows/ci.yml)
 
 **Status: phases 0–7 done.** Details: [docs/PRD.md](docs/PRD.md), [decision records](docs/adr/README.md), [CHANGELOG.md](CHANGELOG.md).
 
@@ -34,12 +49,29 @@ Public data only, seven countries (Indonesia, Malaysia, Philippines, Germany, Fr
 - 47–68M untested people are likely below 25 Mbps; the range comes from two population maps.
 - The two maps agree in Germany and France; in the US they differ by 17%, in Southeast Asia and the UAE by 27–37%.
 - New sites lift some slow places: up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.
-- Checked site plans lift 1.5–3.8× as many people as KPI ranking at the same budget (+50% to +281%).
 - Every nominal has people on both maps, at least 1,000 m² of buildings, and a pin on built land.
 - Site lists as CSV / GeoJSON / KML in `docs/data/plans/`.
 - Site notes: 100% of numbers traced to the data, $0.064 per 1,000 notes.
 - Databricks reproduces Indonesia's numbers exactly, reading Ookla at the source.
 - Single speed tests are mostly luck: two tests at one place differ 3–5×; neighbourhood blending fixes much of it.
+
+## Try it: live API and MCP
+
+| Surface | Address | What it serves |
+|---|---|---|
+| REST API with interactive docs | [next-site-planner.vercel.app/docs](https://next-site-planner.vercel.app/docs) | Speed gap at any point in seven countries, site plans, grounded site notes, country comparison |
+| MCP endpoint (stateless, spec 2026-07-28) | `https://next-site-planner.vercel.app/mcp` | The same four tools for AI assistants |
+
+- Read-only: all 12,716 planned sites have a cached note; no LLM key on the host.
+- Data: the serving store (66.6 MB) is the release asset `serving-data-v1`, checked against `deploy/serving_data.sha256`; derived data shared under CC BY-NC-SA 4.0.
+- Connect an assistant: `claude mcp add --transport http site-planner https://next-site-planner.vercel.app/mcp`.
+- **Size watch:** the bundle is 97.6 MiB of Hobby's 100 MB per-deploy upload limit; a larger store needs slimming first.
+
+**Free-tier limits (R20; Vercel Hobby, read 2026-11-11):**
+- Free and non-commercial; each call gets up to 2 GB, 1 vCPU and 300 s.
+- A monthly allotment; Hobby has no billing, so Vercel pauses the project instead of charging.
+- After idle time the first call wakes the app: about 1–3 s (measured 2026-11-11).
+- **Fallback:** the [results page](https://sabrinapribadi.github.io/next-site-planner/) is static and carries every number, even if the API is paused.
 
 ## Reproduce
 

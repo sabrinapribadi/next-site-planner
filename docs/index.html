@@ -781,24 +781,30 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .nom-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; border: 1.5px solid #fff; }
 
 #data .table-wrap td, #data .table-wrap th, #approach .table-wrap td, #approach .table-wrap th { padding-top: 5px; padding-bottom: 5px; line-height: 1.35; }
+/* brief:css:start (rule R22, written by scripts/brief.py) */
+.brief { display: grid; gap: 12px; padding-block: 18px 4px; }
+.brief-list { list-style: none; margin: 0; padding: 0 !important; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+.brief-list li { display: grid; align-content: start; gap: 4px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; min-width: 0; }
+.brief-w { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.brief-main { font-size: 14.5px; line-height: 1.45; color: var(--fg); }
+.brief-sub { font-size: 13px; line-height: 1.45; color: var(--muted); }
+.brief-skills summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.brief-skills ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13.5px; line-height: 1.45; }
+.brief-proof { font-size: 12px; margin-left: 4px; white-space: nowrap; }
+/* brief:css:end */
 </style>
 
 <div class="wrap">
 <header class="top">
   <span class="eyebrow">Portfolio · GIS + MLOps · public data only · seven countries</span>
   <h1>Where would one more mobile site help the most people?</h1>
-  <p class="lede">Mobile speed, people and cells on one grid: Indonesia, Malaysia, the Philippines, Germany, France, the US and the UAE.</p>
-  <div class="status"><span class="chip">Phases 0–7 of 7 done</span><span class="muted">Gap map, checked site plans, planner API and AI tools, and a Databricks job are live.</span></div>
+<!-- brief:start -->
+<section class="brief" id="brief" aria-label="Project brief for hiring teams"><span class="eyebrow">For hiring teams · the project in 5W1H</span><ol class="brief-list"><li><span class="brief-w">1 · What</span><span class="brief-main">A planner that picks where one more mobile site lifts the most people above a speed bar, per unit of budget, in 7 countries.</span></li><li><span class="brief-w">2 · Why</span><span class="brief-main">Site lists are ranked on weighted KPIs and national medians, which hide where the people on slow mobile live.</span></li><li><span class="brief-w">3 · Who</span><span class="brief-main">Users: radio network planners. Countries: Indonesia, Malaysia, the Philippines, Germany, France, the United States, the UAE.</span><span class="brief-sub">Data: Ookla open speed tiles, two population maps, places, land cover and elevation, on 6.4M populated hexagons (0.74 km² each).</span></li><li><span class="brief-w">4 · Where</span><span class="brief-main"><a href="https://sabrinapribadi.github.io/next-site-planner/">Results page</a> and <a href="https://sabrinapribadi.github.io/next-site-planner/build.html">technical walkthrough</a> on GitHub Pages; <a href="https://next-site-planner.vercel.app/docs">live API and MCP</a> on Vercel; quarterly Indonesia job and registry on Databricks.</span></li><li><span class="brief-w">5 · When it fails</span><span class="brief-main">8 phases with gates set before analysis; 2 failed and are reported (machine learning beat kriging by 7%, bar 10%; live note latency).</span><span class="brief-sub">No live A/B test: no operator traffic. New sites&#x27; effect is measured with difference-in-differences; models face spatial block CV.</span></li><li><span class="brief-w">6 · How</span><span class="brief-main">Kriging fills untested areas; an exact budgeted optimiser chooses sites; every nominal is checked on the ground.</span><span class="brief-sub">Result: checked plans lift 1.5–3.8× as many people as KPI ranking at the same budget.</span></li></ol><details class="brief-skills" open><summary>Skills applied, with proof</summary><ul><li><b>Spatial data engineering</b> DuckDB and H3 over eight public sources and 6.4M hexagons <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/scripts/acquire_public_data.py">acquire_public_data.py</a> <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-001-framing-and-analysis-unit.md">ADR-001</a></li><li><b>Spatial statistics and ML</b> hotspot tests, kriging, measurement-noise model; LightGBM with spatial block CV <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-004-speed-model-for-untested-areas.md">ADR-004</a> <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-005-measurement-noise.md">ADR-005</a></li><li><b>Causal inference</b> staggered difference-in-differences with pre-trend checks <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-007-new-site-effect.md">ADR-007</a></li><li><b>Operations research</b> exact 0/1 knapsack over three cost classes vs KPI ranking <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-008-budgeted-site-plan.md">ADR-008</a></li><li><b>MLOps, cloud and CI/CD</b> Databricks job with Spark H3, Unity Catalog registry, drift; gated CI/CD to Vercel with provenance <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-010-databricks-indonesia-job.md">ADR-010</a> <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-011-public-api-and-technology-assessment.md">ADR-011</a></li><li><b>GenAI</b> grounded site notes with a grader, MCP tools, cost and latency budgets <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-009-planner-api-mcp-rationales.md">ADR-009</a></li><li><b>Domain</b> radio planning (coverage vs capacity gap, morphology, co-location, site spacing) <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-003-industry-alignment.md">ADR-003</a></li></ul></details></section>
+<!-- brief:end -->
+
   <div class="status"><a href="build.html">Technical walkthrough →</a><a href="https://github.com/sabrinapribadi/next-site-planner">GitHub repository</a></div>
   <nav class="toc" aria-label="Sections"><a href="#problem"><span class="n">1</span>Problem</a><a href="#data"><span class="n">2</span>Data</a><a href="#approach"><span class="n">3</span>Approach</a><a href="#solution"><span class="n">4</span>Solution</a><a href="#take"><span class="n">5</span>Our take</a></nav>
 </header>
-
-<div class="glance" id="glance">
-  <div class="card"><span class="eyebrow">Data</span><b class="big" id="g-data">899M people</b><span class="muted small">7 countries · 15 quarters of speed tests · eight public sources on one 0.74 km² hexagon grid</span></div>
-  <div class="card"><span class="eyebrow">Problem</span><b class="big">Rank sites, or count people?</b><span class="muted small">Site lists are ranked on weighted KPIs; countries are compared on national medians that mix cities with islands.</span></div>
-  <div class="card"><span class="eyebrow">Approach</span><b class="big">People below a bar</b><span class="muted small">Count people on slow mobile, measure what new sites did, then choose the costed set of sites that lifts the most people.</span></div>
-  <div class="card result"><span class="eyebrow">Result so far</span><b class="big" id="g-result">1 in 9 to 1 in 11 people</b><span class="muted small" id="g-result-sub">typically get under 25 Mbps on mobile, and about 3 in 5 to 2 in 3 of them were never tested. The range comes from two population maps.</span></div>
-</div>
 
 <section class="block" id="problem">
   <span class="eyebrow">1 · Problem</span>
@@ -943,11 +949,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <span class="eyebrow">5 · Our take</span>
   <h2>The gap is rural, local, and partly unseen</h2>
   <ul class="points prose" id="take-list">
-    <li><b>Rural first:</b> rural people are about 3–6× as likely as city-centre people to be below 25 Mbps (Malaysia far more).</li>
+    <li><b>Rural first:</b> the gap is mostly rural in every country, widest in Malaysia.</li>
     <li><b>Untested places hold most of the gap:</b> 13–23M Filipinos and 22–30M Indonesians nobody tested are likely below 25 Mbps.</li>
     <li><b>Single tests mislead:</b> removing test noise shrinks slow places in the US, France and the UAE, not in Southeast Asia.</li>
     <li><b>New sites lift some slow places:</b> up to 1 in 8 crossed 25 Mbps; average speed rose only in the US.</li>
-    <li><b>Count people, not scores:</b> checked plans lift 1.5–3.8× as many people as KPI ranking; unchecked, it looked up to 9×.</li>
+    <li><b>Count people, not scores, and check every nominal on the ground:</b> unchecked, the gain looked up to 9×.</li>
     <li><b>What would change our view:</b> the pre-set January 2027 test, local cost data, or a third population map.</li>
   </ul>
 </section>
@@ -1038,6 +1044,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-008-budgeted-site-plan.md">ADR-008</a> — the site plan: people lifted per cost, exact solver, KPI baseline; amendments check every nominal on the ground.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-009-planner-api-mcp-rationales.md">ADR-009</a> — planner API and MCP tools; site notes where every number is checked.</li>
       <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-010-databricks-indonesia-job.md">ADR-010</a> — Databricks job for Indonesia, reading Ookla at the source; matches local results exactly.</li>
+      <li><a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-011-public-api-and-technology-assessment.md">ADR-011</a> — public API and MCP on a free host; technology assessment.</li>
     </ul>
     <p class="muted small">The method changes made after checks failed are in the method table above and ADR-002; the noise follow-up is ADR-005.</p>
   </div></details>
@@ -1104,7 +1111,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <footer>
   <span>Every number comes from <code>data/outputs/*.json</code> via <code>scripts/export_page_data.py</code>. Code MIT; maps and derived figures CC BY-NC-SA 4.0 (Ookla data).</span>
-  <span>Sabrina Pribadi · last updated 13 Oct 2026 (<a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/CHANGELOG.md">changelog</a>) · <a href="build.html">technical walkthrough</a> · <a href="https://github.com/sabrinapribadi/next-site-planner">github.com/sabrinapribadi/next-site-planner</a></span>
+  <span>Sabrina Pribadi · last updated 11 Nov 2026 (<a href="https://github.com/sabrinapribadi/next-site-planner/blob/main/CHANGELOG.md">changelog</a>) · <a href="build.html">technical walkthrough</a> · <a href="https://next-site-planner.vercel.app/docs">live API</a> · <a href="https://github.com/sabrinapribadi/next-site-planner">github.com/sabrinapribadi/next-site-planner</a></span>
 </footer>
 </div>
 

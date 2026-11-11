@@ -1,8 +1,8 @@
 PRODUCT REQUIREMENT DOCUMENT (PRD)
 Project: Next Site Planner — Where Would One More Mobile Site Help the Most People?
-Version: 0.7 (P5 planner API, MCP tools and grounded site notes, ADR-009; P6 Databricks job for Indonesia, ADR-010; P7 pages)
+Version: 0.8 (public API and stateless MCP on Vercel Hobby; serving store as a checksummed release asset; ADR-011)
 Author: Sabrina Pribadi
-Date: October 14, 2026
+Date: November 11, 2026
 Status: Active — P0, P1 passed; P2 failed (kriging deployed; ADR-006 retest open until Ookla publishes 2026 Q4, expected January 2027); P3 done; P4 done (checked plans); P5 failed on live latency only (notes cached); P6 passed (Indonesia); P7 passed
 
 
@@ -134,6 +134,7 @@ Raw data lives in `GEO_DATA_DIR` (OneDrive `github_project/data/geo`), never in 
 3. Serving store → one tool registry → REST API (FastAPI) and MCP server; site notes graded, cached (P5)
 4. Databricks job (Indonesia): Ookla S3 → Spark + built-in H3 → Unity Catalog tables and model registry; drift (P6)
 5. `export_page_data.py` → two static pages on GitHub Pages, browser-tested (P7)
+6. Public read-only API and stateless MCP on Vercel Hobby; store from release asset `serving-data-v1` (SHA-256 checked); CD with signed provenance (ADR-011)
 
 
 9. IMPLEMENTATION PLAN

@@ -1,0 +1,46 @@
+# Hiring-team brief (rule R22). Edit here only; `python scripts/brief.py` writes it into README.md, docs/index.html and docs/build.html.
+repo_url: https://github.com/sabrinapribadi/next-site-planner
+brief:
+  - w: What
+    lines:
+      - A planner that picks where one more mobile site lifts the most people above a speed bar, per unit of budget, in 7 countries.
+  - w: Why
+    lines:
+      - Site lists are ranked on weighted KPIs and national medians, which hide where the people on slow mobile live.
+  - w: Who
+    lines:
+      - "Users: radio network planners. Countries: Indonesia, Malaysia, the Philippines, Germany, France, the United States, the UAE."
+      - "Data: Ookla open speed tiles, two population maps, places, land cover and elevation, on 6.4M populated hexagons (0.74 km² each)."
+  - w: Where
+    lines:
+      - "[Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks."
+  - w: When it fails
+    lines:
+      - 8 phases with gates set before analysis; 2 failed and are reported (machine learning beat kriging by 7%, bar 10%; live note latency).
+      - "No live A/B test: no operator traffic. New sites' effect is measured with difference-in-differences; models face spatial block CV."
+  - w: How
+    lines:
+      - Kriging fills untested areas; an exact budgeted optimiser chooses sites; every nominal is checked on the ground.
+      - "Result: checked plans lift 1.5–3.8× as many people as KPI ranking at the same budget."
+skills:
+  - group: Spatial data engineering
+    what: DuckDB and H3 over eight public sources and 6.4M hexagons
+    proof: [["acquire_public_data.py", "scripts/acquire_public_data.py"], ["ADR-001", "docs/adr/ADR-001-framing-and-analysis-unit.md"]]
+  - group: Spatial statistics and ML
+    what: hotspot tests, kriging, measurement-noise model; LightGBM with spatial block CV
+    proof: [["ADR-004", "docs/adr/ADR-004-speed-model-for-untested-areas.md"], ["ADR-005", "docs/adr/ADR-005-measurement-noise.md"]]
+  - group: Causal inference
+    what: staggered difference-in-differences with pre-trend checks
+    proof: [["ADR-007", "docs/adr/ADR-007-new-site-effect.md"]]
+  - group: Operations research
+    what: exact 0/1 knapsack over three cost classes vs KPI ranking
+    proof: [["ADR-008", "docs/adr/ADR-008-budgeted-site-plan.md"]]
+  - group: MLOps, cloud and CI/CD
+    what: Databricks job with Spark H3, Unity Catalog registry, drift; gated CI/CD to Vercel with provenance
+    proof: [["ADR-010", "docs/adr/ADR-010-databricks-indonesia-job.md"], ["ADR-011", "docs/adr/ADR-011-public-api-and-technology-assessment.md"]]
+  - group: GenAI
+    what: grounded site notes with a grader, MCP tools, cost and latency budgets
+    proof: [["ADR-009", "docs/adr/ADR-009-planner-api-mcp-rationales.md"]]
+  - group: Domain
+    what: radio planning (coverage vs capacity gap, morphology, co-location, site spacing)
+    proof: [["ADR-003", "docs/adr/ADR-003-industry-alignment.md"]]

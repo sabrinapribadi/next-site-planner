@@ -176,13 +176,27 @@ ul.points { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 1
 .tip { position: fixed; z-index: 10; max-width: 300px; background: var(--fg); color: var(--bg); font-size: 12.5px; line-height: 1.45; padding: 8px 10px; border-radius: 8px; pointer-events: none; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); }
 .tip b { display: block; margin-bottom: 2px; }
 footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+/* brief:css:start (rule R22, written by scripts/brief.py) */
+.brief { display: grid; gap: 12px; padding-block: 18px 4px; }
+.brief-list { list-style: none; margin: 0; padding: 0 !important; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+.brief-list li { display: grid; align-content: start; gap: 4px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; min-width: 0; }
+.brief-w { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.brief-main { font-size: 14.5px; line-height: 1.45; color: var(--fg); }
+.brief-sub { font-size: 13px; line-height: 1.45; color: var(--muted); }
+.brief-skills summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.brief-skills ul { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13.5px; line-height: 1.45; }
+.brief-proof { font-size: 12px; margin-left: 4px; white-space: nowrap; }
+/* brief:css:end */
 </style>
 
 <div class="wrap">
 <header class="top">
   <span class="eyebrow">Technical walkthrough · GEO-1 · next site planner</span>
   <h1>How the site planner is being built, phase by phase</h1>
-  <p class="lede">Eight phases, each with a gate committed before the work: the question, the build steps, what broke and what it taught.</p>
+<!-- brief:start -->
+<section class="brief" id="brief" aria-label="Project brief for hiring teams"><span class="eyebrow">For hiring teams · the project in 5W1H</span><ol class="brief-list"><li><span class="brief-w">1 · What</span><span class="brief-main">A planner that picks where one more mobile site lifts the most people above a speed bar, per unit of budget, in 7 countries.</span></li><li><span class="brief-w">2 · Why</span><span class="brief-main">Site lists are ranked on weighted KPIs and national medians, which hide where the people on slow mobile live.</span></li><li><span class="brief-w">3 · Who</span><span class="brief-main">Users: radio network planners. Countries: Indonesia, Malaysia, the Philippines, Germany, France, the United States, the UAE.</span></li><li><span class="brief-w">4 · Where</span><span class="brief-main"><a href="https://sabrinapribadi.github.io/next-site-planner/">Results page</a> and <a href="https://sabrinapribadi.github.io/next-site-planner/build.html">technical walkthrough</a> on GitHub Pages; <a href="https://next-site-planner.vercel.app/docs">live API and MCP</a> on Vercel; quarterly Indonesia job and registry on Databricks.</span></li><li><span class="brief-w">5 · When it fails</span><span class="brief-main">8 phases with gates set before analysis; 2 failed and are reported (machine learning beat kriging by 7%, bar 10%; live note latency).</span></li><li><span class="brief-w">6 · How</span><span class="brief-main">Kriging fills untested areas; an exact budgeted optimiser chooses sites; every nominal is checked on the ground.</span></li></ol><details class="brief-skills"><summary>Skills applied, with proof</summary><ul><li><b>Spatial data engineering</b> DuckDB and H3 over eight public sources and 6.4M hexagons <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/scripts/acquire_public_data.py">acquire_public_data.py</a> <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-001-framing-and-analysis-unit.md">ADR-001</a></li><li><b>Spatial statistics and ML</b> hotspot tests, kriging, measurement-noise model; LightGBM with spatial block CV <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-004-speed-model-for-untested-areas.md">ADR-004</a> <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-005-measurement-noise.md">ADR-005</a></li><li><b>Causal inference</b> staggered difference-in-differences with pre-trend checks <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-007-new-site-effect.md">ADR-007</a></li><li><b>Operations research</b> exact 0/1 knapsack over three cost classes vs KPI ranking <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-008-budgeted-site-plan.md">ADR-008</a></li><li><b>MLOps, cloud and CI/CD</b> Databricks job with Spark H3, Unity Catalog registry, drift; gated CI/CD to Vercel with provenance <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-010-databricks-indonesia-job.md">ADR-010</a> <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-011-public-api-and-technology-assessment.md">ADR-011</a></li><li><b>GenAI</b> grounded site notes with a grader, MCP tools, cost and latency budgets <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-009-planner-api-mcp-rationales.md">ADR-009</a></li><li><b>Domain</b> radio planning (coverage vs capacity gap, morphology, co-location, site spacing) <a class="brief-proof" href="https://github.com/sabrinapribadi/next-site-planner/blob/main/docs/adr/ADR-003-industry-alignment.md">ADR-003</a></li></ul></details></section>
+<!-- brief:end -->
+
   <div class="links">
     <a href="./">← Hiring-team view (results)</a>
     <a href="https://github.com/sabrinapribadi/next-site-planner">Code and ADRs</a>
@@ -215,7 +229,7 @@ footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line);
 
 <footer>
   <span>Every number comes from <code>data/outputs/*.json</code>, the ADRs and <code>CHANGELOG.md</code> in the repository. Data: Ookla open speed tiles, Kontur population, Overture places, OpenCelliD, OCHA and geoBoundaries.</span>
-  <span>Sabrina Pribadi · last updated 13 Oct 2026 · <a href="./">results page</a> · <a href="https://github.com/sabrinapribadi/next-site-planner">github.com/sabrinapribadi/next-site-planner</a></span>
+  <span>Sabrina Pribadi · last updated 11 Nov 2026 · <a href="./">results page</a> · <a href="https://next-site-planner.vercel.app/docs">live API</a> · <a href="https://github.com/sabrinapribadi/next-site-planner">github.com/sabrinapribadi/next-site-planner</a></span>
 </footer>
 </div>
 <div class="tip" id="tip" hidden></div>

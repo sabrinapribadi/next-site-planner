@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.11.0] — 2026-11-11 — Hiring-team brief (R22), rules audit fixes
+**Files:** docs/brief.yaml, scripts/brief.py, README.md, docs/index.html, docs/build.html, docs/PRD.md, .github/workflows/ci.yml, tests/browser/*.js
+- **Situation:** The audit found browser tests outside CI, Pages publishing without a gate, missing free-tier notes and an unbumped PRD; hiring teams had no one-glance summary.
+- **Task:** Fix the gaps and put a 5W1H brief first on the README and both pages, with no repeated content.
+- **Action:** One brief source written into all three by script and checked in CI; removed the lede, status line, capability list and repeated figures; browser tests in CI with failing exit codes; Pages deploy after tests.
+- **Result:** CI green; 384 build-page and all hover checks pass; the README states the 97.6 MiB of 100 MB upload headroom.
+- **Talking point:** "Every page now answers what, why, who, where, when it fails and how before anything else."
+
 ## [0.10.0] — 2026-11-11 — Public API and remote MCP, free host, CD with provenance (ADR-011)
 **Files:** docs/adr/ADR-011-public-api-and-technology-assessment.md (new), src/serving/public.py (new), src/serving/store.py, src/serving/notes.py, src/serving/mcp_server.py, scripts/build_deploy.py (new), scripts/smoke_test.py (new), deploy/serving_data.sha256 (new), tests/test_public.py (new), .github/workflows/ci.yml, docs/adr/README.md
 - **Situation:** The planner tools ran only on a laptop; the store (6.4 million hexagons) is too large for git.
