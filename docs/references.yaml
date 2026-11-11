@@ -140,3 +140,7 @@
   doi: 10.18653/v1/2023.emnlp-main.741
   used_in: [ADR-009]
   role: fact-level precision scoring (compared, not used)
+- key: yurdakul_naranjo_2020
+  doi: 10.21314/JRMV.2020.227
+  used_in: [ADR-010]
+  role: statistical properties of the PSI (drift check)

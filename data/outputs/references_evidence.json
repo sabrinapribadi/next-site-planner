@@ -1,5 +1,5 @@
 {
- "retrieved": "2026-10-14",
+ "retrieved": "2026-11-11",
  "source": "OpenAlex",
  "references": [
   {
@@ -8,8 +8,8 @@
    "venue": "Papers of the Regional Science Association",
    "peer_reviewed": true,
    "year": 1974,
-   "citations": 2711,
-   "citations_per_year": 51.2,
+   "citations": 2831,
+   "citations_per_year": 53.4,
    "role": "3GPP service-area sensitivity (P4)",
    "used_in": [
     "ADR-002",
@@ -23,8 +23,8 @@
    "venue": "Geographical Analysis",
    "peer_reviewed": true,
    "year": 1995,
-   "citations": 3650,
-   "citations_per_year": 114.1,
+   "citations": 3816,
+   "citations_per_year": 119.2,
    "role": "Gi* hotspot statistic (P1)",
    "used_in": [
     "ADR-002"
@@ -37,8 +37,8 @@
    "venue": "Geographical Analysis",
    "peer_reviewed": true,
    "year": 2006,
-   "citations": 330,
-   "citations_per_year": 15.7,
+   "citations": 346,
+   "citations_per_year": 16.5,
    "role": "false-discovery control for local statistics (P1)",
    "used_in": [
     "ADR-002"
@@ -51,8 +51,8 @@
    "venue": "Ecography",
    "peer_reviewed": true,
    "year": 2016,
-   "citations": 3339,
-   "citations_per_year": 303.5,
+   "citations": 4468,
+   "citations_per_year": 406.2,
    "role": "spatial block cross-validation (P2)",
    "used_in": [
     "ADR-002"
@@ -65,8 +65,8 @@
    "venue": "Nature Communications",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 866,
-   "citations_per_year": 123.7,
+   "citations": 1110,
+   "citations_per_year": 158.6,
    "role": "random CV overstates spatial models (P2)",
    "used_in": [
     "ADR-002"
@@ -79,8 +79,8 @@
    "venue": "Ecological Modelling",
    "peer_reviewed": true,
    "year": 2021,
-   "citations": 311,
-   "citations_per_year": 51.8,
+   "citations": 376,
+   "citations_per_year": 62.7,
    "role": "counter-view on spatial CV (P2)",
    "used_in": [
     "ADR-002"
@@ -93,8 +93,8 @@
    "venue": "Methods in Ecology and Evolution",
    "peer_reviewed": true,
    "year": 2021,
-   "citations": 518,
-   "citations_per_year": 86.3,
+   "citations": 796,
+   "citations_per_year": 132.7,
    "role": "area of applicability (P2)",
    "used_in": [
     "ADR-002"
@@ -107,8 +107,8 @@
    "venue": "Journal of Econometrics",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 8823,
-   "citations_per_year": 1260.4,
+   "citations": 10066,
+   "citations_per_year": 1438.0,
    "role": "staggered difference-in-differences (P3)",
    "used_in": [
     "ADR-002",
@@ -118,12 +118,12 @@
   },
   {
    "key": "borusyak_2024",
-   "title": "Revisiting Event-Study Designs: Robust and Efficient Estimation",
+   "title": "Revisiting Event Study Designs",
    "venue": "The Review of Economic Studies",
    "peer_reviewed": true,
-   "year": 2024,
-   "citations": 2124,
-   "citations_per_year": 708.0,
+   "year": 2016,
+   "citations": 2996,
+   "citations_per_year": 272.4,
    "role": "imputation event-study estimator, head-to-head arm (P3)",
    "used_in": [
     "ADR-002",
@@ -137,8 +137,8 @@
    "venue": "PLoS ONE",
    "peer_reviewed": true,
    "year": 2015,
-   "citations": 1066,
-   "citations_per_year": 88.8,
+   "citations": 1111,
+   "citations_per_year": 92.6,
    "role": "dasymetric population mapping (WorldPop cross-check; second population map for nominals)",
    "used_in": [
     "ADR-001",
@@ -166,8 +166,8 @@
    "venue": "Journal of Urban Economics",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 382,
-   "citations_per_year": 54.6,
+   "citations": 417,
+   "citations_per_year": 59.6,
    "role": "Degree of Urbanisation applied globally (morphology, E2)",
    "used_in": [
     "ADR-003"
@@ -180,8 +180,8 @@
    "venue": "PeerJ",
    "peer_reviewed": true,
    "year": 2018,
-   "citations": 1094,
-   "citations_per_year": 121.6,
+   "citations": 1182,
+   "citations_per_year": 131.3,
    "role": "spatial features in tree models (P2)",
    "used_in": [
     "ADR-004"
@@ -194,8 +194,8 @@
    "venue": "Remote Sensing",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 366,
-   "citations_per_year": 52.3,
+   "citations": 407,
+   "citations_per_year": 58.1,
    "role": "nearest-observation features (P2)",
    "used_in": [
     "ADR-004"
@@ -208,8 +208,8 @@
    "venue": "NeurIPS 2017 (OpenAlex primary copy is a HAL mirror)",
    "peer_reviewed": true,
    "year": 2017,
-   "citations": 9120,
-   "citations_per_year": 912.0,
+   "citations": 10515,
+   "citations_per_year": 1051.5,
    "role": "gradient boosting model (P2)",
    "used_in": [
     "ADR-004"
@@ -222,8 +222,8 @@
    "venue": "Geoscientific model development",
    "peer_reviewed": true,
    "year": 2024,
-   "citations": 49,
-   "citations_per_year": 16.3,
+   "citations": 75,
+   "citations_per_year": 25.0,
    "role": "block size by distance matching, kNNDM (P2)",
    "used_in": [
     "ADR-004"
@@ -236,8 +236,8 @@
    "venue": "Methods in Ecology and Evolution",
    "peer_reviewed": true,
    "year": 2022,
-   "citations": 111,
-   "citations_per_year": 22.2,
+   "citations": 144,
+   "citations_per_year": 28.8,
    "role": "distance-matched error, NNDM (P2)",
    "used_in": [
     "ADR-004"
@@ -250,8 +250,8 @@
    "venue": "arXiv 2111.10144",
    "peer_reviewed": false,
    "year": 2021,
-   "citations": 6,
-   "citations_per_year": 1.0,
+   "citations": 27,
+   "citations_per_year": 4.5,
    "role": "cited alternative, not tested (P2)",
    "used_in": [
     "ADR-004"
@@ -264,8 +264,8 @@
    "venue": "Computers & Geosciences",
    "peer_reviewed": true,
    "year": 2004,
-   "citations": 3001,
-   "citations_per_year": 130.5,
+   "citations": 3102,
+   "citations_per_year": 134.9,
    "role": "local kriging neighbourhood (P2 baseline)",
    "used_in": [
     "ADR-004"
@@ -278,8 +278,8 @@
    "venue": "Mathematical Geology",
    "peer_reviewed": true,
    "year": 1985,
-   "citations": 1058,
-   "citations_per_year": 25.2,
+   "citations": 1072,
+   "citations_per_year": 25.5,
    "role": "weighted least-squares variogram fitting (P2 baseline)",
    "used_in": [
     "ADR-004"
@@ -292,8 +292,8 @@
    "venue": "Journal of the American Statistical Association",
    "peer_reviewed": true,
    "year": 1979,
-   "citations": 1260,
-   "citations_per_year": 26.2,
+   "citations": 1356,
+   "citations_per_year": 28.2,
    "role": "empirical-Bayes small-area shrinkage (noise follow-up)",
    "used_in": [
     "ADR-005"
@@ -306,8 +306,8 @@
    "venue": "Statistical Science",
    "peer_reviewed": true,
    "year": 1994,
-   "citations": 733,
-   "citations_per_year": 22.2,
+   "citations": 757,
+   "citations_per_year": 22.9,
    "role": "small-area estimation practice",
    "used_in": [
     "ADR-005"
@@ -320,8 +320,8 @@
    "venue": "Annals of the Institute of Statistical Mathematics",
    "peer_reviewed": true,
    "year": 1991,
-   "citations": 4205,
-   "citations_per_year": 116.8,
+   "citations": 4281,
+   "citations_per_year": 118.9,
    "role": "cited alternative, spatial hierarchical Bayes (BYM)",
    "used_in": [
     "ADR-005"
@@ -334,8 +334,8 @@
    "venue": "Journal of Econometrics",
    "peer_reviewed": true,
    "year": 2021,
-   "citations": 7832,
-   "citations_per_year": 1305.3,
+   "citations": 8518,
+   "citations_per_year": 1419.7,
    "role": "why two-way fixed effects is biased with staggered timing (P3)",
    "used_in": [
     "ADR-007"
@@ -348,8 +348,8 @@
    "venue": "Journal of Econometrics",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 5457,
-   "citations_per_year": 779.6,
+   "citations": 6169,
+   "citations_per_year": 881.3,
    "role": "cited alternative, interaction-weighted event study (P3)",
    "used_in": [
     "ADR-007"
@@ -362,8 +362,8 @@
    "venue": "American Economic Review",
    "peer_reviewed": true,
    "year": 2020,
-   "citations": 4948,
-   "citations_per_year": 706.9,
+   "citations": 5352,
+   "citations_per_year": 764.6,
    "role": "cited alternative, heterogeneity-robust DiD (P3)",
    "used_in": [
     "ADR-007"
@@ -376,8 +376,8 @@
    "venue": "American Economic Review",
    "peer_reviewed": true,
    "year": 2021,
-   "citations": 1482,
-   "citations_per_year": 247.0,
+   "citations": 1653,
+   "citations_per_year": 275.5,
    "role": "cited alternative, synthetic DiD (P3)",
    "used_in": [
     "ADR-007"
@@ -390,8 +390,8 @@
    "venue": "Information Processing Letters",
    "peer_reviewed": true,
    "year": 1999,
-   "citations": 982,
-   "citations_per_year": 35.1,
+   "citations": 1004,
+   "citations_per_year": 35.9,
    "role": "greedy guarantee for budgeted maximum coverage (P4)",
    "used_in": [
     "ADR-008"
@@ -404,8 +404,8 @@
    "venue": "Mathematical Programming Computation",
    "peer_reviewed": true,
    "year": 2017,
-   "citations": 427,
-   "citations_per_year": 42.7,
+   "citations": 629,
+   "citations_per_year": 62.9,
    "role": "HiGHS exact solver (P4)",
    "used_in": [
     "ADR-008"
@@ -418,8 +418,8 @@
    "venue": "Social Psychological and Personality Science",
    "peer_reviewed": true,
    "year": 2017,
-   "citations": 2158,
-   "citations_per_year": 215.8,
+   "citations": 2671,
+   "citations_per_year": 267.1,
    "role": "practice of a pre-set smallest effect size of interest (the 10% margins are our own choice)",
    "used_in": [
     "ADR-002",
@@ -433,8 +433,8 @@
    "venue": "Advances in Methods and Practices in Psychological Science",
    "peer_reviewed": true,
    "year": 2018,
-   "citations": 1535,
-   "citations_per_year": 170.6,
+   "citations": 1732,
+   "citations_per_year": 192.4,
    "role": "equivalence testing tutorial (pre-set practical thresholds)",
    "used_in": [
     "ADR-002",
@@ -448,8 +448,8 @@
    "venue": "Proceedings of the IEEE",
    "peer_reviewed": true,
    "year": 1981,
-   "citations": 1346,
-   "citations_per_year": 29.3,
+   "citations": 1406,
+   "citations_per_year": 30.6,
    "role": "slope from a 3 \u00d7 3 elevation window (nominal terrain flags)",
    "used_in": [
     "ADR-008"
@@ -462,8 +462,8 @@
    "venue": "ACM Computing Surveys",
    "peer_reviewed": true,
    "year": 2022,
-   "citations": 4716,
-   "citations_per_year": 943.2,
+   "citations": 7074,
+   "citations_per_year": 1414.8,
    "role": "language models state unsupported facts (why notes are graded)",
    "used_in": [
     "ADR-009"
@@ -476,13 +476,27 @@
    "venue": "Conference on Empirical Methods in Natural Language Processing (EMNLP)",
    "peer_reviewed": true,
    "year": 2023,
-   "citations": 374,
-   "citations_per_year": 93.5,
+   "citations": 1133,
+   "citations_per_year": 283.2,
    "role": "fact-level precision scoring (compared, not used)",
    "used_in": [
     "ADR-009"
    ],
    "openalex_id": "https://openalex.org/W4389519598"
+  },
+  {
+   "key": "yurdakul_naranjo_2020",
+   "title": "Statistical properties of the population stability index",
+   "venue": "The Journal of Risk Model Validation",
+   "peer_reviewed": true,
+   "year": 2020,
+   "citations": 57,
+   "citations_per_year": 8.1,
+   "role": "statistical properties of the PSI (drift check)",
+   "used_in": [
+    "ADR-010"
+   ],
+   "openalex_id": "https://openalex.org/W3129493035"
   }
  ]
 }
