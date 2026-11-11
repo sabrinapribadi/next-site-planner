@@ -2,7 +2,7 @@
 
 <!-- brief:start -->
 
-## For hiring teams: the project in 5W1H
+## At a glance
 
 1. **What:** A planner that picks where one more mobile site lifts the most people above a speed bar, per unit of budget, in 7 countries.
 2. **Why:** Site lists are ranked on weighted KPIs and national medians, which hide where the people on slow mobile live.
