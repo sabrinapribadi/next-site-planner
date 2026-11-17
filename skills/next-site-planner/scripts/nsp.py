@@ -64,7 +64,7 @@ def about(base: str) -> dict:
     q = cs["quarter"]
     s, e = quarter_dates(q)
     weeks = round(((dt.date.fromisoformat(e) - dt.date.fromisoformat(s)).days + 1) / 7)
-    return {"checked_at_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M"),
+    return {"checked_at_utc": dt.datetime.now(dt.UTC).strftime("%Y-%m-%d %H:%M"),
             "speed_tests": {"source": "Speedtest by Ookla open data (mobile), crowdsourced", "quarter": q,
                             "period": f"{s} to {e}", "weeks": weeks},
             "population": ["Kontur 2023 (H3 resolution 8)", "WorldPop 2020 constrained 100 m"],
