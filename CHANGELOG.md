@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.13.0] — 2026-11-17 — Streamlit companion app (R26)
+**Files:** app/streamlit_app.py (new), app/nsp_data.py (new), app/requirements.txt (new), .streamlit/config.toml (new), tests/test_streamlit_app.py (new), tests/fixtures/app_api.json (new), .github/workflows/ci.yml, README.md
+- **Situation:** The results page has no inputs, and LinkedIn previews a Streamlit app well; planners asked to see sites on a map and to try budgets and places themselves.
+- **Task:** Build an interactive-only companion app under R26: brief first, no keys, limits stated, tested in CI.
+- **Action:** Four lazy tabs: the plan's shortlist on a map (hexagons by chance of being slow, markers by build type, click for the checked note); a budget what-if from the committed plan results; a place check with its six neighbours from the live API; countries at five speed bars. Pure data helpers; AppTest on recorded API answers.
+- **Result:** 7 app tests pass offline; numbers equal the API and `p4_site_plan.json` (Philippines at 1,000: 279,483 people, 2.3× KPI ranking); a pydeck quirk found and avoided (per-feature line accessors blank the whole map).
+- **Talking point:** "A planner can now drop a pin anywhere in seven countries and see whether it is slow, how sure we are, and whether the plan already covers it."
+
 ## [0.12.3] — 2026-11-17 — Agent skill iteration 4 (decision-ready maps)
 **Files:** skills/next-site-planner/ (scripts/maps.py new, scripts/nsp.py, SKILL.md, references/charts.md, evals/), tests/test_skill_client.py, docs/adr/ADR-012-agent-skill.md, README.md
 - **Situation:** The planner found the map plain: hexagons and markers in one colour, no buildings or points of interest.

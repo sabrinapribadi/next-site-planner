@@ -73,6 +73,21 @@
 - After idle time the first call wakes the app: about 1–3 s (measured 2026-11-11).
 - **Fallback:** the [results page](https://sabrinapribadi.github.io/next-site-planner/) is static and carries every number, even if the API is paused.
 
+## Try it interactively (Streamlit app)
+
+A companion app in [`app/`](app/streamlit_app.py) (rule R26) holds only what the static results page cannot:
+
+1. **Plan on a map:** the first 10–100 ranked sites of a country's plan, filtered by build type; hexagons shaded by chance of being below 25 Mbps, markers by build type; click a marker for its checked note.
+2. **Budget what-if:** people lifted by the plan, KPI ranking and slowest-first at budgets of 100, 500, 1,000 and 5,000 new-tower equivalents, with the plan's low–high range.
+3. **Check a place:** any point (or a preset) and its six neighbouring hexagons from the live API, with a thin-evidence warning under 10 speed tests.
+4. **Countries at your speed bar:** 5, 10, 25, 50 or 100 Mbps; share of people below the bar among tested areas only vs everyone.
+
+- **Data:** the public API and the committed plan results (`data/outputs/p4_site_plan.json`) only; no keys, no store, no model.
+- **Free-tier limits:** Streamlit Community Cloud sleeps after 12 hours without visits and the first visit wakes it; the [results page](https://sabrinapribadi.github.io/next-site-planner/) is the always-on fallback. No keep-awake pings.
+- **Look:** theme in `.streamlit/config.toml` (light and dark, IBM Plex Sans and Archivo); only the open tab runs, so a tab calls the API only when it is opened.
+- **Tests:** `tests/test_streamlit_app.py` runs every tab with Streamlit AppTest on recorded API answers (`tests/fixtures/app_api.json`), plus an unreachable-API case, in CI.
+- **Run locally:** `pip install -r app/requirements.txt && streamlit run app/streamlit_app.py`.
+
 ## Use it from an AI agent (skill)
 
 The planner ships as an Agent Skill in [`skills/next-site-planner/`](skills/next-site-planner/SKILL.md) (rule R24): instructions on when to use it and how to read every number, a dependency-free client for the live API, and tested example tasks.

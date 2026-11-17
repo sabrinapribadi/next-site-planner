@@ -1,0 +1,44 @@
+# Theme for the Streamlit companion app (R26). Streamlit Cloud reads .streamlit/ from the repository root.
+[theme]
+font = "'IBM Plex Sans':https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+headingFont = "Archivo:https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&display=swap"
+codeFont = "'IBM Plex Mono':https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+baseRadius = "0.6rem"
+buttonRadius = "full"
+showWidgetBorder = true
+showSidebarBorder = true
+metricValueFontSize = "1.8rem"
+metricValueFontWeight = 700
+chartCategoricalColors = ["#2a78d6", "#eb6834", "#1baf7a"]
+
+[theme.light]
+primaryColor = "#6250d6"
+backgroundColor = "#f6f6f9"
+secondaryBackgroundColor = "#ecebf4"
+textColor = "#191a24"
+linkColor = "#4b3bc0"
+borderColor = "#dcdbe8"
+codeBackgroundColor = "#ecebf4"
+
+[theme.light.sidebar]
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f1f0f7"
+
+[theme.dark]
+primaryColor = "#8f81f0"
+backgroundColor = "#101119"
+secondaryBackgroundColor = "#1b1c28"
+textColor = "#e8e8f0"
+linkColor = "#a99ff5"
+borderColor = "#2b2c3c"
+codeBackgroundColor = "#1b1c28"
+
+[theme.dark.sidebar]
+backgroundColor = "#151622"
+secondaryBackgroundColor = "#202130"
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
