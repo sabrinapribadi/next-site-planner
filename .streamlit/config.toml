@@ -1,5 +1,14 @@
-# Theme for the Streamlit companion app (R26). Streamlit Cloud reads .streamlit/ from the repository root.
+# Theme for the Streamlit companion app (R26). Dark by default, like the portfolio's featured apps: LinkedIn's preview
+# is an automatic screenshot of the first screen, so the KPI strip must be visible there.
 [theme]
+base = "dark"
+primaryColor = "#8f81f0"
+backgroundColor = "#0e0f17"
+secondaryBackgroundColor = "#181a26"
+textColor = "#e8e8f0"
+linkColor = "#a99ff5"
+borderColor = "#2b2c3c"
+codeBackgroundColor = "#181a26"
 font = "'IBM Plex Sans':https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
 headingFont = "Archivo:https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&display=swap"
 codeFont = "'IBM Plex Mono':https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
@@ -7,35 +16,13 @@ baseRadius = "0.6rem"
 buttonRadius = "full"
 showWidgetBorder = true
 showSidebarBorder = true
-metricValueFontSize = "1.8rem"
+metricValueFontSize = "1.9rem"
 metricValueFontWeight = 700
-chartCategoricalColors = ["#2a78d6", "#eb6834", "#1baf7a"]
+chartCategoricalColors = ["#3987e5", "#d95926", "#199e70"]
 
-[theme.light]
-primaryColor = "#6250d6"
-backgroundColor = "#f6f6f9"
-secondaryBackgroundColor = "#ecebf4"
-textColor = "#191a24"
-linkColor = "#4b3bc0"
-borderColor = "#dcdbe8"
-codeBackgroundColor = "#ecebf4"
-
-[theme.light.sidebar]
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f1f0f7"
-
-[theme.dark]
-primaryColor = "#8f81f0"
-backgroundColor = "#101119"
-secondaryBackgroundColor = "#1b1c28"
-textColor = "#e8e8f0"
-linkColor = "#a99ff5"
-borderColor = "#2b2c3c"
-codeBackgroundColor = "#1b1c28"
-
-[theme.dark.sidebar]
-backgroundColor = "#151622"
-secondaryBackgroundColor = "#202130"
+[theme.sidebar]
+backgroundColor = "#12131d"
+secondaryBackgroundColor = "#1d1f2d"
 
 [client]
 toolbarMode = "minimal"

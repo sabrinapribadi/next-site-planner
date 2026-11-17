@@ -70,10 +70,12 @@ def test_helpers():
 def test_map_tab_opens_with_brief_and_shortlist(offline):
     at = run()
     text = " ".join(m.value for m in at.markdown)
-    assert "A planner that picks" in text and "Results page" in text
-    assert "12 hours" in at.info[0].value
+    caps = " ".join(c.value for c in at.caption)
+    assert "A planner that picks" in text and "Results page" in caps and "12 hours" in caps
+    hl = D.headline(D.load_plan())
+    assert [m.value for m in at.metric][:2] == [f"{hl['people_plan']:,.0f}", "1.5–3.8×"]       # first screen: committed results
     assert at.subheader[0].value.startswith("Philippines: the first 50 sites lift about")
-    assert [m.label for m in at.metric] == ["Sites shown", "People likely lifted", "Budget used", "Checked on the ground"]
+    assert [m.label for m in at.metric][4:] == ["Sites shown", "People likely lifted", "Budget used", "Checked on the ground"]
 
 
 def test_site_note(offline):
@@ -92,7 +94,7 @@ def test_budget_tab_uses_committed_numbers(offline):
 def test_place_tab_and_thin_evidence(offline):
     at = run("Check a place")
     assert at.subheader[0].value.startswith("Cotabato City") and "93% chance" in at.subheader[0].value
-    assert [m.value for m in at.metric][:2] == ["15 Mbps", "25"]
+    assert [m.value for m in at.metric][4:6] == ["15 Mbps", "25"]
 
 
 def test_speed_bar_tab_and_api_failure(offline):

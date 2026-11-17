@@ -25,13 +25,16 @@ C = {"plan": "#4d94e8" if dark else "#2a78d6", "kpi": "#d95926" if dark else "#e
 st.html("""<style>
 .eyebrow{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;opacity:.65;margin:0}
 .hero-title{font-family:Archivo,'IBM Plex Sans',system-ui,sans-serif;font-size:clamp(2rem,4.4vw,3.1rem);font-weight:800;line-height:1.02;margin:.2rem 0 .45rem;letter-spacing:-.01em}
-.hero-sub{font-size:1.05rem;opacity:.8;max-width:64ch;margin:0}
-.brief-w{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#6250d6;margin-bottom:.25rem}
+.hero-sub{font-size:1.02rem;opacity:.8;max-width:70ch;margin:0 0 .4rem}
+.brief-w{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#a99ff5;margin-bottom:.2rem}
+.brief-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin:.2rem 0 .3rem}
+.bcard{border:1px solid #2b2c3c;border-radius:10px;padding:8px 12px;font-size:.86rem;line-height:1.4;background:#12131d}
+.bcard a{color:#a99ff5}
 .legend{display:flex;flex-wrap:wrap;gap:.35rem 1rem;font-size:.85rem;align-items:center;margin:.2rem 0 .4rem}
 .legend span{display:inline-flex;align-items:center;gap:.35rem}
 .sw{width:.85rem;height:.85rem;border-radius:3px;display:inline-block;border:1px solid rgba(127,127,127,.35)}
 .dot{width:.75rem;height:.75rem;border-radius:50%;display:inline-block;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
-.note{border-left:3px solid #6250d6;padding:.6rem .9rem;border-radius:0 .5rem .5rem 0;background:rgba(98,80,214,.08);line-height:1.5}
+.note{border-left:3px solid #8f81f0;padding:.6rem .9rem;border-radius:0 .5rem .5rem 0;background:rgba(143,129,240,.12);line-height:1.5}
 </style>""")
 
 
@@ -82,17 +85,23 @@ with st.sidebar:
     st.caption("Speed data: Speedtest by Ookla open data (CC BY-NC-SA 4.0); population: Kontur and WorldPop (CC BY 4.0); "
                "land cover: ESA WorldCover; elevation: Copernicus DEM. Non-commercial use.")
 
-# 1. Hero and brief (R22, R26)
+# 1. Hero, KPI strip and the brief (R22, R26): the first screen is what LinkedIn's preview captures
+hl = D.headline(plan_results())
 st.html("""<p class="eyebrow">Ookla open speed tests · 7 countries · 6.4M populated hexagons of 0.74 km²</p>
 <h1 class="hero-title">Next site planner</h1>
 <p class="hero-sub">Where one more mobile site lifts the most people above 25 Mbps for the budget, checked on the ground.</p>""")
+kp = st.columns(4)
+kp[0].metric("People lifted above 25 Mbps", f"{hl['people_plan']:,.0f}", f"KPI ranking: {hl['people_kpi']:,.0f}", delta_color="off", delta_arrow="off", border=True)
+kp[1].metric("Plan vs KPI ranking", f"{hl['times_min']:.1f}–{hl['times_max']:.1f}×", "same budget, by country", delta_color="off", delta_arrow="off", border=True)
+kp[2].metric("Sites in the plans", f"{hl['sites']:,}", "each checked on the ground", delta_color="off", delta_arrow="off", border=True)
+kp[3].metric("Countries", f"{hl['countries']}", "Asia, Europe, US, Gulf", delta_color="off", delta_arrow="off", border=True)
 items = D.brief()
-for row in (items[:3], items[3:]):
-    for col, (w, lines) in zip(st.columns(3, border=True), row):
-        col.html(f'<div class="brief-w">{w}</div>')
-        col.markdown(" ".join(lines))
-st.markdown(f"[Results page]({D.PAGES}) · [Technical walkthrough]({D.PAGES}build.html) · [Live API]({D.API}/docs) · [Source]({D.REPO})")
-st.info(f"This app sleeps after 12 hours without visits. The [results page]({D.PAGES}) is always on and carries every result.")
+st.html('<div class="brief-grid">' + "".join(f'<div class="bcard"><div class="brief-w">{w}</div><div>{D.md_html(lines[0])}</div></div>' for w, lines in items) + "</div>")
+with st.expander("Full brief"):
+    for w, lines in items:
+        st.markdown(f"**{w}:** " + " ".join(lines))
+st.caption(f"[Results page]({D.PAGES}) · [Technical walkthrough]({D.PAGES}build.html) · [Live API]({D.API}/docs) · [Source]({D.REPO}) · "
+           f"Free Streamlit app: it sleeps after 12 hours without visits; the [results page]({D.PAGES}) is always on and carries every result.")
 
 map_tab, budget_tab, place_tab, bar_tab = st.tabs(["Plan on a map", "Budget what-if", "Check a place", "Countries at your speed bar"],
                                                   key="view", on_change="rerun")   # lazy: only the open tab runs (and calls the API)

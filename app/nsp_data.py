@@ -112,3 +112,21 @@ def brief(path: Path = BRIEF) -> list[tuple[str, list[str]]]:
         return re.sub(r"\]\((?!https?://)([^)]+)\)", lambda m: f"]({REPO}/blob/main/{m.group(1)})", t)
 
     return [(item["w"], [fix(str(x)) for x in item["lines"]]) for item in b["brief"]]
+
+
+def headline(plan: dict) -> dict:
+    """KPI strip for the first screen: the seven plans at their headline budgets (committed P4 results)."""
+    rows = []
+    for c, v in plan["countries"].items():
+        b = next(x for k, x in v["budgets"].items() if float(k) == float(v["headline_budget"]))
+        rows.append((c, b["people_lifted"], b["kpi_ranking"], b["sites"], 1 + b["gain_vs_kpi"]))
+    return {"people_plan": sum(r[1] for r in rows), "people_kpi": sum(r[2] for r in rows), "sites": sum(r[3] for r in rows),
+            "times_min": min(r[4] for r in rows), "times_max": max(r[4] for r in rows), "countries": len(rows)}
+
+
+def md_html(text: str) -> str:
+    """Markdown links and bold to HTML for the compact brief cards (brief text is our own, from docs/brief.yaml)."""
+    import html as _h
+    t = _h.escape(text, quote=False)
+    t = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r'<a href="\2" target="_blank">\1</a>', t)
+    return re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", t)
