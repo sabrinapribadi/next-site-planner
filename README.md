@@ -8,7 +8,7 @@
 2. **Why:** Site lists are ranked on weighted KPIs and national medians, which hide where the people on slow mobile live.
 3. **Who:** Users: radio network planners. Countries: Indonesia, Malaysia, the Philippines, Germany, France, the United States, the UAE.
    - Data: Ookla open speed tiles, two population maps, places, land cover and elevation, on 6.4M populated hexagons (0.74 km² each).
-4. **Where:** [Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks.
+4. **Where:** [Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks; an [agent skill](https://github.com/sabrinapribadi/next-site-planner/tree/main/skills/next-site-planner) for Claude Code and other agents.
 5. **When it fails:** 8 phases with gates set before analysis; 2 failed and are reported (machine learning beat kriging by 7%, bar 10%; live note latency).
    - No live A/B test: no operator traffic. New sites' effect is measured with difference-in-differences; models face spatial block CV.
 6. **How:** Kriging fills untested areas; an exact budgeted optimiser chooses sites; every nominal is checked on the ground.
@@ -21,7 +21,7 @@
 - **Causal inference:** staggered difference-in-differences with pre-trend checks — [ADR-007](docs/adr/ADR-007-new-site-effect.md)
 - **Operations research:** exact 0/1 knapsack over three cost classes vs KPI ranking — [ADR-008](docs/adr/ADR-008-budgeted-site-plan.md)
 - **MLOps, cloud and CI/CD:** Databricks job with Spark H3, Unity Catalog registry, drift; gated CI/CD to Vercel with provenance — [ADR-010](docs/adr/ADR-010-databricks-indonesia-job.md), [ADR-011](docs/adr/ADR-011-public-api-and-technology-assessment.md)
-- **GenAI:** grounded site notes with a grader, MCP tools, cost and latency budgets — [ADR-009](docs/adr/ADR-009-planner-api-mcp-rationales.md)
+- **GenAI and agents:** grounded site notes with a grader, MCP tools, cost and latency budgets; an evaluated agent skill (task and trigger evals) — [ADR-009](docs/adr/ADR-009-planner-api-mcp-rationales.md), [SKILL.md](skills/next-site-planner/SKILL.md), [ADR-012](docs/adr/ADR-012-agent-skill.md)
 - **Domain:** radio planning (coverage vs capacity gap, morphology, co-location, site spacing) — [ADR-003](docs/adr/ADR-003-industry-alignment.md)
 
 <!-- brief:end -->
@@ -72,6 +72,27 @@
 - A monthly allotment; Hobby has no billing, so Vercel pauses the project instead of charging.
 - After idle time the first call wakes the app: about 1–3 s (measured 2026-11-11).
 - **Fallback:** the [results page](https://sabrinapribadi.github.io/next-site-planner/) is static and carries every number, even if the API is paused.
+
+## Use it from an AI agent (skill)
+
+The planner ships as an Agent Skill in [`skills/next-site-planner/`](skills/next-site-planner/SKILL.md) (rule R24): instructions on when to use it and how to read every number, a dependency-free client for the live API, and tested example tasks.
+
+1. **Install in Claude Code:** copy the folder into your skills directory.
+   ```bash
+   git clone https://github.com/sabrinapribadi/next-site-planner
+   cp -r next-site-planner/skills/next-site-planner ~/.claude/skills/     # all projects; or .claude/skills/ in one project
+   ```
+2. **Optional MCP connection** (same four tools): `claude mcp add --transport http site-planner https://next-site-planner.vercel.app/mcp`.
+3. **Ask in plain words**, for example: "Is mobile slow near -6.2, 106.8, and is it a coverage or capacity gap?" or "Give me the top 5 Philippines site nominations and explain the first."
+
+| What is tested | How | Result (2026-11-17) |
+|---|---|---|
+| 4 task cases (gap check, shortlist, country comparison, out-of-scope) | [`evals/`](skills/next-site-planner/evals) in the `claude plugin eval` layout; graders checked by script against the live API | 15 of 15 checks pass |
+| When the skill should and should not be used | [`trigger-evals.json`](skills/next-site-planner/trigger-evals.json): 10 should-trigger, 10 near-miss prompts | Ready for `claude plugin eval` |
+| The client and the facts the graders use | `tests/test_skill_client.py` in CI; `scripts/skill_live_check.py` after every deploy | Pass |
+
+- **Licence:** speed data is Ookla Open Data, CC BY-NC-SA 4.0, so the skill and its outputs are for non-commercial use.
+- **Independent run** (real, billed model calls): `claude plugin eval skills/next-site-planner --allow-tools Bash`.
 
 ## Reproduce
 

@@ -13,7 +13,7 @@ brief:
       - "Data: Ookla open speed tiles, two population maps, places, land cover and elevation, on 6.4M populated hexagons (0.74 km² each)."
   - w: Where
     lines:
-      - "[Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks."
+      - "[Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks; an [agent skill](https://github.com/sabrinapribadi/next-site-planner/tree/main/skills/next-site-planner) for Claude Code and other agents."
   - w: When it fails
     lines:
       - 8 phases with gates set before analysis; 2 failed and are reported (machine learning beat kriging by 7%, bar 10%; live note latency).
@@ -38,9 +38,9 @@ skills:
   - group: MLOps, cloud and CI/CD
     what: Databricks job with Spark H3, Unity Catalog registry, drift; gated CI/CD to Vercel with provenance
     proof: [["ADR-010", "docs/adr/ADR-010-databricks-indonesia-job.md"], ["ADR-011", "docs/adr/ADR-011-public-api-and-technology-assessment.md"]]
-  - group: GenAI
-    what: grounded site notes with a grader, MCP tools, cost and latency budgets
-    proof: [["ADR-009", "docs/adr/ADR-009-planner-api-mcp-rationales.md"]]
+  - group: GenAI and agents
+    what: grounded site notes with a grader, MCP tools, cost and latency budgets; an evaluated agent skill (task and trigger evals)
+    proof: [["ADR-009", "docs/adr/ADR-009-planner-api-mcp-rationales.md"], ["SKILL.md", "skills/next-site-planner/SKILL.md"], ["ADR-012", "docs/adr/ADR-012-agent-skill.md"]]
   - group: Domain
     what: radio planning (coverage vs capacity gap, morphology, co-location, site spacing)
     proof: [["ADR-003", "docs/adr/ADR-003-industry-alignment.md"]]

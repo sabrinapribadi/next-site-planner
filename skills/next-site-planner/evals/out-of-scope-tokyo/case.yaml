@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: out-of-scope-tokyo
+expected_outcome: |
+  Says Japan is not covered by the planner and lists the seven countries covered (Indonesia, Malaysia, the Philippines, Germany, France, the US, the UAE), without inventing speeds, gaps or site suggestions for Tokyo.

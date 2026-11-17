@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: gap-check-north-jakarta
+expected_outcome: |
+  Reports the hexagon at that point: typical speed about 89 Mbps from about 1,027 tests, no gap at 25 Mbps, 0% chance below 25 Mbps, urban centre, people from both population maps, and that the plan did not pick this hexagon.

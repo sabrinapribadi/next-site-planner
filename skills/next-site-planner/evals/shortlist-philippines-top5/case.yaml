@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: shortlist-philippines-top5
+expected_outcome: |
+  A table of the Philippines plan ranks 1-5 with district, intervention, cost in tower-equivalents and expected people lifted (rounded, called about), noting the plan was checked on the ground, plus a short grounded explanation of rank 1 that uses only the API's numbers.

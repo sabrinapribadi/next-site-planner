@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.12.0] — 2026-11-17 — Agent skill (R24)
+**Files:** skills/next-site-planner/ (new), docs/adr/ADR-012-agent-skill.md (new), docs/adr/README.md, tests/test_skill_client.py (new), scripts/skill_live_check.py (new), .github/workflows/ci.yml, README.md, docs/brief.yaml, scripts/brief.py, docs/index.html, docs/build.html
+- **Situation:** The planner had a live API and MCP tools, but an agent did not know when to use them or how to read fields such as the plan's gain over KPI ranking.
+- **Task:** Make the planner usable by any agent, free and on GitHub, with tests (rule R24).
+- **Action:** Wrote a skill with reading rules and a field reference, a standard-library client, four task cases with 15 graders and 20 trigger prompts; CI checks the client offline and the live facts after each deploy. Brief styling fix from the portfolio template applied.
+- **Result:** 15 of 15 checks pass against the live API; three field descriptions corrected while checking the code (rank order, conservative population, expected-lifted formula).
+- **Talking point:** "I packaged the planner as an agent skill and tested that an agent reads a relative gain as a relative gain."
+
 ## [0.11.1] — 2026-11-11 — PSI evidence and Databricks deploy from CI
 **Files:** docs/references.yaml, docs/adr/ADR-010, data/outputs/references_evidence.json, .github/workflows/ci.yml
 - **Situation:** ADR-010 cited no paper for its drift measure, and the bundle was deployed only by hand.

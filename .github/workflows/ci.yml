@@ -90,6 +90,9 @@ jobs:
       - name: Smoke test the live URL
         if: steps.data.outputs.ok == 'true' && env.VERCEL_TOKEN != ''
         run: python scripts/smoke_test.py "${{ vars.PUBLIC_URL || steps.vercel.outputs.url }}"
+      # R24: the agent skill's client reaches the fresh deployment and the facts its eval graders use still hold
+      - name: Agent skill live check
+        run: python scripts/skill_live_check.py --base "${{ vars.PUBLIC_URL || steps.vercel.outputs.url }}"
       - name: No token yet
         if: env.VERCEL_TOKEN == ''
         run: echo "::notice::VERCEL_TOKEN not set; deploy skipped."

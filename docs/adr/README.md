@@ -17,6 +17,7 @@ Key design decisions for the next-site planner. Each ADR records the context, th
 | [ADR-009](ADR-009-planner-api-mcp-rationales.md) | Planner API, MCP tools and grounded site notes (P5) | Accepted | Four tools over one registry (REST and MCP); notes graded so every number is traced to the data; template fallback; R13 budgets; live p95 latency missed, notes cached. |
 | [ADR-010](ADR-010-databricks-indonesia-job.md) | Databricks quarterly job for Indonesia (P6) | Accepted | P6 gate narrowed to Indonesia before code; Ookla read at the source; shares identical to local; scorer registered in Unity Catalog; drift check. |
 | [ADR-011](ADR-011-public-api-and-technology-assessment.md) | Public API, remote MCP, technology assessment | Accepted | Four tools on Vercel Hobby with stateless MCP; store as a checksummed release asset read by DuckDB; cached notes, no key; CD with build provenance. |
+| [ADR-012](ADR-012-agent-skill.md) | Agent skill for the planner (R24) | Accepted | `SKILL.md`, a dependency-free client and four tested task cases (15/15 checks against the live API) plus 20 trigger prompts; live check after every deploy. |
 
 ## Decision Dependencies
 

@@ -1,0 +1,22 @@
+[
+  {"query": "we got a bunch of slow-data complaints from Cebu City this month, around 10.3157, 123.8854 — can you check if that area is a coverage or capacity problem before I escalate to the RF team?", "should_trigger": true},
+  {"query": "I have budget for maybe 50 new sites in Indonesia next year. which locations would lift the most people above 25 Mbps, and what mix of macro vs small cell?", "should_trigger": true},
+  {"query": "For a board slide: how many people in Germany and France are still below 25 Mbps on mobile, and how much does an optimised site plan help compared with KPI ranking?", "should_trigger": true},
+  {"query": "explain site #3 in the Malaysia plan to me like I'm not an RF engineer", "should_trigger": true},
+  {"query": "is mobile internet actually bad in rural Papua or is that a myth? give me numbers for a point near Wamena (-4.09, 138.95)", "should_trigger": true},
+  {"query": "Which of the US, UAE and Philippines has the biggest share of people under 10 Mbps on mobile? Use the open speed-test based planner if you can.", "should_trigger": true},
+  {"query": "our regional planner wants a shortlist of co-location candidates in the Philippines, cheapest first is fine, with expected people lifted", "should_trigger": true},
+  {"query": "Check -6.9175, 107.6191 (Bandung) — is it slow, how many people live there, and did the plan pick that hexagon?", "should_trigger": true},
+  {"query": "what does a capacity gap vs a coverage gap mean for a site in Lyon, and is there one near 45.764, 4.8357?", "should_trigger": true},
+  {"query": "pull the top 20 nominations for France and tell me which ones are small cells", "should_trigger": true},
+  {"query": "can you write me a python function that converts lat/lon to an H3 cell at resolution 8?", "should_trigger": false},
+  {"query": "my home fibre in Jakarta keeps dropping in the evening, how do I troubleshoot the ONT and router?", "should_trigger": false},
+  {"query": "What's the mobile download speed at Shibuya crossing in Tokyo according to Opensignal?", "should_trigger": false},
+  {"query": "draft an RFP for a tower company to bid on 200 new macro sites in Kenya", "should_trigger": false},
+  {"query": "summarise the latest Ookla Speedtest Global Index rankings for mobile in Southeast Asia", "should_trigger": false},
+  {"query": "help me explain to my manager why our 5G NR cell at site JKT-0421 has high PRB utilisation using this counter export (counters.csv)", "should_trigger": false},
+  {"query": "what's the difference between a macro cell and a small cell in general? just conceptually", "should_trigger": false},
+  {"query": "build a streamlit dashboard showing our own drive-test results from drive_test_q3.parquet", "should_trigger": false},
+  {"query": "how many people live in the Philippines and what's the population growth rate?", "should_trigger": false},
+  {"query": "convert this KML of planned sites into GeoJSON and plot it on a folium map", "should_trigger": false}
+]
