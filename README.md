@@ -8,7 +8,7 @@
 2. **Why:** Site lists are ranked on weighted KPIs and national medians, which hide where the people on slow mobile live.
 3. **Who:** Users: radio network planners. Countries: Indonesia, Malaysia, the Philippines, Germany, France, the United States, the UAE.
    - Data: Ookla open speed tiles, two population maps, places, land cover and elevation, on 6.4M populated hexagons (0.74 km² each).
-4. **Where:** [Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks; an [agent skill](https://github.com/sabrinapribadi/next-site-planner/tree/main/skills/next-site-planner) for Claude Code and other agents.
+4. **Where:** [Results page](https://sabrinapribadi.github.io/next-site-planner/) and [technical walkthrough](https://sabrinapribadi.github.io/next-site-planner/build.html) on GitHub Pages; [interactive app](https://next-site-planner.streamlit.app/) on Streamlit; [live API and MCP](https://next-site-planner.vercel.app/docs) on Vercel; quarterly Indonesia job and registry on Databricks; an [agent skill](https://github.com/sabrinapribadi/next-site-planner/tree/main/skills/next-site-planner) for Claude Code and other agents.
 5. **When it fails:** 8 phases with gates set before analysis; 2 failed and are reported (machine learning beat kriging by 7%, bar 10%; live note latency).
    - No live A/B test: no operator traffic. New sites' effect is measured with difference-in-differences; models face spatial block CV.
 6. **How:** Kriging fills untested areas; an exact budgeted optimiser chooses sites; every nominal is checked on the ground.
@@ -75,7 +75,7 @@
 
 ## Try it interactively (Streamlit app)
 
-A companion app in [`app/`](app/streamlit_app.py) (rule R26) holds only what the static results page cannot:
+**Live:** [next-site-planner.streamlit.app](https://next-site-planner.streamlit.app/). A companion app in [`app/`](app/streamlit_app.py) (rule R26) holds only what the static results page cannot:
 
 1. **Plan on a map:** the first 10–100 ranked sites of a country's plan, filtered by build type; hexagons shaded by chance of being below 25 Mbps, markers by build type; click a marker for its checked note.
 2. **Budget what-if:** people lifted by the plan, KPI ranking and slowest-first at budgets of 100, 500, 1,000 and 5,000 new-tower equivalents, with the plan's low–high range.

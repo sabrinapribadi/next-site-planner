@@ -1,8 +1,8 @@
 PRODUCT REQUIREMENT DOCUMENT (PRD)
 Project: Next Site Planner — Where Would One More Mobile Site Help the Most People?
-Version: 0.8 (public API and stateless MCP on Vercel Hobby; serving store as a checksummed release asset; ADR-011)
+Version: 0.9 (agent skill, ADR-012; Streamlit companion app, R26)
 Author: Sabrina Pribadi
-Date: November 11, 2026
+Date: November 17, 2026
 Status: Active — P0, P1 passed; P2 failed (kriging deployed; ADR-006 retest open until Ookla publishes 2026 Q4, expected January 2027); P3 done; P4 done (checked plans); P5 failed on live latency only (notes cached); P6 passed (Indonesia); P7 passed
 
 
@@ -96,6 +96,9 @@ Module D: New-site effect, all seven countries — ADR-007 (P3)
 Module E: Budgeted site plan — new sites and added capacity, costed, exact, planner exports — ADR-008 (P4)
 Module F: Planner API, MCP tools, grounded site notes — ADR-009 (P5)
 Module G: Databricks quarterly job for Indonesia, registry, drift — ADR-010 (P6; R15 in ADR-001 and ADR-010)
+Module H: Public API and stateless MCP on a free host — ADR-011
+Module I: Agent skill `next-site-planner` (data line, KPI baseline, maps with OpenStreetMap buildings and masts, thin-evidence warning; 4 evaluated tasks, 29/29) — ADR-012, rule R24
+Module J: Streamlit companion app (plan on a map, budget what-if, place check with neighbours, countries at five speed bars; API and committed results only, no keys) — rule R26
 
 
 6. NON-FUNCTIONAL REQUIREMENTS
