@@ -103,7 +103,8 @@ with st.expander("Full brief"):
 st.caption(f"[Results page]({D.PAGES}) · [Technical walkthrough]({D.PAGES}build.html) · [Live API]({D.API}/docs) · [Source]({D.REPO}) · "
            f"Free Streamlit app: it sleeps after 12 hours without visits; the [results page]({D.PAGES}) is always on and carries every result.")
 
-map_tab, budget_tab, place_tab, bar_tab = st.tabs(["Plan on a map", "Budget what-if", "Check a place", "Countries at your speed bar"],
+map_tab, budget_tab, place_tab, bar_tab, agent_tab = st.tabs(["Plan on a map", "Budget what-if", "Check a place",
+                                                              "Countries at your speed bar", "Ask the agent"],
                                                   key="view", on_change="rerun")   # lazy: only the open tab runs (and calls the API)
 
 # 2. The plan's shortlist on a map
@@ -295,3 +296,12 @@ with bar_tab:
                 "share_below_bar_everyone": "Below bar, everyone", "people_below_bar_everyone_millions": "People below (M)",
                 "untested_people_likely_below_bar_millions": "Untested, likely below (M)"}), hide_index=True, width="stretch",
                 column_config={c: st.column_config.NumberColumn(format="%.1f%%") for c in ["Tested share", "Below bar, tested", "Below bar, everyone"]})
+
+# 6. The planner agent: recorded answers by default, live only with the viewer's own key
+with agent_tab:
+    if agent_tab.open:
+        import agent_tools as AT
+        import chat
+        st.markdown("Ask the planning agent in plain words. It picks the tools (a place's speed, a country's plan, one site's note, "
+                    "countries at a speed bar), reads their results and answers; every number must come from a tool.")
+        chat.render(st, Path(__file__).resolve().parent / "replays.json", AT)

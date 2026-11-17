@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.14.0] — 2026-11-17 — Agent chat in the Streamlit app: replay by default, your own key optional
+**Files:** app/agent.py (new, shared engine), app/chat.py (new, shared tab), app/agent_tools.py (new), app/replays.json (new), scripts/record_agent_replays.py (new), app/streamlit_app.py, app/requirements.txt, tests/test_streamlit_app.py, README.md
+- **Situation:** The app showed models and tools but not the agent; hosting a key would let anyone spend the owner's budget.
+- **Task:** Show the agent working at $0 by default and let viewers try it live on their own key (R26 item 3).
+- **Action:** A planning agent over the four planner tools (same names and parameters as the registry, checked by a test) runs on the public API; 9 questions recorded with tools, a number check, cost and latency; an "Ask the agent" tab replays them (closest match for typed questions) or runs live on the viewer's key, session-only, capped at 10, errors redacted.
+- **Result:** 9 of 9 recorded answers pass the number check; about $0.21 per 1,000 questions; p95 5.7 s. The checker found one real misreading before release (a chance of being slow described as tests below a speed); the agent's instructions now define the field.
+- **Talking point:** "Every chat answer shows which tools it called and whether each number traces to a tool result; visitors can rerun it live on their own key."
+
 ## [0.13.1] — 2026-11-17 — Streamlit app: showcase first screen (R26 item 7)
 **Files:** .streamlit/config.toml, app/streamlit_app.py, app/nsp_data.py, tests/test_streamlit_app.py
 - **Situation:** The app previewed on LinkedIn as text cards, unlike the portfolio's featured apps (dark dashboards with KPI tiles).

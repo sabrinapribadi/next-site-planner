@@ -1,0 +1,702 @@
+{
+ "recorded_utc": "2026-11-17 14:32",
+ "model": "gpt-6-luna",
+ "api": "https://next-site-planner.vercel.app",
+ "runs": [
+  {
+   "question": "Is mobile slow near -6.2, 106.8 in Jakarta, and for how many people?",
+   "answer": "No. The area’s typical mobile speed is 89.3 Mbps, with an estimated 0% chance that typical speed is below 25 Mbps. The hexagon covers 12,968 people (the smaller of the two population estimates). There were 1,027 speed tests.",
+   "tool_calls": [
+    {
+     "name": "gap_at",
+     "arguments": {
+      "lat": -6.2,
+      "lon": 106.8
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "h3": "888c106a49fffff",
+     "country": "IDN",
+     "district": "Kota Jakarta Utara, Jakarta Special Capital Region",
+     "people_kontur": 12968,
+     "people_worldpop": 14539,
+     "tested": true,
+     "tests": 1027,
+     "typical_mbps": 89.3,
+     "chance_below_10_mbps": 0.0,
+     "chance_below_25_mbps": 0.0,
+     "area_type": "urban_centre",
+     "gap_type_25_mbps": "no gap",
+     "in_plan": null
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 1450,
+    "cached_input": 0,
+    "output": 90
+   },
+   "cost_usd": 0.00019,
+   "latency_ms": 5734.5
+  },
+  {
+   "question": "Is there a coverage gap at 7.21421, 124.22888 in Cotabato City?",
+   "answer": "Yes. It’s classified as **slow** (the type of gap is unknown): typical speed is **15 Mbps**, with a **92.9% estimated chance** that typical speed is below 25 Mbps. The hexagon has **14,231–37,416 people** across the two population maps, and there were **25 speed tests**.",
+   "tool_calls": [
+    {
+     "name": "gap_at",
+     "arguments": {
+      "lat": 7.21421,
+      "lon": 124.22888
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "h3": "8868513063fffff",
+     "country": "PHL",
+     "district": "Cotabato City, Soccsksargen",
+     "people_kontur": 37416,
+     "people_worldpop": 14231,
+     "tested": true,
+     "tests": 25,
+     "typical_mbps": 15.0,
+     "chance_below_10_mbps": 0.123,
+     "chance_below_25_mbps": 0.929,
+     "area_type": "urban_centre",
+     "gap_type_25_mbps": "slow, type unknown",
+     "in_plan": {
+      "rank": 1,
+      "intervention": "capacity"
+     }
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 1463,
+    "cached_input": 0,
+    "output": 105
+   },
+   "cost_usd": 0.0001988,
+   "latency_ms": 5555.4
+  },
+  {
+   "question": "Which are the top 5 sites in the Philippines' plan?",
+   "answer": "The Philippines’ top five checked sites are:\n\n1. **Cotabato City, Soccsksargen** — capacity upgrade; 14,231 people; expected lift: 2,155.1.\n2. **Cotabato City, Soccsksargen** — capacity upgrade; 15,812 people; expected lift: 1,636.2.\n3. **Lanao del Norte, Northern Mindanao** — small cell; 28,824 people; expected lift: 1,216.7.\n4. **Isabela, Cagayan Valley** — capacity upgrade; 7,302 people; expected lift: 974.6.\n5. **Batangas, Calabarzon** — capacity upgrade; 8,984 people; expected lift: 727.3.\n\nCosts range from 0.3 to 0.5 new-tower equivalents per site.",
+   "tool_calls": [
+    {
+     "name": "top_sites",
+     "arguments": {
+      "country": "PHL",
+      "k": 5
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "country": "PHL",
+     "budget_new_tower_equivalents": 1000.0,
+     "checked_on_ground": true,
+     "sites": [
+      {
+       "rank": 1,
+       "h3": "8868513063fffff",
+       "country": "PHL",
+       "district": "Cotabato City, Soccsksargen",
+       "intervention": "capacity",
+       "cost_new_tower_equivalents": 0.3,
+       "people": 14231,
+       "people_kontur": 37416,
+       "people_worldpop": 14231,
+       "chance_below_25_mbps": 0.929,
+       "expected_people_lifted": 2155.1,
+       "site_lat": 7.21421,
+       "site_lon": 124.22888,
+       "built_up_m2": 54952,
+       "elevation_m": 2,
+       "slope_deg": 1.9,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      },
+      {
+       "rank": 2,
+       "h3": "886851300dfffff",
+       "country": "PHL",
+       "district": "Cotabato City, Soccsksargen",
+       "intervention": "capacity",
+       "cost_new_tower_equivalents": 0.3,
+       "people": 15812,
+       "people_kontur": 24455,
+       "people_worldpop": 15812,
+       "chance_below_25_mbps": 0.635,
+       "expected_people_lifted": 1636.2,
+       "site_lat": 7.22221,
+       "site_lon": 124.23462,
+       "built_up_m2": 232526,
+       "elevation_m": 5,
+       "slope_deg": 0.7,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      },
+      {
+       "rank": 3,
+       "h3": "88684209b7fffff",
+       "country": "PHL",
+       "district": "Lanao del Norte, Northern Mindanao",
+       "intervention": "small_cell",
+       "cost_new_tower_equivalents": 0.5,
+       "people": 28824,
+       "people_kontur": 37368,
+       "people_worldpop": 28824,
+       "chance_below_25_mbps": 0.723,
+       "expected_people_lifted": 1216.7,
+       "site_lat": 8.00454,
+       "site_lon": 124.28904,
+       "built_up_m2": 565696,
+       "elevation_m": 722,
+       "slope_deg": 1.7,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      },
+      {
+       "rank": 4,
+       "h3": "88696aa6b1fffff",
+       "country": "PHL",
+       "district": "Isabela, Cagayan Valley",
+       "intervention": "capacity",
+       "cost_new_tower_equivalents": 0.3,
+       "people": 7302,
+       "people_kontur": 10078,
+       "people_worldpop": 7302,
+       "chance_below_25_mbps": 0.818,
+       "expected_people_lifted": 974.6,
+       "site_lat": 16.78954,
+       "site_lon": 121.53288,
+       "built_up_m2": 311057,
+       "elevation_m": 106,
+       "slope_deg": 2.5,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      },
+      {
+       "rank": 5,
+       "h3": "88695d801dfffff",
+       "country": "PHL",
+       "district": "Batangas, Calabarzon",
+       "intervention": "capacity",
+       "cost_new_tower_equivalents": 0.3,
+       "people": 8984,
+       "people_kontur": 9938,
+       "people_worldpop": 8984,
+       "chance_below_25_mbps": 0.496,
+       "expected_people_lifted": 727.3,
+       "site_lat": 13.87346,
+       "site_lon": 120.91513,
+       "built_up_m2": 257092,
+       "elevation_m": 5,
+       "slope_deg": 2.9,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      }
+     ]
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 2219,
+    "cached_input": 0,
+    "output": 210
+   },
+   "cost_usd": 0.0003269,
+   "latency_ms": 5490.1
+  },
+  {
+   "question": "Explain the Philippines' number 1 site.",
+   "answer": "The Philippines’ number 1 site is a capacity upgrade in Cotabato City, Soccsksargen. It covers 14,231 people, with a 92.9% estimated chance that typical speed is below 25 Mbps. The plan estimates 2,155 people could be lifted above 25 Mbps. It was ground-checked: the area has 54,952 m² of buildings, is at 2 m elevation, and has a 1.9° slope.",
+   "tool_calls": [
+    {
+     "name": "explain_site",
+     "arguments": {
+      "country": "PHL",
+      "rank": 1
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "site": {
+      "rank": 1,
+      "h3": "8868513063fffff",
+      "country": "PHL",
+      "district": "Cotabato City, Soccsksargen",
+      "intervention": "capacity",
+      "cost_new_tower_equivalents": 0.3,
+      "people": 14231,
+      "people_kontur": 37416,
+      "people_worldpop": 14231,
+      "chance_below_25_mbps": 0.929,
+      "expected_people_lifted": 2155.1,
+      "site_lat": 7.21421,
+      "site_lon": 124.22888,
+      "built_up_m2": 54952,
+      "elevation_m": 2,
+      "slope_deg": 1.9,
+      "steep": false,
+      "high": false,
+      "checked_on_ground": true
+     },
+     "note": "Extra capacity for 14,231 people; 92.9% chance of being below 25 Mbps; 2,155 could be lifted above 25 Mbps. Ground check: 54,952 m² of buildings, elevation 2 m, slope 1.9°, neither steep nor high.",
+     "source": "model",
+     "grader": {
+      "ok": true,
+      "unknown_numbers": [],
+      "names": [],
+      "promise": false,
+      "words": 34,
+      "served_ok": true
+     },
+     "meter": {
+      "provider": "cache",
+      "model": "gpt-6-luna",
+      "input_tokens": 0,
+      "cached_input_tokens": 0,
+      "output_tokens": 0,
+      "latency_ms": 0.369,
+      "cost_usd": 0.0,
+      "cached": true
+     }
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 1650,
+    "cached_input": 0,
+    "output": 127
+   },
+   "cost_usd": 0.0002285,
+   "latency_ms": 4470.3
+  },
+  {
+   "question": "Which country has the largest share of people below 10 Mbps?",
+   "answer": "The Philippines has the largest share of people below 10 Mbps: **5.24%**.",
+   "tool_calls": [
+    {
+     "name": "compare_countries",
+     "arguments": {
+      "bar_mbps": 10
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "bar_mbps": 10,
+     "quarter": "2026Q3",
+     "countries": [
+      {
+       "country": "IDN",
+       "name": "Indonesia",
+       "population_millions": 269.73,
+       "tested_share": 0.6498,
+       "share_below_bar_tested": 0.0409,
+       "share_below_bar_everyone": 0.0249,
+       "people_below_bar_everyone_millions": 6.72,
+       "untested_people_likely_below_bar_millions": 5.36,
+       "plan_people_lifted": 122506,
+       "plan_gain_vs_kpi": 1.853,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "MYS",
+       "name": "Malaysia",
+       "population_millions": 33.32,
+       "tested_share": 0.8576,
+       "share_below_bar_tested": 0.0182,
+       "share_below_bar_everyone": 0.003,
+       "people_below_bar_everyone_millions": 0.1,
+       "untested_people_likely_below_bar_millions": 0.08,
+       "plan_people_lifted": 10540,
+       "plan_gain_vs_kpi": 2.58,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "PHL",
+       "name": "Philippines",
+       "population_millions": 107.9,
+       "tested_share": 0.594,
+       "share_below_bar_tested": 0.0538,
+       "share_below_bar_everyone": 0.0524,
+       "people_below_bar_everyone_millions": 5.65,
+       "untested_people_likely_below_bar_millions": 4.75,
+       "plan_people_lifted": 279483,
+       "plan_gain_vs_kpi": 1.341,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "DEU",
+       "name": "Germany",
+       "population_millions": 83.25,
+       "tested_share": 0.6622,
+       "share_below_bar_tested": 0.0521,
+       "share_below_bar_everyone": 0.0076,
+       "people_below_bar_everyone_millions": 0.63,
+       "untested_people_likely_below_bar_millions": 0.46,
+       "plan_people_lifted": 97127,
+       "plan_gain_vs_kpi": 0.497,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "FRA",
+       "name": "France",
+       "population_millions": 63.87,
+       "tested_share": 0.534,
+       "share_below_bar_tested": 0.0364,
+       "share_below_bar_everyone": 0.0055,
+       "people_below_bar_everyone_millions": 0.35,
+       "untested_people_likely_below_bar_millions": 0.31,
+       "plan_people_lifted": 37568,
+       "plan_gain_vs_kpi": 0.597,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "USA",
+       "name": "United States",
+       "population_millions": 332.23,
+       "tested_share": 0.5639,
+       "share_below_bar_tested": 0.0336,
+       "share_below_bar_everyone": 0.0018,
+       "people_below_bar_everyone_millions": 0.6,
+       "untested_people_likely_below_bar_millions": 0.43,
+       "plan_people_lifted": 4447,
+       "plan_gain_vs_kpi": 1.019,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "ARE",
+       "name": "United Arab Emirates",
+       "population_millions": 9.04,
+       "tested_share": 0.636,
+       "share_below_bar_tested": 0.012,
+       "share_below_bar_everyone": 0.0007,
+       "people_below_bar_everyone_millions": 0.01,
+       "untested_people_likely_below_bar_millions": 0.01,
+       "plan_people_lifted": 311,
+       "plan_gain_vs_kpi": 2.81,
+       "plan_checked_on_ground": true
+      }
+     ]
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 2206,
+    "cached_input": 0,
+    "output": 45
+   },
+   "cost_usd": 0.0002431,
+   "latency_ms": 4400.0
+  },
+  {
+   "question": "How does Indonesia's plan compare with KPI ranking?",
+   "answer": "Indonesia’s checked plan would lift **122,506 people**—**185% more** than KPI ranking at the same budget.",
+   "tool_calls": [
+    {
+     "name": "compare_countries",
+     "arguments": {
+      "bar_mbps": 25
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "bar_mbps": 25,
+     "quarter": "2026Q3",
+     "countries": [
+      {
+       "country": "IDN",
+       "name": "Indonesia",
+       "population_millions": 269.73,
+       "tested_share": 0.6498,
+       "share_below_bar_tested": 0.133,
+       "share_below_bar_everyone": 0.182,
+       "people_below_bar_everyone_millions": 49.09,
+       "untested_people_likely_below_bar_millions": 30.34,
+       "plan_people_lifted": 122506,
+       "plan_gain_vs_kpi": 1.853,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "MYS",
+       "name": "Malaysia",
+       "population_millions": 33.32,
+       "tested_share": 0.8576,
+       "share_below_bar_tested": 0.0495,
+       "share_below_bar_everyone": 0.0394,
+       "people_below_bar_everyone_millions": 1.31,
+       "untested_people_likely_below_bar_millions": 0.77,
+       "plan_people_lifted": 10540,
+       "plan_gain_vs_kpi": 2.58,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "PHL",
+       "name": "Philippines",
+       "population_millions": 107.9,
+       "tested_share": 0.594,
+       "share_below_bar_tested": 0.1635,
+       "share_below_bar_everyone": 0.3092,
+       "people_below_bar_everyone_millions": 33.36,
+       "untested_people_likely_below_bar_millions": 23.36,
+       "plan_people_lifted": 279483,
+       "plan_gain_vs_kpi": 1.341,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "DEU",
+       "name": "Germany",
+       "population_millions": 83.25,
+       "tested_share": 0.6622,
+       "share_below_bar_tested": 0.1457,
+       "share_below_bar_everyone": 0.1145,
+       "people_below_bar_everyone_millions": 9.53,
+       "untested_people_likely_below_bar_millions": 5.54,
+       "plan_people_lifted": 97127,
+       "plan_gain_vs_kpi": 0.497,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "FRA",
+       "name": "France",
+       "population_millions": 63.87,
+       "tested_share": 0.534,
+       "share_below_bar_tested": 0.0835,
+       "share_below_bar_everyone": 0.0643,
+       "people_below_bar_everyone_millions": 4.11,
+       "untested_people_likely_below_bar_millions": 3.36,
+       "plan_people_lifted": 37568,
+       "plan_gain_vs_kpi": 0.597,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "USA",
+       "name": "United States",
+       "population_millions": 332.23,
+       "tested_share": 0.5639,
+       "share_below_bar_tested": 0.0823,
+       "share_below_bar_everyone": 0.0212,
+       "people_below_bar_everyone_millions": 7.04,
+       "untested_people_likely_below_bar_millions": 4.71,
+       "plan_people_lifted": 4447,
+       "plan_gain_vs_kpi": 1.019,
+       "plan_checked_on_ground": true
+      },
+      {
+       "country": "ARE",
+       "name": "United Arab Emirates",
+       "population_millions": 9.04,
+       "tested_share": 0.636,
+       "share_below_bar_tested": 0.0347,
+       "share_below_bar_everyone": 0.0043,
+       "people_below_bar_everyone_millions": 0.04,
+       "untested_people_likely_below_bar_millions": 0.03,
+       "plan_people_lifted": 311,
+       "plan_gain_vs_kpi": 2.81,
+       "plan_checked_on_ground": true
+      }
+     ]
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 2200,
+    "cached_input": 0,
+    "output": 51
+   },
+   "cost_usd": 0.0002455,
+   "latency_ms": 4351.1
+  },
+  {
+   "question": "What are Germany's top 3 sites and what kind of build are they?",
+   "answer": "Germany’s top three planned sites are:\n\n- **Tübingen, Baden-Württemberg** — capacity build.\n- **Oberbayern, Bayern** — capacity build.\n- **Gießen, Hessen** — capacity build.\n\nAll three are checked on the ground.",
+   "tool_calls": [
+    {
+     "name": "top_sites",
+     "arguments": {
+      "country": "DEU",
+      "k": 3
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "country": "DEU",
+     "budget_new_tower_equivalents": 1000.0,
+     "checked_on_ground": true,
+     "sites": [
+      {
+       "rank": 1,
+       "h3": "881f81a743fffff",
+       "country": "DEU",
+       "district": "Tübingen, Baden-Württemberg",
+       "intervention": "capacity",
+       "cost_new_tower_equivalents": 0.3,
+       "people": 2883,
+       "people_kontur": 2883,
+       "people_worldpop": 3289,
+       "chance_below_25_mbps": 0.838,
+       "expected_people_lifted": 185.1,
+       "site_lat": 48.50637,
+       "site_lon": 9.05312,
+       "built_up_m2": 387487,
+       "elevation_m": 326,
+       "slope_deg": 0.6,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      },
+      {
+       "rank": 2,
+       "h3": "881f8d7ad7fffff",
+       "country": "DEU",
+       "district": "Oberbayern, Bayern",
+       "intervention": "capacity",
+       "cost_new_tower_equivalents": 0.3,
+       "people": 3623,
+       "people_kontur": 3623,
+       "people_worldpop": 5707,
+       "chance_below_25_mbps": 0.539,
+       "expected_people_lifted": 149.6,
+       "site_lat": 48.11329,
+       "site_lon": 11.70179,
+       "built_up_m2": 286785,
+       "elevation_m": 540,
+       "slope_deg": 4.7,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      },
+      {
+       "rank": 3,
+       "h3": "881fac19dbfffff",
+       "country": "DEU",
+       "district": "Gießen, Hessen",
+       "intervention": "capacity",
+       "cost_new_tower_equivalents": 0.3,
+       "people": 2067,
+       "people_kontur": 2067,
+       "people_worldpop": 2838,
+       "chance_below_25_mbps": 0.911,
+       "expected_people_lifted": 144.3,
+       "site_lat": 50.79279,
+       "site_lon": 8.76421,
+       "built_up_m2": 395417,
+       "elevation_m": 186,
+       "slope_deg": 1.9,
+       "steep": false,
+       "high": false,
+       "checked_on_ground": true
+      }
+     ]
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 1872,
+    "cached_input": 0,
+    "output": 80
+   },
+   "cost_usd": 0.0002272,
+   "latency_ms": 4878.5
+  },
+  {
+   "question": "How slow is mobile in Tokyo, at 35.68, 139.76?",
+   "answer": "Tokyo is outside the seven countries covered, so I can’t provide a mobile-speed estimate for that location.",
+   "tool_calls": [
+    {
+     "name": "gap_at",
+     "arguments": {
+      "lat": 35.68,
+      "lon": 139.76
+     },
+     "ok": true
+    }
+   ],
+   "tool_results": [
+    {
+     "out_of_scope": true,
+     "message": "No populated hexagon with a speed estimate at this point in the seven countries covered."
+    }
+   ],
+   "steps": 2,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 1338,
+    "cached_input": 0,
+    "output": 52
+   },
+   "cost_usd": 0.0001598,
+   "latency_ms": 4867.6
+  },
+  {
+   "question": "Can you write me a poem about towers?",
+   "answer": "I can help with mobile coverage at a place, compare countries’ speeds, show a country’s planned tower sites, or explain one planned site.",
+   "tool_calls": [],
+   "tool_results": [],
+   "steps": 1,
+   "grounded": true,
+   "ungrounded_numbers": [],
+   "model": "gpt-6-luna",
+   "tokens": {
+    "input": 626,
+    "cached_input": 0,
+    "output": 33
+   },
+   "cost_usd": 7.91e-05,
+   "latency_ms": 1770.3
+  }
+ ],
+ "summary": {
+  "questions": 9,
+  "grounded": 9,
+  "cost_usd_total": 0.001899,
+  "cost_per_1000_usd": 0.211,
+  "latency_ms_p50": 4867.6,
+  "latency_ms_p95": 5734.5
+ }
+}

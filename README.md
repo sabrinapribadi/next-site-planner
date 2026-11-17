@@ -82,6 +82,7 @@
 3. **Check a place:** any point (or a preset) and its six neighbouring hexagons from the live API, with a thin-evidence warning under 10 speed tests.
 4. **Countries at your speed bar:** 5, 10, 25, 50 or 100 Mbps; share of people below the bar among tested areas only vs everyone.
 
+- **Ask the agent:** a planning agent over the four planner tools. **Replay by default:** 9 real answers recorded on the public API (`app/replays.json`, made by `scripts/record_agent_replays.py`), each with its tool calls, a number check (9 of 9 pass), cost and time; a typed question shows the closest recorded one. **Live with your own key:** a viewer can paste their own OpenAI key; it stays in their session only, is never stored or logged, and is capped at 10 questions. The app never holds a key of ours.
 - **Data:** the public API and the committed plan results (`data/outputs/p4_site_plan.json`) only; no keys, no store, no model.
 - **Free-tier limits:** Streamlit Community Cloud sleeps after 12 hours without visits and the first visit wakes it; the [results page](https://sabrinapribadi.github.io/next-site-planner/) is the always-on fallback. No keep-awake pings.
 - **Look:** theme in `.streamlit/config.toml` (light and dark, IBM Plex Sans and Archivo); only the open tab runs, so a tab calls the API only when it is opened.
