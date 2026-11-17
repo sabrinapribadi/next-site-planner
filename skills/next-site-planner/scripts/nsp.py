@@ -64,7 +64,8 @@ def about(base: str) -> dict:
     q = cs["quarter"]
     s, e = quarter_dates(q)
     weeks = round(((dt.date.fromisoformat(e) - dt.date.fromisoformat(s)).days + 1) / 7)
-    return {"checked_at_utc": dt.datetime.now(dt.UTC).strftime("%Y-%m-%d %H:%M"),
+    # timezone.utc, not datetime.UTC: the skill must run on Python 3.8+, and datetime.UTC is 3.11+
+    return {"checked_at_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M"),  # noqa: UP017
             "speed_tests": {"source": "Speedtest by Ookla open data (mobile), crowdsourced", "quarter": q,
                             "period": f"{s} to {e}", "weeks": weeks},
             "population": ["Kontur 2023 (H3 resolution 8)", "WorldPop 2020 constrained 100 m"],
@@ -154,9 +155,9 @@ def main(argv: list[str] | None = None) -> None:
     ms = msub.add_parser("sites"); ms.add_argument("country"); ms.add_argument("--k", type=int, default=10); ms.add_argument("--out", default="site_map.html")
     a = ap.parse_args(argv)
 
-    if a.cmd in ("gap",) or (a.cmd == "map" and a.what == "gap"):
-        if not (-90 <= a.lat <= 90 and -180 <= a.lon <= 180):
-            raise SystemExit("latitude must be -90..90 and longitude -180..180")
+    is_point = a.cmd == "gap" or (a.cmd == "map" and a.what == "gap")
+    if is_point and not (-90 <= a.lat <= 90 and -180 <= a.lon <= 180):
+        raise SystemExit("latitude must be -90..90 and longitude -180..180")
     if a.cmd == "map":
         print(f"map written: {make_map(a.base, a)}")
         return
