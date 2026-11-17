@@ -44,7 +44,7 @@ Every field the four calls return, with what it means and how to say it. Units a
 | `chance_below_25_mbps` | Probability the area is below 25 Mbps |
 | `expected_people_lifted` | people × chance below 25 Mbps × the measured share a site lifts (different for a new site and for co-location); round it ("about 2,100") |
 | `site_lat`, `site_lon` | Nominal location |
-| `built_up_m2`, `elevation_m`, `slope_deg`, `steep`, `high` | Ground check from land cover and elevation |
+| `built_up_m2`, `elevation_m`, `slope_deg`, `steep`, `high` | Ground check: hexagons with under 1,000 m² of built-up land are rejected; `steep` (slope above 20°) and `high` (above 2,500 m) are flags that raise access and build cost, not rejections |
 | `checked_on_ground` | The nominal passed the ground check |
 
 ## `note` (one planned site)

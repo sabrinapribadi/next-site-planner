@@ -38,6 +38,13 @@
 - One change came from the runs: pair `plan_gain_vs_kpi` with `plan_people_lifted`, because the UAE's 3.8× applies to about 311 people.
 - Three facts were corrected while writing the field reference (R23): rank is by expected people lifted, not per cost; `people` is the smaller of the two population estimates; expected people lifted = people × chance below 25 Mbps × the measured lift share.
 
+### Iteration 2 (2026-11-17, after a radio planner's review)
+
+- **Review:** show the data and its period first; define the baseline and its KPIs with its own numbers; say how many weeks a probability comes from; explain why a hexagon is not in the plan; show a map with buildings; call shortlists estimates and ask for CAPEX, OPEX, market share and strategy.
+- **Changes:** `about` command (sources, quarter dates, check time); `map` command (exact H3 outline over satellite imagery); `references/data-sources.md` (sources and vintages, how the chance is made, the KPI baseline and its numbers per country, reasons a hexagon is left out, inputs that sharpen a shortlist); an answer structure in `SKILL.md`.
+- **Corrections found while writing it (R23):** steep and high sites are flags, not rejections (only under 1,000 m² of built-up land rejects); the UAE's budget is 29.3 tower-equivalents, not 1,000.
+- **Result:** 10 new graders encode the review; **25 of 25** pass against the live API.
+
 ## Consequences
 
 - **Positive:** agents can use the planner correctly from a plain question; regressions in the data surface in CI.

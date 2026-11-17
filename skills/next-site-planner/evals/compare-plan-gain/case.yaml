@@ -1,4 +1,4 @@
 schema_version: "1.1"
 name: compare-plan-gain
 expected_outcome: |
-  Names the UAE as the largest gain (plan_gain_vs_kpi 2.81, i.e. about 3.8 times as many people lifted as KPI ranking, or 281% more), reads the field as a relative gain not a ratio, and compares at least the other countries' figures correctly.
+  Opens with the data used and the baseline (KPI ranking: equal-weight slow speed, population, places) and why. Names the UAE as the largest relative gain (about 3.8 times, +281%) but on a 29.3 tower-equivalent budget and about 311 people, gives baseline and plan people lifted per country, and points to the Philippines and Indonesia as the largest absolute wins.

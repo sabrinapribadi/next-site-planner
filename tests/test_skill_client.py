@@ -40,3 +40,18 @@ def test_skill_files():
     assert len(cases) >= 4 and all((c / "prompt.md").exists() and (c / "case.yaml").exists() and any((c / "graders").glob("*.md")) for c in cases)
     trig = json.loads((root / "trigger-evals.json").read_text())
     assert sum(t["should_trigger"] for t in trig) >= 8 and sum(not t["should_trigger"] for t in trig) >= 8
+
+
+def test_quarter_dates():
+    assert nsp.quarter_dates("2026Q3") == ("2026-07-01", "2026-09-30")
+    assert nsp.quarter_dates("2026Q4") == ("2026-10-01", "2026-12-31")
+
+
+def test_map_offline(monkeypatch, tmp_path):
+    gap = {"h3": "888c106a49fffff", "district": "Kota Jakarta Utara", "typical_mbps": 89.3, "gap_type_25_mbps": "no gap",
+           "chance_below_25_mbps": 0.0, "people_kontur": 12968}
+    monkeypatch.setattr(nsp, "get", lambda base, path, params=None, timeout=60: gap)
+    out = tmp_path / "m.html"
+    nsp.main(["map", "gap", "-6.2", "106.8", "--out", str(out)])
+    page = out.read_text()
+    assert "leaflet@1.9.4" in page and "888c106a49fffff" in page and "Kota Jakarta Utara" in page

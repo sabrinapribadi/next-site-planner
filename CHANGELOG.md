@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.12.1] — 2026-11-17 — Agent skill iteration 2 (planner review)
+**Files:** skills/next-site-planner/ (SKILL.md, scripts/nsp.py, references/data-sources.md, references/fields.md, evals/), tests/test_skill_client.py, docs/adr/ADR-012-agent-skill.md, README.md
+- **Situation:** A planner reviewed the skill's answers: they lacked the data period, the baseline's definition, the reason a place is left out, maps, and the business inputs a shortlist needs.
+- **Task:** Make every answer show its evidence first and its limits last.
+- **Action:** Added `about` and `map` commands, a data-sources reference (vintages, KPI baseline and its numbers, exclusion reasons) and an answer structure; 10 new graders.
+- **Result:** 25 of 25 checks pass against the live API; two facts corrected (steep/high are flags; the UAE budget is 29.3).
+- **Talking point:** "A planner's review became ten automated checks, so the next change cannot quietly undo it."
+
 ## [0.12.0] — 2026-11-17 — Agent skill (R24)
 **Files:** skills/next-site-planner/ (new), docs/adr/ADR-012-agent-skill.md (new), docs/adr/README.md, tests/test_skill_client.py (new), scripts/skill_live_check.py (new), .github/workflows/ci.yml, README.md, docs/brief.yaml, scripts/brief.py, docs/index.html, docs/build.html
 - **Situation:** The planner had a live API and MCP tools, but an agent did not know when to use them or how to read fields such as the plan's gain over KPI ranking.
