@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.14.1] — 2026-11-18 — Fix: clicking a map marker crashed the app
+**Files:** app/streamlit_app.py, tests/test_streamlit_app.py
+- **Situation:** On the live app, clicking a site marker raised StreamlitWidgetAlreadyInstantiatedError (reported by the user).
+- **Task:** Keep "click a marker to focus" working without writing a widget's state after it is drawn.
+- **Action:** A click stores the site in `_pending_focus`; the next run applies it before the focus box is drawn; a focus value not in the current list (after a country or filter change) falls back to the whole shortlist.
+- **Result:** Regression test added; 13 app tests pass.
+- **Talking point:** "AppTest could not click a map, so the bug reached the live app; the fix and its test now pin the click path."
+
 ## [0.14.0] — 2026-11-17 — Agent chat in the Streamlit app: replay by default, your own key optional
 **Files:** app/agent.py (new, shared engine), app/chat.py (new, shared tab), app/agent_tools.py (new), app/replays.json (new), scripts/record_agent_replays.py (new), app/streamlit_app.py, app/requirements.txt, tests/test_streamlit_app.py, README.md
 - **Situation:** The app showed models and tools but not the agent; hosting a key would let anyone spend the owner's budget.

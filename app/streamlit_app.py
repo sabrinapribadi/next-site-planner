@@ -133,6 +133,10 @@ with map_tab:
                             delta_color="off", delta_arrow="off", border=True)
 
                 options = ["Whole shortlist"] + [f"#{r.rank} · {r.district} · {D.INTERVENTION[r.intervention]}" for r in df.itertuples()]
+                if st.session_state.get("_pending_focus") in options:     # a marker click from the last run, applied before the widget exists
+                    st.session_state["focus"] = st.session_state.pop("_pending_focus")
+                if st.session_state.get("focus") not in options:            # the country or filters changed: start from the whole list
+                    st.session_state.pop("focus", None)
                 focus = st.selectbox("Focus on a site (or click a marker)", options, key="focus")
                 sel = None if focus in (None, "Whole shortlist") else int(focus.split(" ")[0][1:])
                 if sel is not None:
@@ -157,7 +161,7 @@ with map_tab:
                     hit = next((o for o in options if o.startswith(f"#{picked[0]['rank']} ")), None)
                     if hit:
                         st.session_state["_picked"] = picked[0]["rank"]
-                        st.session_state["focus"] = hit
+                        st.session_state["_pending_focus"] = hit                 # never write a widget's state after it is drawn
                         st.rerun()
 
                 if sel is not None:

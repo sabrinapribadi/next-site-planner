@@ -180,3 +180,14 @@ def test_app_agent_tools_match_registry():
     for s in AT.SCHEMAS:
         params = [p for p in inspect.signature(getattr(tools_mod.Tools, s["name"])).parameters if p != "self"]
         assert sorted(s["parameters"]["properties"]) == sorted(params), s["name"]
+
+
+def test_marker_click_focus_is_applied_before_the_widget(offline):
+    """Regression (live app, 2026-11-18): a marker click wrote the focus widget's state after it was drawn
+    (StreamlitWidgetAlreadyInstantiatedError). Clicks now go through _pending_focus, applied before the widget is drawn."""
+    at = run()
+    opts = at.selectbox(key="focus").options
+    at.session_state["_pending_focus"] = opts[3]                       # what a click on site #3 leaves for the next run
+    at.run()
+    assert not at.exception and at.selectbox(key="focus").value == opts[3]
+    assert "_pending_focus" not in at.session_state
