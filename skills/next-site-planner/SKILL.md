@@ -17,7 +17,8 @@ python scripts/nsp.py countries [--bar 25]          # each country: people below
 python scripts/nsp.py gap LAT LON                   # one hexagon: speed, gap type, people, whether the plan picked it
 python scripts/nsp.py sites COUNTRY [--k 10]        # the country's plan, best first (ISO3: IDN MYS PHL DEU FRA USA ARE)
 python scripts/nsp.py note COUNTRY RANK             # a short note on one planned site, every number traced to the data
-python scripts/nsp.py map gap LAT LON --out map.html          # interactive map of the hexagon over satellite imagery
+python scripts/nsp.py map gap LAT LON --out map.html          # the hexagon and its 6 neighbours by speed, plus OpenStreetMap
+                                                                # buildings, places and masts; nearest mast distance (about 1 min)
 python scripts/nsp.py map sites COUNTRY --k 5 --out map.html  # map of planned sites
 python scripts/nsp.py chart countries --out chart.html         # KPI baseline vs plan per country (paired bars)
 python scripts/nsp.py chart sites COUNTRY --k 5 --out chart.html  # shortlist: people lifted per site by build type
@@ -43,7 +44,7 @@ These are the mistakes worth avoiding, because each one changes a planning decis
 - `cost_new_tower_equivalents`: 1.0 = a new macro tower, 0.5 = a small cell, 0.3 = co-location on an existing tower (the API calls it `capacity`). The plan's budget is 1,000 tower-equivalents per country, except the UAE (29.3: all 29 likely-slow candidates); read `budget_new_tower_equivalents` rather than assuming.
 - **Coverage gap** means people are slow because there is little or no signal; **capacity gap** means signal exists but the network is congested. They need different fixes (new site vs co-location or capacity), so name the type.
 - `people_kontur` and `people_worldpop` are two independent population estimates; a site's `people` is the smaller of the two (a conservative planning figure). When they differ a lot, say so.
-- Speeds are crowdsourced tests for one quarter (`quarter` in `countries`); untested hexagons have estimated speeds (`tested: false`).
+- Speeds are crowdsourced tests for one quarter (`quarter` in `countries`); untested hexagons have estimated speeds (`tested: false`). With fewer than about 10 `tests`, say the evidence is thin (one test can be one bad moment).
 
 ## Answer structure
 
@@ -55,7 +56,7 @@ Planners and executives decide in about five seconds whether an answer is useful
    - the **baseline** for any comparison: KPI ranking (equal-weight slow speed, population, number of places, filled until the budget is spent; it stands in for the weighted KPI lists planners build today), with its own number, not only the gain;
    - **why**: why a place is or is not in the plan (first reason in `references/data-sources.md` the numbers support), or the period behind a probability ("from 13 weeks of tests");
    - the one **caveat** that would change the decision (estimates with wide ranges; a large gap between population maps; the UAE's small budget).
-4. **One visual**, chosen with `references/charts.md`: no chart for a single place (use the map), paired bars for baseline vs plan, ranked bars for a shortlist; a table only for exact values the reader needs. Give the file path and say what it shows (for maps: what the satellite view shows about buildings).
+4. **One visual**, chosen with `references/charts.md`: no chart for a single place (use the map), paired bars for baseline vs plan, ranked bars for a shortlist; a table only for exact values the reader needs. Give the file path and say what it shows. For place maps, read the panel: how many of the neighbouring hexagons are likely slow (an isolated gap or an area-wide one), the building and place counts, and the nearest mapped mast (a co-location candidate); OpenStreetMap is volunteered and may miss masts, so say "mapped".
 5. **To sharpen this** (one line, for shortlists and investment questions): CAPEX and OPEX per site type, existing sites, market share, revenue per user and the commercial strategy. Add the licence (Ookla data is CC BY-NC-SA 4.0, non-commercial) when the numbers may be reused.
 
 Aim for about ten lines of text before the visual; cut any point that would not change the reader's decision.

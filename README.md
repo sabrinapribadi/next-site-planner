@@ -82,13 +82,13 @@ The planner ships as an Agent Skill in [`skills/next-site-planner/`](skills/next
    git clone https://github.com/sabrinapribadi/next-site-planner
    cp -r next-site-planner/skills/next-site-planner ~/.claude/skills/     # all projects; or .claude/skills/ in one project
    ```
-2. **Maps and charts:** `python scripts/nsp.py map gap LAT LON` writes an interactive map of the hexagon over satellite imagery (buildings visible); `chart countries` and `chart sites COUNTRY` write the baseline-vs-plan and shortlist charts.
+2. **Maps and charts:** `python scripts/nsp.py map gap LAT LON` writes an interactive map: the hexagon and its neighbours shaded by chance of being slow, with OpenStreetMap buildings, places and telecom masts and the nearest mast's distance; `chart countries` and `chart sites COUNTRY` write the baseline-vs-plan and shortlist charts.
 3. **Optional MCP connection** (same four tools): `claude mcp add --transport http site-planner https://next-site-planner.vercel.app/mcp`.
 4. **Ask in plain words**, for example: "Is mobile slow near -6.2, 106.8, and is it a coverage or capacity gap?" or "Give me the top 5 Philippines site nominations and explain the first."
 
 | What is tested | How | Result (2026-11-17) |
 |---|---|---|
-| 4 task cases (gap check, shortlist, country comparison, out-of-scope) | [`evals/`](skills/next-site-planner/evals) in the `claude plugin eval` layout; graders checked by script against the live API | 28 of 28 checks pass (iteration 3, after two rounds of planner review) |
+| 4 task cases (gap check, shortlist, country comparison, out-of-scope) | [`evals/`](skills/next-site-planner/evals) in the `claude plugin eval` layout; graders checked by script against the live API | 29 of 29 checks pass (iteration 4, after three rounds of planner review) |
 | When the skill should and should not be used | [`trigger-evals.json`](skills/next-site-planner/trigger-evals.json): 10 should-trigger, 10 near-miss prompts | Ready for `claude plugin eval` |
 | The client and the facts the graders use | `tests/test_skill_client.py` in CI; `scripts/skill_live_check.py` after every deploy | Pass |
 

@@ -6,7 +6,7 @@ The reader should get the answer in about five seconds from the headline and one
 
 | The reader must... | Use | Command |
 |---|---|---|
-| Take in one place's answer (a few numbers) | **No chart**: a bold headline and 2–4 numbered points; add the **map** if location matters | `map gap LAT LON` |
+| Take in one place's answer (a few numbers) | **No chart**: a bold headline and 2–4 numbered points, plus the **map**: hexagons shaded by chance of being slow (orange scale), the point in blue, places in aqua, masts in violet, buildings outlined, and a panel with the numbers | `map gap LAT LON` |
 | Compare before → after for each item (KPI baseline vs plan) | **Paired horizontal bars**, baseline grey, plan blue, the multiple printed at the end | `chart countries` |
 | Rank items and tell a few types apart (a shortlist by build type) | **Ranked horizontal bars**, largest first, colour = type (at most 3), value printed | `chart sites COUNTRY --k N` |
 | Read exact values across several columns (cost, people, chance) | **Table** (put it after the chart, or alone for 5 or fewer rows the reader will copy) | — |

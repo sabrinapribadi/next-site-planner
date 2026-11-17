@@ -51,6 +51,12 @@
 - **Changes:** `chart` command with two self-contained forms (paired bars for KPI baseline vs plan; ranked bars by build type for shortlists), palette checked with a colour-vision validator, values printed on bars and a table view; `references/charts.md` (which visual for which job; the five-second layout); answer structure rewritten as a data line, a bold headline, 2–4 numbered points, one visual and one "to sharpen this" line.
 - **Result:** 7 new graders; **28 of 28** pass against the live API (one grader bug fixed: decimals were counted as sentence ends).
 
+### Iteration 4 (2026-11-17, third review)
+
+- **Review:** the map was plain; hexagons and markers shared a colour; show buildings and points of interest and more to decide with.
+- **Changes:** `scripts/maps.py`: the hexagon and its neighbours (ring 1, or 2) shaded on one orange scale by chance of being slow; markers in other hues (point blue, places aqua, masts violet, buildings outlined); OpenStreetMap buildings, places and telecom masts fetched once at build time (public Overpass servers queued 20–60 s when measured, so not in the browser) and embedded; a panel with the hexagon's numbers, neighbours likely slow, OSM counts and the nearest mapped mast; the shortlist map loads OSM live when zoomed in. The skill now flags thin evidence below about 10 speed tests (the Papua example has 1).
+- **Result:** 1 new grader; **29 of 29** pass (two grader bugs fixed over iterations 3–4: decimals counted as sentence ends; one exact phrase too strict).
+
 ## Consequences
 
 - **Positive:** agents can use the planner correctly from a plain question; regressions in the data surface in CI.

@@ -66,10 +66,25 @@ def test_chart_offline(monkeypatch, tmp_path):
 
 
 def test_map_offline(monkeypatch, tmp_path):
+    """Place map without the network: the hexagon (and neighbours if h3 is installed), embedded OpenStreetMap features,
+    marker colours distinct from the hexagon scale, and the nearest-mast figure in the panel."""
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills/next-site-planner/scripts"))
+    import maps
     gap = {"h3": "888c106a49fffff", "district": "Kota Jakarta Utara", "typical_mbps": 89.3, "gap_type_25_mbps": "no gap",
-           "chance_below_25_mbps": 0.0, "people_kontur": 12968}
+           "chance_below_25_mbps": 0.0, "chance_below_10_mbps": 0.0, "people_kontur": 12968, "people_worldpop": 14539,
+           "tested": True, "tests": 1027, "area_type": "urban_centre", "in_plan": None}
+    osm = {"buildings": [{"ring": [[-6.2, 106.8], [-6.2, 106.801], [-6.201, 106.801]], "name": "yes", "levels": None}],
+           "places": [{"lat": -6.2005, "lon": 106.8005, "name": "Cafe", "kind": "cafe"}],
+           "masts": [{"lat": -6.2, "lon": 106.8023, "name": "Mast / tower", "kind": "mast", "operator": ""}]}
     monkeypatch.setattr(nsp, "get", lambda base, path, params=None, timeout=60: gap)
+    monkeypatch.setattr(nsp, "about", lambda base: {"speed_tests": {"quarter": "2026Q3", "period": "2026-07-01 to 2026-09-30", "weeks": 13},
+                                                     "checked_at_utc": "x"})
+    monkeypatch.setattr(maps, "fetch_osm", lambda box, timeout=90: osm)
     out = tmp_path / "m.html"
     nsp.main(["map", "gap", "-6.2", "106.8", "--out", str(out)])
     page = out.read_text()
-    assert "leaflet@1.9.4" in page and "888c106a49fffff" in page and "Kota Jakarta Utara" in page
+    assert "leaflet@1.9.4" in page and "Kota Jakarta Utara" in page and '"Cafe"' in page
+    assert "Nearest mapped mast</td><td>250 m" in page                       # about 254 m, rounded to 10 m
+    hexes = json.loads(page.split("const HEX = ")[1].split(", PTS = ")[0])
+    assert hexes and {maps.BLUE, maps.AQUA, maps.VIOLET}.isdisjoint({h["fill"] for h in hexes})

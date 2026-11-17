@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.12.3] — 2026-11-17 — Agent skill iteration 4 (decision-ready maps)
+**Files:** skills/next-site-planner/ (scripts/maps.py new, scripts/nsp.py, SKILL.md, references/charts.md, evals/), tests/test_skill_client.py, docs/adr/ADR-012-agent-skill.md, README.md
+- **Situation:** The planner found the map plain: hexagons and markers in one colour, no buildings or points of interest.
+- **Task:** Give the map what a planner decides with.
+- **Action:** Neighbouring hexagons shaded by chance of being slow; distinct marker colours; OpenStreetMap buildings, places and masts embedded at build time; a panel with the numbers and the nearest mapped mast; thin-evidence warning under about 10 tests.
+- **Result:** 29 of 29 checks pass; Jakarta map: 7 fast hexagons, 3,546 buildings, 435 places, nearest mast 250 m; Papua: 10 slow hexagons, mast 150 m from the planned site.
+- **Talking point:** "The map answers the planner's next question, is there a mast to co-locate on, before they ask it."
+
 ## [0.12.2] — 2026-11-17 — Agent skill iteration 3 (five-second answers and charts)
 **Files:** skills/next-site-planner/ (SKILL.md, scripts/nsp.py, scripts/charts.py, references/charts.md, evals/), tests/test_skill_client.py, docs/adr/ADR-012-agent-skill.md, README.md
 - **Situation:** The second review asked for answers readable in five seconds, with bullets and the right chart instead of only tables.
