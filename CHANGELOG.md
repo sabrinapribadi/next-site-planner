@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.12.2] — 2026-11-17 — Agent skill iteration 3 (five-second answers and charts)
+**Files:** skills/next-site-planner/ (SKILL.md, scripts/nsp.py, scripts/charts.py, references/charts.md, evals/), tests/test_skill_client.py, docs/adr/ADR-012-agent-skill.md, README.md
+- **Situation:** The second review asked for answers readable in five seconds, with bullets and the right chart instead of only tables.
+- **Task:** Choose visuals by the reader's job and keep text short.
+- **Action:** Added paired-bar and ranked-bar charts (self-contained, light and dark, hover, table view, palette validated for colour-vision deficiency), a chart-choice reference and a five-part answer layout; 7 new graders.
+- **Result:** 28 of 28 checks pass; offline chart test in CI.
+- **Talking point:** "Each chart form was chosen by what the reader has to do with the numbers, and its colours were checked for colour-blind readers."
+
 ## [0.12.1] — 2026-11-17 — Agent skill iteration 2 (planner review)
 **Files:** skills/next-site-planner/ (SKILL.md, scripts/nsp.py, references/data-sources.md, references/fields.md, evals/), tests/test_skill_client.py, docs/adr/ADR-012-agent-skill.md, README.md
 - **Situation:** A planner reviewed the skill's answers: they lacked the data period, the baseline's definition, the reason a place is left out, maps, and the business inputs a shortlist needs.

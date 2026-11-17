@@ -45,6 +45,12 @@
 - **Corrections found while writing it (R23):** steep and high sites are flags, not rejections (only under 1,000 m² of built-up land rejects); the UAE's budget is 29.3 tower-equivalents, not 1,000.
 - **Result:** 10 new graders encode the review; **25 of 25** pass against the live API.
 
+### Iteration 3 (2026-11-17, second review)
+
+- **Review:** pick a table or a chart by what the reader must do, use bullets and numbering, and make the answer readable in about five seconds.
+- **Changes:** `chart` command with two self-contained forms (paired bars for KPI baseline vs plan; ranked bars by build type for shortlists), palette checked with a colour-vision validator, values printed on bars and a table view; `references/charts.md` (which visual for which job; the five-second layout); answer structure rewritten as a data line, a bold headline, 2–4 numbered points, one visual and one "to sharpen this" line.
+- **Result:** 7 new graders; **28 of 28** pass against the live API (one grader bug fixed: decimals were counted as sentence ends).
+
 ## Consequences
 
 - **Positive:** agents can use the planner correctly from a plain question; regressions in the data surface in CI.

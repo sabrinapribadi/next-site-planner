@@ -47,6 +47,24 @@ def test_quarter_dates():
     assert nsp.quarter_dates("2026Q4") == ("2026-10-01", "2026-12-31")
 
 
+def test_chart_offline(monkeypatch, tmp_path):
+    """Both chart forms render without the network: paired bars (2 per country) and ranked bars (1 per site)."""
+    countries = {"countries": [{"country": "PHL", "name": "Philippines", "plan_people_lifted": 279483, "plan_gain_vs_kpi": 1.341},
+                               {"country": "ARE", "name": "United Arab Emirates", "plan_people_lifted": 311, "plan_gain_vs_kpi": 2.81}]}
+    site = {"rank": 1, "district": "Cotabato City", "intervention": "capacity", "cost_new_tower_equivalents": 0.3, "people": 14231,
+            "chance_below_25_mbps": 0.929, "expected_people_lifted": 2155.1}
+    sites = {"country": "PHL", "budget_new_tower_equivalents": 1000.0, "checked_on_ground": True, "sites": [site]}
+    monkeypatch.setattr(nsp, "about", lambda base: {"speed_tests": {"quarter": "2026Q3", "period": "2026-07-01 to 2026-09-30"}, "checked_at_utc": "x"})
+    monkeypatch.setattr(nsp, "get", lambda base, path, params=None, timeout=60: sites if path.startswith("/sites") else countries)
+    out = tmp_path / "c.html"
+    nsp.main(["chart", "countries", "--out", str(out)])
+    page = out.read_text()
+    assert page.count('class="bar"') == 4 and "2.3×" in page and "about 160,100 more people" in page
+    nsp.main(["chart", "sites", "PHL", "--k", "1", "--out", str(out)])
+    page = out.read_text()
+    assert page.count('class="bar"') == 1 and "Philippines plan" in page and "Co-location (capacity)" in page
+
+
 def test_map_offline(monkeypatch, tmp_path):
     gap = {"h3": "888c106a49fffff", "district": "Kota Jakarta Utara", "typical_mbps": 89.3, "gap_type_25_mbps": "no gap",
            "chance_below_25_mbps": 0.0, "people_kontur": 12968}

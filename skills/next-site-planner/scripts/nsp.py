@@ -141,6 +141,44 @@ def make_map(base: str, a: argparse.Namespace) -> Path:
     return out
 
 
+BUILD = {"macro": "New macro tower", "small_cell": "Small cell", "capacity": "Co-location (capacity)"}
+
+
+def make_chart(base: str, a: argparse.Namespace) -> Path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import charts  # sibling module, imported only when a chart is asked for
+    ab = about(base)
+    data_line = (f"Data: Ookla speed tests {ab['speed_tests']['quarter']} ({ab['speed_tests']['period']}); population Kontur 2023 and "
+                 f"WorldPop 2020; checked {ab['checked_at_utc']} UTC. Ookla data CC BY-NC-SA 4.0 (non-commercial).")
+    if a.what == "countries":
+        cs = get(base, "/countries")["countries"]
+        rows = [{"label": c["name"], "a": c["plan_people_lifted"] / (1 + c["plan_gain_vs_kpi"]), "b": c["plan_people_lifted"],
+                 "note": f"{1 + c['plan_gain_vs_kpi']:.1f}×"} for c in cs if c.get("plan_gain_vs_kpi") is not None]
+        top = max(rows, key=lambda r: r["b"] - r["a"])
+        page = charts.paired_bars(rows, "Optimised plan vs KPI ranking: people lifted above 25 Mbps",
+                                  f"Same budget per country. Biggest absolute win: {top['label']} (about {round(top['b'] - top['a'], -2):,.0f} more people).",
+                                  data_line + " UAE budget 29.3 tower-equivalents; others 1,000. Central estimates; ranges are wide.",
+                                  "KPI ranking (baseline)", "Optimised plan")
+    else:
+        d = get(base, f"/sites/{a.country.upper()}", {"k": max(1, min(100, a.k))})
+        if d.get("out_of_scope"):
+            raise SystemExit(d["message"])
+        rows = [{"label": f"#{s['rank']} {s['district']}", "v": s["expected_people_lifted"], "cat": BUILD.get(s["intervention"], s["intervention"]),
+                 "note": f"cost {s['cost_new_tower_equivalents']}",
+                 "tip": (f"{BUILD.get(s['intervention'], s['intervention'])}, cost {s['cost_new_tower_equivalents']} tower-eq.<br>"
+                         f"{s['people']:,} people, {s['chance_below_25_mbps']:.0%} chance below 25 Mbps<br>"
+                         f"about {round(s['expected_people_lifted']):,} lifted")}
+                for s in d["sites"]]
+        sub = (f"Budget {d['budget_new_tower_equivalents']:,.0f} tower-equivalents"
+               + ("; every site checked on the ground." if d.get("checked_on_ground") else "."))
+        names = {c["country"]: c["name"] for c in get(base, "/countries")["countries"]}
+        page = charts.ranked_bars(rows, f"{names.get(d['country'], d['country'])} plan: expected people lifted above 25 Mbps, first {len(rows)} sites",
+                                  sub, data_line + " Estimates from public data.", list(BUILD.values()))
+    out = Path(a.out).resolve()
+    out.write_text(page, encoding="utf-8")
+    return out
+
+
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--base", default=DEFAULT_BASE)
@@ -153,6 +191,9 @@ def main(argv: list[str] | None = None) -> None:
     m = sub.add_parser("map"); msub = m.add_subparsers(dest="what", required=True)
     mg = msub.add_parser("gap"); mg.add_argument("lat", type=float); mg.add_argument("lon", type=float); mg.add_argument("--out", default="site_map.html")
     ms = msub.add_parser("sites"); ms.add_argument("country"); ms.add_argument("--k", type=int, default=10); ms.add_argument("--out", default="site_map.html")
+    ch = sub.add_parser("chart"); csub = ch.add_subparsers(dest="what", required=True)
+    cc = csub.add_parser("countries"); cc.add_argument("--out", default="chart.html")
+    cst = csub.add_parser("sites"); cst.add_argument("country"); cst.add_argument("--k", type=int, default=10); cst.add_argument("--out", default="chart.html")
     a = ap.parse_args(argv)
 
     is_point = a.cmd == "gap" or (a.cmd == "map" and a.what == "gap")
@@ -160,6 +201,9 @@ def main(argv: list[str] | None = None) -> None:
         raise SystemExit("latitude must be -90..90 and longitude -180..180")
     if a.cmd == "map":
         print(f"map written: {make_map(a.base, a)}")
+        return
+    if a.cmd == "chart":
+        print(f"chart written: {make_chart(a.base, a)}")
         return
     if a.cmd == "about":
         out = about(a.base)

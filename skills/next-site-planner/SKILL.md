@@ -19,6 +19,8 @@ python scripts/nsp.py sites COUNTRY [--k 10]        # the country's plan, best f
 python scripts/nsp.py note COUNTRY RANK             # a short note on one planned site, every number traced to the data
 python scripts/nsp.py map gap LAT LON --out map.html          # interactive map of the hexagon over satellite imagery
 python scripts/nsp.py map sites COUNTRY --k 5 --out map.html  # map of planned sites
+python scripts/nsp.py chart countries --out chart.html         # KPI baseline vs plan per country (paired bars)
+python scripts/nsp.py chart sites COUNTRY --k 5 --out chart.html  # shortlist: people lifted per site by build type
 ```
 
 The same four tools exist over MCP at `https://next-site-planner.vercel.app/mcp` (`gap_at`, `top_sites`, `explain_site`, `compare_countries`). If an MCP connection is configured, either route is fine; the numbers are identical.
@@ -45,16 +47,18 @@ These are the mistakes worth avoiding, because each one changes a planning decis
 
 ## Answer structure
 
-Planners and executives decide whether to trust a number before they read it, so the order matters:
+Planners and executives decide in about five seconds whether an answer is useful and trustworthy, so keep it short, numbered and visual:
 
-1. **Data used** (two or three lines, first): speed tests from Ookla open data for the quarter and its dates (e.g. "2026 Q3, 1 July–30 September 2026, 13 weeks"), population from Kontur 2023 and WorldPop 2020, and "checked on <date> UTC" from `about`.
-2. **Baseline** (for any comparison or "how much better"): what the plan is compared with and why. The usual baseline is KPI ranking: equal-weight scores of slow speed, population and number of places, filled until the budget is spent; it stands in for the weighted KPI lists planners build today. Give the baseline's own number (people it lifts), not only the gain.
-3. **The answer**, in operational units: people, Mbps, sites, tower-equivalents. For shortlists, a table with rank, district, intervention, cost, people and expected people lifted.
-4. **Why**: for a place, why it is or is not in the plan (the first reason in `references/data-sources.md` that the numbers support); for a probability, what period it comes from ("from 13 weeks of tests").
-5. **Map** when the question is about a place or specific sites: run `map` and give the file path; say what the satellite view shows (built-up land, open land) and quote `built_up_m2` for planned sites.
-6. **Caveats and what would sharpen it**: these are estimates from public data (ranges in `references/data-sources.md`); for a shortlist or investment question, ask for CAPEX and OPEX per site type, existing sites, market share, revenue per user and the commercial strategy. Mention the licence (Ookla data is CC BY-NC-SA 4.0, non-commercial) when the numbers may be reused.
+1. **Data line** (one line, first): Ookla speed tests for the quarter and its dates (e.g. "2026 Q3, 1 Jul–30 Sep 2026, 13 weeks"), Kontur 2023 and WorldPop 2020 population, "checked <date> UTC" (from `about`).
+2. **Headline** in bold: the answer in one sentence with its key number.
+3. **2–4 numbered points**, each one line:
+   - the **baseline** for any comparison: KPI ranking (equal-weight slow speed, population, number of places, filled until the budget is spent; it stands in for the weighted KPI lists planners build today), with its own number, not only the gain;
+   - **why**: why a place is or is not in the plan (first reason in `references/data-sources.md` the numbers support), or the period behind a probability ("from 13 weeks of tests");
+   - the one **caveat** that would change the decision (estimates with wide ranges; a large gap between population maps; the UAE's small budget).
+4. **One visual**, chosen with `references/charts.md`: no chart for a single place (use the map), paired bars for baseline vs plan, ranked bars for a shortlist; a table only for exact values the reader needs. Give the file path and say what it shows (for maps: what the satellite view shows about buildings).
+5. **To sharpen this** (one line, for shortlists and investment questions): CAPEX and OPEX per site type, existing sites, market share, revenue per user and the commercial strategy. Add the licence (Ookla data is CC BY-NC-SA 4.0, non-commercial) when the numbers may be reused.
 
-Keep each part short; the data and baseline lines exist so the reader can judge the answer, not to pad it.
+Aim for about ten lines of text before the visual; cut any point that would not change the reader's decision.
 
 ## Limits
 
