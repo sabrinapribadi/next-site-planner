@@ -2,6 +2,14 @@
 
 Newest first. Each entry uses STAR (Situation, Task, Action, Result) so it can be told as a story.
 
+## [0.15.0] — 2026-11-18 — App template v2: sidebar pages, Explore the data, a business question per page
+**Files:** app/streamlit_app.py, app/frame.py (new, shared), tests/test_streamlit_app.py, README.md
+- **Situation:** The user wanted every Streamlit app to combine the older dashboards' structure (sidebar pages: a real use case, EDA, an AI assistant; a business question on every view) with the newer apps' 5W1H brief and KPI first screen.
+- **Task:** Rebuild this app on one shared template (R26 item 8) and check every page against the data before release.
+- **Action:** Six pages on the shared `frame.py`; Explore the data reads the results page's own data (speed ladders, measured share) and keeps the live countries-at-a-speed-bar chart; one fixed, validated colour per country.
+- **Result:** 17 app tests pass. Checking the page caught a figure from a superseded model stage (115M more people below 25 Mbps) that disagreed with the API; the page now reads the published data (68M; the Philippines 31% of everyone vs 16% tested).
+- **Talking point:** "Every portfolio app now reads the same way: what it is for, the data, the use case, then an assistant; and every page answers a business question from the data."
+
 ## [0.14.1] — 2026-11-18 — Fix: clicking a map marker crashed the app
 **Files:** app/streamlit_app.py, tests/test_streamlit_app.py
 - **Situation:** On the live app, clicking a site marker raised StreamlitWidgetAlreadyInstantiatedError (reported by the user).

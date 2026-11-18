@@ -77,16 +77,20 @@
 
 **Live:** [next-site-planner.streamlit.app](https://next-site-planner.streamlit.app/). A companion app in [`app/`](app/streamlit_app.py) (rule R26) holds only what the static results page cannot:
 
-1. **Plan on a map:** the first 10–100 ranked sites of a country's plan, filtered by build type; hexagons shaded by chance of being below 25 Mbps, markers by build type; click a marker for its checked note.
-2. **Budget what-if:** people lifted by the plan, KPI ranking and slowest-first at budgets of 100, 500, 1,000 and 5,000 new-tower equivalents, with the plan's low–high range.
-3. **Check a place:** any point (or a preset) and its six neighbouring hexagons from the live API, with a thin-evidence warning under 10 speed tests.
-4. **Countries at your speed bar:** 5, 10, 25, 50 or 100 Mbps; share of people below the bar among tested areas only vs everyone.
+Built on the portfolio's app template (rule R26 item 8): a sidebar with one button per page (each page linkable as `?page=`), at-a-glance stats and links; every page opens with the business question it answers, with the answer computed from the data.
+
+1. **Overview:** the results, the 5W1H brief and a card per page.
+2. **Explore the data:** speed ladders by country (tested areas or everyone), how much of each country is measured, and countries at any speed bar from the live API.
+3. **Plan on a map:** the first 10–100 ranked sites of a country's plan, filtered by build type; click a marker for its checked note.
+4. **Budget what-if:** people lifted by the plan, KPI ranking and slowest-first at each budget, with the plan's low–high range.
+5. **Check a place:** any point (or a preset) and its six neighbouring hexagons from the live API, with a thin-evidence warning under 10 speed tests.
+6. **AI Assistant** (below).
 
 - **Ask the agent:** a planning agent over the four planner tools. **Replay by default:** 9 real answers recorded on the public API (`app/replays.json`, made by `scripts/record_agent_replays.py`), each with its tool calls, a number check (9 of 9 pass), cost and time; a typed question shows the closest recorded one. **Live with your own key:** a viewer can paste their own OpenAI key; it stays in their session only, is never stored or logged, and is capped at 10 questions. The app never holds a key of ours.
 - **Data:** the public API and the committed plan results (`data/outputs/p4_site_plan.json`) only; no keys, no store, no model.
 - **Free-tier limits:** Streamlit Community Cloud sleeps after 12 hours without visits and the first visit wakes it; the [results page](https://sabrinapribadi.github.io/next-site-planner/) is the always-on fallback. No keep-awake pings.
-- **Look:** theme in `.streamlit/config.toml` (light and dark, IBM Plex Sans and Archivo); only the open tab runs, so a tab calls the API only when it is opened.
-- **Tests:** `tests/test_streamlit_app.py` runs every tab with Streamlit AppTest on recorded API answers (`tests/fixtures/app_api.json`), plus an unreachable-API case, in CI.
+- **Look:** dark theme in `.streamlit/config.toml`; only the open page runs, so a page calls the API only when it is opened.
+- **Tests:** `tests/test_streamlit_app.py` runs every page with Streamlit AppTest on recorded API answers (`tests/fixtures/app_api.json`), plus an unreachable-API case, in CI.
 - **Run locally:** `pip install -r app/requirements.txt && streamlit run app/streamlit_app.py`.
 
 ## Use it from an AI agent (skill)

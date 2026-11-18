@@ -40,10 +40,16 @@ def offline(monkeypatch):
     monkeypatch.setattr(D, "time", types.SimpleNamespace(sleep=lambda s: None))   # only the helper's retry pause
 
 
-def run(view=None, **state):
+PAGES = ["overview", "explore", "map", "budget", "place", "agent"]
+
+
+def html_text(at) -> str:
+    return " ".join(e.proto.body for e in at.get("html"))
+
+
+def run(page="map", **state):
     at = AppTest.from_file(APP, default_timeout=60)
-    if view:
-        at.session_state["view"] = view
+    at.session_state["page"] = page
     for k, v in state.items():
         at.session_state[k] = v
     at.run()
@@ -67,15 +73,33 @@ def test_helpers():
     assert "](https://" in " ".join(dict(D.brief())["Where"])
 
 
-def test_map_tab_opens_with_brief_and_shortlist(offline):
-    at = run()
+def test_first_screen_brief_and_pages(offline):
+    at = run("overview")
     text = " ".join(m.value for m in at.markdown)
     caps = " ".join(c.value for c in at.caption)
     assert "A planner that picks" in text and "Results page" in caps and "12 hours" in caps
     hl = D.headline(D.load_plan())
     assert [m.value for m in at.metric][:2] == [f"{hl['people_plan']:,.0f}", "1.5–3.8×"]       # first screen: committed results
+    for w in ["What", "Why", "Who", "Where", "When it fails", "How"]:                           # the 5W1H brief (R22)
+        assert f'class="f-w">{w}<' in html_text(at), w
+    assert [b.key for b in at.sidebar.button] == [f"nav_{k}" for k in PAGES]
+
+
+def test_every_page_opens_with_its_business_question(offline):
+    for key in PAGES[1:]:
+        assert "Business question" in html_text(run(key)), key
+
+
+def test_map_page_shortlist(offline):
+    at = run()
     assert at.subheader[0].value.startswith("Philippines: the first 50 sites lift about")
-    assert [m.label for m in at.metric][4:] == ["Sites shown", "People likely lifted", "Budget used", "Checked on the ground"]
+    assert [m.label for m in at.metric] == ["Sites shown", "People likely lifted", "Budget used", "Checked on the ground"]
+
+
+def test_explore_page_counts_untested_people(offline):
+    at = run("explore")
+    page = html_text(at)
+    assert "million more people" in page and "The Philippines is slowest: 31% of everyone, against 16% in tested areas only" in page and "about <b>68 million more people</b>" in page
 
 
 def test_site_note(offline):
@@ -86,21 +110,21 @@ def test_site_note(offline):
 
 
 def test_budget_tab_uses_committed_numbers(offline):
-    at = run("Budget what-if")
+    at = run("budget")
     b = D.load_plan()["countries"]["PHL"]["budgets"]["1000"]
     assert at.subheader[0].value.startswith(f"At 1,000 tower-equivalents in the Philippines, the plan lifts about {b['people_lifted']:,.0f} people")
 
 
 def test_place_tab_and_thin_evidence(offline):
-    at = run("Check a place")
+    at = run("place")
     assert at.subheader[0].value.startswith("Cotabato City") and "93% chance" in at.subheader[0].value
-    assert [m.value for m in at.metric][4:6] == ["15 Mbps", "25"]
+    assert [m.value for m in at.metric][:2] == ["15 Mbps", "25"]
 
 
 def test_speed_bar_tab_and_api_failure(offline):
-    at = run("Countries at your speed bar")
-    assert at.subheader[0].value.startswith("Below 25 Mbps: The Philippines has the largest share")
-    at = run("Countries at your speed bar", bar=100)                    # not recorded: the app must warn, not crash
+    at = run("explore")
+    assert any(m.value.startswith("**Below 25 Mbps: The Philippines has the largest share") for m in at.markdown)
+    at = run("explore", bar=100)                    # not recorded: the app must warn, not crash
     assert any("did not answer" in w.value for w in at.warning)
 
 
@@ -135,7 +159,7 @@ def _chat_app(monkeypatch, fake_run=None):
     if fake_run:
         monkeypatch.setattr(A, "run", fake_run)
     at = AppTest.from_file(APP, default_timeout=60)
-    at.session_state["view"] = "Ask the agent"                          # lazy tabs (site planner); ignored where tabs are eager
+    at.session_state["page"] = "agent"
     at.run()
     assert not at.exception, at.exception
     return at
@@ -191,3 +215,9 @@ def test_marker_click_focus_is_applied_before_the_widget(offline):
     at.run()
     assert not at.exception and at.selectbox(key="focus").value == opts[3]
     assert "_pending_focus" not in at.session_state
+
+
+def test_frame_is_the_shared_copy():
+    """The app frame is identical in every portfolio app; change it everywhere at once (checksum of the shared copy)."""
+    import hashlib
+    assert hashlib.sha256((ROOT / "app" / "frame.py").read_bytes()).hexdigest()[:16] == "385e92329f20405a"
